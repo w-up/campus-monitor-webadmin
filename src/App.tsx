@@ -1,0 +1,48 @@
+import React from "react";
+import { useObserver } from "mobx-react-lite";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { HomePage } from "./pages/Home";
+import { Layout } from "antd";
+import { NavMenu } from "./components/NavMenu";
+import "./App.css";
+import { useStore } from "./stores";
+import { api } from "./services/index";
+
+const App = () => {
+  const { menu } = useStore();
+  const [{ data, loading, error }] = api.company.getCompanyBusinessInfoById({ companyId: 1 });
+  console.log(data, loading, error);
+
+  const renderRoute = (data: any[]) => {
+    return data.map(item => {
+      if (item.children.length > 0) {
+        return (
+          <Route path={item.path} key={item.path} component={item.component}>
+            {renderRoute(item.children)}
+          </Route>
+        );
+      }
+      return <Route exact path={item.path} key={item.path} component={item.component} />;
+    });
+  };
+
+  return useObserver(() => (
+    <Router>
+      <Layout style={{ minHeight: "100vh" }}>
+        <Layout.Sider collapsible collapsed={menu.collapsed} onCollapse={menu.toggleCollapsed}>
+          <NavMenu></NavMenu>
+        </Layout.Sider>
+        <Layout>
+          <Layout.Content>
+            <Switch>
+              <Route exact path="/" component={HomePage} />
+              {renderRoute(menu.menus)}
+            </Switch>
+          </Layout.Content>
+        </Layout>
+      </Layout>
+    </Router>
+  ));
+};
+
+export default App;
