@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@uiw/react-baidu-map": "^1.15.3",
     "antd": "^3.26.11",
     "axios": "^0.19.2",
     "axios-hooks": "^1.9.0",
