@@ -1,5 +1,4 @@
 import Axios from "axios";
-import { message } from "antd";
 import { configure } from "axios-hooks";
 import useAxios from "axios-hooks";
 
@@ -16,7 +15,6 @@ axios.interceptors.response.use(
     return res;
   },
   async err => {
-    message.error(err);
     return Promise.reject(err);
   }
 );
