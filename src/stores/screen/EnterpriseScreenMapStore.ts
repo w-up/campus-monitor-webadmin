@@ -1,0 +1,105 @@
+import { action, observable } from "mobx";
+import { ComplexCustomOverlay } from "../../pages/screen/EnterpriseScreen/customOverlay";
+//@ts-ignore
+const BMapGL = window.BMapGL;
+
+export class EnterpriseScreenMapStore {
+  @observable map: any = null;
+  @observable center = new BMapGL.Point(116.384405, 39.9001);
+  @observable zoom = 20;
+  @observable heading = 50.5;
+  @observable tilt = 53;
+  @observable overlays = [] as any;
+  @observable activeFlag = true;
+  @observable curIndex = 0;
+
+  @action.bound
+  addpoints(index: number) {
+    var myCompOverlay;
+    for (let x in this.overlays) {
+      this.map.removeOverlay(this.overlays[x]);
+    }
+    this.curIndex = index;
+    this.overlays = [];
+    for (let x in this.lists) {
+      myCompOverlay = new ComplexCustomOverlay(new BMapGL.Point(this.lists[x].position[0], this.lists[x].position[1]), this.lists[x], x, this);
+      this.overlays.push(myCompOverlay);
+      this.map.addOverlay(myCompOverlay);
+    }
+  }
+
+  lists = [
+    {
+      class: "dnj",
+      active: true,
+      text: "东南角",
+      update: "15:30:30",
+      position: [116.384405, 39.9001],
+      children: [
+        { name: "非甲烷总经", value: "111ppm", display: "true" },
+        { name: "苯乙烯", value: "200ppm", display: "true" },
+        { name: "H2S", value: "111ppm", display: "true" },
+        { name: "NH3", value: "111ppm", display: "true" },
+        { name: "Test", value: "111ppm", display: "true" }
+        // {name:"非甲烷总经",value:"111ppm",display:"true"},
+        // {name:"苯乙烯",value:"200ppm",display:"true"},
+        // {name:"H2S",value:"111ppm",display:"true"},
+        // {name:"NH3",value:"111ppm",display:"true"}
+      ]
+    },
+    {
+      class: "dbj",
+      active: false,
+      text: "东北角",
+      update: "15:30:30",
+      position: [116.384305, 39.9011],
+      children: [
+        { name: "非甲烷总经", value: "111ppm", display: "true" },
+        { name: "苯乙烯", value: "200ppm", display: "true" },
+        { name: "H2S", value: "111ppm", display: "true" },
+        { name: "NH3", value: "111ppm", display: "true" },
+        { name: "Test", value: "111ppm", display: "true" }
+        // {name:"非甲烷总经",value:"111ppm",display:"true"},
+        // {name:"苯乙烯",value:"200ppm",display:"true"},
+        // {name:"H2S",value:"111ppm",display:"true"},
+        // {name:"NH3",value:"111ppm",display:"true"}
+      ]
+    },
+    {
+      class: "xbj",
+      active: false,
+      text: "西北角",
+      update: "15:30:30",
+      position: [116.383805, 39.9005],
+      children: [
+        { name: "非甲烷总经", value: "111ppm", display: "true" },
+        { name: "苯乙烯", value: "200ppm", display: "true" },
+        { name: "H2S", value: "111ppm", display: "true" },
+        { name: "NH3", value: "111ppm", display: "true" },
+        { name: "Test", value: "111ppm", display: "true" }
+        // {name:"非甲烷总经",value:"111ppm",display:"true"},
+        // {name:"苯乙烯",value:"200ppm",display:"true"},
+        // {name:"H2S",value:"111ppm",display:"true"},
+        // {name:"NH3",value:"111ppm",display:"true"}
+      ]
+    },
+    {
+      class: "xnj",
+      active: false,
+      text: "西南角",
+      update: "15:30:30",
+      position: [116.383305, 39.9001],
+      children: [
+        { name: "非甲烷总经", value: "111ppm", display: "true" },
+        { name: "苯乙烯", value: "200ppm", display: "true" },
+        { name: "H2S", value: "111ppm", display: "true" },
+        { name: "NH3", value: "111ppm", display: "true" },
+        { name: "Test", value: "111ppm", display: "true" }
+        // {name:"非甲烷总经",value:"111ppm",display:"true"},
+        // {name:"苯乙烯",value:"200ppm",display:"true"},
+        // {name:"H2S",value:"111ppm",display:"true"},
+        // {name:"NH3",value:"111ppm",display:"true"}
+      ]
+    }
+  ];
+}
