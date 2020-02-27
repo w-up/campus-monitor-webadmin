@@ -1,18 +1,16 @@
-import React, {Component, useEffect, useState} from 'react';
-import moment from "moment";
+import React, {useEffect, useState} from 'react';
 import {useObserver} from "mobx-react-lite";
-
-moment.locale('zh-cn');
+import { Moment } from "../../../utils/moment-util";
 
 export const TimeDisplay = () => {
 
-  const [time, setTime] = useState(moment().format('LTS'));
-  const [day, setDay] = useState(moment().format('LL') + moment().format('dddd'));
+  const [time, setTime] = useState(Moment().format('LTS'));
+  const [day, setDay] = useState(Moment().format('LL') + Moment().format('dddd'));
 
   useEffect(() => {
     setInterval(() => {
-      setTime(moment().format('LTS'));
-      setDay(moment().format('LL') + moment().format('dddd'))
+      setTime(Moment().format('LTS'));
+      setDay(Moment().format('LL') + Moment().format('dddd'))
     }, 1000);
   });
 
