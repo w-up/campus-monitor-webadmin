@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/echarts": "^4.4.3",
     "@uiw/react-baidu-map": "^1.15.3",
     "antd": "^3.26.11",
     "axios": "^0.19.2",
     "axios-hooks": "^1.9.0",
+    "echarts": "^4.6.0",
+    "echarts-for-react": "^2.0.15-beta.1",
     "mobx": "^5.15.4",
     "mobx-react": "^6.1.7",
     "mobx-react-lite": "^1.5.2",
