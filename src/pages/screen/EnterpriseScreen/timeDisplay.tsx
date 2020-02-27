@@ -16,10 +16,10 @@ export const TimeDisplay = () => {
 
   // render will know everything!
   return useObserver(() => (
-      <div style={{"lineHeight": "65px"}}>
-        <img src="/images/clock-icon.png" style={{"float": "left", "margin": "20px 0 0 0"}}/>
-        <span className="showTime">{time}</span>
-        <span className="showWeek">{day}</span>
+      <div className="leading-5 text-white">
+        <img src="/images/clock-icon.png" className="w-5 ml-5 float-left"/>
+        <span className="text-lg m-2">{time}</span>
+        <span className="text-sm ml-2">{day}</span>
       </div>
     )
   );
