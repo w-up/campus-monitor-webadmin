@@ -11,7 +11,7 @@ export const EnterpriseScreenPage = () => {
   return useObserver(() => (
     <div ref={fullScreenRef} className="w-full h-full" style={{ backgroundColor: "#0d1b28" }}>
       <Header />
-      <div style={{ width: "46vw", height: "46vh", margin: "0 auto" }}>
+      <div style={{ width: "50vw", height: "46vh", margin: "0 auto" }}>
         <EnterpriseMap />
       </div>
       <div style={{ width: "23vw", height: "34vh" }}>

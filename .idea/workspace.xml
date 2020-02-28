@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b5aa787-9ba3-4839-bcb1-9b38c1c54b5a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/index.tsx" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -31,8 +30,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/index.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="17" column="36" lean-forward="true" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
+            <state relative-caret-position="154">
+              <caret line="7" column="43" lean-forward="true" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -264,12 +263,12 @@
       <workItem from="1582706748102" duration="60000" />
       <workItem from="1582707226642" duration="4502000" />
       <workItem from="1582771626358" duration="619000" />
-      <workItem from="1582810537269" duration="16352000" />
+      <workItem from="1582810537269" duration="16694000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35333000" />
+    <option name="totallyTimeSpent" value="35675000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
@@ -624,8 +623,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/index.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="17" column="36" lean-forward="true" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
+        <state relative-caret-position="154">
+          <caret line="7" column="43" lean-forward="true" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
