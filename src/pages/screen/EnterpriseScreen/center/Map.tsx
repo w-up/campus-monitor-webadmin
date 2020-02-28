@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useObserver } from "mobx-react-lite";
-import style from "../../../common/mapStyle";
-import { useStore } from "../../../stores/index";
+import style from "../../../../common/mapStyle";
+import { useStore } from "../../../../stores";
 
 //@ts-ignore
 const BMapGL = window.BMapGL;
@@ -39,7 +39,7 @@ export const EnterpriseMap = () => {
   }, [mapStore]);
   return useObserver(() => (
     <div style={{ width: "100%", height: "100%" }}>
-      <div id="allmap" style={{ width: "50vw", height: "50vh" }} />
+      <div id="allmap" style={{height: "50vh"}} />
     </div>
   ));
 };

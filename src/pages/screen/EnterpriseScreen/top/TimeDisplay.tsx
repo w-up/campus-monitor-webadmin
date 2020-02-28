@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useObserver} from "mobx-react-lite";
-import { Moment } from "../../../utils/moment-util";
+import { Moment } from "../../../../utils/moment-util";
 
 export const TimeDisplay = () => {
 
