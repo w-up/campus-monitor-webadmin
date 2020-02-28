@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@types/echarts": "^4.4.3",
+    "@types/moment-timezone": "^0.5.12",
     "@uiw/react-baidu-map": "^1.15.3",
     "antd": "^3.26.11",
     "axios": "^0.19.2",
@@ -14,6 +15,7 @@
     "mobx-react": "^6.1.7",
     "mobx-react-lite": "^1.5.2",
     "moment": "^2.24.0",
+    "moment-timezone": "^0.5.28",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router": "^5.1.2",

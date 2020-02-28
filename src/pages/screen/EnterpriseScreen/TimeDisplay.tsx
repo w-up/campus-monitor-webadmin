@@ -19,7 +19,7 @@ export const TimeDisplay = () => {
         <div className="head-left">
           <img alt="clock-icon" src="/images/clock-icon.png" className="w-5 ml-5 float-left"/>
           <span className="text-lg m-2">{time}</span>
-          <span className="text-sm ml-2">{day}</span>
+          <span className="text-sm ml-2"> {day}</span>
         </div>
       </div>
     )
