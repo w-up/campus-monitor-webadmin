@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
 import { EnterpriseMap } from "./Map";
 import { EnterpriseScreenGasChart } from "./GasChart";
-import { Header } from "./header";
+import { Header } from "./Header";
 import { Button } from "antd";
 
 export const EnterpriseScreenPage = () => {
