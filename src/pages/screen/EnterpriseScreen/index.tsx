@@ -5,7 +5,7 @@ import { EnterpriseScreenGasChart } from "./left/GasChart";
 import { Header } from "./top/Header";
 import { Button } from "antd";
 import {GasTable} from "./left/GasTable";
-import {GasTableDynamic} from "./right/GasTableDynamic";
+import {SewageTableDynamic} from "./right/SewageTableDynamic";
 
 export const EnterpriseScreenPage = () => {
   const fullScreenRef = useRef<HTMLDivElement>(null);
@@ -21,7 +21,7 @@ export const EnterpriseScreenPage = () => {
           <EnterpriseMap />
         </div>
         <div>
-          <GasTableDynamic/>
+          <SewageTableDynamic/>
         </div>
       </div>
       <div style={{ width: "23vw", height: "34vh" }}>

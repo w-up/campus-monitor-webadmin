@@ -4,14 +4,14 @@ import {CarouselProvider, Dot, DotGroup, Slide, Slider} from "pure-react-carouse
 import {GasTableStore} from "../../../../stores/screen/GasTableStore";
 import {useStore} from "../../../../stores";
 
-export const GasTableDynamic = () => {
+export const SewageTableDynamic = () => {
   const {
     screen: {gasTable: GasTableStore}
   } = useStore();
 
   return useObserver(() => (
       <div className="topright">
-        <div className="title text-center">气体排放情况（实时）</div>
+        <div className="title text-center">污水排放情况（实时）</div>
         <div className="box">
           <div className="tabtitle">
             <div>站点名称</div>
