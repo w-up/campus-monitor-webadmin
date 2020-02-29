@@ -17,7 +17,7 @@ export const ParkScreenMap = () => {
   }, [mapStore.map]);
 
   return useObserver(() => (
-    <div style={{ width: "100%", height: "100%" }}>
+    <div style={{ width: "100%", height: "50vh" }}>
       <APILoader akay={config.baiduMapApiKey}>
         <Map onTilesLoaded={mapStore.handle} zoom={mapStore.zoom} center={mapStore.center} enableScrollWheelZoom>
           <Polygon path={mapStore.polygonPath} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor=""></Polygon>

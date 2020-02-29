@@ -24,7 +24,7 @@ export const EnterpriseScreenGasChart = () => {
         show: true
       },
       formatter(params: any, ticket: any, callback: any) {
-        var showHtm = [];
+        var showHtm = [] as any;
         for (var i = 0; i < params.length; i++) {
           var list = {} as any;
           //x轴名称

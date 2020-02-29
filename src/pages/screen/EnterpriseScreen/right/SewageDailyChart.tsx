@@ -30,7 +30,7 @@ export const SewageDailyChart = () => {
       },
       formatter: (params: any, ticket: any, callback: any) => {
         // console.log(params);
-        var showHtm = [];
+        var showHtm = [] as any;
         for (var i = 0; i < params.length; i++) {
           var list = {} as any;
           //x轴名称
