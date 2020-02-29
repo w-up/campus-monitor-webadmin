@@ -2,19 +2,24 @@ import React from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
 import ReactEcharts from "echarts-for-react";
 
-export const EnterpriseScreenGasChart = () => {
+export const EnterpriseScreenGroupChart = () => {
   const store = useLocalStore(() => ({
+    //   标题配置
     title: {
-      text: "非甲烷中经",
+      text: "24小时排放趋势图",
       textStyle: {
-        color: "rgba(4,248,204,0.8)",
-        fontSize: "14"
+        color: "#88A8C5FF",
+        fontSize: "14",
+        fontWeight: "normal"
       },
+      x: "center",
+      y: "20px",
       padding: [5, 20]
     },
+    // 提示配置
     tooltip: {
       trigger: "axis",
-      backgroundColor: "rgba(38,95,163,0.6);",
+      backgroundColor: "rgba(38,95,163,0.6)",
       padding: 10,
       textStyle: {
         color: "#88A8C5",
@@ -23,7 +28,7 @@ export const EnterpriseScreenGasChart = () => {
       alwaysShowContent: {
         show: true
       },
-      formatter(params: any, ticket: any, callback: any) {
+      formatter: (params: any, ticket: any, callback: any) => {
         var showHtm = [];
         for (var i = 0; i < params.length; i++) {
           var list = {} as any;
@@ -38,8 +43,6 @@ export const EnterpriseScreenGasChart = () => {
           showHtm.push(list);
         }
         return `<div style="color: #04F9CC;text-align:left;line-height:20px">${text} 日均</div>
-            <div style="color: #04F9CC;text-align:left;line-height:20px">${store.title.text}</div>
-             <div style="color:#F90421;text-align:left;line-height:20px">日均值上限：2（mg/m³）</div>
             <div style="color:#88A8C5;text-align:left;font-size:10px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
             <div style="display:flex;align-items: center;"><div style="margin-right:10px;width:10px;height:1px;border:1px solid #1089E7;background:#1089E7"></div><div>${showHtm[0].name}</div>
             <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${showHtm[0].value.toFixed(1)}</div></div>
@@ -53,38 +56,19 @@ export const EnterpriseScreenGasChart = () => {
       }
     },
     // 上册图列配置
-    legend: [
-      {
-        data: ["东南角", "东北角"],
-        x: "right",
-        textStyle: {
-          color: "#88A8C5",
-          fontSize: 12
-        },
-        icon: "rect",
-        y: 0,
-        itemHeight: 2,
-        itemWidth: 20
-      },
-      {
-        data: ["西南角", "西北角"],
-        x: "right",
-        textStyle: {
-          color: "#88A8C5",
-          fontSize: 12
-        },
-        icon: "rect",
-        y: 20,
-        bottom: 10,
-        itemHeight: 2,
-        itemWidth: 20
+    legend: {
+      data: ["非甲烷总经", "苯乙烯", "H2S", "NH3"],
+      textStyle: {
+        fontSize: 10,
+        color: "#88A8C5" // 图例文字颜色
       }
-    ],
+      // y:"-10px",
+    },
     grid: {
       top: "25%",
-      left: "5%",
+      left: "4%",
       right: "2%",
-      bottom: "2%",
+      bottom: "0%",
       containLabel: true
     },
     xAxis: {
@@ -98,17 +82,17 @@ export const EnterpriseScreenGasChart = () => {
       data: ["12/01", "12/02", "12/03", "12/04", "12/05", "12/06", "12/07"]
     },
     yAxis: {
-      name: "日均值（mg/m³）",
-      type: "value",
-      min: 0,
-      // max: 3,
-      splitNumber: 3,
+      name: "（mg/m³）",
       nameTextStyle: {
         color: "rgba(136,168,197,0.5)",
         align: "center",
         verticalAlign: "middle",
-        padding: [5, 0, 5, 50]
+        padding: [5, 0, 15, 20]
       },
+      type: "value",
+      min: 0,
+      max: 3,
+      splitNumber: 3,
       axisLabel: {
         textStyle: {
           color: "rgba(136,168,197,0.5)",
@@ -128,7 +112,7 @@ export const EnterpriseScreenGasChart = () => {
     },
     series: [
       {
-        name: "东南角",
+        name: "非甲烷总经",
         type: "line",
         data: [1.2, 1.6, 1.8, 1.92, 2.02, 2.22, 1.89],
         itemStyle: {
@@ -140,10 +124,10 @@ export const EnterpriseScreenGasChart = () => {
           }
         },
         symbol: "circle", //设定为实心点
-        symbolSize: 2 //设定实心点的大小
+        symbolSize: 6 //设定实心点的大小
       },
       {
-        name: "东北角",
+        name: "苯乙烯",
         type: "line",
         // stack: "总量",
         data: [1.2, 1.5, 1.8, 2.0, 1.8, 1.6, 1.3],
@@ -156,10 +140,10 @@ export const EnterpriseScreenGasChart = () => {
           }
         },
         symbol: "circle", //设定为实心点
-        symbolSize: 2 //设定实心点的大小
+        symbolSize: 6 //设定实心点的大小
       },
       {
-        name: "西南角",
+        name: "H2S",
         type: "line",
         // stack: "总量",
         data: [1.2, 1.8, 1.5, 1.2, 1.5, 1.2, 1.6],
@@ -172,10 +156,10 @@ export const EnterpriseScreenGasChart = () => {
           }
         },
         symbol: "circle", //设定为实心点
-        symbolSize: 2 //设定实心点的大小
+        symbolSize: 6 //设定实心点的大小
       },
       {
-        name: "西北角",
+        name: "NH3",
         type: "line",
         // stack: "总量",
         data: [0.8, 1.2, 1.0, 1.3, 1.5, 2.0, 1.8],
@@ -188,13 +172,13 @@ export const EnterpriseScreenGasChart = () => {
           }
         },
         symbol: "circle", //设定为实心点
-        symbolSize: 2 //设定实心点的大小
+        symbolSize: 6 //设定实心点的大小
       }
     ]
   }));
   return useObserver(() => (
-    <div style={{ height: "300px" }}>
-      <ReactEcharts option={store} style={{ height: "100%", width: "100%" }} className="react_for_echarts" />
+    <div style={{ height: "320px" }}>
+      <ReactEcharts option={store} style={{ width: "100%" }} className="react_for_echarts" />
     </div>
   ));
 };

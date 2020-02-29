@@ -38,8 +38,8 @@ export const EnterpriseMap = () => {
     };
   }, [mapStore]);
   return useObserver(() => (
-    <div style={{ width: "100%", height: "100%" }}>
-      <div id="allmap" style={{height: "50vh"}} />
+    <div>
+      <div id="allmap" style={{ height: "50vh" }} />
     </div>
   ));
 };
