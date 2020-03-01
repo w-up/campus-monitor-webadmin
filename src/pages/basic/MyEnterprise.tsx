@@ -14,15 +14,15 @@ export const MyEnterprisePage = () => {
           title: 'parent 1-0',
           key: '0-0-0',
           children: [
-            { title: 'leaf', key: '0-0-0-0' },
-            { title: 'leaf', key: '0-0-0-1' },
-            { title: 'leaf', key: '0-0-0-2' },
+            { title: 'leaf', key: '0-0-0-0'},
+            { title: 'leaf', key: '0-0-0-1'},
+            { title: 'leaf', key: '0-0-0-2'},
           ],
         },
         {
           title: 'parent 1-1',
           key: '0-0-1',
-          children: [{ title: 'leaf', key: '0-0-1-0' }],
+          children: [{ title: 'leaf', key: '0-0-1-0'}],
         },
         {
           title: 'parent 1-2',
@@ -39,7 +39,7 @@ export const MyEnterprisePage = () => {
     },
   ]
   const showLine = true
-  const showIcon = false
+  const showIcon = true
   const columns = useLocalStore(() => ([
     {
       title: '厂区名称',

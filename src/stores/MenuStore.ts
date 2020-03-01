@@ -1,9 +1,5 @@
 import { observable, action } from "mobx";
-import { ParkPage } from "../pages/basic/Park";
-import { EnterprisePage } from "../pages/basic/Enterprise";
 import { MyEnterprisePage } from "../pages/basic/MyEnterprise";
-import { UserPermissionPage } from "../pages/permission/UserPermission";
-import { RolePermissionPage } from "../pages/permission/RolePermission";
 import { EnterpriseScreenPage } from "../pages/screen/EnterpriseScreen";
 import { ParkScreenPage } from "../pages/screen/ParkScreen";
 import { MapMonitorPage } from "../pages/MapMonitor";
@@ -17,6 +13,9 @@ import { AlertSettingPage } from "../pages/alert/AlertSetting";
 import { DataAuditPage } from "../pages/data/DataAudit";
 import { DataManagePage } from "../pages/data/DataManage";
 import { ReportPage } from "../pages/Report";
+import { Basic } from "../pages/basic/Basic";
+import { User } from "../pages/screen/User/User";
+import { System } from "../pages/screen/System/System";
 
 export class MenuStore {
   @observable collapsed = false;
@@ -37,14 +36,14 @@ export class MenuStore {
           icon: "dashboard",
           title: "园区管理",
           path: "/base/park",
-          component: ParkPage,
+          component: Basic,
           children: []
         },
         {
           icon: "dashboard",
           title: "企业管理",
           path: "/base/enterprise",
-          component: EnterprisePage,
+          component: Basic,
           children: []
         },
         {
@@ -59,23 +58,36 @@ export class MenuStore {
     {
       icon: "dashboard",
       title: "用户权限",
-      path: "/permission",
+      path: "/user",
       component: "",
       children: [
         {
           icon: "dashboard",
           title: "用户管理",
-          path: "/permission/user",
-          component: UserPermissionPage,
+          path: "/user/userlist",
+          component: User,
           children: []
         },
         {
           icon: "dashboard",
           title: "角色管理",
-          path: "/permission/role",
-          component: RolePermissionPage,
+          path: "/user/rolelist",
+          component: User,
           children: []
         }
+      ]
+    },
+    {
+      icon: 'dashboard',
+      title: "系统管理",
+      path: "/system",
+      children: [
+        {
+          icon: "dashboard",
+          title: "参数配置",
+          path: "/system/configration",
+          children: []
+        },
       ]
     },
     {
