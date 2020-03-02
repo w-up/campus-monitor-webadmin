@@ -15,7 +15,6 @@ import { DataManagePage } from "../pages/data/DataManage";
 import { ReportPage } from "../pages/Report";
 import { Basic } from "../pages/basic/Basic";
 import { User } from "../pages/screen/User/User";
-import { System } from "../pages/screen/System/System";
 
 export class MenuStore {
   @observable collapsed = false;
@@ -78,7 +77,7 @@ export class MenuStore {
       ]
     },
     {
-      icon: 'dashboard',
+      icon: "dashboard",
       title: "系统管理",
       path: "/system",
       children: [
@@ -87,7 +86,7 @@ export class MenuStore {
           title: "参数配置",
           path: "/system/configration",
           children: []
-        },
+        }
       ]
     },
     {
