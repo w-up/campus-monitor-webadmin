@@ -38,7 +38,7 @@ export const EnterpriseMap = () => {
     };
   }, [mapStore]);
   return useObserver(() => (
-    <div>
+    <div className="py-4" style={{background:"#6076AD"}}>
       <div id="allmap" style={{ height: "50vh" }} />
     </div>
   ));

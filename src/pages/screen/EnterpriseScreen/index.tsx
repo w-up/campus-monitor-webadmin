@@ -17,13 +17,13 @@ export const EnterpriseScreenPage = () => {
   // @ts-ignore
   return useObserver(() => (
     <div className="p-4" style={{ background: "#1E2538", borderTop: "1px solid rgb(0, 177, 255)" }}>
-      <div className="text-white pb-4 pl-2" style={{color:"#0DACF2"}} onClick={() => fullScreenRef.current?.requestFullscreen()}>
+      <div className="text-white pb-4 pl-2 cursor-pointer" style={{color:"#0DACF2"}} onClick={() => fullScreenRef.current?.requestFullscreen()}>
         <Icon className="text-3xl font-black" type="fullscreen"/>
         <span className="ml-2">全屏展示</span>
       </div>
       <div ref={fullScreenRef} className="w-full h-full pl-4 pr-4" style={{backgroundColor: "#061630"}}>
         <ScreenTop/>
-        <div className="flex mt-4">
+        <div className="screen-page flex mt-4">
           <div>
             <GasTable/>
             <EnterpriseScreenGasChart/>

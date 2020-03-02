@@ -10,8 +10,8 @@ export const GasTable = () => {
   } = useStore();
 
   return useObserver(() => (
-      <div className="topleft">
-        <div className="title text-center">气体排放情况（实时）</div>
+      <div className="topleft screenTable">
+        <div className="tableTitle text-center">气体排放情况（实时）</div>
         <div className="box">
           <div className="tabtitle">
             <div>站点名称</div>

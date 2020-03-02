@@ -193,8 +193,13 @@ export const EnterpriseScreenGasChart = () => {
     ]
   }));
   return useObserver(() => (
-    <div style={{ height: "300px" }}>
-      <ReactEcharts option={store} style={{ height: "100%", width: "100%" }} className="react_for_echarts" />
+    <div className="screenTable mt-4" style={{ height: "370px" }}>
+      <div className="tableTitle flex justify-between items-center">
+        <img src="/images/left.png" className="img"/>
+        <div>气体日均排放浓度趋势图</div>
+        <img src="/images/right1.png" className="img"/>
+      </div>
+      <ReactEcharts option={store} style={{marginTop:"20px", padding: "10px", height: "280px", width: "100%" }} className="react_for_echarts" />
     </div>
   ));
 };

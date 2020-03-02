@@ -10,8 +10,8 @@ export const SewageTableDynamic = () => {
   } = useStore();
 
   return useObserver(() => (
-      <div className="topright">
-        <div className="title text-center">污水排放情况（实时）</div>
+      <div className="topright screenTable">
+        <div className="tableTitle text-center">污水排放情况（实时）</div>
         <div className="box">
           <div className="tabtitle">
             <div>站点名称</div>

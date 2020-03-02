@@ -47,22 +47,14 @@
     transform-origin: bottom right;
 }
 
-.topleft {
+.screenTable {
     width: 25%;
     min-width: 350px;
     border: 1px solid #2e3b61;
-    border-radius: 5px;
-}
-
-.topright {
-    width: 25%;
-    min-width: 350px;
-    border: 1px solid #2e3b61;
-    border-radius: 5px;
 }
 
 
-.topleft .title, .topright .title {
+.screen-page .tableTitle {
     color: #55b7fe;
     padding: 9px 0px;
     background-image: url("/images/title.png");
