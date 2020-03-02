@@ -4,7 +4,7 @@ import {TimeDisplay} from "./TimeDisplay";
 import {LocationDisplay} from "./LocationDisplay";
 
 
-export const Header = () => {
+export const ScreenTop = () => {
   return useObserver(() => (
     <div className="flex flex-row header-bg h-20 text-white">
       <TimeDisplay/>
