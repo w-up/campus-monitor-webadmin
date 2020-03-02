@@ -1,7 +1,6 @@
 import React from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
 import { Card, Form, Input, Button, Breadcrumb, Radio, Select } from "antd";
-import TextArea from "antd/lib/input/TextArea";
 
 const { Option } = Select;
 export const AddNewUser = () => {

@@ -180,7 +180,6 @@ export class MenuStore {
           title: "告警管理",
           path: "/alert/manage",
           component: AlertManagePage,
-          children: []
         },
         {
           icon: "dashboard",

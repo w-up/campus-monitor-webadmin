@@ -2,23 +2,15 @@ import React from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
 import { Card, Form, Button, Input, Select, Table, Badge, Divider, Breadcrumb, Modal, Tree } from 'antd'
 import { RouteChildrenProps } from "react-router";
-import { Link } from "react-router-dom";
+import { EditableTable } from './MyEditableTable'
+
+const EditableFormTable = Form.create()(EditableTable);
 
 const { TreeNode } = Tree;
-const { Option } = Select;
 type Props = RouteChildrenProps<{}>
 
 
 export const SystemConfigration = (props: Props) => {
-  const rowSelection = useLocalStore(() => ({
-    onChange: (selectedRowKeys:any, selectedRows:any) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    },
-    getCheckboxProps: (record:any) => ({
-      disabled: record.name === 'Disabled User', // Column configuration not to be checked
-      name: record.name,
-    }),
-  }))
 
   const isShowEle = useLocalStore(() => ({
     isShowModal: false
@@ -32,87 +24,6 @@ export const SystemConfigration = (props: Props) => {
     isShowEle.isShowModal = false
   }
 
-  const openModal = () => {
-    isShowEle.isShowModal = true
-    console.log('aa')
-  }
-
-  const columns = useLocalStore(() => ([
-    {
-      title: '角色编号',
-      dataIndex: 'roleId',
-    },
-    {
-      title: '角色名',
-      dataIndex: 'roleName',
-    },
-    {
-      title: '描述',
-      dataIndex: 'desc',
-    },
-    {
-      title: '状态',
-      dataIndex: 'status',
-      render: () => {
-        return <Badge status="processing" text="正常" />
-      }
-    },
-    {
-      title: '创建时间',
-      dataIndex: 'createTime',
-    },
-    {
-      title: '操作',
-      dataIndex: 'action',
-      render: (text:any, record:any) => (
-        <span>
-          <a>删除</a>
-          <Divider type="vertical" />
-          <a onClick={() => props.history.push('addOrEditRole')}>修改</a>
-          <Divider type="vertical" />
-          <a onClick={() => openModal()}>权限配置</a>
-        </span>
-      ),
-    }
-  ]))
-  const data = useLocalStore(() => ([
-    {
-      key: '1',
-      id: 1,
-      roleId: 'TradeCode21',
-      roleName: '园区管理员',
-      desc: '园区1',
-      status: '正常',
-      createTime: '2019-02-21',
-    },
-    {
-      key: '2',
-      id: 2,
-      roleId: 'TradeCode21',
-      roleName: '园区管理员',
-      desc: '园区1',
-      status: '正常',
-      createTime: '2019-02-21',
-    },
-    {
-      key: '3',
-      id: 3,
-      roleId: 'TradeCode21',
-      roleName: '园区管理员',
-      desc: '园区1',
-      status: '正常',
-      createTime: '2019-02-21',
-    },
-    {
-      key: '4',
-      id: 4,
-      roleId: 'TradeCode21',
-      roleName: '园区管理员',
-      desc: '园区1',
-      status: '正常',
-      createTime: '2019-02-21',
-    },
-  ]))
 
  return useObserver(() => 
  <div>
@@ -146,7 +57,7 @@ export const SystemConfigration = (props: Props) => {
       </div>
 
       <div>
-        <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+        <EditableFormTable></EditableFormTable>
       </div>
     </Card>;
     <div>
