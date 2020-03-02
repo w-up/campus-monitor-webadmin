@@ -36,9 +36,6 @@ const App = () => {
           <NavMenu></NavMenu>
         </Layout.Sider>
         <Layout>
-          <Layout.Header style={{ background: "#fff", padding: "0 20px" }}>
-            <Icon style={{ fontSize: 25 }} className="trigger" type={menu.collapsed ? "menu-unfold" : "menu-fold"} onClick={menu.toggleCollapsed} />
-          </Layout.Header>
           <Layout.Content>
             <Switch>
               <Route exact path="/" component={HomePage} />

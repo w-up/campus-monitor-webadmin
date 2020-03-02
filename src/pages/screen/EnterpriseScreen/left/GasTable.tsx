@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useObserver} from "mobx-react-lite";
 import {useStore} from "../../../../stores";
-import {ButtonBack, ButtonNext, CarouselProvider, Dot, DotGroup, Slide, Slider} from "pure-react-carousel";
+import {CarouselProvider, Dot, DotGroup, Slide, Slider} from "pure-react-carousel";
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
 export const GasTable = () => {
   const {
-    screen: {gasTable: GasTableStore}
+    screen: {gasTable: gasTableStore}
   } = useStore();
 
   return useObserver(() => (
@@ -26,19 +26,23 @@ export const GasTable = () => {
             totalSlides={3}
           >
             <Slider>
-              <Slide index={0}>{GasTableStore.list.map((item) => {
-                return (
-                  <div className="listitem tabtitle">
-                    <div>{item.name}</div>
-                    <div>{item.dataName}</div>
-                    <div>{item.num + 'ppm'}</div>
-                    <div>{item.maxNum}</div>
-                    <div>{item.point}</div>
-                  </div>
-                )
-              })}</Slide>
-              <Slide index={1} className="text-white">I am the second Slide.</Slide>
-              <Slide index={2} className="text-white">I am the third Slide.</Slide>
+              {
+                gasTableStore.newList.map((page, index) => {
+                  return (
+                    <Slide index={index}>{page.map((item) => {
+                      return (
+                        <div className="listitem tabtitle">
+                          <div>{item.name}</div>
+                          <div>{item.dataName}</div>
+                          <div>{item.num + 'ppm'}</div>
+                          <div>{item.maxNum}</div>
+                          <div>{item.point}</div>
+                        </div>
+                      )
+                    })}</Slide>
+                  )
+                })
+              }
             </Slider>
             <DotGroup className="text-center">
               <Dot slide={0} className="text-white sliderDotButton"> </Dot>
