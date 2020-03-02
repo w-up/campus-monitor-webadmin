@@ -18,7 +18,7 @@ const App = () => {
 
   const renderRoute = (data: any[]) => {
     return data.map(item => {
-      if (item.children.length > 0) {
+      if (item.children && item.children.length > 0) {
         return (
           <Route path={item.path} key={item.path} component={item.component}>
             {renderRoute(item.children)}
