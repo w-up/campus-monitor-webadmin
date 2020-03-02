@@ -53,6 +53,12 @@
     border: 1px solid #2e3b61;
 }
 
+.screenCenterTable {
+    width: 100%;
+    min-width: 350px;
+    border: 1px solid #2e3b61;
+}
+
 
 .screen-page .tableTitle {
     color: #55b7fe;
@@ -83,7 +89,7 @@
     color: #88a8c5;
     font-size: 12px;
     text-align: center;
-    line-height: 40px;
+    line-height: 35px;
 }
 
 .sliderDotButton {
@@ -93,4 +99,39 @@
     border-radius:50%;
     margin: 15px 9px;
     opacity: 0.7;
+}
+
+.centerBottom {
+    height: calc(50vh - 136px);
+    margin-top: 10px;
+    border: 1px solid #2e3b61;
+}
+.title {
+    font-size: 18px;
+    height: 44px;
+    line-height: 44px;
+    background: url("/images/title.png") no-repeat;
+    background-size: cover;
+    font-weight: 700;
+    text-align: center;
+}
+.t-b-con {
+    width: 100px;
+    color: #55B7FE;
+    cursor: pointer;
+    display: inline-block;
+}
+.t-b-con.active{
+    background: rgba(44,80,129,0.6);
+    color: #04F9CC;
+}
+.t-b-con img{
+    float:left;
+    margin:12px 0 0 10px;
+    display: inline-block;
+}
+
+.title ul li {
+    list-style-type: none;
+    display: inline-block;
 }

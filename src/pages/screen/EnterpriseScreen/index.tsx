@@ -32,7 +32,7 @@ export const EnterpriseScreenPage = () => {
             <EnterpriseMap/>
             <EnterpriseScreenGroupChart/>
           </div>
-          <div>
+          <div className="flex flex-col">
             <SewageTableDynamic/>
             <Sewage24HourChart/>
             <SewageDailyChart/>

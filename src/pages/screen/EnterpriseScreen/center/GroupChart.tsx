@@ -1,8 +1,18 @@
 import React from "react";
-import { useObserver, useLocalStore } from "mobx-react-lite";
+import {useObserver, useLocalStore} from "mobx-react-lite";
 import ReactEcharts from "echarts-for-react";
 
 export const EnterpriseScreenGroupChart = () => {
+
+  const titleStore = useLocalStore(() => ({
+    titleLists: [
+      {active: true, text: '东南角'},
+      {active: false, text: '东北角'},
+      {active: false, text: '西北角'},
+      {active: false, text: '西南角'}
+    ]
+  }));
+
   const store = useLocalStore(() => ({
     //   标题配置
     title: {
@@ -177,8 +187,22 @@ export const EnterpriseScreenGroupChart = () => {
     ]
   }));
   return useObserver(() => (
-    <div style={{ height: "320px" }}>
-      <ReactEcharts option={store} style={{ width: "100%" }} className="react_for_echarts" />
+    <div className="screenCenterTable mt-4 pb-4">
+      <div className="title">
+        <ul>
+          {titleStore.titleLists.map((item) => {
+            return (
+              <li>
+                <div className={item.active ? "active t-b-con" : "t-b-con"}>
+                  <img src="/images/map2.png"/>
+                  {item.text}
+                </div>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+      <ReactEcharts option={store} style={{width: "100%"}} className="react_for_echarts"/>
     </div>
   ));
 };

@@ -6,11 +6,11 @@ import {useStore} from "../../../../stores";
 
 export const SewageTableDynamic = () => {
   const {
-    screen: {gasTable: GasTableStore}
+    screen: {sewageTable: sewageTableStore}
   } = useStore();
 
   return useObserver(() => (
-      <div className="topright screenTable">
+      <div className="topright screenTable flex-1">
         <div className="tableTitle text-center">污水排放情况（实时）</div>
         <div className="box">
           <div className="tabtitle">
@@ -22,25 +22,30 @@ export const SewageTableDynamic = () => {
           </div>
           <CarouselProvider
             naturalSlideWidth={100}
-            naturalSlideHeight={125}
+            naturalSlideHeight={75}
             totalSlides={3}
             isPlaying={true}
           >
             <Slider>
-              <Slide index={0}>{GasTableStore.list.map((item) => {
-                return (
-                  <div className="listitem tabtitle">
-                    <div>{item.name}</div>
-                    <div>{item.dataName}</div>
-                    <div>{item.num + 'ppm'}</div>
-                    <div>{item.maxNum}</div>
-                    <div>{item.point}</div>
-                  </div>
-                )
-              })}</Slide>
-              <Slide index={1} className="text-white">I am the second Slide.</Slide>
-              <Slide index={2} className="text-white">I am the third Slide.</Slide>
+              {
+                sewageTableStore.list.map((page, index) => {
+                  return (
+                    <Slide index={index}>{page.map((item) => {
+                      return (
+                        <div className="listitem tabtitle">
+                          <div>{item.name}</div>
+                          <div>{item.thing}</div>
+                          <div>{item.num + 'ppm'}</div>
+                          <div>{item.unnormal}</div>
+                          <div>{item.bigger}</div>
+                        </div>
+                      )
+                    })}</Slide>
+                  )
+                })
+              }
             </Slider>
+
             <DotGroup className="text-center">
               <Dot slide={0} className="text-white sliderDotButton"> </Dot>
               <Dot slide={1} className="text-white sliderDotButton"> </Dot>
