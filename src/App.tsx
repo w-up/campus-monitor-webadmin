@@ -32,7 +32,7 @@ const App = () => {
   return useObserver(() => (
     <Router>
       <Layout style={{ minHeight: "100vh" }}>
-        <Layout.Sider collapsible collapsed={menu.collapsed} style={{ borderTop: "1px solid #00B1FF" }}>
+        <Layout.Sider collapsible collapsed={menu.collapsed} onCollapse={menu.toggleCollapsed} style={{ borderTop: "1px solid #00B1FF" }}>
           <NavMenu></NavMenu>
         </Layout.Sider>
         <Layout>

@@ -72,7 +72,7 @@ export class ParkScreenMapStore {
   }
 
   @action.bound
-  handle(e: any) {
+  onMapUpdate(e: any) {
     if (!this.map) {
       this.map = e.target;
       //@ts-ignore

@@ -22,7 +22,7 @@ export const MapMonitorPage = () => {
       <div style={{ width: "25%" }}></div>
       <div style={{ width: "75%" }}>
         <APILoader akay={config.baiduMapApiKey}>
-          <Map onTilesLoaded={mapStore.handle} zoom={mapStore.zoom} center={mapStore.center} enableScrollWheelZoom onZoomEnd={e => (mapStore.zoom = e.target.getZoom())}>
+          <Map onTilesLoaded={mapStore.onMapUpdate} zoom={mapStore.zoom} center={mapStore.center} enableScrollWheelZoom onZoomEnd={e => (mapStore.zoom = e.target.getZoom())}>
             <Polygon path={mapStore.polygonPath} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor=""></Polygon>
             {mapStore.compamys.map((item, index) => (
               <Polygon path={item} key={index} strokeStyle="dashed" fillColor="#FFD800" strokeColor="#FFD800" strokeWeight={2}></Polygon>

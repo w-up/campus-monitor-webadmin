@@ -15,6 +15,7 @@ import { DataManagePage } from "../pages/data/DataManage";
 import { ReportPage } from "../pages/Report";
 import { Basic } from "../pages/basic/Basic";
 import { User } from "../pages/screen/User/User";
+import { DrawBaiduMapExample } from "../pages/examples/DrawBaidumap/index";
 
 export class MenuStore {
   @observable collapsed = false;
@@ -179,7 +180,7 @@ export class MenuStore {
           icon: "dashboard",
           title: "告警管理",
           path: "/alert/manage",
-          component: AlertManagePage,
+          component: AlertManagePage
         },
         {
           icon: "dashboard",
@@ -218,6 +219,20 @@ export class MenuStore {
       path: "/report",
       component: ReportPage,
       children: []
+    },
+    {
+      icon: "dashboard",
+      title: "示例",
+      path: "/exmaple",
+      component: "",
+      children: [
+        {
+          icon: "dashboard",
+          title: "地图路径绘制",
+          path: "/exmaple/drawmap",
+          component: DrawBaiduMapExample
+        }
+      ]
     }
   ];
 }
