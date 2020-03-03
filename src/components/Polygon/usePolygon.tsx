@@ -9,7 +9,7 @@ export default (props = {} as UsePolygon) => {
   const [polygon, setPolygon] = useState<BMap.Polygon>();
 
   const opts = { strokeColor, fillColor, strokeWeight, strokeOpacity, fillOpacity, strokeStyle, enableMassClear, enableEditing, enableClicking };
-  useEffect(() => {
+  useMemo(() => {
     if (map && !polygon) {
       const points = (path || []).map(item => new BMap.Point(item.lng, item.lat));
       const instance = new BMap.Polygon(points, opts);
