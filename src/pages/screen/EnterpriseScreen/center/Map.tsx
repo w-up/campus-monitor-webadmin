@@ -33,12 +33,13 @@ export const EnterpriseMap = () => {
     mapStore.map.addOverlay(groundOverlay); //添加图片覆盖物
     // bus.$on("changeBottomIndex", mapStore.addpoints)
     mapStore.addpoints(0); //添加站点覆盖物
+    mapStore.play();
     return () => {
       mapStore.map = null;
     };
   }, [mapStore]);
   return useObserver(() => (
-    <div className="py-4" style={{background:"#6076AD"}}>
+    <div className="py-4" style={{ background: "#6076AD" }}>
       <div id="allmap" style={{ height: "50vh" }} />
     </div>
   ));

@@ -6,7 +6,7 @@ import { LoginPage } from "./pages/Login";
 import { Layout, ConfigProvider } from "antd";
 import { NavMenu } from "./components/NavMenu";
 import { NavHead } from "./components/NavHead";
-import "./App.css";
+import "./App.scss";
 import { useStore } from "./stores";
 // import { api } from "./services/index";
 import { Basic } from "./pages/basic/Basic";
@@ -36,6 +36,9 @@ const App = () => {
     <Router>
       <Layout style={{ minHeight: "100vh" }}>
         <NavHead></NavHead>
+        {/* <Layout.Sider collapsible collapsed={menu.collapsed} onCollapse={menu.toggleCollapsed} style={{ borderTop: "1px solid #00B1FF" }}>
+          <NavMenu></NavMenu>
+        </Layout.Sider> */}
         <Layout>
           <Layout.Sider trigger={null} collapsible collapsed={menu.collapsed}>
             <NavMenu></NavMenu>

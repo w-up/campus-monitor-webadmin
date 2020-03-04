@@ -4,7 +4,7 @@ import { Map, APILoader, Polygon, Label, CustomOverlay } from "@uiw/react-baidu-
 import { useStore } from "../../stores/index";
 import "./index.css";
 
-export const MapMonitorPage = () => {
+export const DynamicSourcePage = () => {
   const {
     config,
     screen: { parkScreenMap: mapStore }
