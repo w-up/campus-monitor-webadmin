@@ -13,25 +13,33 @@ export class EnterpriseScreenMapStore {
   @observable activeFlag = true;
   @observable curIndex = 0;
 
+  playTimer?: any;
+
   @action.bound
   addpoints(index: number) {
-    var myCompOverlay;
     for (let x in this.overlays) {
       this.map.removeOverlay(this.overlays[x]);
     }
     this.curIndex = index;
     this.overlays = [];
     for (let x in this.lists) {
-      myCompOverlay = new ComplexCustomOverlay(new BMapGL.Point(this.lists[x].position[0], this.lists[x].position[1]), this.lists[x], x, this);
+      const myCompOverlay = new ComplexCustomOverlay(new BMapGL.Point(this.lists[x].position[0], this.lists[x].position[1]), this.lists[x], x, this);
       this.overlays.push(myCompOverlay);
       this.map.addOverlay(myCompOverlay);
     }
   }
 
+  @action.bound
+  play() {
+    clearInterval(this.playTimer);
+    this.playTimer = setInterval(() => {
+      this.addpoints(this.curIndex >= this.lists.length - 1 ? 0 : this.curIndex + 1);
+    }, 5000);
+  }
+
   lists = [
     {
       class: "dnj",
-      active: true,
       text: "东南角",
       update: "15:30:30",
       position: [116.384405, 39.9001],
@@ -49,7 +57,6 @@ export class EnterpriseScreenMapStore {
     },
     {
       class: "dbj",
-      active: false,
       text: "东北角",
       update: "15:30:30",
       position: [116.384305, 39.9011],
@@ -67,7 +74,6 @@ export class EnterpriseScreenMapStore {
     },
     {
       class: "xbj",
-      active: false,
       text: "西北角",
       update: "15:30:30",
       position: [116.383805, 39.9005],
@@ -85,7 +91,6 @@ export class EnterpriseScreenMapStore {
     },
     {
       class: "xnj",
-      active: false,
       text: "西南角",
       update: "15:30:30",
       position: [116.383305, 39.9001],
