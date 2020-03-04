@@ -17,6 +17,7 @@ export class EnterpriseScreenMapStore {
 
   @action.bound
   addpoints(index: number) {
+    if (!this.map) return;
     for (let x in this.overlays) {
       this.map.removeOverlay(this.overlays[x]);
     }
