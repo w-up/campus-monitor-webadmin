@@ -4,7 +4,7 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { HomePage } from "./pages/Home";
 import { Layout, Icon } from "antd";
 import { NavMenu } from "./components/NavMenu";
-import "./App.css";
+import "./App.scss";
 import { useStore } from "./stores";
 import { api } from "./services/index";
 import { Basic } from "./pages/basic/Basic";

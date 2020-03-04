@@ -3,8 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="0b5aa787-9ba3-4839-bcb1-9b38c1c54b5a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/NavMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavMenu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/SewageTableDynamic.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/SewageTableDynamic.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/ScreenTop.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/ScreenTop.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/ParkScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/ParkScreen/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,112 +25,24 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasTable.tsx">
+        <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/index.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
+            <state relative-caret-position="-6">
+              <caret line="14" column="29" lean-forward="true" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
               <folding>
-                <element signature="e#0#26#0" expanded="true" />
+                <element signature="e#0#36#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/App.tsx">
+        <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/top/ScreenTop.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
-              <caret line="21" column="16" lean-forward="true" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
+            <state relative-caret-position="289">
+              <caret line="26" column="46" selection-start-line="26" selection-start-column="46" selection-end-line="26" selection-end-column="46" />
               <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/NavMenu.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasChart.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="201" column="89" selection-start-line="201" selection-start-column="89" selection-end-line="201" selection-end-column="89" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-                <element signature="e#221#5858#0" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/stores/index.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="10" column="16" lean-forward="true" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/stores/MenuStore.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="52">
-              <caret line="26" column="19" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="19" />
-              <folding>
-                <element signature="e#1284#1786#0" />
-                <element signature="e#1798#2236#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/SewageTableDynamic.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="311">
-              <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/Sewage24HourChart.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="179" column="58" selection-start-line="179" selection-start-column="58" selection-end-line="179" selection-end-column="58" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/index.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11">
-              <caret line="23" column="51" selection-start-line="23" selection-start-column="51" selection-end-line="23" selection-end-column="51" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
+                <element signature="e#0#44#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -132,8 +51,89 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/index.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="3878" column="1" selection-start-line="3878" selection-start-column="1" selection-end-line="3878" selection-end-column="1" />
+            <state relative-caret-position="298">
+              <caret line="3882" column="9" selection-start-line="3882" selection-start-column="1" selection-end-line="3882" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/App.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="118">
+              <caret line="219" column="23" selection-start-line="219" selection-start-column="23" selection-end-line="219" selection-end-column="23" />
+              <folding>
+                <element signature="e#345#369#0" />
+                <element signature="e#390#617#0" />
+                <element signature="e#639#867#0" />
+                <element signature="e#882#948#0" />
+                <element signature="e#969#1036#0" />
+                <element signature="e#1636#1729#0" />
+                <element signature="e#1755#1886#0" />
+                <element signature="e#1902#1990#0" />
+                <element signature="e#2199#2288#0" />
+                <element signature="e#2304#2364#0" />
+                <element signature="e#2377#2449#0" />
+                <element signature="e#2464#2521#0" />
+                <element signature="e#2466#2565#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasTable.tsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="511">
+              <caret line="33" column="48" selection-start-line="33" selection-start-column="40" selection-end-line="33" selection-end-column="48" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/SewageTableDynamic.tsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="77">
+              <caret line="27" column="11" lean-forward="true" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="11" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/TimeDisplay.tsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="6" column="2" selection-start-line="6" selection-start-column="2" selection-end-line="14" selection-end-column="5" />
+              <folding>
+                <element signature="e#0#49#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/index.tsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="316">
+              <caret line="25" column="23" lean-forward="true" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/ScreenTop.tsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="10" column="42" selection-start-line="10" selection-start-column="42" selection-end-line="10" selection-end-column="42" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -155,6 +155,10 @@
       <find>listitem</find>
       <find>antd</find>
       <find>topright</find>
+      <find>showWeek</find>
+      <find>head-right</find>
+      <find>listItem</find>
+      <find>00ccff</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -165,7 +169,6 @@
       <list>
         <option value="$PROJECT_DIR$/src/pages/screen/ParkScreen/timeDisplay.ts" />
         <option value="$PROJECT_DIR$/src/pages/screen/ParkScreen/timeDisplay.tsx" />
-        <option value="$PROJECT_DIR$/src/pages/screen/ParkScreen/index.tsx" />
         <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/timeDisplay.tsx" />
         <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/LocationDisplay.ts" />
         <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/locationDisplay.ts" />
@@ -185,20 +188,24 @@
         <option value="$PROJECT_DIR$/src/stores/screen/GasTableStore.ts" />
         <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/Header.tsx" />
         <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/ScreenHeader.tsx" />
-        <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/ScreenTop.tsx" />
         <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/center/Map.tsx" />
         <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/center/GroupChart.tsx" />
         <option value="$PROJECT_DIR$/src/stores/screen/SewageTableStore.ts" />
         <option value="$PROJECT_DIR$/src/stores/index.ts" />
-        <option value="$PROJECT_DIR$/src/App.css" />
-        <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/index.tsx" />
-        <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/SewageTableDynamic.tsx" />
         <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/SewageDailyChart.tsx" />
         <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/Sewage24HourChart.tsx" />
         <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasChart.tsx" />
-        <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasTable.tsx" />
-        <option value="$PROJECT_DIR$/src/App.tsx" />
         <option value="$PROJECT_DIR$/src/components/NavMenu.tsx" />
+        <option value="$PROJECT_DIR$/src/pages/screen/ParkScreen/top/ScreenTop.ts" />
+        <option value="$PROJECT_DIR$/src/App.css" />
+        <option value="$PROJECT_DIR$/src/App.tsx" />
+        <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasTable.tsx" />
+        <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/SewageTableDynamic.tsx" />
+        <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/index.tsx" />
+        <option value="$PROJECT_DIR$/src/pages/screen/ParkScreen/index.tsx" />
+        <option value="$PROJECT_DIR$/src/pages/screen/ParkScreen/top/ScreenTop.tsx" />
+        <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/ScreenTop.tsx" />
+        <option value="$PROJECT_DIR$/src/App.scss" />
       </list>
     </option>
   </component>
@@ -248,7 +255,35 @@
               <item name="campus-monitor-webadmin" type="b2602c69:ProjectViewProjectNode" />
               <item name="campus-monitor-webadmin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="stores" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="screen" type="462c0819:PsiDirectoryNode" />
+              <item name="EnterpriseScreen" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="campus-monitor-webadmin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="campus-monitor-webadmin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="screen" type="462c0819:PsiDirectoryNode" />
+              <item name="EnterpriseScreen" type="462c0819:PsiDirectoryNode" />
+              <item name="top" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="campus-monitor-webadmin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="campus-monitor-webadmin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="screen" type="462c0819:PsiDirectoryNode" />
+              <item name="ParkScreen" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="campus-monitor-webadmin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="campus-monitor-webadmin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="screen" type="462c0819:PsiDirectoryNode" />
+              <item name="ParkScreen" type="462c0819:PsiDirectoryNode" />
+              <item name="top" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -272,11 +307,11 @@
       <recent name="$PROJECT_DIR$/src/pages/basic" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/images" />
       <recent name="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top" />
       <recent name="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/center" />
       <recent name="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left" />
       <recent name="$PROJECT_DIR$/src/pages/basic" />
-      <recent name="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -308,12 +343,12 @@
       <workItem from="1582706748102" duration="60000" />
       <workItem from="1582707226642" duration="4502000" />
       <workItem from="1582771626358" duration="619000" />
-      <workItem from="1582810537269" duration="61885000" />
+      <workItem from="1582810537269" duration="79687000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="80866000" />
+    <option name="totallyTimeSpent" value="98668000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
@@ -321,7 +356,7 @@
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49924585" visible="true" weight="0.24940048" />
       <window_info id="Structure" order="1" sideWeight="0.5007542" side_tool="true" weight="0.24940048" />
-      <window_info id="npm" order="2" side_tool="true" />
+      <window_info id="npm" order="2" sideWeight="0.5007542" side_tool="true" weight="0.24940048" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32880846" />
@@ -341,84 +376,11 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49924585" visible="true" weight="0.24940048" />
-      <window_info id="Structure" order="1" sideWeight="0.5007542" side_tool="true" weight="0.24940048" />
-      <window_info id="npm" order="2" side_tool="true" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32880846" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32768363" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="GraphQL" order="9" />
-      <window_info anchor="bottom" id="TypeScript" order="10" />
-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="12" weight="0.49622926" />
-      <window_info anchor="bottom" id="Messages" order="13" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/index.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/moment/moment.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="642" column="18" selection-start-line="642" selection-start-column="18" selection-end-line="642" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/images/clock-icon.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/images/header-bg.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/images/topbg.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/index.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/Home.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Template.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/@types/react/index.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -445,23 +407,6 @@
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/TimeDisplay.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="24" column="5" lean-forward="true" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/LocationDisplay.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
@@ -540,13 +485,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/Map.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="21" column="37" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/stores/screen/ParkScreenMapStore.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="379">
@@ -568,16 +506,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-491">
           <caret line="18" column="4" selection-start-line="18" selection-start-column="4" selection-end-line="32" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/ScreenTop.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="11" column="20" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -644,13 +572,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="87" column="29" selection-start-line="87" selection-start-column="21" selection-end-line="87" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/center/GroupChart.tsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="131">
@@ -687,16 +608,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/SewageTableDynamic.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/Sewage24HourChart.tsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
@@ -708,20 +619,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.css">
+    <entry file="file://$PROJECT_DIR$/src/stores/index.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="3878" column="1" selection-start-line="3878" selection-start-column="1" selection-end-line="3878" selection-end-column="1" />
+        <state relative-caret-position="231">
+          <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/index.tsx">
+    <entry file="file://$PROJECT_DIR$/src/stores/MenuStore.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11">
-          <caret line="23" column="51" selection-start-line="23" selection-start-column="51" selection-end-line="23" selection-end-column="51" />
+        <state relative-caret-position="74">
+          <caret line="27" column="19" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/NavMenu.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
           <folding>
-            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tailwind.config.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tsconfig.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="14" column="10" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-216">
+          <caret line="6" column="20" lean-forward="true" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/Map.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/Map.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="21" column="37" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/postcss.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/LocationDisplay.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -732,58 +694,108 @@
           <folding>
             <element signature="e#0#26#0" expanded="true" />
             <element signature="e#221#5858#0" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/SewageTableDynamic.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="77">
+          <caret line="27" column="11" lean-forward="true" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/red.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/green.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/TimeDisplay.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="2" selection-start-line="6" selection-start-column="2" selection-end-line="14" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasTable.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
+        <state relative-caret-position="511">
+          <caret line="33" column="48" selection-start-line="33" selection-start-column="40" selection-end-line="33" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="3882" column="9" selection-start-line="3882" selection-start-column="1" selection-end-line="3882" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/index.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="25" column="23" lean-forward="true" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/index.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6">
+          <caret line="14" column="29" lean-forward="true" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/top/ScreenTop.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="26" column="46" selection-start-line="26" selection-start-column="46" selection-end-line="26" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/ScreenTop.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="10" column="42" selection-start-line="10" selection-start-column="42" selection-end-line="10" selection-end-column="42" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/stores/index.ts">
+    <entry file="file://$PROJECT_DIR$/src/App.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="10" column="16" lean-forward="true" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+        <state relative-caret-position="118">
+          <caret line="219" column="23" selection-start-line="219" selection-start-column="23" selection-end-line="219" selection-end-column="23" />
           <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/stores/MenuStore.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="52">
-          <caret line="26" column="19" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="19" />
-          <folding>
-            <element signature="e#1284#1786#0" />
-            <element signature="e#1798#2236#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="21" column="16" lean-forward="true" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/NavMenu.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#345#369#0" />
+            <element signature="e#390#617#0" />
+            <element signature="e#639#867#0" />
+            <element signature="e#882#948#0" />
+            <element signature="e#969#1036#0" />
+            <element signature="e#1636#1729#0" />
+            <element signature="e#1755#1886#0" />
+            <element signature="e#1902#1990#0" />
+            <element signature="e#2199#2288#0" />
+            <element signature="e#2304#2364#0" />
+            <element signature="e#2377#2449#0" />
+            <element signature="e#2464#2521#0" />
+            <element signature="e#2466#2565#0" />
           </folding>
         </state>
       </provider>

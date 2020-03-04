@@ -10,10 +10,10 @@ export const SewageTableDynamic = () => {
   } = useStore();
 
   return useObserver(() => (
-      <div className="topright screenTable flex-1">
+      <div className="topRight screenTable flex-1">
         <div className="tableTitle text-center">污水排放情况（实时）</div>
         <div className="box">
-          <div className="tabtitle">
+          <div className="tabTitle">
             <div>站点名称</div>
             <div>检测物质</div>
             <div>监测数值</div>
@@ -32,7 +32,7 @@ export const SewageTableDynamic = () => {
                   return (
                     <Slide index={index}>{page.map((item) => {
                       return (
-                        <div className="listitem tabtitle">
+                        <div className="listItem tabTitle">
                           <div>{item.name}</div>
                           <div>{item.thing}</div>
                           <div>{item.num + 'ppm'}</div>

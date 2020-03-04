@@ -1,0 +1,249 @@
+@import "~antd/dist/antd.css";
+
+$primary-text-color: #04B2F0;
+$screen-background: #061630;
+
+.screenTitleGradient {
+  background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#DFF1FF), to(#00D2FF));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.screenPage {
+  background: #1E2538;
+  border-top: 1px solid rgb(0, 177, 255);
+
+  .header-bg {
+    background: url("/images/topbg.png") no-repeat center;
+    background-size: contain;
+    height: 92px;
+    line-height: 92px;
+  }
+
+  .title {
+    font-size: 18px;
+    height: 44px;
+    line-height: 44px;
+    background: url("/images/title.png") no-repeat;
+    background-size: cover;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .head-left,
+  .head-right {
+    position: relative;
+    width: 25%;
+    min-width: 350px;
+    padding: 20px 0 12px 0;
+    color: #04b2f0;
+    opacity: 0.9;
+  }
+
+  .head-right {
+    margin-left: auto;
+  }
+
+  .head-left::before {
+    content: "";
+    position: absolute;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid rgba(96, 118, 173, 0.5);
+    transform: perspective(0.5em) rotateX(1deg);
+    transform-origin: bottom left;
+  }
+
+  .head-right::before {
+    content: "";
+    position: absolute;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid rgba(96, 118, 173, 0.5);
+    transform: perspective(0.5em) rotateX(1deg);
+    transform-origin: bottom right;
+  }
+
+  .screenTable {
+    width: 25%;
+    min-width: 350px;
+    border: 1px solid #2e3b61;
+  }
+
+  .screenCenterTable {
+    width: 100%;
+    min-width: 350px;
+    border: 1px solid #2e3b61;
+  }
+
+  .topLeft, .topRight {
+    .tabTitle {
+      line-height: 40px;
+      display: flex;
+      justify-content: space-around;
+      color: #46c6f3;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(0, 118, 180, 0.3);
+      text-align: center;
+
+      & > div {
+        flex: 1;
+      }
+    }
+
+    .box {
+      padding: 0px 10px;
+    }
+  }
+
+  .tableTitle {
+    color: #55b7fe;
+    padding: 9px 0px;
+    background-image: url("/images/title.png");
+    font-weight: 700;
+  }
+
+
+}
+
+.listItem {
+  color: #88a8c5;
+  font-size: 12px;
+  text-align: center;
+  line-height: 35px;
+}
+
+.sliderDotButton {
+  width: 7px;
+  height: 7px;
+  background: rgba(4, 249, 204, 1);
+  border-radius: 50%;
+  margin: 15px 9px;
+  opacity: 0.7;
+}
+
+.centerBottom {
+  height: calc(50vh - 136px);
+  margin-top: 10px;
+  border: 1px solid #2e3b61;
+}
+
+
+.t-b-con {
+  width: 100px;
+  color: #55B7FE;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.t-b-con.active {
+  background: rgba(44, 80, 129, 0.6);
+  color: #04F9CC;
+}
+
+.t-b-con img {
+  float: left;
+  margin: 12px 0 0 10px;
+  display: inline-block;
+}
+
+.title ul li {
+  list-style-type: none;
+  display: inline-block;
+}
+
+.parkScreen {
+  background: #1E2538;
+  border-top: 1px solid rgb(0, 177, 255);
+
+  .area {
+    font-size: 14px;
+    color: #04B2F0;
+  }
+
+  .parkScreenTop {
+    width: 100%;
+    background: url("/images/bg_screen_park_head.png") no-repeat center;
+    -webkit-background-size: contain;
+    background-size: contain;
+    text-align: center;
+
+    & > div {
+      margin: auto 0;
+    }
+
+    .head-left {
+      width: 22%;
+      color: $primary-text-color;
+    }
+
+    .head-center {
+      width: 66%;
+    }
+
+    .head-right {
+      width: 22%;
+      color: $primary-text-color;
+
+      & > div {
+        margin: auto 0;
+      }
+
+      .weather {
+        .weather-img {
+          margin: auto 0;
+        }
+        .wr {
+          color: #F7994D;
+        }
+      }
+    }
+  }
+
+  .screenContent {
+    .leftContent, .rightContent {
+      border: 1px solid #1082DA;
+      position: relative;
+      height:100%;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+  }
+  .corner {
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    &.cornerTl {
+      border-top: 4px solid $primary-text-color;
+      border-left: 4px solid $primary-text-color;
+      left: -2px;
+      top: -2px;
+    }
+    &.cornerTr {
+      border-top: 4px solid $primary-text-color;
+      border-right: 4px solid $primary-text-color;
+      right: -2px;
+      top: -2px;
+    }
+    &.cornerBl {
+      border-bottom: 4px solid $primary-text-color;
+      border-left: 4px solid $primary-text-color;
+      left: -2px;
+      bottom: -2px;
+    }
+    &.cornerBr {
+      border-bottom: 4px solid $primary-text-color;
+      right: -2px;
+      bottom: -2px;
+      border-right: 4px solid $primary-text-color;
+    }
+  }
+}
+
+
+

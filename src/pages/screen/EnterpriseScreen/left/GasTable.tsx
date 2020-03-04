@@ -10,10 +10,10 @@ export const GasTable = () => {
   } = useStore();
 
   return useObserver(() => (
-      <div className="topleft screenTable">
+      <div className="topLeft screenTable">
         <div className="tableTitle text-center">气体排放情况（实时）</div>
         <div className="box">
-          <div className="tabtitle">
+          <div className="tabTitle">
             <div>站点名称</div>
             <div>检测物质</div>
             <div>监测数值</div>
@@ -31,7 +31,7 @@ export const GasTable = () => {
                   return (
                     <Slide index={index}>{page.map((item) => {
                       return (
-                        <div className="listitem tabtitle">
+                        <div className="listItem tabTitle">
                           <div>{item.name}</div>
                           <div>{item.dataName}</div>
                           <div>{item.num + 'ppm'}</div>
