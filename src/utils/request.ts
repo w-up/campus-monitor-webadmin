@@ -1,24 +1,45 @@
+/*
+ * @Descripttion: 
+ * @Author: shenchuanrun
+ * @Date: 2020-03-03 14:18:27
+ * @LastEditors: shenchuanrun
+ * @LastEditTime: 2020-03-04 18:26:22
+ */
 import Axios from "axios";
-import { configure } from "axios-hooks";
-import useAxios from "axios-hooks";
+import { message } from "antd";
 
-export const axios = Axios.create({
-  baseURL: "http://fynp55.natappfree.cc/"
-});
+Axios.defaults.withCredentials = true
 
-axios.interceptors.request.use(config => {
-  return config;
-});
+let http = Axios.create({
+  baseURL: process.env.NODE_ENV == 'development' ? 'http://57iwrg.natappfree.cc' : '',
+  timeout: 60 * 1000
+})
 
-axios.interceptors.response.use(
-  res => {
-    return res;
+http.interceptors.response.use(
+  response => {
+    const res = response.data
+    if (res.code != 0) {
+      message.error(res.msg)
+      return Promise.reject(response)
+    } else {
+      return res
+    }
   },
-  async err => {
-    return Promise.reject(err);
+  error => {
+    if (error && error.response) {
+      message.error(error.response.msg)
+    }
+    return Promise.reject(error)
   }
-);
+)
 
-configure({ axios });
 
-export { useAxios };
+export function GET(url, paramsOrData) {
+  return http({ method: 'GET', url, params: paramsOrData })
+}
+
+export function POST(url, paramsOrData) {
+  return http({ method: 'POST', url, data: paramsOrData })
+}
+
+export default http

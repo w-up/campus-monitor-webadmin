@@ -39,6 +39,15 @@ export const NavMenu = () => {
   const dir = pathname.substring(0, pathname.lastIndexOf("/"));
   return useObserver(() => (
     <Menu defaultSelectedKeys={[pathname]} defaultOpenKeys={[dir]} mode="inline" theme="dark">
+      <Menu.Item title='MENU' style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+        {!menu.collapsed && <span>MENU</span>}
+        <Icon
+          className="trigger"
+          type={menu.collapsed ? 'menu-unfold' : 'menu-fold'}
+          style={{fontSize: '20px'}}
+          onClick={menu.toggleCollapsed}
+        />
+      </Menu.Item>
       {renderMenu(menu.menus)}
     </Menu>
   ));

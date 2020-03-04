@@ -2,19 +2,23 @@ import React from "react";
 import { useObserver } from "mobx-react-lite";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { HomePage } from "./pages/Home";
-import { Layout, Icon } from "antd";
+import { LoginPage } from "./pages/Login";
+import { Layout, ConfigProvider } from "antd";
 import { NavMenu } from "./components/NavMenu";
+import { NavHead } from "./components/NavHead";
 import "./App.css";
 import { useStore } from "./stores";
-import { api } from "./services/index";
+// import { api } from "./services/index";
 import { Basic } from "./pages/basic/Basic";
 import { User } from "./pages/screen/User/User";
 import { System } from "./pages/screen/System/System";
+import zhCN from 'antd/es/locale/zh_CN';
 
 const App = () => {
   const { menu } = useStore();
-  const [{ data, loading, error }] = api.company.getCompanyBusinessInfoById({ companyId: 1 });
-  console.log(data, loading, error);
+  // console.log(menu)
+  // const [{ data, loading, error }] = api.company.getCompanyBusinessInfoById({ companyId: 1 });
+  // console.log(data, loading, error);
 
   const renderRoute = (data: any[]) => {
     return data.map(item => {
@@ -28,14 +32,14 @@ const App = () => {
       return <Route exact path={item.path} key={item.path} component={item.component} />;
     });
   };
-
-  return useObserver(() => (
+  const mainRoute = useObserver(() => (
     <Router>
       <Layout style={{ minHeight: "100vh" }}>
-        <Layout.Sider collapsible collapsed={menu.collapsed} style={{ borderTop: "1px solid #00B1FF" }}>
-          <NavMenu></NavMenu>
-        </Layout.Sider>
+        <NavHead></NavHead>
         <Layout>
+          <Layout.Sider trigger={null} collapsible collapsed={menu.collapsed}>
+            <NavMenu></NavMenu>
+          </Layout.Sider>
           <Layout.Content>
             <Switch>
               <Route exact path="/" component={HomePage} />
@@ -48,6 +52,17 @@ const App = () => {
         </Layout>
       </Layout>
     </Router>
+  ))
+
+  return useObserver(() => (
+    <ConfigProvider locale={zhCN}>
+      <Router>
+        <Switch>
+          <Route exact path="/login" component={LoginPage}/>
+          <Route path="/" >{mainRoute}</Route>
+        </Switch>
+      </Router>
+    </ConfigProvider>
   ));
 };
 
