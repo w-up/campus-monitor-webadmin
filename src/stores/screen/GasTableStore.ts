@@ -119,7 +119,7 @@ export class GasTableStore {
         num: 441,
         maxNum: 600,
         point: "-"
-      },{
+      }, {
       name: "中试车间1",
       dataName: "TVOC",
       num: 441,
@@ -188,7 +188,7 @@ export class GasTableStore {
         num: 1.15,
         maxNum: 200,
         point: "-"
-      },{
+      }, {
       name: "中试车间1",
       dataName: "TVOC",
       num: 441,
@@ -223,6 +223,20 @@ export class GasTableStore {
         maxNum: 600,
         point: "-"
       }]];
+
+  @observable wasteGasList = [
+    {region: "B化工", wu: "氮氧化物", data: "52.7mg/m³", maxnum: "200"},
+    {region: "AB化工", wu: "非甲烷总经", data: "12.2mg/m³", maxnum: "100"},
+    {region: "CB化工", wu: "二氧化硫", data: "52.7mg/m³", maxnum: "200"},
+    {region: "B化工", wu: "一氧化碳", data: "12.2mg/m³", maxnum: "100"},
+    {region: "B化工", wu: "氮氧化物", data: "12.2mg/m³", maxnum: "100"},
+    {region: "B化工", wu: "氮氧化物", data: "52.7mg/m³", maxnum: "200"},
+    {region: "AB化工", wu: "非甲烷总经", data: "12.2mg/m³", maxnum: "100"},
+    {region: "CB化工", wu: "二氧化硫", data: "52.7mg/m³", maxnum: "200"},
+    {region: "B化工", wu: "一氧化碳", data: "12.2mg/m³", maxnum: "100"},
+    {region: "B化工", wu: "氮氧化物", data: "12.2mg/m³", maxnum: "100"},
+    {region: "B化工", wu: "氮氧化物", data: "52.7mg/m³", maxnum: "200"},
+  ];
 
 
   @action.bound

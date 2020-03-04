@@ -108,14 +108,26 @@ $screen-background: #061630;
     font-weight: 700;
   }
 
+}
+.tabTitle {
+  line-height: 40px;
+  display: flex;
+  justify-content: space-around;
+  color: #46c6f3;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(0, 118, 180, 0.3);
+  text-align: center;
 
+  & > div {
+    flex: 1;
+  }
 }
 
 .listItem {
   color: #88a8c5;
   font-size: 12px;
   text-align: center;
-  line-height: 35px;
+  line-height: 30px;
 }
 
 .sliderDotButton {
@@ -212,6 +224,12 @@ $screen-background: #061630;
       height:100%;
       overflow: hidden;
       box-sizing: border-box;
+    }
+    .tableTitle {
+      color: #DBF6FF;
+      background: url("/images/75757.png") no-repeat bottom;
+      background-size: contain;
+      font-weight: 700;
     }
   }
   .corner {
