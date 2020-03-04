@@ -2,7 +2,7 @@ import React from "react";
 import { useObserver } from "mobx-react-lite";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { HomePage } from "./pages/Home";
-import { Layout, Icon } from "antd";
+import { Layout } from "antd";
 import { NavMenu } from "./components/NavMenu";
 import "./App.scss";
 import { useStore } from "./stores";

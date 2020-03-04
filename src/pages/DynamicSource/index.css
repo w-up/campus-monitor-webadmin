@@ -1,0 +1,9 @@
+.number {
+  position: absolute;
+  bottom: 24px;
+  left: 10px;
+  text-align: center;
+  font-size: 10px;
+  color: white;
+  width: 20px;
+}

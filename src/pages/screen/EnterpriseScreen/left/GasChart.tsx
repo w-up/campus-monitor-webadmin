@@ -1,11 +1,122 @@
-import React from "react";
+import React, { createRef, useRef } from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
 import ReactEcharts from "echarts-for-react";
+import { CarouselProvider, Dot, DotGroup, Slide, Slider } from "pure-react-carousel";
+import { useEffect } from "react";
+import { constant } from "../../../../common/constants";
+import { utils } from "../../../../utils/index";
+import { _ } from "../../../../utils/lodash";
 
 export const EnterpriseScreenGasChart = () => {
   const store = useLocalStore(() => ({
+    listtotal: [
+      {
+        name: "非甲烷中经",
+        date: ["12/01", "12/02", "12/03", "12/04", "12/05", "12/06", "12/07"],
+        series: [
+          { name: "东南角", data: [1.2, 1.6, 1.8, 1.92, 2.02, 2.22, 1.89] },
+          { name: "东北角", data: [1.2, 1.5, 1.8, 2.0, 1.8, 1.6, 1.3] },
+          { name: "西南角", data: [1.2, 1.8, 1.5, 1.2, 1.5, 1.2, 1.6] },
+          { name: "西北角", data: [0.8, 1.2, 1.0, 1.3, 1.5, 2.0, 1.8] }
+        ]
+      },
+      {
+        name: "TVOC",
+        date: ["12/01", "12/02", "12/03", "12/04", "12/05", "12/06", "12/07"],
+        series: [
+          { name: "东南角", data: [1.2, 1.6, 1.8, 1.92, 2.02, 2.22, 1.89] },
+          { name: "东北角", data: [1.2, 1.5, 1.8, 2.0, 1.8, 1.6, 1.3] },
+          { name: "西南角", data: [1.2, 1.8, 1.5, 1.2, 1.5, 1.2, 1.6] },
+          { name: "西北角", data: [0.8, 1.2, 1.0, 1.3, 1.5, 2.0, 1.8] }
+        ]
+      },
+      {
+        name: "苯",
+        date: ["12/01", "12/02", "12/03", "12/04", "12/05", "12/06", "12/07"],
+        series: [
+          { name: "东南角", data: [1.2, 1.6, 1.8, 1.92, 2.02, 2.22, 1.89] },
+          { name: "东北角", data: [1.2, 1.5, 1.8, 2.0, 1.8, 1.6, 1.3] },
+          { name: "西南角", data: [1.2, 1.8, 1.5, 1.2, 1.5, 1.2, 1.6] },
+          { name: "西北角", data: [0.8, 1.2, 1.0, 1.3, 1.5, 2.0, 1.8] }
+        ]
+      },
+      {
+        name: "甲苯",
+        date: ["12/01", "12/02", "12/03", "12/04", "12/05", "12/06", "12/07"],
+        series: [
+          { name: "东南角", data: [1.2, 1.6, 1.8, 1.92, 2.02, 2.22, 1.89] },
+          { name: "东北角", data: [1.2, 1.5, 1.8, 2.0, 1.8, 1.6, 1.3] },
+          { name: "西南角", data: [1.2, 1.8, 1.5, 1.2, 1.5, 1.2, 1.6] },
+          { name: "西北角", data: [0.8, 1.2, 1.0, 1.3, 1.5, 2.0, 1.8] }
+        ]
+      }
+    ]
+  }));
+  const elementsRef = useRef(store.listtotal.map(() => createRef<any>()));
+
+  useEffect(() => {
+    setInterval(() => {
+      elementsRef.current.forEach((item, index) => {
+        const datas = _.cloneDeep(store.listtotal);
+
+        const stat = datas[index];
+        utils.array.scrollArray(stat.date);
+        stat.series.forEach(i => {
+          utils.array.scrollArray(i.data);
+        });
+
+        store.listtotal = datas;
+
+        const inst = item.current?.getEchartsInstance();
+        if (inst) {
+          inst.dispatchAction({
+            type: "showTip",
+            seriesIndex: 1, // 显示第几个serindexes
+            dataIndex: 1, // 显示第几个数据
+            position: ["45%", "10%"]
+          });
+        }
+      });
+    }, 1000);
+  }, []);
+
+  return useObserver(() => (
+    <div className="screenTable mt-4" style={{ height: "377px" }}>
+      <div className="tableTitle flex justify-between items-center">
+        <img src="/images/left.png" className="img" />
+        <div>气体日均排放浓度趋势图</div>
+        <img src="/images/right1.png" className="img" />
+      </div>
+      <CarouselProvider naturalSlideWidth={100} isPlaying naturalSlideHeight={80} interval={5000} totalSlides={store.listtotal.length}>
+        <Slider>
+          {store.listtotal.map((item, index) => {
+            return (
+              <Slide index={index} key={index}>
+                <ReactEcharts
+                  //@ts-ignore
+                  ref={elementsRef.current[index]}
+                  option={makeOption({ name: item.name, series: item.series, date: item.date })}
+                  style={{ marginTop: "20px", padding: "10px", height: "260px", width: "100%" }}
+                  className="react_for_echarts"
+                />
+              </Slide>
+            );
+          })}
+        </Slider>
+        <DotGroup className="text-center">
+          {store.listtotal.map((item, index) => (
+            <Dot slide={index} key={index} className="text-white sliderDotButton" children={""} />
+          ))}
+        </DotGroup>
+      </CarouselProvider>
+    </div>
+  ));
+};
+
+export const makeOption = ({ name, series, date }: { name: string; series: any[]; date: any[] }) => {
+  const option = {
     title: {
-      text: "非甲烷中经",
+      text: name,
       textStyle: {
         color: "rgba(4,248,204,0.8)",
         fontSize: "14"
@@ -38,7 +149,7 @@ export const EnterpriseScreenGasChart = () => {
           showHtm.push(list);
         }
         return `<div style="color: #04F9CC;text-align:left;line-height:20px">${text} 日均</div>
-            <div style="color: #04F9CC;text-align:left;line-height:20px">${store.title.text}</div>
+            <div style="color: #04F9CC;text-align:left;line-height:20px">${option.title.text}</div>
              <div style="color:#F90421;text-align:left;line-height:20px">日均值上限：2（mg/m³）</div>
             <div style="color:#88A8C5;text-align:left;font-size:10px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
             <div style="display:flex;align-items: center;"><div style="margin-right:10px;width:10px;height:1px;border:1px solid #1089E7;background:#1089E7"></div><div>${showHtm[0].name}</div>
@@ -95,7 +206,7 @@ export const EnterpriseScreenGasChart = () => {
           fontSize: "10"
         }
       },
-      data: ["12/01", "12/02", "12/03", "12/04", "12/05", "12/06", "12/07"]
+      data: date.slice(0, 5)
     },
     yAxis: {
       name: "日均值（mg/m³）",
@@ -126,80 +237,21 @@ export const EnterpriseScreenGasChart = () => {
         show: false
       }
     },
-    series: [
-      {
-        name: "东南角",
-        type: "line",
-        data: [1.2, 1.6, 1.8, 1.92, 2.02, 2.22, 1.89],
-        itemStyle: {
-          normal: {
-            color: "#1089E7", //改变折线点的颜色
-            lineStyle: {
-              color: "#1089E7" //改变折线颜色
-            }
+    series: series.map((item, index) => ({
+      name: item.name,
+      data: item.data.slice(0, 5),
+      type: "line",
+      itemStyle: {
+        normal: {
+          color: constant.seriesColors[index], //改变折线点的颜色
+          lineStyle: {
+            color: constant.seriesColors[index] //改变折线颜色
           }
-        },
-        symbol: "circle", //设定为实心点
-        symbolSize: 2 //设定实心点的大小
+        }
       },
-      {
-        name: "东北角",
-        type: "line",
-        // stack: "总量",
-        data: [1.2, 1.5, 1.8, 2.0, 1.8, 1.6, 1.3],
-        itemStyle: {
-          normal: {
-            color: "#FE7B43", //改变折线点的颜色
-            lineStyle: {
-              color: "#FE7B43" //改变折线颜色
-            }
-          }
-        },
-        symbol: "circle", //设定为实心点
-        symbolSize: 2 //设定实心点的大小
-      },
-      {
-        name: "西南角",
-        type: "line",
-        // stack: "总量",
-        data: [1.2, 1.8, 1.5, 1.2, 1.5, 1.2, 1.6],
-        itemStyle: {
-          normal: {
-            color: "#12FFEE", //改变折线点的颜色
-            lineStyle: {
-              color: "#12FFEE" //改变折线颜色
-            }
-          }
-        },
-        symbol: "circle", //设定为实心点
-        symbolSize: 2 //设定实心点的大小
-      },
-      {
-        name: "西北角",
-        type: "line",
-        // stack: "总量",
-        data: [0.8, 1.2, 1.0, 1.3, 1.5, 2.0, 1.8],
-        itemStyle: {
-          normal: {
-            color: "#AB90DF", //改变折线点的颜色
-            lineStyle: {
-              color: "#AB90DF" //改变折线颜色
-            }
-          }
-        },
-        symbol: "circle", //设定为实心点
-        symbolSize: 2 //设定实心点的大小
-      }
-    ]
-  }));
-  return useObserver(() => (
-    <div className="screenTable mt-4" style={{ height: "377px" }}>
-      <div className="tableTitle flex justify-between items-center">
-        <img src="/images/left.png" className="img"/>
-        <div>气体日均排放浓度趋势图</div>
-        <img src="/images/right1.png" className="img"/>
-      </div>
-      <ReactEcharts option={store} style={{marginTop:"20px", padding: "10px", height: "260px", width: "100%" }} className="react_for_echarts" />
-    </div>
-  ));
+      symbol: "circle", //设定为实心点
+      symbolSize: 2 //设定实心点的大小
+    }))
+  };
+  return option;
 };
