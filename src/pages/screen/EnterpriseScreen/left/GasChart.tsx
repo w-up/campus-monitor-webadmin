@@ -9,6 +9,8 @@ import { _ } from "../../../../utils/lodash";
 
 export const EnterpriseScreenGasChart = () => {
   const store = useLocalStore(() => ({
+    dataIndex: 0,
+    dataIndexMax: 6,
     listtotal: [
       {
         name: "非甲烷中经",
@@ -56,24 +58,15 @@ export const EnterpriseScreenGasChart = () => {
 
   useEffect(() => {
     setInterval(() => {
+      store.dataIndex >= store.dataIndexMax ? (store.dataIndex = 0) : store.dataIndex++;
       elementsRef.current.forEach((item, index) => {
-        const datas = _.cloneDeep(store.listtotal);
-
-        const stat = datas[index];
-        utils.array.scrollArray(stat.date);
-        stat.series.forEach(i => {
-          utils.array.scrollArray(i.data);
-        });
-
-        store.listtotal = datas;
-
         const inst = item.current?.getEchartsInstance();
         if (inst) {
           inst.dispatchAction({
             type: "showTip",
-            seriesIndex: 1, // 显示第几个serindexes
-            dataIndex: 1, // 显示第几个数据
-            position: ["45%", "10%"]
+            seriesIndex: 0, // 显示第几个serindexes
+            dataIndex: store.dataIndex // 显示第几个数据
+            // position: ["45%", "10%"]
           });
         }
       });
@@ -206,7 +199,7 @@ export const makeOption = ({ name, series, date }: { name: string; series: any[]
           fontSize: "10"
         }
       },
-      data: date.slice(0, 5)
+      data: date
     },
     yAxis: {
       name: "日均值（mg/m³）",
@@ -239,7 +232,7 @@ export const makeOption = ({ name, series, date }: { name: string; series: any[]
     },
     series: series.map((item, index) => ({
       name: item.name,
-      data: item.data.slice(0, 5),
+      data: item.data,
       type: "line",
       itemStyle: {
         normal: {

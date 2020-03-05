@@ -9,6 +9,8 @@ export const SewageDailyChart = () => {
   const mapRef = React.useRef<any>();
 
   const store = useLocalStore(() => ({
+    dataIndex: 0,
+    dataIndexMax: 6,
     options: {
       //   标题配置
       title: {
@@ -185,21 +187,15 @@ export const SewageDailyChart = () => {
   }));
   useEffect(() => {
     setInterval(() => {
-      const options = _.cloneDeep(store.options) as typeof store.options;
-      utils.array.scrollArray(options.xAxis.data);
-      options.series.forEach(i => {
-        utils.array.scrollArray(i.data);
-      });
-      store.options = options;
+      store.dataIndex >= store.dataIndexMax ? (store.dataIndex = 0) : store.dataIndex++;
 
       const mapInst = mapRef.current?.getEchartsInstance();
-      console.log(mapInst);
       if (mapInst) {
         mapInst.dispatchAction({
           type: "showTip",
-          seriesIndex: 1, // 显示第几个serindexes
-          dataIndex: 1, // 显示第几个数据
-          position: ["45%", "10%"]
+          seriesIndex: 0, // 显示第几个serindexes
+          dataIndex: store.dataIndex // 显示第几个数据
+          // position: ["45%", "10%"]
         });
       }
     }, 1000);
@@ -208,7 +204,7 @@ export const SewageDailyChart = () => {
     <div className="screenTable mt-4" style={{ height: "252px" }}>
       <div className="tableTitle flex justify-between items-center">
         <img src="/images/left.png" className="img" />
-        <div>污水排放浓度24小时趋势图</div>
+        <div>污水日均排放趋势图</div>
         <img src="/images/right1.png" className="img" />
       </div>
       <ReactEcharts ref={mapRef} option={store.options} style={{ width: "100%", height: "180px" }} />

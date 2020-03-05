@@ -3,9 +3,7 @@ import { useObserver, useLocalStore } from "mobx-react-lite";
 import ReactEcharts from "echarts-for-react";
 import { useStore } from "../../../../stores/index";
 import { useEffect } from "react";
-import cloneDeep from "lodash/cloneDeep";
 import { _ } from "../../../../utils/lodash";
-import { utils } from "../../../../utils";
 
 export const EnterpriseScreenGroupChart = () => {
   const {
@@ -14,6 +12,8 @@ export const EnterpriseScreenGroupChart = () => {
   const mapRef = React.useRef<any>();
 
   const store = useLocalStore(() => ({
+    dataIndex: 0,
+    dataIndexMax: 7,
     options: {
       //   标题配置
       title: {
@@ -90,7 +90,7 @@ export const EnterpriseScreenGroupChart = () => {
             fontSize: "10"
           }
         },
-        data: ["12/01", "12/02", "12/03", "12/04", "12/05", "12/06", "12/07"]
+        data: ["12/01", "12/02", "12/03", "12/04", "12/05", "12/06", "12/07", "12/08"]
       },
       yAxis: {
         name: "（mg/m³）",
@@ -125,7 +125,7 @@ export const EnterpriseScreenGroupChart = () => {
         {
           name: "非甲烷总经",
           type: "line",
-          data: [1.2, 1.6, 1.8, 1.92, 2.02, 2.22, 1.89],
+          data: [1.2, 1.6, 1.8, 1.92, 2.02, 2.22, 1.89, 2],
           itemStyle: {
             normal: {
               color: "#1089E7", //改变折线点的颜色
@@ -141,7 +141,7 @@ export const EnterpriseScreenGroupChart = () => {
           name: "苯乙烯",
           type: "line",
           // stack: "总量",
-          data: [1.2, 1.5, 1.8, 2.0, 1.8, 1.6, 1.3],
+          data: [1.2, 1.5, 1.8, 2.0, 1.8, 1.6, 1.3, 1],
           itemStyle: {
             normal: {
               color: "#FE7B43", //改变折线点的颜色
@@ -157,7 +157,7 @@ export const EnterpriseScreenGroupChart = () => {
           name: "H2S",
           type: "line",
           // stack: "总量",
-          data: [1.2, 1.8, 1.5, 1.2, 1.5, 1.2, 1.6],
+          data: [1.2, 1.8, 1.5, 1.2, 1.5, 1.2, 1.6, 1],
           itemStyle: {
             normal: {
               color: "#12FFEE", //改变折线点的颜色
@@ -173,7 +173,7 @@ export const EnterpriseScreenGroupChart = () => {
           name: "NH3",
           type: "line",
           // stack: "总量",
-          data: [0.8, 1.2, 1.0, 1.3, 1.5, 2.0, 1.8],
+          data: [0.8, 1.2, 1.0, 1.3, 1.5, 2.0, 1.8, 1],
           itemStyle: {
             normal: {
               color: "#AB90DF", //改变折线点的颜色
@@ -191,21 +191,15 @@ export const EnterpriseScreenGroupChart = () => {
 
   useEffect(() => {
     setInterval(() => {
-      const options = _.cloneDeep(store.options) as typeof store.options;
-      utils.array.scrollArray(options.xAxis.data);
-      options.series.forEach(i => {
-        utils.array.scrollArray(i.data);
-      });
-      store.options = options;
+      store.dataIndex >= store.dataIndexMax ? (store.dataIndex = 0) : store.dataIndex++;
 
       const mapInst = mapRef.current?.getEchartsInstance();
-      console.log(mapInst);
       if (mapInst) {
         mapInst.dispatchAction({
           type: "showTip",
-          seriesIndex: 1, // 显示第几个serindexes
-          dataIndex: 1, // 显示第几个数据
-          position: ["45%", "10%"]
+          seriesIndex: 0, // 显示第几个serindexes
+          dataIndex: store.dataIndex // 显示第几个数据
+          // position: ["45%", "10%"]
         });
       }
     }, 1000);
