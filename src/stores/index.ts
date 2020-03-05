@@ -7,11 +7,13 @@ import { EnterpriseScreenMapStore } from "./screen/EnterpriseScreenMapStore";
 import { GasTableStore } from "./screen/GasTableStore";
 import { SewageTableStore } from "./screen/SewageTableStore";
 import { DrawMapStore } from "./map/DrawMapStore";
+import { MapMonitorStore } from "./mapMonitor/index";
 
 export const store = {
   menu: new MenuStore(),
   auth: new AuthStore(),
   config: new ConfigStore(),
+  mapMonitor: new MapMonitorStore(),
   map: {
     drawMap: new DrawMapStore()
   },
