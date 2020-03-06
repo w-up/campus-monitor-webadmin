@@ -1,15 +1,26 @@
 @import "~antd/dist/antd.css";
+@import "./variable.scss";
 
-$primary-text-color: #04B2F0;
-$screen-background: #061630;
+.primary-button-text-dark {
+  color: $primary-button-text-dark;
+}
+.primary-text-dark {
+  color: $primary-text-dark;
+}
+.primary-text-color {
+  color: $primary-text-color;
+}
+.screen-background {
+  background: $screen-background;
+}
 
 .screenTitleGradient {
-  background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#DFF1FF), to(#00D2FF));
+  background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#dff1ff), to(#00d2ff));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .screenPage {
-  background: #1E2538;
+  background: #1e2538;
   border-top: 1px solid rgb(0, 177, 255);
 
   .header-bg {
@@ -81,7 +92,8 @@ $screen-background: #061630;
     border: 1px solid #2e3b61;
   }
 
-  .topLeft, .topRight {
+  .topLeft,
+  .topRight {
     .tabTitle {
       line-height: 40px;
       display: flex;
@@ -107,7 +119,6 @@ $screen-background: #061630;
     background-image: url("/images/title.png");
     font-weight: 700;
   }
-
 }
 .tabTitle {
   line-height: 40px;
@@ -145,17 +156,16 @@ $screen-background: #061630;
   border: 1px solid #2e3b61;
 }
 
-
 .t-b-con {
   width: 100px;
-  color: #55B7FE;
+  color: #55b7fe;
   cursor: pointer;
   display: inline-block;
 }
 
 .t-b-con.active {
   background: rgba(44, 80, 129, 0.6);
-  color: #04F9CC;
+  color: #04f9cc;
 }
 
 .t-b-con img {
@@ -170,12 +180,12 @@ $screen-background: #061630;
 }
 
 .parkScreen {
-  background: #1E2538;
+  background: #1e2538;
   border-top: 1px solid rgb(0, 177, 255);
 
   .area {
     font-size: 14px;
-    color: #04B2F0;
+    color: #04b2f0;
   }
 
   .parkScreenTop {
@@ -211,22 +221,23 @@ $screen-background: #061630;
           margin: auto 0;
         }
         .wr {
-          color: #F7994D;
+          color: #f7994d;
         }
       }
     }
   }
 
   .screenContent {
-    .leftContent, .rightContent {
-      border: 1px solid #1082DA;
+    .leftContent,
+    .rightContent {
+      border: 1px solid #1082da;
       position: relative;
-      height:100%;
+      height: 100%;
       overflow: hidden;
       box-sizing: border-box;
     }
     .tableTitle {
-      color: #DBF6FF;
+      color: #dbf6ff;
       background: url("/images/75757.png") no-repeat bottom;
       background-size: contain;
       font-weight: 700;
@@ -262,6 +273,3 @@ $screen-background: #061630;
     }
   }
 }
-
-
-
