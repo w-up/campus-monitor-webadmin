@@ -6,13 +6,16 @@ import {Icon} from "antd";
 import {ScreenTop} from "./top/ScreenTop";
 import {SewageWaterTable} from "./right/SewageWaterTable";
 import {WasteGasTable} from "./right/WasteGasTable";
+import {MonitorParamForm} from "./left/MonitorParamForm";
+import {FocusStationTable} from "./left/FocusStationTable";
+import {TopTenMonitorTable} from "./left/TopTenMonitorTable";
 
 export const ParkScreenPage = () => {
   const fullScreenRef = useRef<HTMLDivElement>(null);
 
   return useObserver(() => (
     <div className="p-4 parkScreen">
-      <div className="text-white pb-4 pl-2 cursor-pointer" style={{color:"#0DACF2"}} onClick={() => fullScreenRef.current?.requestFullscreen()}>
+      <div className="pb-4 pl-2 cursor-pointer" style={{color:"#0DACF2"}} onClick={() => fullScreenRef.current?.requestFullscreen()}>
         <Icon className="text-3xl font-black" type="fullscreen"/>
         <span className="ml-2">全屏展示</span>
       </div>
@@ -24,8 +27,12 @@ export const ParkScreenPage = () => {
             <span className="corner cornerTr"></span>
             <span className="corner cornerBl"></span>
             <span className="corner cornerBr"></span>
-            <div className="" style={{ width: "34%" }}></div>
-            <div style={{ width: "65%" }}>
+            <div className="w-1/3">
+              <MonitorParamForm/>
+              <FocusStationTable/>
+              <TopTenMonitorTable/>
+            </div>
+            <div className="w-2/3">
               <ParkScreenMap />
               <ParkScreen24HourChart />
             </div>

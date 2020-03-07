@@ -13,9 +13,18 @@
 .screen-background {
   background: $screen-background;
 }
+.vertical-middle {
+  margin: auto 0;
+}
+.text-ellipsis{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  white-space:nowrap;
+}
 
 .screenTitleGradient {
-  background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#dff1ff), to(#00d2ff));
+  background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#dff1ff), to($screen-primary-text));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -138,7 +147,7 @@
   color: #88a8c5;
   font-size: 12px;
   text-align: center;
-  line-height: 30px;
+  line-height: 35px;
 }
 
 .sliderDotButton {
@@ -237,10 +246,9 @@
       box-sizing: border-box;
     }
     .tableTitle {
-      color: #dbf6ff;
+      color: $primary-white;
       background: url("/images/75757.png") no-repeat bottom;
       background-size: contain;
-      font-weight: 700;
     }
   }
   .corner {
@@ -271,5 +279,42 @@
       bottom: -2px;
       border-right: 4px solid $primary-text-color;
     }
+  }
+}
+
+.screenFormStyle {
+  .ant-form {
+    .ant-form-item {
+      margin-bottom: 15px;
+    }
+    .ant-form-item-label {
+      text-align: left;
+
+      & > label {
+        color: $screen-primary-text;
+      }
+    }
+
+    button {
+      background:rgba(0,120,255,0.66);
+      border:1px solid rgba(0,174,255,1);
+      border-radius:4px;
+      padding-left: 29px;
+      padding-right: 29px;
+      height: 36px;
+      line-height: 36px;
+    }
+  }
+  .ant-select-selection {
+    background:rgba(55,105,239,0.2);
+    border:1px solid rgba(106,166,221,1);
+    border-radius:4px;
+    color: $primary-white;
+  }
+  .ant-select-arrow {
+    color: $screen-primary-text;
+  }
+  .ant-form-item-label > label::after {
+    content:"";
   }
 }

@@ -8,11 +8,14 @@ export const SewageWaterTable = () => {
   } = useStore();
 
   return useObserver(() => (
-      <div className="topRight screenTable flex-1">
-        <div className="pt-4 px-4">
-          <div className="tableTitle text-left pb-2">重点污染物—废气</div>
+      <div className="topRight px-4 screenTable flex-1">
+        <div className="pt-4 pb-2 tableTitle flex justify-between">
+          <div className="text-left">重点污染物—废气</div>
+          <div className="vertical-middle">
+            <img src="/images/787878.png" className="float-right"/>
+          </div>
         </div>
-        <div className="px-4">
+        <div className="">
           <div className="tabTitle">
             <div>区域</div>
             <div>污染物</div>
