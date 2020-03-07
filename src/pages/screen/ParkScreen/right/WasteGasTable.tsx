@@ -1,14 +1,27 @@
 import React from 'react';
-import {useObserver} from "mobx-react-lite";
-import {useStore} from "../../../../stores";
+import {useLocalStore, useObserver} from "mobx-react-lite";
+import { Scrollbars } from 'react-custom-scrollbars';
 
 export const WasteGasTable = () => {
-  const {
-    screen: {gasTable: gasTableStore}
-  } = useStore();
+
+  const store = useLocalStore(() => ({
+    sewageGas: [
+      { region: "CB废水", wu: "PH", data: "52.7mg/m³", maxNum: "200" },
+      { region: "B废水", wu: "流量", data: "12.2mg/m³", maxNum: "100" },
+      { region: "B废水", wu: "COD", data: "12.2mg/m³", maxNum: "100" },
+      { region: "B废水", wu: "PH", data: "52.7mg/m³", maxNum: "200" },
+      { region: "CB废水", wu: "PH", data: "52.7mg/m³", maxNum: "200" },
+      { region: "B废水", wu: "流量", data: "12.2mg/m³", maxNum: "100" },
+      { region: "B废水", wu: "COD", data: "12.2mg/m³", maxNum: "100" },
+      { region: "B废水", wu: "PH", data: "52.7mg/m³", maxNum: "200" },
+      { region: "CB废水", wu: "PH", data: "52.7mg/m³", maxNum: "200" },
+      { region: "B废水", wu: "流量", data: "12.2mg/m³", maxNum: "100" },
+      { region: "B废水", wu: "COD", data: "12.2mg/m³", maxNum: "100" },
+      { region: "B废水", wu: "PH", data: "52.7mg/m³", maxNum: "200" }
+    ]}));
 
   return useObserver(() => (
-      <div className="topRight screenTable flex-1">
+      <div className="topRight mt-4 screenTable">
         <div className="pt-4 px-4">
           <div className="tableTitle text-left pb-2">重点污染物—废水</div>
         </div>
@@ -19,15 +32,16 @@ export const WasteGasTable = () => {
             <div>浓度值</div>
             <div>限值</div>
           </div>
-          <div>{gasTableStore.wasteGasList.map((item) => {
+          <div>
+            <Scrollbars style={{ height: 250 }}>{store.sewageGas.map((item) => {
             return (
               <div className="listItem tabTitle">
                 <div>{item.region}</div>
                 <div>{item.wu}</div>
                 <div>{item.data}</div>
-                <div>{item.maxnum}</div>
+                <div>{item.maxNum}</div>
               </div>)
-          })}
+            })}</Scrollbars>
           </div>
         </div>
       </div>
