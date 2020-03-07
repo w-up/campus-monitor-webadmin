@@ -10,6 +10,10 @@
 .primary-text-color {
   color: $primary-text-color;
 }
+
+.screen-text-color-2 {
+  color: $screen-text-color-2;
+}
 .screen-background {
   background: $screen-background;
 }
@@ -123,7 +127,7 @@
   }
 
   .tableTitle {
-    color: #55b7fe;
+    color: $screen-text-color-2;
     padding: 9px 0px;
     background-image: url("/images/title.png");
     font-weight: 700;
@@ -167,7 +171,7 @@
 
 .t-b-con {
   width: 100px;
-  color: #55b7fe;
+  color: $screen-text-color-2;
   cursor: pointer;
   display: inline-block;
 }
@@ -280,6 +284,12 @@
       border-right: 4px solid $primary-text-color;
     }
   }
+
+  .mapExplain {
+    background:#172046;
+    //opacity:0.5;
+  }
+
 }
 
 .screenFormStyle {
@@ -317,4 +327,38 @@
   .ant-form-item-label > label::after {
     content:"";
   }
+}
+
+.factoryAreaYellow {
+  width: 35px;
+  height:11px;
+  border:2px solid rgba(255,216,0,1);
+  background: #FFD800;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.lineGreen {
+  width:40px;
+  height:1px;
+  border:1px dashed #00FF66;
+  display: inline-block;
+  margin-right: 8px;
+  margin-bottom: 4px;
+}
+
+.blockNormal {
+  width:15px;
+  height:8px;
+  background: #00FFD0;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.redOver {
+  width:15px;
+  height:8px;
+  background: #F90421;
+  display: inline-block;
+  margin-right: 8px;
 }

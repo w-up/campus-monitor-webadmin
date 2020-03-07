@@ -234,8 +234,7 @@ export class GasTableStore {
     {region: "AB化工", wu: "非甲烷总经", data: "12.2mg/m³", maxnum: "100"},
     {region: "CB化工", wu: "二氧化硫", data: "52.7mg/m³", maxnum: "200"},
     {region: "B化工", wu: "一氧化碳", data: "12.2mg/m³", maxnum: "100"},
-    {region: "B化工", wu: "氮氧化物", data: "12.2mg/m³", maxnum: "100"},
-    {region: "B化工", wu: "氮氧化物", data: "52.7mg/m³", maxnum: "200"},
+    {region: "B化工", wu: "氮氧化物", data: "12.2mg/m³", maxnum: "100"}
   ];
 
 

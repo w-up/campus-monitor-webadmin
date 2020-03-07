@@ -15,7 +15,8 @@ export const ParkScreenPage = () => {
 
   return useObserver(() => (
     <div className="p-4 parkScreen">
-      <div className="pb-4 pl-2 cursor-pointer" style={{color:"#0DACF2"}} onClick={() => fullScreenRef.current?.requestFullscreen()}>
+      <div className="pb-4 pl-2 cursor-pointer" style={{color: "#0DACF2"}}
+           onClick={() => fullScreenRef.current?.requestFullscreen()}>
         <Icon className="text-3xl font-black" type="fullscreen"/>
         <span className="ml-2">全屏展示</span>
       </div>
@@ -23,26 +24,35 @@ export const ParkScreenPage = () => {
         <ScreenTop/>
         <div className="screenContent flex-1 flex mt-4">
           <div className="leftContent flex w-9/12 p-4">
-            <span className="corner cornerTl"></span>
-            <span className="corner cornerTr"></span>
-            <span className="corner cornerBl"></span>
-            <span className="corner cornerBr"></span>
+            <span className="corner cornerTl"/>
+            <span className="corner cornerTr"/>
+            <span className="corner cornerBl"/>
+            <span className="corner cornerBr"/>
             <div className="w-1/3">
               <MonitorParamForm/>
               <FocusStationTable/>
               <TopTenMonitorTable/>
             </div>
             <div className="w-2/3">
-              <ParkScreenMap />
-              <ParkScreen24HourChart />
+              <ParkScreenMap/>
+              <div className="my-4 p-2 px-6 mapExplain flex flex-row">
+                <div className="primary-text-dark w-1/3">当前园区：A园区</div>
+                <div className="flex flex-row w-2/3 screen-text-color-2 justify-between">
+                  <div><div className="factoryAreaYellow"/>工厂区域</div>
+                  <div><div className="lineGreen"/>园区</div>
+                  <div><div className="blockNormal"/>正常值</div>
+                  <div><div className="redOver"/>超标值</div>
+                </div>
+              </div>
+              <ParkScreen24HourChart/>
             </div>
           </div>
           <div className="w-3/12 pl-4">
             <div className="rightContent">
-              <span className="corner cornerTl"></span>
-              <span className="corner cornerTr"></span>
-              <span className="corner cornerBl"></span>
-              <span className="corner cornerBr"></span>
+              <span className="corner cornerTl"/>
+              <span className="corner cornerTr"/>
+              <span className="corner cornerBl"/>
+              <span className="corner cornerBr"/>
               <SewageWaterTable/>
               <WasteGasTable/>
             </div>
