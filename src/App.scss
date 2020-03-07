@@ -20,11 +20,11 @@
 .vertical-middle {
   margin: auto 0;
 }
-.text-ellipsis{
+.text-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
-  white-space:nowrap;
+  white-space: nowrap;
 }
 
 .screenTitleGradient {
@@ -306,9 +306,9 @@
     }
 
     button {
-      background:rgba(0,120,255,0.66);
-      border:1px solid rgba(0,174,255,1);
-      border-radius:4px;
+      background: rgba(0, 120, 255, 0.66);
+      border: 1px solid rgba(0, 174, 255, 1);
+      border-radius: 4px;
       padding-left: 29px;
       padding-right: 29px;
       height: 36px;
@@ -316,16 +316,96 @@
     }
   }
   .ant-select-selection {
-    background:rgba(55,105,239,0.2);
-    border:1px solid rgba(106,166,221,1);
-    border-radius:4px;
+    background: rgba(55, 105, 239, 0.2);
+    border: 1px solid rgba(106, 166, 221, 1);
+    border-radius: 4px;
     color: $primary-white;
   }
   .ant-select-arrow {
     color: $screen-primary-text;
   }
   .ant-form-item-label > label::after {
-    content:"";
+    content: "";
+  }
+}
+
+.mapmonitor-page,
+.dynamicsource-page {
+  .ant-switch {
+    border-color: white;
+  }
+  .ant-radio-wrapper {
+    span {
+      color: white;
+    }
+  }
+  .ant-form-item-label > label {
+    color: white;
+  }
+  .ant-form-item {
+    margin-bottom: 10px;
+  }
+
+  .ant-tabs.ant-tabs-card {
+    > .ant-tabs-bar {
+      border-color: #1e4465;
+      .anticon {
+        color: #1e4465;
+      }
+    }
+    > .ant-tabs-bar .ant-tabs-tab {
+      border-color: transparent;
+      background: transparent;
+      color: #1e4465;
+      i {
+        font-size: 24px;
+        margin: 0 4px;
+      }
+    }
+    > .ant-tabs-bar .ant-tabs-tab-active {
+      border-color: #4abbec;
+      background: #4abbec;
+      color: white;
+      .anticon {
+        color: white;
+      }
+    }
+  }
+
+  .number {
+    position: absolute;
+    bottom: 24px;
+    left: 10px;
+    text-align: center;
+    font-size: 10px;
+    color: white;
+    width: 20px;
+  }
+  .monitor-table {
+    tr:hover td {
+      background: transparent !important;
+    }
+    .ant-table-thead > tr > th {
+      background: transparent;
+      color: white;
+      border-bottom: 2px solid #1bb8a1;
+    }
+    .ant-table-tbody > tr > td {
+      border-color: #303747;
+      color: white;
+    }
+  }
+  .monitor-row-panel {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    background: rgba(16, 24, 43, 0.8);
+    width: 25vw;
+    z-index: 1;
+  }
+  .stat-panel {
+    background: rgba(32, 37, 60, 0.8);
   }
 }
 

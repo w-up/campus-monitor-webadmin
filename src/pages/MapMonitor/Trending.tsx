@@ -1,6 +1,6 @@
 import React from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
-import { Form, Select, Button, Table, Icon, DatePicker, Radio } from "antd";
+import { Form, Select, Button, Table, Icon, DatePicker, Radio, Divider } from "antd";
 import { WrappedFormUtils } from "antd/lib/form/Form";
 import { TableProps } from "antd/lib/table";
 
@@ -16,6 +16,16 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
       wrapperCol: {
         span: 16
       }
+    },
+    monitorPanel: {
+      historyData: [
+        { name: "平均浓度", value: "1073.20 up/m3" },
+        { name: "平均浓度", value: "2000.20 up/m3" }
+      ],
+      rateData: [
+        { name: "同比", value: "13.94" },
+        { name: "环比", value: "7.98" }
+      ]
     },
     handleSubmit: e => {
       e.preventDefault();
@@ -80,6 +90,30 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
             <div>统计类型: 日</div>
           </div>
           <div className="primary-button-text-dark mt-3">时间段： 2020-01-02 至 2020-01-03</div>
+        </div>
+        <div className="text-white mt-8">
+          <div className="flex justify-between pb-4 px-4" style={{ borderBottom: "1px solid #1bb8a1" }}>
+            <div>历史监测数据</div>
+            <div>同期变化率(2020-01-03)</div>
+          </div>
+          <div className="flex">
+            <div className="mt-2 px-4" style={{ width: "50%", borderRight: "1px solid white" }}>
+              {store.monitorPanel.historyData.map((item, index) => (
+                <div className="flex justify-between my-4">
+                  <div>{item.name}</div>
+                  <div className="primary-text-color">{item.value}</div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-2 px-4" style={{ width: "50%" }}>
+              {store.monitorPanel.rateData.map((item, index) => (
+                <div className="flex justify-between my-4">
+                  <div>{item.name}</div>
+                  <div className="primary-button-text-dark">{item.value} % ↓</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
