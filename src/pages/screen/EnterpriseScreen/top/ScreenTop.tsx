@@ -20,7 +20,7 @@ export const ScreenTop = () => {
       <TimeDisplay/>
       <div className="primary-text-color relative flex-1 text-2xl font-bold text-center">
         <span className="screenTitleGradient">污染源实时监测公共驾驶舱</span>
-        <Icon onClick={() => store.toggleSettingBox()} className="text-lg absolute ml-8 cursor-pointer z-50" type="setting" theme="filled"/>
+        <Icon onClick={() => store.toggleSettingBox()} className="settingIcon text-lg absolute ml-8 cursor-pointer z-50" type="setting" theme="filled"/>
         <SettingBox boxDisplay={store.boxDisplay} toggle={store.toggleSettingBox}/>
       </div>
       <LocationDisplay/>

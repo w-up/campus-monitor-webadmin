@@ -22,7 +22,7 @@ export const SewageTableDynamic = () => {
           </div>
           <CarouselProvider
             naturalSlideWidth={100}
-            naturalSlideHeight={75}
+            naturalSlideHeight={55}
             totalSlides={3}
             isPlaying={true}
           >

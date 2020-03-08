@@ -25,13 +25,6 @@
   margin: auto 0;
 }
 
-.text-ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .screenTitleGradient {
   background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#dff1ff), to($screen-primary-text));
   -webkit-background-clip: text;
@@ -48,7 +41,7 @@
     height: 105px;
     line-height: 92px;
 
-    div > i {
+    .settingIcon {
       line-height: 92px;
     }
   }
@@ -68,9 +61,10 @@
     position: relative;
     width: 25%;
     min-width: 350px;
-    padding: 20px 0 12px 0;
+    padding: 20px 12px 12px 0;
     color: #04b2f0;
     opacity: 0.9;
+    height: 54px;
   }
 
   .head-right {
@@ -163,6 +157,10 @@
   font-size: 12px;
   text-align: center;
   line-height: 35px;
+
+  & > div {
+    @extend %text-ellipsis;
+  }
 }
 
 .sliderDotButton {
@@ -201,6 +199,40 @@
 .title ul li {
   list-style-type: none;
   display: inline-block;
+}
+
+.corner {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+
+  &.cornerTl {
+    border-top: 4px solid $primary-text-color;
+    border-left: 4px solid $primary-text-color;
+    left: -2px;
+    top: -2px;
+  }
+
+  &.cornerTr {
+    border-top: 4px solid $primary-text-color;
+    border-right: 4px solid $primary-text-color;
+    right: -2px;
+    top: -2px;
+  }
+
+  &.cornerBl {
+    border-bottom: 4px solid $primary-text-color;
+    border-left: 4px solid $primary-text-color;
+    left: -2px;
+    bottom: -2px;
+  }
+
+  &.cornerBr {
+    border-bottom: 4px solid $primary-text-color;
+    right: -2px;
+    bottom: -2px;
+    border-right: 4px solid $primary-text-color;
+  }
 }
 
 .parkScreen {
@@ -266,40 +298,6 @@
       color: $primary-white;
       background: url("/images/75757.png") no-repeat bottom;
       background-size: contain;
-    }
-  }
-
-  .corner {
-    width: 10px;
-    height: 10px;
-    position: absolute;
-
-    &.cornerTl {
-      border-top: 4px solid $primary-text-color;
-      border-left: 4px solid $primary-text-color;
-      left: -2px;
-      top: -2px;
-    }
-
-    &.cornerTr {
-      border-top: 4px solid $primary-text-color;
-      border-right: 4px solid $primary-text-color;
-      right: -2px;
-      top: -2px;
-    }
-
-    &.cornerBl {
-      border-bottom: 4px solid $primary-text-color;
-      border-left: 4px solid $primary-text-color;
-      left: -2px;
-      bottom: -2px;
-    }
-
-    &.cornerBr {
-      border-bottom: 4px solid $primary-text-color;
-      right: -2px;
-      bottom: -2px;
-      border-right: 4px solid $primary-text-color;
     }
   }
 
@@ -597,10 +595,12 @@
       color: #88a8c5;
       font-weight: normal;
       margin: 4px 0;
+
       .ant-checkbox-inner {
         @extend %screen-form-theme;
+
         &::after {
-          border-color:$primary-text-color-gray;
+          border-color: $primary-text-color-gray;
         }
       }
     }
