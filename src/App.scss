@@ -47,7 +47,8 @@
     background-size: contain;
     height: 105px;
     line-height: 92px;
-    i {
+
+    div > i {
       line-height: 92px;
     }
   }
@@ -532,42 +533,52 @@
     .ant-tree-switcher {
       color: $primary-text-color;
     }
+
     .ant-tree-checkbox-inner {
       background-color: $screen-setting-background-color;
       border: 1px solid $primary-text-color-gray;
     }
+
     li .ant-tree-node-content-wrapper {
       color: $primary-text-color;
       font-weight: normal;
+
       &.ant-tree-node-selected,
       &:hover {
         background-color: #102245;
       }
     }
+
     .ant-tree-checkbox-checked .ant-tree-checkbox-inner {
       background-color: $primary-text-color-gray;
       border: 1px solid $primary-text-color-gray;
+
       &::after {
         border: 2px solid $screen-setting-background-color;
         border-top: 0;
         border-left: 0;
       }
     }
+
     .ant-tree-checkbox-indeterminate .ant-tree-checkbox-inner {
       background-color: $primary-text-color-gray;
       border: 1px solid $primary-text-color-gray;
+
       &::after {
         background-color: #102245;
       }
     }
   }
+
   .ant-radio-group {
     padding: 0 20px;
+
     .ant-radio-wrapper {
       color: #88a8c5;
       font-weight: normal;
       margin: 4px 0;
       width: 50%;
+
       .ant-radio-inner {
         background-color: $screen-setting-background-color;
         border: 1px solid $primary-text-color-gray;
@@ -579,12 +590,29 @@
     }
   }
 
+  .ant-checkbox-group {
+
+    .ant-checkbox-wrapper {
+      display: block;
+      color: #88a8c5;
+      font-weight: normal;
+      margin: 4px 0;
+      .ant-checkbox-inner {
+        @extend %screen-form-theme;
+        &::after {
+          border-color:$primary-text-color-gray;
+        }
+      }
+    }
+  }
+
   .setting-box-footer {
     .ant-btn-primary {
       background-color: $primary-text-color;
       color: $primary-white;
       border-color: $primary-text-color;
     }
+
     .ant-btn-default {
       background-color: $screen-setting-background-color;
       color: $primary-white;
