@@ -10,8 +10,8 @@ import "./App.scss";
 import { useStore } from "./stores";
 // import { api } from "./services/index";
 import { Basic } from "./pages/basic/Basic";
-import { User } from "./pages/screen/User/User";
-import { System } from "./pages/screen/System/System";
+import { User } from "./pages/basic/User/User";
+import { System } from "./pages/basic/System/System";
 import zhCN from 'antd/es/locale/zh_CN';
 
 const App = () => {

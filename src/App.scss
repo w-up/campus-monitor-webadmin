@@ -439,6 +439,23 @@
   .stat-panel {
     background: rgba(32, 37, 60, 0.8);
   }
+
+  .ant-input, .ant-select-selection, .ant-calendar-picker, .ant-radio-button-wrapper {
+    background-color: #061630;
+    color: white;
+    i {
+      color: #d9d9d9;
+    }
+  }
+  .ant-radio-button-wrapper.ant-radio-button-wrapper-checked {
+    background-color: #0DACF2;
+    border-color: #0DACF2;
+  }
+
+  .ant-btn-primary {
+    background-color: #0DACF2;
+    border-color: #0DACF2;
+  }
 }
 
 .factoryAreaYellow {
@@ -620,3 +637,6 @@
     }
   }
 }
+
+
+
