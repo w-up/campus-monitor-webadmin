@@ -45,8 +45,11 @@
   .header-bg {
     background: url("/images/topbg.png") no-repeat center;
     background-size: contain;
-    height: 92px;
+    height: 105px;
     line-height: 92px;
+    i {
+      line-height: 92px;
+    }
   }
 
   .title {
@@ -556,6 +559,23 @@
       border: 1px solid $primary-text-color-gray;
       &::after {
         background-color: #102245;
+      }
+    }
+  }
+  .ant-radio-group {
+    padding: 0 20px;
+    .ant-radio-wrapper {
+      color: #88a8c5;
+      font-weight: normal;
+      margin: 4px 0;
+      width: 50%;
+      .ant-radio-inner {
+        background-color: $screen-setting-background-color;
+        border: 1px solid $primary-text-color-gray;
+
+        &::after {
+          background-color: $primary-text-color-gray;
+        }
       }
     }
   }
