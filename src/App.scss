@@ -25,6 +25,10 @@
   margin: auto 0;
 }
 
+.ant-layout-header {
+  border-bottom: 1px solid rgb(0, 177, 255);
+}
+
 .screenTitleGradient {
   background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#dff1ff), to($screen-primary-text));
   -webkit-background-clip: text;
@@ -33,7 +37,6 @@
 
 .screenPage {
   background: #1e2538;
-  border-top: 1px solid rgb(0, 177, 255);
 
   .header-bg {
     background: url("/images/topbg.png") no-repeat center;

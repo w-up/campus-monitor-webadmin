@@ -3,17 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0b5aa787-9ba3-4839-bcb1-9b38c1c54b5a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/src/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/System/MyEditableCell.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/basic/System/MyEditableCell.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/System/MyEditableTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/basic/System/MyEditableTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/System/System.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/basic/System/System.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/System/SystemConfig.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/basic/System/SystemConfig.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/User/AddEditRole.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/basic/User/AddEditRole.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/User/AddNewUser.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/basic/User/AddNewUser.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/User/Roles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/basic/User/Roles.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/User/User.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/basic/User/User.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/User/UserManagement.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/basic/User/UserManagement.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/MenuStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/MenuStore.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -42,8 +31,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="422">
-              <caret line="454" column="20" lean-forward="true" selection-start-line="454" selection-start-column="20" selection-end-line="454" selection-end-column="20" />
+            <state relative-caret-position="301">
+              <caret line="39" column="2" selection-start-line="39" selection-start-column="2" selection-end-line="39" selection-end-column="2" />
               <folding>
                 <element signature="e#3592#4304#0" />
                 <element signature="e#6204#6234#0" />
@@ -366,12 +355,12 @@
       <workItem from="1582810537269" duration="83678000" />
       <workItem from="1583466188019" duration="1697000" />
       <workItem from="1583552729410" duration="19722000" />
-      <workItem from="1583586844944" duration="28764000" />
+      <workItem from="1583586844944" duration="28984000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="152842000" />
+    <option name="totallyTimeSpent" value="153062000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
@@ -788,8 +777,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="454" column="20" lean-forward="true" selection-start-line="454" selection-start-column="20" selection-end-line="454" selection-end-column="20" />
+        <state relative-caret-position="301">
+          <caret line="39" column="2" selection-start-line="39" selection-start-column="2" selection-end-line="39" selection-end-column="2" />
           <folding>
             <element signature="e#3592#4304#0" />
             <element signature="e#6204#6234#0" />
