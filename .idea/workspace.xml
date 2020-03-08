@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b5aa787-9ba3-4839-bcb1-9b38c1c54b5a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/ParkScreen/left/TopTenMonitorTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/ParkScreen/left/TopTenMonitorTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/SewageWaterTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/SewageWaterTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/WasteGasTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/WasteGasTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/ParkScreen/top/ScreenTop.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/ParkScreen/top/ScreenTop.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/variable.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/variable.scss" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,24 +18,76 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/right/SewageWaterTable.tsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="44">
+              <caret line="2" selection-start-line="2" selection-end-line="2" selection-end-column="53" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/index.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="458">
-              <caret line="56" column="24" selection-start-line="56" selection-start-column="24" selection-end-line="56" selection-end-column="24" />
+            <state relative-caret-position="20">
+              <caret line="5" column="17" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/App.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="179">
+              <caret line="476" column="16" selection-start-line="476" selection-start-column="16" selection-end-line="476" selection-end-column="16" />
               <folding>
-                <element signature="e#0#36#0" expanded="true" />
+                <element signature="e#8400#8635#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/right/SewageWaterTable.tsx">
+        <entry file="file://$PROJECT_DIR$/src/variable.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="39" column="30" selection-start-line="39" selection-start-column="30" selection-end-line="39" selection-end-column="30" />
+            <state>
+              <caret column="28" selection-start-column="22" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/top/ScreenTop.tsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-11">
+              <caret line="25" column="12" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
               <folding>
-                <element signature="e#0#26#0" expanded="true" />
+                <element signature="e#0#44#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/top/ScreenTopSetting.tsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="327">
+              <caret line="101" column="21" lean-forward="true" selection-start-line="101" selection-start-column="21" selection-end-line="101" selection-end-column="21" />
+              <folding>
+                <element signature="e#0#59#0" expanded="true" />
+                <element signature="e#304#1321#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/TimeDisplay.tsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="242">
+              <caret line="11" column="13" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="13" />
+              <folding>
+                <element signature="e#0#49#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -48,79 +96,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/left/MonitorParamForm.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-253">
-              <caret line="17" column="6" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="6" />
+            <state relative-caret-position="253">
+              <caret line="54" column="12" lean-forward="true" selection-start-line="54" selection-start-column="12" selection-end-line="56" selection-end-column="21" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/left/TopTenMonitorTable.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="51" column="20" lean-forward="true" selection-start-line="51" selection-start-column="20" selection-end-line="51" selection-end-column="20" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="25" column="17" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/left/24HourChart.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="130" column="5" selection-start-line="130" selection-start-column="5" selection-end-line="130" selection-end-column="5" />
-              <folding>
-                <element signature="e#0#49#0" expanded="true" />
-                <element signature="e#288#3615#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/right/WasteGasTable.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="35" column="43" selection-start-line="35" selection-start-column="43" selection-end-line="35" selection-end-column="43" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/left/FocusStationTable.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="6" column="2" selection-start-line="6" selection-start-column="2" selection-end-line="30" selection-end-column="6" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-                <element signature="e#251#1366#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/App.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="161" column="13" lean-forward="true" selection-start-line="161" selection-start-column="13" selection-end-line="161" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -161,10 +141,16 @@
       <find>maxnum</find>
       <find>scroll</find>
       <find>dot</find>
+      <find>screenTable</find>
+      <find>04F0C1</find>
+      <find>#037FAB</find>
+      <find>button</find>
+      <find>04B2F0</find>
     </findStrings>
     <replaceStrings>
       <replace>$screen-text-color-2</replace>
       <replace>maxNum</replace>
+      <replace>$primary-text-color-gray</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -205,7 +191,6 @@
         <option value="$PROJECT_DIR$/src/App.tsx" />
         <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasTable.tsx" />
         <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/index.tsx" />
-        <option value="$PROJECT_DIR$/src/pages/screen/ParkScreen/top/ScreenTop.tsx" />
         <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/ScreenTop.tsx" />
         <option value="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/SewageWaterTable.ts" />
         <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/SewageTableDynamic.tsx" />
@@ -216,13 +201,15 @@
         <option value="$PROJECT_DIR$/src/pages/screen/ParkScreen/left/MonitorParamForm.tsx" />
         <option value="$PROJECT_DIR$/src/pages/screen/ParkScreen/left/FocusStationTable.tsx" />
         <option value="$PROJECT_DIR$/src/stores/screen/GasTableStore.ts" />
-        <option value="$PROJECT_DIR$/src/variable.scss" />
         <option value="$PROJECT_DIR$/src/pages/screen/ParkScreen/index.tsx" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/WasteGasTable.tsx" />
         <option value="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/SewageWaterTable.tsx" />
         <option value="$PROJECT_DIR$/src/pages/screen/ParkScreen/left/TopTenMonitorTable.tsx" />
+        <option value="$PROJECT_DIR$/src/pages/screen/ParkScreen/top/ScreenTop.tsx" />
+        <option value="$PROJECT_DIR$/src/variable.scss" />
         <option value="$PROJECT_DIR$/src/App.scss" />
+        <option value="$PROJECT_DIR$/src/pages/screen/ParkScreen/top/ScreenTopSetting.tsx" />
       </list>
     </option>
   </component>
@@ -243,6 +230,11 @@
             <path>
               <item name="campus-monitor-webadmin" type="b2602c69:ProjectViewProjectNode" />
               <item name="campus-monitor-webadmin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="campus-monitor-webadmin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="campus-monitor-webadmin" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="campus-monitor-webadmin" type="b2602c69:ProjectViewProjectNode" />
@@ -273,6 +265,32 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
               <item name="screen" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="campus-monitor-webadmin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="campus-monitor-webadmin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="screen" type="462c0819:PsiDirectoryNode" />
+              <item name="EnterpriseScreen" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="campus-monitor-webadmin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="campus-monitor-webadmin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="screen" type="462c0819:PsiDirectoryNode" />
+              <item name="EnterpriseScreen" type="462c0819:PsiDirectoryNode" />
+              <item name="left" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="campus-monitor-webadmin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="campus-monitor-webadmin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="screen" type="462c0819:PsiDirectoryNode" />
+              <item name="EnterpriseScreen" type="462c0819:PsiDirectoryNode" />
+              <item name="top" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="campus-monitor-webadmin" type="b2602c69:ProjectViewProjectNode" />
@@ -333,15 +351,15 @@
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/pages/basic" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/pages/screen/ParkScreen/left" />
       <recent name="$PROJECT_DIR$/public/images" />
+      <recent name="$PROJECT_DIR$/src/pages/screen/ParkScreen/left" />
       <recent name="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top" />
       <recent name="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/center" />
       <recent name="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages/basic" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -376,18 +394,18 @@
       <workItem from="1582810537269" duration="83678000" />
       <workItem from="1583466188019" duration="1697000" />
       <workItem from="1583552729410" duration="19722000" />
-      <workItem from="1583586844944" duration="2435000" />
+      <workItem from="1583586844944" duration="14684000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="126513000" />
+    <option name="totallyTimeSpent" value="138762000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49924585" visible="true" weight="0.24940048" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49924585" visible="true" weight="0.24940048" />
       <window_info id="Structure" order="1" sideWeight="0.5007542" side_tool="true" weight="0.24940048" />
       <window_info id="npm" order="2" sideWeight="0.5007542" side_tool="true" weight="0.24940048" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -414,13 +432,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/icon/index.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="664">
-          <caret line="33" column="9" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/center/Map.tsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
@@ -445,13 +456,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/common/constants.ts">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/echarts-for-react/lib/index.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="477">
-          <caret line="37" column="21" selection-start-line="37" selection-start-column="21" selection-end-line="37" selection-end-column="21" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/center/GroupChart.tsx">
       <provider selected="true" editor-type-id="text-editor">
@@ -547,16 +551,6 @@
     <entry file="file://$PROJECT_DIR$/src/assets/green.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/TimeDisplay.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="6" column="2" selection-start-line="6" selection-start-column="2" selection-end-line="14" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/index.tsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="316">
@@ -579,13 +573,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/left/Map.css" />
     <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/left/Map.tsx" />
-    <entry file="file://$PROJECT_DIR$/src/index.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="4510" column="1" selection-start-line="4510" selection-start-column="1" selection-end-line="4510" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/SewageTableDynamic.tsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1254">
@@ -648,16 +635,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasTable.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="22" column="10" lean-forward="true" selection-start-line="22" selection-start-column="10" selection-end-line="51" selection-end-column="29" />
-          <folding>
-            <element signature="e#743#1904#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/stores/mapMonitor/index.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-912" />
@@ -677,23 +654,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/Map.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-220">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/top/ScreenTop.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="53">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/stores/screen/GasTableStore.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="166">
@@ -701,13 +661,6 @@
           <folding>
             <element signature="e#275#1371#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/variable.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="20" selection-start-line="6" selection-end-line="6" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -728,28 +681,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/left/24HourChart.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="130" column="5" selection-start-line="130" selection-start-column="5" selection-end-line="130" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-            <element signature="e#288#3615#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/left/FocusStationTable.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="2" selection-start-line="6" selection-start-column="2" selection-end-line="30" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-            <element signature="e#251#1366#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="191">
@@ -757,43 +688,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/index.tsx">
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/Map.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="56" column="24" selection-start-line="56" selection-start-column="24" selection-end-line="56" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-10">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/right/WasteGasTable.tsx">
+    <entry file="file://$PROJECT_DIR$/node_modules/echarts-for-react/lib/index.d.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="35" column="43" selection-start-line="35" selection-start-column="43" selection-end-line="35" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/right/SewageWaterTable.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="39" column="30" selection-start-line="39" selection-start-column="30" selection-end-line="39" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/left/MonitorParamForm.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-253">
-          <caret line="17" column="6" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="814">
+          <caret line="37" column="21" selection-start-line="37" selection-start-column="21" selection-end-line="37" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -807,10 +712,122 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasTable.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="21" column="16" lean-forward="true" selection-start-line="12" selection-start-column="6" selection-end-line="21" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="7031" column="13" selection-start-line="7031" selection-start-column="1" selection-end-line="7031" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/right/WasteGasTable.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="23" column="6" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#1115#1890#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/index.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/left/24HourChart.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-67">
+          <caret line="32" column="17" selection-start-line="32" selection-start-column="8" selection-end-line="32" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/TimeDisplay.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/right/SewageWaterTable.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" selection-start-line="2" selection-end-line="2" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/left/FocusStationTable.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="6" column="2" selection-start-line="6" selection-start-column="2" selection-end-line="30" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#251#1366#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/left/MonitorParamForm.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="54" column="12" lean-forward="true" selection-start-line="54" selection-start-column="12" selection-end-line="56" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/top/ScreenTop.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-11">
+          <caret line="25" column="12" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/variable.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="28" selection-start-column="22" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/App.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="161" column="13" lean-forward="true" selection-start-line="161" selection-start-column="13" selection-end-line="161" selection-end-column="13" />
+        <state relative-caret-position="179">
+          <caret line="476" column="16" selection-start-line="476" selection-start-column="16" selection-end-line="476" selection-end-column="16" />
+          <folding>
+            <element signature="e#8400#8635#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/screen/ParkScreen/top/ScreenTopSetting.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="101" column="21" lean-forward="true" selection-start-line="101" selection-start-column="21" selection-end-line="101" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#59#0" expanded="true" />
+            <element signature="e#304#1321#0" />
+          </folding>
         </state>
       </provider>
     </entry>
