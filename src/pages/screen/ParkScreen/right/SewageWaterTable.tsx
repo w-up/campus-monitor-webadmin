@@ -1,33 +1,53 @@
 import React from 'react';
-import {useObserver} from "mobx-react-lite";
-import {useStore} from "../../../../stores";
+import {useLocalStore, useObserver} from "mobx-react-lite";
+import { Scrollbars } from 'react-custom-scrollbars';
 
 export const SewageWaterTable = () => {
-  const {
-    screen: {gasTable: gasTableStore}
-  } = useStore();
+
+  const store = useLocalStore(() => ({
+    sewageWater:[
+      { region: "CB化工", wu: "二氧化硫", data: "52.7mg/m³", maxNum: "200" },
+      { region: "B化工", wu: "一氧化碳", data: "12.2mg/m³", maxNum: "100" },
+      { region: "B化工", wu: "氮氧化物", data: "12.2mg/m³", maxNum: "100" },
+      { region: "B化工", wu: "氮氧化物", data: "52.7mg/m³", maxNum: "200" },
+      { region: "CB化工", wu: "二氧化硫", data: "52.7mg/m³", maxNum: "200" },
+      { region: "B化工", wu: "一氧化碳", data: "12.2mg/m³", maxNum: "100" },
+      { region: "B化工", wu: "氮氧化物", data: "12.2mg/m³", maxNum: "100" },
+      { region: "B化工", wu: "氮氧化物", data: "52.7mg/m³", maxNum: "200" },
+      { region: "CB化工", wu: "二氧化硫", data: "52.7mg/m³", maxNum: "200" },
+      { region: "B化工", wu: "一氧化碳", data: "12.2mg/m³", maxNum: "100" },
+      { region: "B化工", wu: "氮氧化物", data: "12.2mg/m³", maxNum: "100" },
+      { region: "B化工", wu: "氮氧化物", data: "52.7mg/m³", maxNum: "200" },
+    ]
+  }));
 
   return useObserver(() => (
-      <div className="topRight screenTable flex-1">
-        <div className="pt-4 px-4">
-          <div className="tableTitle text-left pb-2">重点污染物—废气</div>
+      <div className="topRight px-4 screenTable">
+        <div className="pt-4 pb-2 tableTitle flex justify-between">
+          <div className="text-left">重点污染物—废气</div>
+          <div className="vertical-middle">
+            <img src="/images/787878.png" className="float-right"/>
+          </div>
         </div>
-        <div className="px-4">
+        <div className="">
           <div className="tabTitle">
             <div>区域</div>
             <div>污染物</div>
             <div>浓度值</div>
             <div>限值</div>
           </div>
-          <div>{gasTableStore.wasteGasList.map((item) => {
+          <div>
+            <Scrollbars style={{ height: 250 }}>
+            {store.sewageWater.map((item) => {
                 return (
                   <div className="listItem tabTitle">
                     <div>{item.region}</div>
                     <div>{item.wu}</div>
                     <div>{item.data}</div>
-                    <div>{item.maxnum}</div>
+                    <div>{item.maxNum}</div>
                   </div>)
               })}
+            </Scrollbars>
           </div>
         </div>
       </div>

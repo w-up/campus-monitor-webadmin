@@ -1,6 +1,7 @@
 import {useObserver} from "mobx-react-lite";
 import React, {useEffect, useState} from "react";
 import {Moment} from "../../../../utils/moment-util";
+import {ScreenTopSetting} from "./ScreenTopSetting";
 
 export const ScreenTop = () => {
 
@@ -22,11 +23,7 @@ export const ScreenTop = () => {
           <div><span className="showTime font-bold text-lg sm:text-base">{time}</span></div>
         </div>
       </div>
-      <div className="head-center">
-        <div className="text-center text-2xl font-bold">
-          <span className="screenTitleGradient">鼎龙工业园污染源实时监测</span>
-        </div>
-      </div>
+      <ScreenTopSetting />
       <div className="head-right flex flex-row justify-around">
         <div className="city">
           武汉

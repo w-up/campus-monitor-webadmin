@@ -15,25 +15,28 @@ export const EnterpriseScreenPage = () => {
 
   return useObserver(() => (
     <div className="p-4 screenPage">
-      <div className="text-white pb-4 pl-2 cursor-pointer" style={{color:"#0DACF2"}} onClick={() => fullScreenRef.current?.requestFullscreen()}>
+      <div className="text-white pb-4 pl-2 cursor-pointer" style={{color: "#0DACF2"}}
+           onClick={() => fullScreenRef.current?.requestFullscreen()}>
         <Icon className="text-3xl font-black" type="fullscreen"/>
         <span className="ml-2">全屏展示</span>
       </div>
-      <div ref={fullScreenRef} className="flex-col w-full h-full pl-4 pr-4" style={{backgroundColor: "#061630"}}>
+      <div ref={fullScreenRef} className="flex-col w-full h-full" style={{backgroundColor: "#061630"}}>
         <ScreenTop/>
-        <div className="flex-1 flex mt-4">
-          <div>
-            <GasTable/>
-            <EnterpriseScreenGasChart/>
-          </div>
-          <div className="flex-1 pl-4 pr-4">
-            <EnterpriseMap/>
-            <EnterpriseScreenGroupChart/>
-          </div>
-          <div className="flex flex-col">
-            <SewageTableDynamic/>
-            <Sewage24HourChart/>
-            <SewageDailyChart/>
+        <div className="px-4">
+          <div className="flex-1 flex mt-4">
+            <div>
+              <GasTable/>
+              <EnterpriseScreenGasChart/>
+            </div>
+            <div className="flex-1 pl-4 pr-4">
+              <EnterpriseMap/>
+              <EnterpriseScreenGroupChart/>
+            </div>
+            <div className="flex flex-col">
+              <SewageTableDynamic/>
+              <Sewage24HourChart/>
+              <SewageDailyChart/>
+            </div>
           </div>
         </div>
       </div>

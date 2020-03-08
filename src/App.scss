@@ -1,22 +1,55 @@
 @import "~antd/dist/antd.css";
+@import "./variable.scss";
 
-$primary-text-color: #04B2F0;
-$screen-background: #061630;
+.primary-button-text-dark {
+  color: $primary-button-text-dark;
+}
+
+.primary-text-dark {
+  color: $primary-text-dark;
+}
+
+.primary-text-color {
+  color: $primary-text-color;
+}
+
+.screen-text-color-2 {
+  color: $screen-text-color-2;
+}
+
+.screen-background {
+  background: $screen-background;
+}
+
+.vertical-middle {
+  margin: auto 0;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .screenTitleGradient {
-  background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#DFF1FF), to(#00D2FF));
+  background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#dff1ff), to($screen-primary-text));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 .screenPage {
-  background: #1E2538;
+  background: #1e2538;
   border-top: 1px solid rgb(0, 177, 255);
 
   .header-bg {
     background: url("/images/topbg.png") no-repeat center;
     background-size: contain;
-    height: 92px;
+    height: 105px;
     line-height: 92px;
+    i {
+      line-height: 92px;
+    }
   }
 
   .title {
@@ -81,7 +114,8 @@ $screen-background: #061630;
     border: 1px solid #2e3b61;
   }
 
-  .topLeft, .topRight {
+  .topLeft,
+  .topRight {
     .tabTitle {
       line-height: 40px;
       display: flex;
@@ -102,13 +136,13 @@ $screen-background: #061630;
   }
 
   .tableTitle {
-    color: #55b7fe;
+    color: $screen-text-color-2;
     padding: 9px 0px;
     background-image: url("/images/title.png");
     font-weight: 700;
   }
-
 }
+
 .tabTitle {
   line-height: 40px;
   display: flex;
@@ -127,15 +161,15 @@ $screen-background: #061630;
   color: #88a8c5;
   font-size: 12px;
   text-align: center;
-  line-height: 30px;
+  line-height: 35px;
 }
 
 .sliderDotButton {
   width: 7px;
   height: 7px;
-  background: rgba(4, 249, 204, 1);
+  background: #04b2f0;
   border-radius: 50%;
-  margin: 15px 9px;
+  margin: 2px 9px;
   opacity: 0.7;
 }
 
@@ -145,17 +179,16 @@ $screen-background: #061630;
   border: 1px solid #2e3b61;
 }
 
-
 .t-b-con {
   width: 100px;
-  color: #55B7FE;
+  color: $screen-text-color-2;
   cursor: pointer;
   display: inline-block;
 }
 
 .t-b-con.active {
   background: rgba(44, 80, 129, 0.6);
-  color: #04F9CC;
+  color: #04f9cc;
 }
 
 .t-b-con img {
@@ -170,12 +203,12 @@ $screen-background: #061630;
 }
 
 .parkScreen {
-  background: #1E2538;
+  background: #1e2538;
   border-top: 1px solid rgb(0, 177, 255);
 
   .area {
     font-size: 14px;
-    color: #04B2F0;
+    color: #04b2f0;
   }
 
   .parkScreenTop {
@@ -210,50 +243,57 @@ $screen-background: #061630;
         .weather-img {
           margin: auto 0;
         }
+
         .wr {
-          color: #F7994D;
+          color: #f7994d;
         }
       }
     }
   }
 
   .screenContent {
-    .leftContent, .rightContent {
-      border: 1px solid #1082DA;
+    .leftContent,
+    .rightContent {
+      border: 1px solid #1082da;
       position: relative;
-      height:100%;
+      height: 100%;
       overflow: hidden;
       box-sizing: border-box;
     }
+
     .tableTitle {
-      color: #DBF6FF;
+      color: $primary-white;
       background: url("/images/75757.png") no-repeat bottom;
       background-size: contain;
-      font-weight: 700;
     }
   }
+
   .corner {
     width: 10px;
     height: 10px;
     position: absolute;
+
     &.cornerTl {
       border-top: 4px solid $primary-text-color;
       border-left: 4px solid $primary-text-color;
       left: -2px;
       top: -2px;
     }
+
     &.cornerTr {
       border-top: 4px solid $primary-text-color;
       border-right: 4px solid $primary-text-color;
       right: -2px;
       top: -2px;
     }
+
     &.cornerBl {
       border-bottom: 4px solid $primary-text-color;
       border-left: 4px solid $primary-text-color;
       left: -2px;
       bottom: -2px;
     }
+
     &.cornerBr {
       border-bottom: 4px solid $primary-text-color;
       right: -2px;
@@ -261,7 +301,294 @@ $screen-background: #061630;
       border-right: 4px solid $primary-text-color;
     }
   }
+
+  .mapExplain {
+    background: #172046;
+    //opacity:0.5;
+  }
 }
 
+.screenFormStyle {
+  .ant-form {
+    .ant-form-item {
+      margin-bottom: 15px;
+    }
 
+    .ant-form-item-label {
+      text-align: left;
 
+      & > label {
+        color: $screen-primary-text;
+      }
+    }
+
+    button {
+      background: rgba(0, 120, 255, 0.66);
+      border: 1px solid rgba(0, 174, 255, 1);
+      border-radius: 4px;
+      padding-left: 29px;
+      padding-right: 29px;
+      height: 36px;
+      line-height: 36px;
+    }
+  }
+
+  .ant-select-selection {
+    background: rgba(55, 105, 239, 0.2);
+    border: 1px solid rgba(106, 166, 221, 1);
+    border-radius: 4px;
+    color: $primary-white;
+  }
+
+  .ant-select-arrow {
+    color: $screen-primary-text;
+  }
+
+  .ant-form-item-label > label::after {
+    content: "";
+  }
+}
+
+.mapmonitor-page,
+.dynamicsource-page {
+  .ant-switch {
+    border-color: white;
+  }
+
+  .ant-radio-wrapper {
+    span {
+      color: white;
+    }
+  }
+
+  .ant-form-item-label > label {
+    color: white;
+  }
+
+  .ant-form-item {
+    margin-bottom: 10px;
+  }
+
+  .ant-tabs.ant-tabs-card {
+    > .ant-tabs-bar {
+      border-color: #1e4465;
+
+      .anticon {
+        color: #1e4465;
+      }
+    }
+
+    > .ant-tabs-bar .ant-tabs-tab {
+      border-color: transparent;
+      background: transparent;
+      color: #1e4465;
+
+      i {
+        font-size: 24px;
+        margin: 0 4px;
+      }
+    }
+
+    > .ant-tabs-bar .ant-tabs-tab-active {
+      border-color: #4abbec;
+      background: #4abbec;
+      color: white;
+
+      .anticon {
+        color: white;
+      }
+    }
+  }
+
+  .number {
+    position: absolute;
+    bottom: 24px;
+    left: 10px;
+    text-align: center;
+    font-size: 10px;
+    color: white;
+    width: 20px;
+  }
+
+  .monitor-table {
+    tr:hover td {
+      background: transparent !important;
+    }
+
+    .ant-table-thead > tr > th {
+      background: transparent;
+      color: white;
+      border-bottom: 2px solid #1bb8a1;
+    }
+
+    .ant-table-tbody > tr > td {
+      border-color: #303747;
+      color: white;
+    }
+  }
+
+  .monitor-row-panel {
+    position: fixed;
+    right: 0;
+    top: 60px;
+    height: 100vh;
+    background: rgba(16, 24, 43, 0.8);
+    width: 25vw;
+    z-index: 1;
+  }
+
+  .stat-panel {
+    background: rgba(32, 37, 60, 0.8);
+  }
+}
+
+.factoryAreaYellow {
+  width: 35px;
+  height: 11px;
+  border: 2px solid rgba(255, 216, 0, 1);
+  background: #ffd800;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.lineGreen {
+  width: 40px;
+  height: 1px;
+  border: 1px dashed #00ff66;
+  display: inline-block;
+  margin-right: 8px;
+  margin-bottom: 4px;
+}
+
+.blockNormal {
+  width: 15px;
+  height: 8px;
+  background: #00ffd0;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.redOver {
+  width: 15px;
+  height: 8px;
+  background: #f90421;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.screenSetting {
+  width: 400px;
+  border: 1px solid #2e3b61;
+  background: #102245;
+  height: 420px;
+  font-size: 14px;
+  border-radius: 2px;
+  color: $primary-white;
+  right: 55px;
+  top: 50px;
+  transition: max-height 0.3s ease-out;
+
+  .setting-box-header {
+    height: 40px;
+    line-height: 40px;
+    background: url("/images/title.png") no-repeat;
+  }
+
+  .ant-tabs {
+    color: #04b2f0;
+
+    .ant-tabs-bar {
+      border-bottom: 1px solid #04b2f0;
+    }
+
+    .ant-tabs-nav-scroll {
+      text-align: left;
+    }
+
+    .ant-tabs-nav {
+      font-weight: 400;
+
+      .ant-tabs-tab {
+        margin: 0;
+        padding: 10px 16px;
+      }
+
+      .ant-tabs-tab-active {
+        font-weight: 400;
+      }
+
+      .ant-tabs-ink-bar {
+        background-color: #04f0c1;
+        height: 1px;
+      }
+    }
+
+    .ant-tabs-content {
+      text-align: left;
+    }
+  }
+
+  .ant-tree {
+    .ant-tree-switcher {
+      color: $primary-text-color;
+    }
+    .ant-tree-checkbox-inner {
+      background-color: $screen-setting-background-color;
+      border: 1px solid $primary-text-color-gray;
+    }
+    li .ant-tree-node-content-wrapper {
+      color: $primary-text-color;
+      font-weight: normal;
+      &.ant-tree-node-selected,
+      &:hover {
+        background-color: #102245;
+      }
+    }
+    .ant-tree-checkbox-checked .ant-tree-checkbox-inner {
+      background-color: $primary-text-color-gray;
+      border: 1px solid $primary-text-color-gray;
+      &::after {
+        border: 2px solid $screen-setting-background-color;
+        border-top: 0;
+        border-left: 0;
+      }
+    }
+    .ant-tree-checkbox-indeterminate .ant-tree-checkbox-inner {
+      background-color: $primary-text-color-gray;
+      border: 1px solid $primary-text-color-gray;
+      &::after {
+        background-color: #102245;
+      }
+    }
+  }
+  .ant-radio-group {
+    padding: 0 20px;
+    .ant-radio-wrapper {
+      color: #88a8c5;
+      font-weight: normal;
+      margin: 4px 0;
+      width: 50%;
+      .ant-radio-inner {
+        background-color: $screen-setting-background-color;
+        border: 1px solid $primary-text-color-gray;
+
+        &::after {
+          background-color: $primary-text-color-gray;
+        }
+      }
+    }
+  }
+
+  .setting-box-footer {
+    .ant-btn-primary {
+      background-color: $primary-text-color;
+      color: $primary-white;
+      border-color: $primary-text-color;
+    }
+    .ant-btn-default {
+      background-color: $screen-setting-background-color;
+      color: $primary-white;
+      border-color: $primary-text-color;
+    }
+  }
+}
