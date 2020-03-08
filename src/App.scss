@@ -164,7 +164,7 @@
 .sliderDotButton {
   width: 7px;
   height: 7px;
-  background: #04B2F0;
+  background: #04b2f0;
   border-radius: 50%;
   margin: 2px 9px;
   opacity: 0.7;
@@ -303,7 +303,6 @@
     background: #172046;
     //opacity:0.5;
   }
-
 }
 
 .screenFormStyle {
@@ -428,7 +427,7 @@
   .monitor-row-panel {
     position: fixed;
     right: 0;
-    top: 0;
+    top: 60px;
     height: 100vh;
     background: rgba(16, 24, 43, 0.8);
     width: 25vw;
@@ -444,7 +443,7 @@
   width: 35px;
   height: 11px;
   border: 2px solid rgba(255, 216, 0, 1);
-  background: #FFD800;
+  background: #ffd800;
   display: inline-block;
   margin-right: 8px;
 }
@@ -452,7 +451,7 @@
 .lineGreen {
   width: 40px;
   height: 1px;
-  border: 1px dashed #00FF66;
+  border: 1px dashed #00ff66;
   display: inline-block;
   margin-right: 8px;
   margin-bottom: 4px;
@@ -461,7 +460,7 @@
 .blockNormal {
   width: 15px;
   height: 8px;
-  background: #00FFD0;
+  background: #00ffd0;
   display: inline-block;
   margin-right: 8px;
 }
@@ -469,7 +468,7 @@
 .redOver {
   width: 15px;
   height: 8px;
-  background: #F90421;
+  background: #f90421;
   display: inline-block;
   margin-right: 8px;
 }
@@ -484,7 +483,7 @@
   color: $primary-white;
   right: 55px;
   top: 50px;
-  transition: max-height .3s ease-out;
+  transition: max-height 0.3s ease-out;
 
   .setting-box-header {
     height: 40px;
@@ -493,10 +492,10 @@
   }
 
   .ant-tabs {
-    color: #04B2F0;
+    color: #04b2f0;
 
     .ant-tabs-bar {
-      border-bottom: 1px solid #04B2F0;
+      border-bottom: 1px solid #04b2f0;
     }
 
     .ant-tabs-nav-scroll {
@@ -513,11 +512,10 @@
 
       .ant-tabs-tab-active {
         font-weight: 400;
-
       }
 
       .ant-tabs-ink-bar {
-        background-color: #04F0C1;
+        background-color: #04f0c1;
         height: 1px;
       }
     }
@@ -538,7 +536,8 @@
     li .ant-tree-node-content-wrapper {
       color: $primary-text-color;
       font-weight: normal;
-      &.ant-tree-node-selected, &:hover {
+      &.ant-tree-node-selected,
+      &:hover {
         background-color: #102245;
       }
     }
