@@ -16,6 +16,9 @@
 .screen-text-color-2 {
   color: $screen-text-color-2;
 }
+.primary-red {
+  color: $primary-red;
+}
 
 .screen-background {
   background: $screen-background;
@@ -643,3 +646,12 @@
 
 
 
+.tableFloat {
+  line-height:20px;
+  .tableFloatNumber {
+    color: #04F9CC;
+    text-align: right;
+    display: inline-block;
+    margin-left: 15px;
+  }
+}
