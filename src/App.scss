@@ -446,7 +446,10 @@
     background: rgba(32, 37, 60, 0.8);
   }
 
-  .ant-input, .ant-select-selection, .ant-calendar-picker, .ant-radio-button-wrapper {
+  .ant-input,
+  .ant-select-selection,
+  .ant-calendar-picker,
+  .ant-radio-button-wrapper {
     background-color: #061630;
     color: white;
     i {
@@ -454,13 +457,13 @@
     }
   }
   .ant-radio-button-wrapper.ant-radio-button-wrapper-checked {
-    background-color: #0DACF2;
-    border-color: #0DACF2;
+    background-color: #0dacf2;
+    border-color: #0dacf2;
   }
 
   .ant-btn-primary {
-    background-color: #0DACF2;
-    border-color: #0DACF2;
+    background-color: #0dacf2;
+    border-color: #0dacf2;
   }
 }
 
@@ -612,7 +615,6 @@
   }
 
   .ant-checkbox-group {
-
     .ant-checkbox-wrapper {
       display: block;
       color: #88a8c5;
@@ -644,12 +646,10 @@
   }
 }
 
-
-
 .tableFloat {
-  line-height:20px;
+  line-height: 20px;
   .tableFloatNumber {
-    color: #04F9CC;
+    color: #04f9cc;
     text-align: right;
     display: inline-block;
     margin-left: 15px;
