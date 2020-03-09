@@ -8,6 +8,7 @@ import { GasTableStore } from "./screen/GasTableStore";
 import { SewageTableStore } from "./screen/SewageTableStore";
 import { DrawMapStore } from "./map/DrawMapStore";
 import { MapMonitorStore } from "./mapMonitor/index";
+import { Park } from "./base/Park";
 
 export const store = {
   menu: new MenuStore(),
@@ -22,7 +23,11 @@ export const store = {
     enterpriseScreenMap: new EnterpriseScreenMapStore(),
     gasTable: new GasTableStore(),
     sewageTable: new SewageTableStore()
+  },
+  base: {
+    park: new Park(),
   }
+
 };
 //@ts-ignore
 global._store = store;
