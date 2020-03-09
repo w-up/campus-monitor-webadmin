@@ -9,12 +9,14 @@ import { SewageTableStore } from "./screen/SewageTableStore";
 import { DrawMapStore } from "./map/DrawMapStore";
 import { MapMonitorStore } from "./mapMonitor/index";
 import { Park } from "./base/Park";
+import { DynamicSourceStore } from "./dynamicSource/index";
 
 export const store = {
   menu: new MenuStore(),
   auth: new AuthStore(),
   config: new ConfigStore(),
   mapMonitor: new MapMonitorStore(),
+  dynamicSource: new DynamicSourceStore(),
   map: {
     drawMap: new DrawMapStore()
   },

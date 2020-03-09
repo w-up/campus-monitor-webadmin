@@ -3,6 +3,7 @@ import { useObserver, useLocalStore } from "mobx-react-lite";
 import { Form, Select, Button, Table, Icon } from "antd";
 import { WrappedFormUtils } from "antd/lib/form/Form";
 import { TableProps } from "antd/lib/table";
+import { LineChart } from "../../components/LineChart";
 
 //@ts-ignore
 export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils }) => {
@@ -144,6 +145,11 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
             <div>气压: 101.6kPa</div>
           </div>
           <Table className="monitor-table mt-10" {...store.monitorPanel.table} pagination={false} />
+
+          <div>
+            <div className="primary-text-color mt-10 text-center">24小时监测浓度趋势图</div>
+            <LineChart />
+          </div>
         </div>
       )}
     </div>

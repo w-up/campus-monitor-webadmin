@@ -3,6 +3,8 @@ import { useObserver, useLocalStore } from "mobx-react-lite";
 import { Form, Select, Button, Table, Icon, DatePicker, Radio, Divider } from "antd";
 import { WrappedFormUtils } from "antd/lib/form/Form";
 import { TableProps } from "antd/lib/table";
+import { ColumnLineChart } from "../../components/ColumnLineChart";
+import { LineChart } from "../../components/LineChart";
 
 //@ts-ignore
 export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => {
@@ -84,7 +86,9 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
         </Form.Item>
       </Form>
       <div className="monitor-row-panel p-4 ">
-        <div className="stat-panel text-white mt-4 p-4">
+        <div className="primary-button-text-dark text-xl mt-8">A 化工</div>
+
+        <div className="stat-panel text-white mt-8 p-4">
           <div className="flex justify-between">
             <div>检测因子: 总挥发性有机物</div>
             <div>统计类型: 日</div>
@@ -113,6 +117,15 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
                 </div>
               ))}
             </div>
+          </div>
+          <div>
+            <div className="primary-text-color mt-10 text-center">24小时监测浓度趋势图</div>
+            <ColumnLineChart />
+          </div>
+
+          <div>
+            <div className="primary-text-color mt-10 text-center">厂界24小时排放浓度趋势图</div>
+            <LineChart />
           </div>
         </div>
       </div>

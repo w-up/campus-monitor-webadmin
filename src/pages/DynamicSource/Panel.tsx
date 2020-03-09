@@ -4,6 +4,7 @@ import { Form, Select, Button, Table, Icon, DatePicker, Slider, Switch, Input } 
 import { WrappedFormUtils } from "antd/lib/form/Form";
 import { TableProps } from "antd/lib/table";
 import RadioGroup from "antd/lib/radio/group";
+import { PieChart } from "../../components/PieChart";
 
 //@ts-ignore
 export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUtils }) => {
@@ -140,6 +141,10 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
         <div className="primary-button-text-dark text-sm mt-2"> 时间: 2020-01-02 14:00:00</div>
 
         <Table className="monitor-table mt-10" {...store.monitorPanel.table} pagination={false} />
+        <div>
+          <div className="primary-text-color mt-10 text-center">园区TVOCs排放贡献率</div>
+          <PieChart showLegend={false} pieRadius="80%" center={["50%", "50%"]} />
+        </div>
       </div>
     </div>
   ));

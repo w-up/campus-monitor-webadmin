@@ -2,6 +2,7 @@ import React from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
 import { Form, Select, Button, DatePicker, Icon, Slider, Radio } from "antd";
 import { WrappedFormUtils } from "antd/lib/form/Form";
+import { PieChart } from "../../components/PieChart";
 
 export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils }) => {
   const { getFieldDecorator } = form;
@@ -74,6 +75,11 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
           </Button>
         </Form.Item>
       </Form>
+
+      <div>
+        <div className="primary-text-color mt-10 text-center">园区TVOCs排放贡献率</div>
+        <PieChart />
+      </div>
     </div>
   ));
 });

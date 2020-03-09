@@ -18,7 +18,7 @@ export const GasTable = () => {
             <div>检测物质</div>
             <div>监测数值</div>
             <div>限值</div>
-            <div>超标率(%)</div>
+            <div>超标率</div>
           </div>
           <CarouselProvider
             naturalSlideWidth={100}

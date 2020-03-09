@@ -14,7 +14,7 @@ import { DataAuditPage } from "../pages/data/DataAudit";
 import { DataManagePage } from "../pages/data/DataManage";
 import { ReportPage } from "../pages/Report";
 import { Basic } from "../pages/basic/Basic";
-import { User } from "../pages/screen/User/User";
+import { User } from "../pages/basic/User/User";
 import { DrawBaiduMapExample } from "../pages/examples/DrawBaidumap/index";
 
 export class MenuStore {

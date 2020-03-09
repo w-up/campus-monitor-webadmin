@@ -1,3 +1,6 @@
+import icon from "../../../assets/img/ps9584563327b54298-eddd-40c8-a935-e5af0eec008d.png";
+import iconActive from "../../../assets/img/psfe3cfd750f8cc8dc-7879-4416-9832-a398f85a77b1.png";
+
 const BMapGL = window.BMapGL;
 
 //覆盖物类 加入 obj 站点信息
@@ -20,11 +23,7 @@ ComplexCustomOverlay.prototype.initialize = function(map) {
   let cells = `<div style='width:250px;'>
   <div style='display:inline-block'>
       <div style='width:40px;height:15px;background:${isActive ? "rgba(5,100,230,1)" : "#5A6C77"};border:1px solid rgba(4,249,204,1);color:white;border-radius:2px;'>${this._obj.text}</div>
-      <img style='width:40px;height:55px;' src='${
-        isActive
-          ? "https://lanhu.oss-cn-beijing.aliyuncs.com/ps9584563327b54298-eddd-40c8-a935-e5af0eec008d"
-          : "https://lanhu.oss-cn-beijing.aliyuncs.com/psfe3cfd750f8cc8dc-7879-4416-9832-a398f85a77b1"
-      }'/>
+      <img style='width:40px;height:55px;' src='${isActive ? icon : iconActive}'/>
   </div>
   <div style='display:inline-block;border:1px solid rgba(4,108,249,1);border-radius:4px;' >
       <div style='font-size:12px;display:flex;background-color:${isActive ? "rgba(4,108,249,1)" : "#2C5081"};color:white;'>

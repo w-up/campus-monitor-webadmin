@@ -7,3 +7,17 @@ $primary-white: #DBF6FF;
 $screen-text-color-2: #55B7FE;
 $screen-setting-background-color: #102245;
 $primary-text-color-gray: #037FAB;
+$primary-red:#F90421;
+
+
+%screen-form-theme {
+  background-color: $screen-setting-background-color;
+  border: 1px solid $primary-text-color-gray;
+}
+
+%text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+}

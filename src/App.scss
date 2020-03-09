@@ -16,6 +16,9 @@
 .screen-text-color-2 {
   color: $screen-text-color-2;
 }
+.primary-red {
+  color: $primary-red;
+}
 
 .screen-background {
   background: $screen-background;
@@ -25,11 +28,8 @@
   margin: auto 0;
 }
 
-.text-ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  white-space: nowrap;
+.ant-layout-header {
+  border-bottom: 1px solid rgb(0, 177, 255);
 }
 
 .screenTitleGradient {
@@ -40,13 +40,16 @@
 
 .screenPage {
   background: #1e2538;
-  border-top: 1px solid rgb(0, 177, 255);
 
   .header-bg {
     background: url("/images/topbg.png") no-repeat center;
     background-size: contain;
-    height: 92px;
+    height: 105px;
     line-height: 92px;
+
+    .settingIcon {
+      line-height: 92px;
+    }
   }
 
   .title {
@@ -64,9 +67,10 @@
     position: relative;
     width: 25%;
     min-width: 350px;
-    padding: 20px 0 12px 0;
+    padding: 20px 12px 12px 0;
     color: #04b2f0;
     opacity: 0.9;
+    height: 54px;
   }
 
   .head-right {
@@ -159,12 +163,16 @@
   font-size: 12px;
   text-align: center;
   line-height: 35px;
+
+  & > div {
+    @extend %text-ellipsis;
+  }
 }
 
 .sliderDotButton {
   width: 7px;
   height: 7px;
-  background: #04B2F0;
+  background: #04b2f0;
   border-radius: 50%;
   margin: 2px 9px;
   opacity: 0.7;
@@ -197,6 +205,40 @@
 .title ul li {
   list-style-type: none;
   display: inline-block;
+}
+
+.corner {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+
+  &.cornerTl {
+    border-top: 4px solid $primary-text-color;
+    border-left: 4px solid $primary-text-color;
+    left: -2px;
+    top: -2px;
+  }
+
+  &.cornerTr {
+    border-top: 4px solid $primary-text-color;
+    border-right: 4px solid $primary-text-color;
+    right: -2px;
+    top: -2px;
+  }
+
+  &.cornerBl {
+    border-bottom: 4px solid $primary-text-color;
+    border-left: 4px solid $primary-text-color;
+    left: -2px;
+    bottom: -2px;
+  }
+
+  &.cornerBr {
+    border-bottom: 4px solid $primary-text-color;
+    right: -2px;
+    bottom: -2px;
+    border-right: 4px solid $primary-text-color;
+  }
 }
 
 .parkScreen {
@@ -265,45 +307,10 @@
     }
   }
 
-  .corner {
-    width: 10px;
-    height: 10px;
-    position: absolute;
-
-    &.cornerTl {
-      border-top: 4px solid $primary-text-color;
-      border-left: 4px solid $primary-text-color;
-      left: -2px;
-      top: -2px;
-    }
-
-    &.cornerTr {
-      border-top: 4px solid $primary-text-color;
-      border-right: 4px solid $primary-text-color;
-      right: -2px;
-      top: -2px;
-    }
-
-    &.cornerBl {
-      border-bottom: 4px solid $primary-text-color;
-      border-left: 4px solid $primary-text-color;
-      left: -2px;
-      bottom: -2px;
-    }
-
-    &.cornerBr {
-      border-bottom: 4px solid $primary-text-color;
-      right: -2px;
-      bottom: -2px;
-      border-right: 4px solid $primary-text-color;
-    }
-  }
-
   .mapExplain {
     background: #172046;
     //opacity:0.5;
   }
-
 }
 
 .screenFormStyle {
@@ -428,7 +435,7 @@
   .monitor-row-panel {
     position: fixed;
     right: 0;
-    top: 0;
+    top: 60px;
     height: 100vh;
     background: rgba(16, 24, 43, 0.8);
     width: 25vw;
@@ -438,13 +445,33 @@
   .stat-panel {
     background: rgba(32, 37, 60, 0.8);
   }
+
+  .ant-input,
+  .ant-select-selection,
+  .ant-calendar-picker,
+  .ant-radio-button-wrapper {
+    background-color: #061630;
+    color: white;
+    i {
+      color: #d9d9d9;
+    }
+  }
+  .ant-radio-button-wrapper.ant-radio-button-wrapper-checked {
+    background-color: #0dacf2;
+    border-color: #0dacf2;
+  }
+
+  .ant-btn-primary {
+    background-color: #0dacf2;
+    border-color: #0dacf2;
+  }
 }
 
 .factoryAreaYellow {
   width: 35px;
   height: 11px;
   border: 2px solid rgba(255, 216, 0, 1);
-  background: #FFD800;
+  background: #ffd800;
   display: inline-block;
   margin-right: 8px;
 }
@@ -452,7 +479,7 @@
 .lineGreen {
   width: 40px;
   height: 1px;
-  border: 1px dashed #00FF66;
+  border: 1px dashed #00ff66;
   display: inline-block;
   margin-right: 8px;
   margin-bottom: 4px;
@@ -461,7 +488,7 @@
 .blockNormal {
   width: 15px;
   height: 8px;
-  background: #00FFD0;
+  background: #00ffd0;
   display: inline-block;
   margin-right: 8px;
 }
@@ -469,7 +496,7 @@
 .redOver {
   width: 15px;
   height: 8px;
-  background: #F90421;
+  background: #f90421;
   display: inline-block;
   margin-right: 8px;
 }
@@ -484,7 +511,7 @@
   color: $primary-white;
   right: 55px;
   top: 50px;
-  transition: max-height .3s ease-out;
+  transition: max-height 0.3s ease-out;
 
   .setting-box-header {
     height: 40px;
@@ -493,10 +520,10 @@
   }
 
   .ant-tabs {
-    color: #04B2F0;
+    color: #04b2f0;
 
     .ant-tabs-bar {
-      border-bottom: 1px solid #04B2F0;
+      border-bottom: 1px solid #04b2f0;
     }
 
     .ant-tabs-nav-scroll {
@@ -513,11 +540,10 @@
 
       .ant-tabs-tab-active {
         font-weight: 400;
-
       }
 
       .ant-tabs-ink-bar {
-        background-color: #04F0C1;
+        background-color: #04f0c1;
         height: 1px;
       }
     }
@@ -531,31 +557,76 @@
     .ant-tree-switcher {
       color: $primary-text-color;
     }
+
     .ant-tree-checkbox-inner {
       background-color: $screen-setting-background-color;
       border: 1px solid $primary-text-color-gray;
     }
+
     li .ant-tree-node-content-wrapper {
       color: $primary-text-color;
       font-weight: normal;
-      &.ant-tree-node-selected, &:hover {
+
+      &.ant-tree-node-selected,
+      &:hover {
         background-color: #102245;
       }
     }
+
     .ant-tree-checkbox-checked .ant-tree-checkbox-inner {
       background-color: $primary-text-color-gray;
       border: 1px solid $primary-text-color-gray;
+
       &::after {
         border: 2px solid $screen-setting-background-color;
         border-top: 0;
         border-left: 0;
       }
     }
+
     .ant-tree-checkbox-indeterminate .ant-tree-checkbox-inner {
       background-color: $primary-text-color-gray;
       border: 1px solid $primary-text-color-gray;
+
       &::after {
         background-color: #102245;
+      }
+    }
+  }
+
+  .ant-radio-group {
+    padding: 0 20px;
+
+    .ant-radio-wrapper {
+      color: #88a8c5;
+      font-weight: normal;
+      margin: 4px 0;
+      width: 50%;
+
+      .ant-radio-inner {
+        background-color: $screen-setting-background-color;
+        border: 1px solid $primary-text-color-gray;
+
+        &::after {
+          background-color: $primary-text-color-gray;
+        }
+      }
+    }
+  }
+
+  .ant-checkbox-group {
+    .ant-checkbox-wrapper {
+      display: block;
+      color: #88a8c5;
+      font-weight: normal;
+      margin: 4px 0;
+
+      .ant-checkbox-inner {
+        @extend %screen-form-theme;
+
+        &::after {
+          border-color: $primary-text-color-gray;
+        }
       }
     }
   }
@@ -566,10 +637,21 @@
       color: $primary-white;
       border-color: $primary-text-color;
     }
+
     .ant-btn-default {
       background-color: $screen-setting-background-color;
       color: $primary-white;
       border-color: $primary-text-color;
     }
+  }
+}
+
+.tableFloat {
+  line-height: 20px;
+  .tableFloatNumber {
+    color: #04f9cc;
+    text-align: right;
+    display: inline-block;
+    margin-left: 15px;
   }
 }

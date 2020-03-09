@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { useObserver } from "mobx-react-lite";
-import { Map, APILoader, Polygon, Label, CustomOverlay } from "@uiw/react-baidu-map";
+import { Map, APILoader, Polygon, Label, CustomOverlay, Marker } from "@uiw/react-baidu-map";
 import { useStore } from "../../stores/index";
+import blueArrow from "../../assets/img/arrow-blue.png";
+import { _ } from "utils/lodash";
+import * as geolib from "geolib";
 
 export const DynamicSourceMap = () => {
-  const {
-    config,
-    screen: { parkScreenMap: mapStore }
-  } = useStore();
+  const { config, dynamicSource: mapStore } = useStore();
+  const icon = new BMap.Icon(blueArrow, new BMap.Size(92, 30));
 
   useEffect(() => {
     return () => {
@@ -34,6 +35,21 @@ export const DynamicSourceMap = () => {
             item={item.name}
           ></Label>
         ))}
+        {mapStore.zoom >= 17 && (
+          <CustomOverlay paneName="floatPane">
+            {mapStore.pointsc.map((item, index) => (
+              <div key={index} style={{ position: "absolute", left: item.mapPos.left, top: item.mapPos.top, transform: `rotate(${Math.random() * 360}deg)` }}>
+                {item.number < 15 ? (
+                  <img style={{ maxWidth: "92px", height: "30px" }} src={require("../../assets/img/arrow-blue.png")} />
+                ) : (
+                  <img style={{ maxWidth: "92px", height: "30px", transform: "rotate(90dge)" }} src={require("../../assets/img/arrow-blue.png")} />
+                )}
+                <div className="number">{item.number}</div>
+              </div>
+            ))}
+          </CustomOverlay>
+        )}
+
         {mapStore.zoom > 17 && (
           <CustomOverlay paneName="floatPane">
             {mapStore.pointsc.map((item, index) => (
