@@ -3,7 +3,6 @@ import { observer } from "mobx-react-lite";
 import { toJS } from 'mobx';
 import { useStore } from "../../stores/index";
 import { Card, Form, Button, Input, Select, Table, Badge, Divider, Breadcrumb, Alert, Modal } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
 
 export const ParkPage = observer(() => {
@@ -44,7 +43,6 @@ export const ParkPage = observer(() => {
     console.log(item);
     Modal.confirm({
       title: '删除确认',
-      icon: <ExclamationCircleOutlined />,
       content: '确定删除这条记录吗？',
       onOk() {
         return deletePark([ item.id ]);
