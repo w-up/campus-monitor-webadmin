@@ -1,15 +1,24 @@
-import { action, observable } from "mobx";
+import { action, observable, computed } from "mobx";
+import * as geolib from "geolib";
+import { utils } from "../../utils/index";
 
 export class DynamicSourceStore {
   //@ts-ignore
   @observable map: BMap.Map = null;
   @observable center = { lng: 120.983642, lat: 31.36556 };
   @observable zoom = 17;
+  @observable computeType: "1" | "2" | "3" = "1";
   @observable polygonPath = [
     { lng: 120.990022, lat: 31.3717 },
     { lng: 120.970045, lat: 31.3702 },
     { lng: 120.981034, lat: 31.3616 }
   ];
+
+  @computed
+  get polyCenter(): ReturnType<typeof geolib.getCenterOfBounds> {
+    const result = geolib.getCenterOfBounds(utils.array.formatLatLngLong(this.polygonPath));
+    return result;
+  }
   @observable compamys = [
     [
       { lng: 120.985022, lat: 31.3687 },

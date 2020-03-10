@@ -5,6 +5,7 @@
   "dependencies": {
     "@types/echarts": "^4.4.3",
     "@types/geolib": "^2.0.23",
+    "@types/mockjs": "^1.0.2",
     "@types/moment-timezone": "^0.5.12",
     "@uiw/react-baidu-map": "^1.15.3",
     "antd": "^3.26.11",

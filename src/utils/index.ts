@@ -1,7 +1,24 @@
 import { _ } from "./lodash";
 
 export const utils = {
+  obj: {
+    formatLatLngShort(i) {
+      return {
+        lat: i.latitude,
+        lng: i.longitude
+      };
+    }
+  },
   array: {
+    formatLatLngLong(arr) {
+      return arr.map(i => ({
+        latitude: i.lat,
+        longitude: i.lng
+      }));
+    },
+    formatLatLngShort(arr) {
+      return arr.map(utils.obj.formatLatLngShort);
+    },
     scrollArray(arr: any[]) {
       const a = arr.shift();
       arr.push(a);

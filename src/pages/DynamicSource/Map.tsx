@@ -4,29 +4,29 @@ import { Map, APILoader, Polygon, Label, CustomOverlay, Marker } from "@uiw/reac
 import { useStore } from "../../stores/index";
 import blueArrow from "../../assets/img/arrow-blue.png";
 import { _ } from "utils/lodash";
-import * as geolib from "geolib";
+import { utils } from "../../utils/index";
+import { PolarRadialChart } from "../../components/PolarRadialChart";
 
 export const DynamicSourceMap = () => {
-  const { config, dynamicSource: mapStore } = useStore();
+  const { config, dynamicSource } = useStore();
   const icon = new BMap.Icon(blueArrow, new BMap.Size(92, 30));
 
   useEffect(() => {
     return () => {
       //@ts-ignore
-      mapStore.map = null;
+      dynamicSource.map = null;
     };
-  }, [mapStore.map]);
-
+  }, [dynamicSource.map]);
   return useObserver(() => (
     <APILoader akay={config.baiduMapApiKey}>
-      <Map onTilesLoaded={mapStore.onMapUpdate} zoom={mapStore.zoom} center={mapStore.center} enableScrollWheelZoom onZoomEnd={e => (mapStore.zoom = e.target.getZoom())}>
-        <Polygon path={mapStore.polygonPath} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor=""></Polygon>
-        {mapStore.compamys.map((item, index) => (
+      <Map onTilesLoaded={dynamicSource.onMapUpdate} zoom={dynamicSource.zoom} center={dynamicSource.center} enableScrollWheelZoom onZoomEnd={e => (dynamicSource.zoom = e.target.getZoom())}>
+        <Polygon path={dynamicSource.polygonPath} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor=""></Polygon>
+        {dynamicSource.compamys.map((item, index) => (
           <Polygon path={item} key={index} strokeStyle="dashed" fillColor="#FFD800" strokeColor="#FFD800" strokeWeight={2}></Polygon>
         ))}
-        {mapStore.compname.map((item, index) => (
+        {dynamicSource.compname.map((item, index) => (
           <Label
-            offset={mapStore.offset}
+            offset={dynamicSource.offset}
             content={item.name}
             key={item.name}
             position={item.position}
@@ -35,9 +35,9 @@ export const DynamicSourceMap = () => {
             item={item.name}
           ></Label>
         ))}
-        {mapStore.zoom >= 17 && (
+        {dynamicSource.computeType == "1" && (
           <CustomOverlay paneName="floatPane">
-            {mapStore.pointsc.map((item, index) => (
+            {dynamicSource.pointsc.map((item, index) => (
               <div key={index} style={{ position: "absolute", left: item.mapPos.left, top: item.mapPos.top, transform: `rotate(${Math.random() * 360}deg)` }}>
                 {item.number < 15 ? (
                   <img style={{ maxWidth: "92px", height: "30px" }} src={require("../../assets/img/arrow-blue.png")} />
@@ -50,9 +50,15 @@ export const DynamicSourceMap = () => {
           </CustomOverlay>
         )}
 
-        {mapStore.zoom > 17 && (
+        {dynamicSource.computeType == "2" && dynamicSource.zoom >= 17 && (
+          <CustomOverlay paneName="floatPane" position={utils.obj.formatLatLngShort(dynamicSource.polyCenter)}>
+            <PolarRadialChart />
+          </CustomOverlay>
+        )}
+
+        {dynamicSource.computeType == "3" && (
           <CustomOverlay paneName="floatPane">
-            {mapStore.pointsc.map((item, index) => (
+            {dynamicSource.pointsc.map((item, index) => (
               <div key={index} style={{ position: "absolute", left: item.mapPos.left, top: item.mapPos.top }}>
                 {item.number < 15 ? (
                   <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../assets/green.png")} />

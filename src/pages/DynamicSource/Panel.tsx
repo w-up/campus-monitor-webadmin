@@ -5,10 +5,12 @@ import { WrappedFormUtils } from "antd/lib/form/Form";
 import { TableProps } from "antd/lib/table";
 import RadioGroup from "antd/lib/radio/group";
 import { PieChart } from "../../components/PieChart";
+import { useStore } from "../../stores/index";
 
 //@ts-ignore
 export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUtils }) => {
   const { getFieldDecorator } = form;
+  const { config, dynamicSource } = useStore();
 
   const store = useLocalStore(() => ({
     isPlaying: false,
@@ -40,6 +42,11 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
       ]
     },
     monitorPanel: {
+      points: [
+        { name: "位置01", position: 29.1121, concentration: "121.1ppm" },
+        { name: "位置02", position: 29.1121, concentration: "121.1ppm" },
+        { name: "位置03", position: 29.1121, concentration: "121.1ppm" }
+      ],
       table: {
         dataSource: [
           { name: "A化工", precent: "62.5" },
@@ -111,7 +118,7 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
         <Form.Item label="终止时间">{getFieldDecorator("endTime", { initialValue: "" })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}</Form.Item>
         <div className="my-8 mx-2">
           <div className="primary-text-color">计算方法</div>
-          {getFieldDecorator("point", { initialValue: "1" })(<RadioGroup options={store.form.options}></RadioGroup>)}
+          {getFieldDecorator("computeType", { initialValue: "1" })(<RadioGroup options={store.form.options} onChange={e => (dynamicSource.computeType = e.target.value)}></RadioGroup>)}
         </div>
         <Form.Item wrapperCol={{ span: 22 }}>
           <Button type="primary" htmlType="submit" className="w-full">
@@ -136,16 +143,36 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
         </div>
       </div>
 
-      <div className="monitor-row-panel p-4 ">
-        <div className="primary-button-text-dark text-lg">计算结果</div>
-        <div className="primary-button-text-dark text-sm mt-2"> 时间: 2020-01-02 14:00:00</div>
+      {dynamicSource.computeType == "1" && (
+        <div className="monitor-row-panel p-4 ">
+          <div className="primary-button-text-dark text-lg">计算结果</div>
+          <div className="primary-button-text-dark text-sm mt-2"> 时间: 2020-01-02 14:00:00</div>
 
-        <Table className="monitor-table mt-10" {...store.monitorPanel.table} pagination={false} />
-        <div>
-          <div className="primary-text-color mt-10 text-center">园区TVOCs排放贡献率</div>
-          <PieChart showLegend={false} pieRadius="80%" center={["50%", "50%"]} />
+          <Table className="monitor-table mt-10" {...store.monitorPanel.table} pagination={false} />
+          <div>
+            <div className="primary-text-color mt-10 text-center">园区TVOCs排放贡献率</div>
+            <PieChart showLegend={false} pieRadius="80%" center={["50%", "50%"]} />
+          </div>
         </div>
-      </div>
+      )}
+      {dynamicSource.computeType == "3" && (
+        <div className="monitor-row-panel p-4 ">
+          <div className="primary-button-text-dark text-lg">计算结果</div>
+          <div className="primary-button-text-dark text-sm mt-2"> 时间: 2020-01-02 14:00:00</div>
+          {store.monitorPanel.points.map((item, index) => (
+            <div className="stat-panel text-white mt-8 p-4 flex">
+              <div className="text-md">
+                <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "red", display: "inline-block" }}></span>
+                <span className="ml-2">{item.name}</span>
+              </div>
+              <div className="ml-4">
+                <div>位置: {item.position}</div>
+                <div>浓度: {item.concentration}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   ));
 });
