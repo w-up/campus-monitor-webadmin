@@ -12,6 +12,7 @@ import { AlertManagePage } from "../pages/alert/AlertManage";
 import { AlertSettingPage } from "../pages/alert/AlertSetting";
 import { DataAuditPage } from "../pages/data/DataAudit";
 import { DataManagePage } from "../pages/data/DataManage";
+import { DataView } from "../pages/data/DataView";
 import { ReportPage } from "../pages/Report";
 import { Basic } from "../pages/basic/Basic";
 import { User } from "../pages/basic/User/User";
@@ -202,6 +203,20 @@ export class MenuStore {
           title: "数据管理",
           path: "/data/manage",
           component: DataManagePage,
+          children: []
+        },
+        {
+          icon: "dashboard",
+          title: "审核不通过查看",
+          path: "/data/manage/resolve",
+          component: DataView,
+          children: []
+        },
+        {
+          icon: "dashboard",
+          title: "审核通过查看",
+          path: "/data/manage/reject",
+          component: DataView,
           children: []
         },
         {

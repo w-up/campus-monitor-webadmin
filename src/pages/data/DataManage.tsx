@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-import ReactEcharts from "echarts-for-react";
+import { Link } from "react-router-dom";
 import { Card, Row, Col, Form, Button, Select, Tabs, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal } from 'antd';
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -32,9 +32,18 @@ const columns = [
     key: 'age',
   },
   {
-    title: '贡献率',
-    key: 'tags',
-    dataIndex: 'tags',
+    title: '状态',
+    key: 'status',
+    dataIndex: 'status',
+    render: (item) => {
+      if (item === '审核不通过') {
+        return <Link to="/data/manage/view" >{item}</Link>
+      } else if (item === '审核通过') {
+        return <Link to="/data/manage/view" >{item}</Link>
+      } else {
+        return item;
+      }
+    }
   },
 ];
 
@@ -48,6 +57,7 @@ const data = [
     age: 32,
     address: 'New York No. 1 Lake Park',
     tags: ['nice', 'developer'],
+    status: '审核不通过',
   },
   {
     time: '2019-10-24 17:00',
@@ -58,6 +68,7 @@ const data = [
     age: 42,
     address: 'London No. 1 Lake Park',
     tags: ['loser'],
+    status: '审核通过',
   },
   {
     time: '2019-10-24 17:00',
@@ -68,6 +79,7 @@ const data = [
     age: 32,
     address: 'Sidney No. 1 Lake Park',
     tags: ['cool', 'teacher'],
+    status: '待审核',
   },
   {
     time: '2019-10-24 17:00',
@@ -78,6 +90,7 @@ const data = [
     age: 32,
     address: 'New York No. 1 Lake Park',
     tags: ['nice', 'developer'],
+    status: '待审核',
   },
   {
     time: '2019-10-24 17:00',
@@ -88,6 +101,7 @@ const data = [
     age: 42,
     address: 'London No. 1 Lake Park',
     tags: ['loser'],
+    status: '待审核',
   },
   {
     time: '2019-10-24 17:00',
@@ -98,6 +112,7 @@ const data = [
     age: 32,
     address: 'Sidney No. 1 Lake Park',
     tags: ['cool', 'teacher'],
+    status: '待审核',
   },
   {
     time: '2019-10-24 17:00',
@@ -108,6 +123,7 @@ const data = [
     age: 32,
     address: 'New York No. 1 Lake Park',
     tags: ['nice', 'developer'],
+    status: '待审核',
   },
   {
     time: '2019-10-24 17:00',
@@ -118,6 +134,7 @@ const data = [
     age: 42,
     address: 'London No. 1 Lake Park',
     tags: ['loser'],
+    status: '待审核',
   },
   {
     time: '2019-10-24 17:00',
@@ -128,6 +145,7 @@ const data = [
     age: 32,
     address: 'Sidney No. 1 Lake Park',
     tags: ['cool', 'teacher'],
+    status: '待审核',
   },
 ];
 
