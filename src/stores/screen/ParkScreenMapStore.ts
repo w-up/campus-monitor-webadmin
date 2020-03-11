@@ -1,4 +1,5 @@
 import { action, observable } from "mobx";
+import api from "services";
 
 export class ParkScreenMapStore {
   //@ts-ignore
@@ -61,6 +62,16 @@ export class ParkScreenMapStore {
     { position: { lng: 120.983022, lat: 31.3657 }, name: "长润发" },
     { position: { lng: 120.980022, lat: 31.3657 }, name: "群力化工" }
   ];
+  @observable gasData = [] as any;
+  @observable waterData = [] as any;
+
+  @action.bound
+  async loadData() {
+    const [{ data: gasData }, { data: waterData }] = await Promise.all([api.DeviceData.getFactoryPMByParkId({ type: "1" }), api.DeviceData.getFactoryPMByParkId({ type: "2" })]);
+    this.gasData = gasData;
+    this.waterData = waterData;
+    console.log({ gasData, waterData });
+  }
 
   @action.bound
   draw() {
