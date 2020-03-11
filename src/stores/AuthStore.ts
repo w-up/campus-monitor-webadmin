@@ -26,7 +26,6 @@ export class AuthStore {
   @action.bound
   async login(data: { username: string; password: string }) {
     const result = await api.LoginService.login(data);
-    console.log(result.data);
     const { token, user, codes } = result.data;
     window.localStorage.setItem("token", token);
     Object.assign(this, {
@@ -37,9 +36,8 @@ export class AuthStore {
   }
 
   @action.bound
-  async devLogin() {
-    if (!this.token) {
-      this.login({ username: "admin", password: "123456" });
-    }
+  async logout() {
+    this.token = null;
+    window.localStorage.clear();
   }
 }

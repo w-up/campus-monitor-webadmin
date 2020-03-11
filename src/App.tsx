@@ -1,6 +1,6 @@
 import React from "react";
 import { useObserver } from "mobx-react-lite";
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch, useLocation, useHistory, Redirect } from "react-router-dom";
 import { HomePage } from "./pages/Home";
 import { LoginPage } from "./pages/Login";
 import { Layout, ConfigProvider } from "antd";
@@ -13,17 +13,9 @@ import { Basic } from "./pages/basic/Basic";
 import { User } from "./pages/basic/User/User";
 import { System } from "./pages/basic/System/System";
 import zhCN from "antd/es/locale/zh_CN";
-import { useEffect } from "react";
 
 const App = () => {
   const { menu, auth } = useStore();
-  // console.log(menu)
-  // const [{ data, loading, error }] = api.company.getCompanyBusinessInfoById({ companyId: 1 });
-  // console.log(data, loading, error);
-
-  useEffect(() => {
-    auth.devLogin();
-  }, []);
 
   const renderRoute = (data: any[]) => {
     return data.map(item => {
@@ -37,37 +29,40 @@ const App = () => {
       return <Route exact path={item.path} key={item.path} component={item.component} />;
     });
   };
-  const mainRoute = useObserver(() => (
-    <Router>
-      <Layout style={{ minHeight: "100vh" }}>
-        <NavHead></NavHead>
-        {/* <Layout.Sider collapsible collapsed={menu.collapsed} onCollapse={menu.toggleCollapsed} style={{ borderTop: "1px solid #00B1FF" }}>
+  const MainRoute = useObserver(() =>
+    auth.token ? (
+      <Router>
+        <Layout style={{ minHeight: "100vh" }}>
+          <NavHead></NavHead>
+          {/* <Layout.Sider collapsible collapsed={menu.collapsed} onCollapse={menu.toggleCollapsed} style={{ borderTop: "1px solid #00B1FF" }}>
           <NavMenu></NavMenu>
         </Layout.Sider> */}
-        <Layout>
-          <Layout.Sider trigger={null} collapsible collapsed={menu.collapsed}>
-            <NavMenu></NavMenu>
-          </Layout.Sider>
-          <Layout.Content>
-            <Switch>
-              <Route exact path="/" component={HomePage} />
-              <Route path="/base" component={Basic}></Route>
-              <Route path="/user" component={User}></Route>
-              <Route path="/system" component={System}></Route>
-              {renderRoute(menu.menus)}
-            </Switch>
-          </Layout.Content>
+          <Layout>
+            <Layout.Sider trigger={null} collapsible collapsed={menu.collapsed}>
+              <NavMenu></NavMenu>
+            </Layout.Sider>
+            <Layout.Content>
+              <Switch>
+                <Route path="/base" component={Basic}></Route>
+                <Route path="/user" component={User}></Route>
+                <Route path="/system" component={System}></Route>
+                {renderRoute(menu.menus)}
+              </Switch>
+            </Layout.Content>
+          </Layout>
         </Layout>
-      </Layout>
-    </Router>
-  ));
+      </Router>
+    ) : (
+      <Redirect to={{ pathname: "/login" }} />
+    )
+  );
 
   return useObserver(() => (
     <ConfigProvider locale={zhCN}>
       <Router>
         <Switch>
           <Route exact path="/login" component={LoginPage} />
-          <Route path="/">{mainRoute}</Route>
+          <Route path="/">{MainRoute}</Route>
         </Switch>
       </Router>
     </ConfigProvider>
