@@ -6,7 +6,7 @@ import { Card, Row, Col, Form, Button, Select, Tabs, Input, DatePicker, Radio, T
 const { Option } = Select;
 const { TabPane } = Tabs;
 
-export const DataView = observer(() => {
+export const DataRejectView = observer(() => {
 
   return (
     <div>

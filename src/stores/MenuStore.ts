@@ -12,7 +12,10 @@ import { AlertManagePage } from "../pages/alert/AlertManage";
 import { AlertSettingPage } from "../pages/alert/AlertSetting";
 import { DataAuditPage } from "../pages/data/DataAudit";
 import { DataManagePage } from "../pages/data/DataManage";
-import { DataView } from "../pages/data/DataView";
+import { DataResolveView } from "../pages/data/DataResolveView";
+import { DataRejectView } from "../pages/data/DataRejectView";
+import { DataReplenish } from "../pages/data/DataReplenish";
+
 import { ReportPage } from "../pages/Report";
 import { Basic } from "../pages/basic/Basic";
 import { User } from "../pages/basic/User/User";
@@ -207,21 +210,31 @@ export class MenuStore {
         },
         {
           icon: "dashboard",
+          title: "补录数据",
+          path: "/data/manage/replenish",
+          isHide: true,
+          component: DataReplenish,
+          children: []
+        },
+        {
+          icon: "dashboard",
           title: "审核不通过查看",
-          path: "/data/manage/resolve",
-          component: DataView,
+          path: "/data/manage/reject",
+          isHide: true,
+          component: DataRejectView,
           children: []
         },
         {
           icon: "dashboard",
           title: "审核通过查看",
-          path: "/data/manage/reject",
-          component: DataView,
+          isHide: true,
+          path: "/data/manage/resolve",
+          component: DataResolveView,
           children: []
         },
         {
           icon: "dashboard",
-          title: "对比分析",
+          title: "数据审核",
           path: "/data/audit",
           component: DataAuditPage,
           children: []

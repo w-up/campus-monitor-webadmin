@@ -37,9 +37,9 @@ const columns = [
     dataIndex: 'status',
     render: (item) => {
       if (item === '审核不通过') {
-        return <Link to="/data/manage/view" >{item}</Link>
+        return <Link to="/data/manage/reject" >{item}</Link>
       } else if (item === '审核通过') {
-        return <Link to="/data/manage/view" >{item}</Link>
+        return <Link to="/data/manage/resolve" >{item}</Link>
       } else {
         return item;
       }
@@ -204,7 +204,9 @@ export const DataManagePage = observer(() => {
             </Form>
 
             <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }}>
-              <Button type="primary" style={{ width: '100%' }} htmlType="submit">补传数据</Button>
+              <Link to="/data/manage/replenish">
+                <Button type="primary" style={{ width: '100%' }}>补传数据</Button>
+              </Link>
             </Form.Item>
           </Card>
         </Col>

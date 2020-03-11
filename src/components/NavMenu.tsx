@@ -9,7 +9,7 @@ export const NavMenu = () => {
   const { menu } = useStore();
 
   const renderMenu = (data: any[]) => {
-    return data.map(item => {
+    return data.filter(item => !item.isHide).map(item => {
       if (item.children && item.children.length > 0) {
         return (
           <SubMenu
