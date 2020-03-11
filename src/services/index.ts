@@ -7,8 +7,14 @@
  */
 // import { CompanyService } from "./company";
 import LoginService from "./login";
+import MapConfig from "./MapConfig";
+import DeviceData from "./DeviceData";
+import MapMonitor from "./MapMonitor";
 
 export default {
   // company: new CompanyService(),
-  LoginService
+  LoginService,
+  MapConfig,
+  DeviceData,
+  MapMonitor
 };
