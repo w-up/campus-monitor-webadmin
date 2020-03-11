@@ -62,6 +62,8 @@ export class MapMonitorStore {
     { position: { lng: 120.980022, lat: 31.3657 }, name: "群力化工" }
   ];
 
+  @observable currentTabKey = "1";
+
   @action.bound
   draw() {
     for (let x in this.pointsc) {

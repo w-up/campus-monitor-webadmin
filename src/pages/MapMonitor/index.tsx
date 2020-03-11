@@ -8,12 +8,14 @@ import { PollutionDistribution } from "./PollutionDistribution";
 import { Trending } from "./Trending";
 import { Contribution } from "./Contribution";
 import { MonitorAlert } from "./MonitorAlert";
+import { useStore } from "../../stores/index";
 
 export const MapMonitorPage = () => {
+  const { mapMonitor } = useStore();
   return useObserver(() => (
     <div className="mapmonitor-page flex" style={{ width: "100vw", height: "100%", backgroundColor: "#061630" }}>
       <div style={{ width: "20%" }}>
-        <Tabs type="card" size="large" defaultActiveKey="1">
+        <Tabs type="card" size="large" defaultActiveKey={mapMonitor.currentTabKey} onChange={e => (mapMonitor.currentTabKey = e)}>
           <Tabs.TabPane key="1" tab={<Icon type="area-chart" />}>
             <RuntimeMonitor />
           </Tabs.TabPane>
