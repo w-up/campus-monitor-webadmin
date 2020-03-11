@@ -24,13 +24,13 @@ export const EnterpriseMap = () => {
     // bus.$on("changeBottomIndex", mapStore.addpoints)
 
     setTimeout(() => {
-      if (!mapStore) return;
+      if (!mapStore.map) return;
       mapStore.addpoints(0); //添加站点覆盖物
       mapStore.play();
     }, 100);
 
     setTimeout(() => {
-      if (!mapStore) return;
+      if (!mapStore.map) return;
       let groundOverlayOptions = {
         displayOnMinLevel: 10,
         displayOnMaxLevel: 30,
