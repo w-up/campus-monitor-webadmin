@@ -18,7 +18,7 @@ let http = Axios.create({
 
 http.interceptors.request.use(async config => {
   if (!config.headers["Authrization"]) {
-    config.headers["Authrization"] = store.auth.token;
+    config.headers["Authrization"] = `Bearer ${store.auth.token}`;
   }
   return config;
 });
@@ -41,11 +41,11 @@ http.interceptors.response.use(
   }
 );
 
-export function GET(url, paramsOrData) {
+export function GET(url, paramsOrData?) {
   return http({ method: "GET", url, params: paramsOrData });
 }
 
-export function POST(url, paramsOrData) {
+export function POST(url, paramsOrData?) {
   return http({ method: "POST", url, data: paramsOrData });
 }
 
