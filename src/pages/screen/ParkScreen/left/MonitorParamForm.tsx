@@ -3,19 +3,23 @@ import { useObserver, useLocalStore } from "mobx-react-lite";
 import { Form, Select, Button, Table, Icon } from "antd";
 import { WrappedFormUtils } from "antd/lib/form/Form";
 import { useStore } from "../../../../stores/index";
+import { useLocalStorage } from "react-use";
 
 //@ts-ignore
 export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtils }) => {
   const { getFieldDecorator } = form;
   const { config } = useStore();
 
+  const [currentPmType, setCurrentType] = useLocalStorage("screen.parkScreen.MonitorParamForm.currentPmType", "all");
+
+  const [currentPmCode, setCurrentPmCode] = useLocalStorage("screen.parkScreen.MonitorParamForm.currentPmCode", "温度");
+
   const store = useLocalStore(() => ({
-    currentPmId: "all",
     get pmCodes() {
-      if (this.currentPmId == "all") {
-        return config.allPmCodes;
+      if (currentPmType == "all") {
+        return config.allPmCodes || [];
       } else {
-        return config.pmCodes[this.currentPmId];
+        return config.pmCodes[currentPmType] || [];
       }
     },
     formItemLayout: {
@@ -40,8 +44,8 @@ export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtil
     <div className="runtim-monitor screenFormStyle primary-text-color pr-6">
       <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
         <Form.Item label="监测类型">
-          {getFieldDecorator("park", { initialValue: "all" })(
-            <Select onChange={e => (store.currentPmId = String(e))}>
+          {getFieldDecorator("type", { initialValue: currentPmType })(
+            <Select onChange={setCurrentType}>
               <Select.Option value="all">全部</Select.Option>
               {Object.values(config.pmTypes).map((item, index) => (
                 <Select.Option value={item.id}>{item.label}</Select.Option>
@@ -50,8 +54,8 @@ export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtil
           )}
         </Form.Item>
         <Form.Item label="监测因子">
-          {getFieldDecorator("type", { initialValue: "TVOCs" })(
-            <Select>
+          {getFieldDecorator("pmCode", { initialValue: currentPmCode })(
+            <Select onChange={setCurrentPmCode}>
               {store.pmCodes.map((item, index) => (
                 <Select.Option value={item.pmCode}>{item.pmName}</Select.Option>
               ))}
