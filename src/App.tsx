@@ -12,13 +12,18 @@ import { useStore } from "./stores";
 import { Basic } from "./pages/basic/Basic";
 import { User } from "./pages/basic/User/User";
 import { System } from "./pages/basic/System/System";
-import zhCN from 'antd/es/locale/zh_CN';
+import zhCN from "antd/es/locale/zh_CN";
+import { useEffect } from "react";
 
 const App = () => {
-  const { menu } = useStore();
+  const { menu, auth } = useStore();
   // console.log(menu)
   // const [{ data, loading, error }] = api.company.getCompanyBusinessInfoById({ companyId: 1 });
   // console.log(data, loading, error);
+
+  useEffect(() => {
+    auth.devLogin();
+  }, []);
 
   const renderRoute = (data: any[]) => {
     return data.map(item => {
@@ -55,14 +60,14 @@ const App = () => {
         </Layout>
       </Layout>
     </Router>
-  ))
+  ));
 
   return useObserver(() => (
     <ConfigProvider locale={zhCN}>
       <Router>
         <Switch>
-          <Route exact path="/login" component={LoginPage}/>
-          <Route path="/" >{mainRoute}</Route>
+          <Route exact path="/login" component={LoginPage} />
+          <Route path="/">{mainRoute}</Route>
         </Switch>
       </Router>
     </ConfigProvider>

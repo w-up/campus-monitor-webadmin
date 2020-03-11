@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 
+ * @Descripttion:
  * @Author: shenchuanrun
  * @Date: 2020-03-03 14:18:27
  * @LastEditors: shenchuanrun
@@ -10,5 +10,5 @@ import LoginService from "./login";
 
 export default {
   // company: new CompanyService(),
-  ...LoginService
+  LoginService
 };

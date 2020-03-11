@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 
+ * @Descripttion:
  * @Author: shenchuanrun
  * @Date: 2020-03-04 18:52:20
  * @LastEditors: shenchuanrun
@@ -7,8 +7,8 @@
  */
 import { GET, POST } from "../utils/request";
 
-export default{
-  getParkList(data: { current: number, pageSize: number, parkName: string }) {
-    return GET('/park/getParkListPage', data)
+export default {
+  getParkList(data: { current: number; pageSize: number; parkName: string }) {
+    return GET("/park/getParkListPage", data);
   }
-}
+};
