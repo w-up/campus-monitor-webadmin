@@ -243,7 +243,7 @@ export class MenuStore {
     },
     {
       icon: "dashboard",
-      title: "数据报表",
+      title: "统计报表",
       path: "/report",
       component: ReportPage,
       children: []
