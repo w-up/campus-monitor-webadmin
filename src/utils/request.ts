@@ -17,8 +17,8 @@ let http = Axios.create({
 });
 
 http.interceptors.request.use(async config => {
-  if (!config.headers["Authrization"]) {
-    config.headers["Authrization"] = `Bearer ${store.auth.token}`;
+  if (!config.headers["Authorization"]) {
+    config.headers["Authorization"] = `Bearer ${store.auth.token}`;
   }
   return config;
 });

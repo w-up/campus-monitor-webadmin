@@ -8,14 +8,18 @@ import { NavMenu } from "./components/NavMenu";
 import { NavHead } from "./components/NavHead";
 import "./App.scss";
 import { useStore } from "./stores";
-// import { api } from "./services/index";
 import { Basic } from "./pages/basic/Basic";
 import { User } from "./pages/basic/User/User";
 import { System } from "./pages/basic/System/System";
 import zhCN from "antd/es/locale/zh_CN";
+import { useEffect } from "react";
 
 const App = () => {
-  const { menu, auth } = useStore();
+  const { menu, auth, config } = useStore();
+
+  useEffect(() => {
+    config.loadPmCode();
+  }, []);
 
   const renderRoute = (data: any[]) => {
     return data.map(item => {
