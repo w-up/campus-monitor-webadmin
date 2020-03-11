@@ -21,20 +21,26 @@ export const EnterpriseMap = () => {
     mapStore.map.setTilt(mapStore.tilt); //旋转角度
     let SW = new BMapGL.Point(116.38179, 39.900146);
     let NE = new BMapGL.Point(116.384451, 39.901146);
-
-    let groundOverlayOptions = {
-      opacity: 1,
-      displayOnMinLevel: 10,
-      displayOnMaxLevel: 20
-    };
-
-    // 初始化GroundOverlay
-    let groundOverlay = new BMapGL.GroundOverlay(new BMapGL.Bounds(SW, NE), groundOverlayOptions);
-    groundOverlay.setImageURL(ExampleMap);
-    mapStore.map.addOverlay(groundOverlay); //添加图片覆盖物
     // bus.$on("changeBottomIndex", mapStore.addpoints)
-    mapStore.addpoints(0); //添加站点覆盖物
-    mapStore.play();
+
+    setTimeout(() => {
+      if (!mapStore) return;
+      mapStore.addpoints(0); //添加站点覆盖物
+      mapStore.play();
+    }, 100);
+
+    setTimeout(() => {
+      if (!mapStore) return;
+      let groundOverlayOptions = {
+        displayOnMinLevel: 10,
+        displayOnMaxLevel: 30,
+        imageURL: ExampleMap
+      };
+      // 初始化GroundOverlay
+      let groundOverlay = new BMapGL.GroundOverlay(new BMapGL.Bounds(SW, NE), groundOverlayOptions);
+      mapStore.map.addOverlay(groundOverlay); //添加图片覆盖物
+    }, 500);
+
     return () => {
       mapStore.map = null;
     };
