@@ -4,7 +4,7 @@ import { ParkPage } from "./Park";
 import { EnterprisePage } from "./Enterprise";
 import { MyEnterprisePage } from "./MyEnterprise";
 import { AddNewEnterprise } from "./AddNewEnterprise";
-import { AddNewPark } from "./AddNewPark";
+import { ParkEditPage } from "./ParkEditPage";
 
 export const Basic = (props: RouteComponentProps) => {
   return (
@@ -13,7 +13,7 @@ export const Basic = (props: RouteComponentProps) => {
       <Route path={`${props.match.path}/enterprise`} component={EnterprisePage}></Route>
       <Route path={`${props.match.path}/my-enterprise`} component={MyEnterprisePage}></Route>
       <Route path={`${props.match.path}/add-enterprise`} component={AddNewEnterprise}></Route>
-      <Route path={`${props.match.path}/add-park`} component={AddNewPark}></Route>
+      <Route path={`${props.match.path}/park-edit`} component={ParkEditPage}></Route>
     </Switch>
   )
 }
