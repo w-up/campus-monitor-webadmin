@@ -41,11 +41,16 @@ const App = () => {
           {/* <Layout.Sider collapsible collapsed={menu.collapsed} onCollapse={menu.toggleCollapsed} style={{ borderTop: "1px solid #00B1FF" }}>
           <NavMenu></NavMenu>
         </Layout.Sider> */}
-          <Layout>
-            <Layout.Sider trigger={null} collapsible collapsed={menu.collapsed}>
+          <Layout style={{marginTop: 64}}>
+            <Layout.Sider style={{
+              overflow: 'auto',
+              height: '100vh',
+              position: 'fixed',
+              left: 0,
+            }} trigger={null} collapsible collapsed={menu.collapsed}>
               <NavMenu></NavMenu>
             </Layout.Sider>
-            <Layout.Content>
+            <Layout.Content style={{ marginLeft: menu.collapsed?80:200 }}>
               <Switch>
                 <Route path="/base" component={Basic}></Route>
                 <Route path="/user" component={User}></Route>
