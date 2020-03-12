@@ -31,27 +31,24 @@ export class MenuStore {
 
   @observable menus = [
     {
-      icon: "dashboard",
+      icon: "appstore",
       title: "基础信息",
       path: "/base",
       component: "",
       children: [
         {
-          icon: "dashboard",
           title: "园区管理",
           path: "/base/park",
           component: Basic,
           children: []
         },
         {
-          icon: "dashboard",
           title: "企业管理",
           path: "/base/enterprise",
           component: Basic,
           children: []
         },
         {
-          icon: "dashboard",
           title: "我的企业",
           path: "/base/my-enterprise",
           component: MyEnterprisePage,
@@ -60,20 +57,18 @@ export class MenuStore {
       ]
     },
     {
-      icon: "dashboard",
+      icon: "user",
       title: "用户权限",
       path: "/user",
       component: "",
       children: [
         {
-          icon: "dashboard",
           title: "用户管理",
           path: "/user/userlist",
           component: User,
           children: []
         },
         {
-          icon: "dashboard",
           title: "角色管理",
           path: "/user/rolelist",
           component: User,
@@ -82,12 +77,11 @@ export class MenuStore {
       ]
     },
     {
-      icon: "dashboard",
+      icon: "setting",
       title: "系统管理",
       path: "/system",
       children: [
         {
-          icon: "dashboard",
           title: "参数配置",
           path: "/system/configration",
           children: []
@@ -101,14 +95,12 @@ export class MenuStore {
       component: "",
       children: [
         {
-          icon: "dashboard",
           title: "企业驾驶舱",
           path: "/screen/enterprise",
           component: EnterpriseScreenPage,
           children: []
         },
         {
-          icon: "dashboard",
           title: "园区驾驶舱",
           path: "/screen/park",
           component: ParkScreenPage,
@@ -117,7 +109,7 @@ export class MenuStore {
       ]
     },
     {
-      icon: "dashboard",
+      icon: "environment",
       title: "地图监控",
       path: "/map",
       component: MapMonitorPage,
@@ -131,20 +123,18 @@ export class MenuStore {
       children: []
     },
     {
-      icon: "dashboard",
+      icon: "search",
       title: "数据查询",
       path: "/query",
       component: "",
       children: [
         {
-          icon: "dashboard",
           title: "实时数据查询",
           path: "/query/runtime",
           component: RuntimeDataPage,
           children: []
         },
         {
-          icon: "dashboard",
           title: "历史数据查询",
           path: "/query/history",
           component: HistoryDataPage,
@@ -153,20 +143,18 @@ export class MenuStore {
       ]
     },
     {
-      icon: "dashboard",
+      icon: "bar-chart",
       title: "统计分析",
       path: "/analysis",
       component: "",
       children: [
         {
-          icon: "dashboard",
           title: "统计排名",
           path: "/analysis/rank",
           component: RankAnalysisPage,
           children: []
         },
         {
-          icon: "dashboard",
           title: "对比分析",
           path: "/analysis/comparison",
           component: ComparisonAnalysisPage,
@@ -175,19 +163,17 @@ export class MenuStore {
       ]
     },
     {
-      icon: "dashboard",
+      icon: "info-circle",
       title: "告警处理",
       path: "/alert",
       component: "",
       children: [
         {
-          icon: "dashboard",
           title: "告警管理",
           path: "/alert/manage",
           component: AlertManagePage
         },
         {
-          icon: "dashboard",
           title: "告警设置",
           path: "/alert/setting",
           component: AlertSettingPage,
@@ -196,20 +182,18 @@ export class MenuStore {
       ]
     },
     {
-      icon: "dashboard",
+      icon: "fund",
       title: "数据质量",
       path: "/data",
       component: "",
       children: [
         {
-          icon: "dashboard",
           title: "数据管理",
           path: "/data/manage",
           component: DataManagePage,
           children: []
         },
         {
-          icon: "dashboard",
           title: "补录数据",
           path: "/data/manage/replenish",
           isHide: true,
@@ -217,7 +201,6 @@ export class MenuStore {
           children: []
         },
         {
-          icon: "dashboard",
           title: "审核不通过查看",
           path: "/data/manage/reject",
           isHide: true,
@@ -225,7 +208,6 @@ export class MenuStore {
           children: []
         },
         {
-          icon: "dashboard",
           title: "审核通过查看",
           isHide: true,
           path: "/data/manage/resolve",
@@ -233,7 +215,6 @@ export class MenuStore {
           children: []
         },
         {
-          icon: "dashboard",
           title: "数据审核",
           path: "/data/audit",
           component: DataAuditPage,
@@ -242,7 +223,7 @@ export class MenuStore {
       ]
     },
     {
-      icon: "dashboard",
+      icon: "area-chart",
       title: "统计报表",
       path: "/report",
       component: ReportPage,
@@ -255,7 +236,6 @@ export class MenuStore {
       component: "",
       children: [
         {
-          icon: "dashboard",
           title: "地图路径绘制",
           path: "/exmaple/drawmap",
           component: DrawBaiduMapExample
