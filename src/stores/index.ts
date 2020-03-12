@@ -9,6 +9,7 @@ import { SewageTableStore } from "./screen/SewageTableStore";
 import { DrawMapStore } from "./map/DrawMapStore";
 import { MapMonitorStore } from "./mapMonitor/index";
 import { Park } from "./base/Park";
+import { ParkEdit } from "./base/ParkEdit";
 import { DynamicSourceStore } from "./dynamicSource/index";
 
 export const store = {
@@ -28,6 +29,7 @@ export const store = {
   },
   base: {
     park: new Park(),
+    parkEdit: new ParkEdit(),
   }
 
 };

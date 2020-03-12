@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { toJS } from 'mobx';
 import { useStore } from "../../stores/index";
-import { Card, Form, Button, Input, Select, Table, Badge, Divider, Breadcrumb, Alert, Modal } from 'antd';
+import { Card, Form, Button, Input, Select, Table, Badge, Divider, Breadcrumb, Alert, Modal, message } from 'antd';
 import { Link } from "react-router-dom";
 
 export const ParkPage = observer(() => {
@@ -44,10 +44,14 @@ export const ParkPage = observer(() => {
     Modal.confirm({
       title: '删除确认',
       content: '确定删除这条记录吗？',
-      onOk() {
-        return deletePark([ item.id ]);
+      async onOk() {
+        try {
+          await deletePark([ item.id ]);
+          message.success('删除成功');
+        } catch {
+          message.error('删除失败');
+        }
       },
-      onCancel() {},
     });
   }
 
@@ -122,7 +126,7 @@ export const ParkPage = observer(() => {
         </div>
 
         <div style={{ marginTop: 20, marginBottom: 10 }}>
-          <Button type="primary"><Link to="add-park">新建</Link></Button>
+          <Button type="primary"><Link to="/base/park-edit">新建</Link></Button>
           <Button style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button>
         </div>
         <div style={{ marginTop: 20, marginBottom: 10 }}>
