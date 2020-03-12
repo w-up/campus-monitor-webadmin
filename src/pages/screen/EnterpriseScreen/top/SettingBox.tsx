@@ -3,6 +3,7 @@ import {useLocalStore, useObserver} from "mobx-react-lite";
 import {Button, Icon, Radio, Tabs, Checkbox} from "antd";
 import {Scrollbars} from 'react-custom-scrollbars';
 import {useProperties} from "@uiw/react-baidu-map/lib/cjs/common/hooks";
+import {MapSettingTab} from "./MapSettingTab";
 
 export const SettingBox = ({boxDisplay, toggle}) => {
   const {TabPane} = Tabs;
@@ -55,7 +56,7 @@ export const SettingBox = ({boxDisplay, toggle}) => {
   }));
 
   return useObserver(() => (
-    <div className="absolute screenSetting z-50 mt-8" style={{width: 350, height:410, left: 100, display: settingDisplay ? "block" : "none"}}>
+    <div className="absolute screenSetting z-50 mt-8" style={{width: 350, height:500, left: 100, display: settingDisplay ? "block" : "none"}}>
       <div className="setting-box-header text-center">
         驾驶舱显示设置
         <span className="text-red-600 z-50 absolute right-0 top-0" onClick={() => toggle(!settingDisplay)}>
@@ -67,7 +68,7 @@ export const SettingBox = ({boxDisplay, toggle}) => {
           <TabPane tab="因子配置" key="1">
             <div className="flex">
               <div className="w-6/12 pl-2">
-                <Scrollbars style={{height: 230}}>
+                <Scrollbars style={{height: 320}}>
                   <div className="font-normal">废气:</div>
                   <Checkbox.Group>
                     {store.checkboxGroupData1.map((item)=> {
@@ -79,7 +80,7 @@ export const SettingBox = ({boxDisplay, toggle}) => {
                 </Scrollbars>
               </div>
               <div className="w-6/12 pl-2">
-                <Scrollbars style={{height: 230}}>
+                <Scrollbars style={{height: 320}}>
                   <div className="font-normal">废水:</div>
                   <Checkbox.Group>
                     {store.checkboxGroupData2.map((item)=> {
@@ -93,7 +94,7 @@ export const SettingBox = ({boxDisplay, toggle}) => {
             </div>
           </TabPane>
           <TabPane tab="厂区切换" key="2">
-            <Scrollbars style={{height: 230}}>
+            <Scrollbars style={{height: 320}}>
               <Radio.Group>
                 {store.radioGroupData.map((item) => {
                   return (
@@ -104,8 +105,8 @@ export const SettingBox = ({boxDisplay, toggle}) => {
             </Scrollbars>
           </TabPane>
           <TabPane tab="地图配置" key="3">
-            <Scrollbars style={{height: 230}}>
-
+            <Scrollbars style={{height: 320}}>
+              <MapSettingTab/>
             </Scrollbars>
           </TabPane>
         </Tabs>

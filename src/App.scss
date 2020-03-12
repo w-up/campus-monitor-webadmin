@@ -16,6 +16,7 @@
 .screen-text-color-2 {
   color: $screen-text-color-2;
 }
+
 .primary-red {
   color: $primary-red;
 }
@@ -243,6 +244,7 @@
 
 .parkScreen {
   background: #1e2538;
+
   .area {
     font-size: 14px;
     color: #04b2f0;
@@ -450,10 +452,12 @@
   .ant-radio-button-wrapper {
     background-color: #061630;
     color: white;
+
     i {
       color: #d9d9d9;
     }
   }
+
   .ant-radio-button-wrapper.ant-radio-button-wrapper-checked {
     background-color: #0dacf2;
     border-color: #0dacf2;
@@ -629,6 +633,55 @@
     }
   }
 
+  .ant-form-item {
+    margin-bottom: 6px;
+  }
+  .ant-form-item-label {
+    & > label {
+      color: #04b2f0;
+      font-weight: normal;
+    }
+  }
+  .ant-input {
+    background-color: #102245;
+    color: $primary-white;
+    border: 1px solid #2e3b61;
+    border-radius: 2px;
+    height: 28px;
+  }
+  .ant-upload {
+    color: $primary-white;
+    font-size: 12px;
+    font-weight: normal;
+  }
+  .ant-upload.ant-upload-select-picture-card {
+    width: 80px;
+    height: 80px;
+    background: #103266;
+    border-radius: 0;
+    border: 1px dashed #5195C3;
+  }
+  .ant-upload-list-picture-card .ant-upload-list-item-uploading-text {
+    color: $primary-white;
+    font-size: 12px;
+    font-weight: normal;
+  }
+  .ant-upload-list-picture-card .ant-upload-list-item-progress {
+    bottom: 24px;
+    padding-left: 6px;
+  }
+  .ant-upload-list-picture-card-container {
+    width: 80px;
+    height: 80px;
+  }
+  .ant-upload-list-picture-card .ant-upload-list-item {
+    width: 80px;
+    height: 80px;
+    border: 1px dashed #5195C3;
+    border-radius: 0;
+    background: #103266;
+  }
+
   .setting-box-footer {
     .ant-btn-primary {
       background-color: $primary-text-color;
@@ -646,6 +699,7 @@
 
 .tableFloat {
   line-height: 20px;
+
   .tableFloatNumber {
     color: #04f9cc;
     text-align: right;
