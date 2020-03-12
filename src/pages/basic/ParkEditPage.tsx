@@ -109,7 +109,7 @@ export const ParkEditPage = Form.create()(observer(({ form }: any) => {
                 <Radio value="location">输入经纬度</Radio>
               </Radio.Group>
             )}
-            <Table size="small" bordered dataSource={toJS(scope)}>
+            <Table pagination={false} size="small" bordered dataSource={toJS(scope)}>
               <Column
                 title="名称"
                 dataIndex="scopeName"
