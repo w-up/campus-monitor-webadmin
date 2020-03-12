@@ -18,6 +18,7 @@ const App = () => {
   const { menu, auth, config } = useStore();
 
   useEffect(() => {
+    auth.getAuthUser();
     config.loadPmCode();
   }, []);
 

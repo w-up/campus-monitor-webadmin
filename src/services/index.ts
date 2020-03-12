@@ -6,7 +6,7 @@
  * @LastEditTime: 2020-03-04 17:55:02
  */
 // import { CompanyService } from "./company";
-import LoginService from "./login";
+import AuthService from "./auth";
 import MapConfig from "./mapConfig";
 import DeviceData from "./deviceData";
 import MapMonitor from "./mapMonitor";
@@ -14,7 +14,7 @@ import PmCode from "./pmCode";
 
 export default {
   // company: new CompanyService(),
-  LoginService,
+  AuthService,
   MapConfig,
   DeviceData,
   MapMonitor,

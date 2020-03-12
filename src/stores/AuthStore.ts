@@ -1,6 +1,7 @@
 import { action, observable } from "mobx";
 import api from "services";
 
+const user = window.localStorage.getItem("user");
 export interface User {
   id: string;
   type: number;
@@ -15,7 +16,7 @@ export interface User {
 
 export class AuthStore {
   @observable token = window.localStorage.getItem("token");
-  @observable user: User | undefined = undefined;
+  @observable user: User | null = user ? JSON.parse(user) : null;
   @observable codes: string[] = [];
 
   @action.bound
@@ -25,14 +26,24 @@ export class AuthStore {
 
   @action.bound
   async login(data: { username: string; password: string }) {
-    const result = await api.LoginService.login(data);
+    const result = await api.AuthService.login(data);
     const { token, user, codes } = result.data;
     window.localStorage.setItem("token", token);
+    window.localStorage.setItem("user", JSON.stringify(user));
+
     Object.assign(this, {
       token,
       user,
       codes
     });
+  }
+
+  @action.bound
+  async getAuthUser() {
+    if (!this.token) return;
+    const result = await api.AuthService.getAuthUser();
+    // window.localStorage.setItem("user", JSON.stringify(user));
+    console.log(result);
   }
 
   @action.bound

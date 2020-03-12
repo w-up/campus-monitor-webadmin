@@ -1,11 +1,6 @@
 import { observable, action } from "mobx";
 import api from "services";
-
-export interface PMCode {
-  pmCode: string;
-  pmName: string;
-}
-
+import { PMCode } from "../type";
 export class ConfigStore {
   @observable baiduMapApiKey = "WR0KNr4UYumtXNOM9clX1Il6hHNngdTu";
 
