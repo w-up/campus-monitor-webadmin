@@ -15,7 +15,7 @@ export const NavMenu = () => {
           <SubMenu
             title={
               <span>
-                <Icon type={item.icon}></Icon>
+                {item.icon && <Icon style={{display:"inline-block", lineHeight:"40px"}} type={item.icon}/>}
                 <span>{item.title}</span>
               </span>
             }
@@ -28,7 +28,7 @@ export const NavMenu = () => {
       return (
         <Menu.Item title={item.title} key={item.path}>
           <Link to={item.path}>
-            <Icon type={item.icon}></Icon>
+            {item.icon && <Icon style={{display:"inline-block", lineHeight:"40px"}} type={item.icon}/>}
             <span>{item.title}</span>
           </Link>
         </Menu.Item>

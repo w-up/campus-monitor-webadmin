@@ -6,7 +6,7 @@ export const LocationDisplay = () => {
 
   return useObserver(() => (
       <div className="leading-5 flex-1 flex items-end mr-4">
-        <div className="head-right text-center flex flex-row justify-end items-center">
+        <div className="head-right text-center font-bold flex flex-row justify-end items-center">
           <div className="px-2 flex flex-row">
             <Icon style={{marginTop:4, marginRight:4}} type="environment" theme="filled"/>
             <span> 武汉 蔡甸区</span>

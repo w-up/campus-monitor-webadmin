@@ -32,7 +32,7 @@ export const NavHead = () => {
     </Menu>
   );
   return useObserver(() => (
-    <Layout.Header style={{ background: "#1E2538", padding: "0 24px", display: "flex", justifyContent: "space-between", position: 'fixed', zIndex: 1, width: '100%'}}>
+    <Layout.Header style={{ background: "#1E2538", padding: "0 24px", display: "flex", justifyContent: "space-between", position: 'fixed', zIndex: 100000, width: '100%'}}>
       <h1 style={{ color: "#fff", fontSize: "20px" }}>工业园区在线监测告警平台</h1>
       <Dropdown overlay={userMenu}>
         <a style={{ width: "80px", color: "#fff", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
