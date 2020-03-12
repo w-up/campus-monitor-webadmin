@@ -2,9 +2,14 @@ import React from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
 import { Form, Select, Button, DatePicker, Icon, Slider } from "antd";
 import { WrappedFormUtils } from "antd/lib/form/Form";
+import { useStore } from "stores";
+import api from "services";
+import { PMCode } from "../../type";
+import moment from "moment";
 
 export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFormUtils }) => {
   const { getFieldDecorator } = form;
+  const { mapMonitor } = useStore();
 
   const store = useLocalStore(() => ({
     isPlaying: false,
@@ -15,6 +20,13 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
       wrapperCol: {
         span: 16
       }
+    },
+    currentPark: "all",
+    pmcodes: [] as Array<PMCode>,
+    async selectPark(parkId) {
+      this.currentPark = parkId;
+      const result = await api.MapMonitor.getPmCodeListByParkId({ parkId });
+      this.pmcodes = result.data;
     },
     graphs: [
       { value: "350", color: "#6eb447" },
@@ -32,6 +44,7 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
       form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log("Received values of form: ", values);
+          const result = api.MapMonitor.getPollutantDistributionByPmCode(values);
         }
       });
     }
@@ -45,21 +58,34 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
       </div>
       <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
         <Form.Item label="选择园区">
-          {getFieldDecorator("park", { initialValue: "all" })(
-            <Select>
+          {getFieldDecorator("parkId", { initialValue: mapMonitor.currentFactory, rules: [{ required: true }] })(
+            <Select onChange={store.selectPark}>
               <Select.Option value="all">全部</Select.Option>
+              {mapMonitor.parks.map((item, index) => (
+                <Select.Option value={item.id} key={index}>
+                  {item.parkName}
+                </Select.Option>
+              ))}
             </Select>
           )}
         </Form.Item>
         <Form.Item label="监测因子">
-          {getFieldDecorator("type", { initialValue: "all" })(
+          {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
             <Select>
-              <Select.Option value="all">TVOCs</Select.Option>
+              {store.pmcodes.map((item, index) => (
+                <Select.Option value={item.pmCode} key={index}>
+                  {item.pmName}
+                </Select.Option>
+              ))}
             </Select>
           )}
         </Form.Item>
-        <Form.Item label="起始时间">{getFieldDecorator("startTime", { initialValue: "" })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}</Form.Item>
-        <Form.Item label="终止时间">{getFieldDecorator("endTime", { initialValue: "" })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}</Form.Item>
+        <Form.Item label="起始时间">
+          {getFieldDecorator("timeStart", { initialValue: moment().subtract(1, "day"), rules: [{ required: true }] })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}
+        </Form.Item>
+        <Form.Item label="终止时间">
+          {getFieldDecorator("timeEnd", { initialValue: moment(), rules: [{ required: true }] })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}
+        </Form.Item>
 
         <Form.Item wrapperCol={{ span: 22 }}>
           <Button type="primary" htmlType="submit" className="w-full">

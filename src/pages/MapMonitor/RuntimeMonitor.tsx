@@ -4,17 +4,18 @@ import { Form, Select, Button, Table, Icon } from "antd";
 import { WrappedFormUtils } from "antd/lib/form/Form";
 import { TableProps } from "antd/lib/table";
 import { LineChart } from "../../components/LineChart";
+import { useStore } from "stores";
+import { PMValue } from "../../type";
+import api from "services";
 
 //@ts-ignore
 export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils }) => {
+  const { mapMonitor } = useStore();
   const { getFieldDecorator } = form;
 
   const store = useLocalStore(() => ({
-    curIndex: 0 as any,
-    get curData() {
-      if (this.curIndex === null) return;
-      return this.table.dataSource![this.curIndex];
-    },
+    curSiteId: null as any,
+    siteData: null as PMValue | null,
     formItemLayout: {
       labelCol: {
         span: 6
@@ -28,6 +29,7 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
       form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log("Received values of form: ", values);
+          mapMonitor.loadSitePmValueList();
         }
       });
     },
@@ -58,39 +60,31 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
           }
         ]
       }
-    },
-    table: {
-      dataSource: [
-        { key: "1", name: "A化工东南1", data: "123" },
-        { key: "2", name: "A化工东南2", data: "123" },
-        { key: "3", name: "A化工东南3", data: "123" },
-        { key: "4", name: "A化工东南4", data: "123" },
-        { key: "5", name: "A化工东南5", data: "123" },
-        { key: "6", name: "A化工东南6", data: "123" },
-        { key: "7", name: "A化工东南7", data: "123" },
-        { key: "8", name: "A化工东南8", data: "123" }
-      ],
-      onRowClick(data, index) {
-        store.curIndex = store.curIndex == index ? null : index;
-        console.log(store.curData);
-      },
-      columns: [
-        {
-          title: "排名",
-          dataIndex: "key"
-        },
-        {
-          title: "站点",
-          dataIndex: "name",
-          render: (text, record, index) => <div className={index == store.curIndex ? "primary-button-text-dark" : "primary-text-color"}>{text}</div>
-        },
-        {
-          title: "TVOCs",
-          dataIndex: "data"
-        }
-      ]
-    } as TableProps<any>
+    }
   }));
+
+  const table = {
+    async onRowClick(data, index) {
+      store.curSiteId = data.siteId;
+      const result = await api.MapMonitor.getSiteMonitorDataById({ siteId: data.siteId });
+      store.siteData = result.data;
+    },
+    columns: [
+      {
+        title: "排名",
+        dataIndex: "ranking"
+      },
+      {
+        title: "站点",
+        dataIndex: "siteName",
+        render: (text, record) => <div className={record.siteId == store.curSiteId ? "primary-button-text-dark" : "primary-text-color"}>{text}</div>
+      },
+      {
+        title: <span>{mapMonitor.currentPmCode}</span>,
+        dataIndex: "collectValue"
+      }
+    ]
+  } as TableProps<PMValue>;
 
   return useObserver(() => (
     <div className="runtim-monitor px-4">
@@ -100,23 +94,37 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
       </div>
       <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
         <Form.Item label="选择园区">
-          {getFieldDecorator("park", { initialValue: "all" })(
-            <Select>
+          {getFieldDecorator("park", { initialValue: mapMonitor.currentPark, rules: [{ required: true }] })(
+            <Select onChange={mapMonitor.selectPark}>
               <Select.Option value="all">全部</Select.Option>
+              {mapMonitor.parks.map((item, index) => (
+                <Select.Option value={item.id} key={index}>
+                  {item.parkName}
+                </Select.Option>
+              ))}
             </Select>
           )}
         </Form.Item>
         <Form.Item label="监测区域">
-          {getFieldDecorator("area", { initialValue: "all" })(
-            <Select>
+          {getFieldDecorator("factory", { initialValue: mapMonitor.currentFactory, rules: [{ required: true }] })(
+            <Select onChange={mapMonitor.selectFactory}>
               <Select.Option value="all">全部</Select.Option>
+              {mapMonitor.factories.map((item, index) => (
+                <Select.Option value={item.id} key={index}>
+                  {item.factoryName}
+                </Select.Option>
+              ))}
             </Select>
           )}
         </Form.Item>
         <Form.Item label="监测因子">
-          {getFieldDecorator("type", { initialValue: "TVOCs" })(
-            <Select>
-              <Select.Option value="TVOCs">TVOCs</Select.Option>
+          {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
+            <Select onChange={mapMonitor.selectPmcode}>
+              {mapMonitor.pmcodes.map((item, index) => (
+                <Select.Option value={item.pmCode} key={index}>
+                  {item.pmName}
+                </Select.Option>
+              ))}
             </Select>
           )}
         </Form.Item>
@@ -130,11 +138,11 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
         <Icon type="clock-circle" theme="filled" />
         <span className="ml-2">更新时间: 2020-01-02 14:00:00</span>
       </div>
-      <Table className="monitor-table mt-2" {...store.table} pagination={false} />
-      {store.curIndex !== null && (
+      <Table className="monitor-table mt-2" {...table} dataSource={mapMonitor.pmValues} pagination={false} />
+      {store.siteData && (
         <div className="monitor-row-panel p-4 ">
           <div className="flex justify-between items-center mt-4">
-            <div className="primary-button-text-dark text-lg">{store.curData.name}</div>
+            <div className="primary-button-text-dark text-lg">{store.siteData?.pmName}</div>
             <div className="primary-button-text-dark text-sm"> 更新时间: 2020-01-02 14:00:00</div>
           </div>
           <div className="stat-panel grid grid-flow-col grid-cols-3 grid-rows-2 gap-4 text-white mt-8 p-4">

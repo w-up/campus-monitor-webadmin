@@ -1,4 +1,7 @@
 import { action, observable } from "mobx";
+import api from "services";
+import { store } from "../index";
+import { Park, Factory, PMCode, PMValue } from "../../type";
 
 export class MapMonitorStore {
   //@ts-ignore
@@ -62,7 +65,61 @@ export class MapMonitorStore {
     { position: { lng: 120.980022, lat: 31.3657 }, name: "群力化工" }
   ];
 
-  @observable currentTabKey = "1";
+  @observable currentTabKey = "";
+  @observable currentPark = "all";
+  @observable currentFactory = "all";
+  @observable currentPmCode = "";
+
+  @observable parks: Array<Park> = [];
+  @observable factories: Array<Factory> = [];
+  @observable pmcodes: Array<PMCode> = [];
+  @observable pmValues: Array<PMValue> = [];
+
+  @action.bound
+  selectPark(parkId) {
+    this.currentPark = parkId;
+    if (parkId !== "all") {
+      this.loadFactories({ parkId });
+    }
+  }
+
+  @action.bound
+  selectFactory(factoryId) {
+    this.currentFactory = factoryId;
+    if (factoryId !== "all") {
+      this.loadPmCodes({ factoryId });
+    }
+  }
+
+  @action.bound
+  selectPmcode(pmCode) {
+    this.currentPmCode = pmCode;
+  }
+
+  @action.bound
+  async loadPark() {
+    const result = await api.MapMonitor.getParkList();
+    this.parks = result.data;
+  }
+  @action.bound
+  async loadSitePmValueList() {
+    const result = await api.MapMonitor.getSitePmValueList({ pmCode: this.currentPmCode });
+    this.pmValues = result.data;
+  }
+
+  async loadFactories({ parkId }: { parkId: any }) {
+    const result = await api.MapMonitor.getFactoryList({
+      parkId: Number(parkId)
+    });
+    this.factories = result.data;
+  }
+
+  async loadPmCodes({ factoryId }: { factoryId: any }) {
+    const result = await api.MapMonitor.getPmCodeList({
+      factoryId: Number(factoryId)
+    });
+    this.pmcodes = result.data;
+  }
 
   @action.bound
   draw() {

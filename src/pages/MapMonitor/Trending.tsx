@@ -5,10 +5,14 @@ import { WrappedFormUtils } from "antd/lib/form/Form";
 import { TableProps } from "antd/lib/table";
 import { ColumnLineChart } from "../../components/ColumnLineChart";
 import { LineChart } from "../../components/LineChart";
+import { useStore } from "../../stores/index";
+import api from "services";
+import moment from "moment";
 
 //@ts-ignore
 export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => {
   const { getFieldDecorator } = form;
+  const { mapMonitor } = useStore();
 
   const store = useLocalStore(() => ({
     formItemLayout: {
@@ -29,11 +33,19 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
         { name: "环比", value: "7.98" }
       ]
     },
+    type: "day" as any,
     handleSubmit: e => {
       e.preventDefault();
       form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log("Received values of form: ", values);
+          // cosnst { } = values
+          // const result = api.MapMonitor.getFactoryEmissionsTrendByPmCode({
+          //   parkId,
+          //   pmcCode,
+          //   statisticalType,
+          //   type
+          // })
         }
       });
     }
@@ -47,37 +59,50 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
       </div>
       <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
         <Form.Item label="选择园区">
-          {getFieldDecorator("park", { initialValue: "all" })(
-            <Select>
+          {getFieldDecorator("parkId", { initialValue: mapMonitor.currentPark, rules: [{ required: true }] })(
+            <Select onChange={mapMonitor.selectPark}>
               <Select.Option value="all">全部</Select.Option>
+              {mapMonitor.parks.map((item, index) => (
+                <Select.Option value={item.id} key={index}>
+                  {item.parkName}
+                </Select.Option>
+              ))}
             </Select>
           )}
         </Form.Item>
         <Form.Item label="监测区域">
-          {getFieldDecorator("area", { initialValue: "all" })(
-            <Select>
+          {getFieldDecorator("factoryId", { initialValue: mapMonitor.currentFactory, rules: [{ required: true }] })(
+            <Select onChange={mapMonitor.selectFactory}>
               <Select.Option value="all">全部</Select.Option>
+              {mapMonitor.factories.map((item, index) => (
+                <Select.Option value={item.id} key={index}>
+                  {item.factoryName}
+                </Select.Option>
+              ))}
             </Select>
           )}
         </Form.Item>
         <Form.Item label="监测因子">
-          {getFieldDecorator("type", { initialValue: "TVOCs" })(
-            <Select>
-              <Select.Option value="TVOCs">TVOCs</Select.Option>
+          {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
+            <Select onChange={mapMonitor.selectPmcode}>
+              {mapMonitor.pmcodes.map((item, index) => (
+                <Select.Option value={item.pmCode} key={index}>
+                  {item.pmName}
+                </Select.Option>
+              ))}
             </Select>
           )}
         </Form.Item>
         <Form.Item label="统计类型">
-          {getFieldDecorator("dateType", { initialValue: "day" })(
-            <Radio.Group>
+          {getFieldDecorator("type", { initialValue: store.type })(
+            <Radio.Group onChange={e => (store.type = e.target.value)}>
               <Radio.Button value="day">日</Radio.Button>
               <Radio.Button value="month">月</Radio.Button>
-              <Radio.Button value="month">年</Radio.Button>
+              <Radio.Button value="year">年</Radio.Button>
             </Radio.Group>
           )}
         </Form.Item>
-        <Form.Item label="起始时间">{getFieldDecorator("startTime", { initialValue: "" })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}</Form.Item>
-        <Form.Item label="终止时间">{getFieldDecorator("endTime", { initialValue: "" })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}</Form.Item>
+        <Form.Item label="统计时间">{getFieldDecorator("statisticalType", { initialValue: moment() })(<DatePicker className="w-full" mode={store.type} />)}</Form.Item>
 
         <Form.Item wrapperCol={{ span: 22 }}>
           <Button type="primary" htmlType="submit" className="w-full">
