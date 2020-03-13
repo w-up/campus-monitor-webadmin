@@ -11,6 +11,9 @@ import MapConfig from "./mapConfig";
 import DeviceData from "./deviceData";
 import MapMonitor from "./mapMonitor";
 import PmCode from "./pmCode";
+import DeviceSite from "./deviceSite";
+import Factory from "./factory";
+import DevicePM from "./devicePM";
 
 export default {
   // company: new CompanyService(),
@@ -18,5 +21,8 @@ export default {
   MapConfig,
   DeviceData,
   MapMonitor,
-  PmCode
+  PmCode,
+  DeviceSite,
+  Factory,
+  DevicePM
 };

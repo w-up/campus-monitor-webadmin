@@ -67,10 +67,16 @@ export class ParkScreenMapStore {
 
   @action.bound
   async loadData() {
-    const [{ data: gasData }, { data: waterData }] = await Promise.all([api.DeviceData.getFactoryPMByParkId({ type: "1" }), api.DeviceData.getFactoryPMByParkId({ type: "2" })]);
-    this.gasData = gasData;
-    this.waterData = waterData;
-    console.log({ gasData, waterData });
+    const [{ data: gasData }, { data: waterData }, data] = await Promise.all([
+      api.DeviceData.getFactoryPMByParkId({ type: "1" }),
+      api.DeviceData.getFactoryPMByParkId({ type: "2" }),
+      api.DeviceSite.getAllSitesByParkId()
+    ]);
+    Object.assign(this, {
+      gasData,
+      waterData
+    });
+    console.log(data);
   }
 
   @action.bound

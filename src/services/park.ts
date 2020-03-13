@@ -10,5 +10,8 @@ import { GET, POST } from "../utils/request";
 export default {
   getParkList(data: { current: number; pageSize: number; parkName: string }) {
     return GET("/park/getParkListPage", data);
+  },
+  getAllParksSelect() {
+    return GET("/park/getAllParksSelect");
   }
 };

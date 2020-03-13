@@ -13,6 +13,9 @@ export default {
   getFactoryEmissionsTrendByPmCode(data: { factoryId: number; pmCode: string; type: number; statisticalTime: string }) {
     return POST("/mapMonitor/getFactoryEmissionsTrendByPmCode", data);
   },
+  getPollutantDistributionByPmCode(data: { parkId: number; pmCode: string; timeStart: string; timeEnd: string }) {
+    return POST("/mapMonitor/getPollutantDistributionByPmCode", data);
+  },
   getParkList() {
     return GET("/mapMonitor/getParkList");
   },
@@ -31,10 +34,8 @@ export default {
   getPmCodeListByParkId(data: { parkId: string }) {
     return GET("/mapMonitor/getPmCodeListByParkId", data);
   },
-  getPollutantDistributionByPmCode(data: { parkId: number; pmCode: string; timeStart: string; timeEnd: string }) {
-    return POST("/mapMonitor/getPollutantDistributionByPmCode", data);
-  },
+
   getUncheckedAlarmInformation() {
-    return POST("/mapMonitor/getUncheckedAlarmInformation");
+    return GET("/mapMonitor/getUncheckedAlarmInformation");
   }
 };
