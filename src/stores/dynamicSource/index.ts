@@ -158,9 +158,9 @@ export class DynamicSourceStore {
       this.map = e.target;
       //@ts-ignore
       this.map.setMapStyle({ features: [], style: "midnight" });
-      this.fillArrow();
     } else {
       this.draw();
+      this.fillArrow();
     }
   }
 }
