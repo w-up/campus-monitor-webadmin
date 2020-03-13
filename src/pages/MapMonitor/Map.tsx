@@ -11,7 +11,7 @@ export const MapMonitorMap = () => {
       //@ts-ignore
       mapMonitor.map = null;
     };
-  }, [mapMonitor.map]);
+  }, []);
 
   return useObserver(() => (
     <APILoader akay={config.baiduMapApiKey}>

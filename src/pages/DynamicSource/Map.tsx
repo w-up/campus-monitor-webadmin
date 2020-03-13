@@ -16,7 +16,7 @@ export const DynamicSourceMap = () => {
       //@ts-ignore
       dynamicSource.map = null;
     };
-  }, [dynamicSource.map]);
+  }, []);
   return useObserver(() => (
     <APILoader akay={config.baiduMapApiKey}>
       <Map onTilesLoaded={dynamicSource.onMapUpdate} zoom={dynamicSource.zoom} center={dynamicSource.center} enableScrollWheelZoom onZoomEnd={e => (dynamicSource.zoom = e.target.getZoom())}>

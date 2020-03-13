@@ -2,6 +2,12 @@ import { action, observable } from "mobx";
 import api from "services";
 import { store } from "../index";
 import { Park, Factory, PMCode, PMValue } from "../../type";
+import { CanvasOverlay } from "./canvasOverlay";
+import * as mapv from "mapv";
+import times from "lodash/times";
+import { _ } from "utils/lodash";
+//@ts-ignore
+const kriging = window.kriging;
 
 export class MapMonitorStore {
   //@ts-ignore
@@ -122,23 +128,76 @@ export class MapMonitorStore {
   }
 
   @action.bound
+  fillPollution() {
+    let data = [] as any;
+    this.pointsc.forEach((i, index) => {
+      if (index % 4) return;
+      _.times(20, () => {
+        data.push({
+          geometry: {
+            type: "Point",
+            coordinates: [i.position.lng - 0.001 + Math.random() * 0.002, i.position.lat - 0.001 + Math.random() * 0.002]
+          },
+          count: 50 * Math.random() + i.number / 10,
+          time: 100 * Math.random()
+        });
+      });
+    });
+    const mapvLayer = new mapv.baiduMapLayer(this.map, new mapv.DataSet(data), {
+      size: 13,
+      gradient: { 0.25: "rgb(0,0,255)", 0.55: "rgb(0,255,0)", 0.85: "yellow", 1.0: "rgb(255,0,0)" },
+      max: 60,
+      // range: [0, 100], // 过滤显示数据范围
+      // minOpacity: 0.2, // 热力图透明度
+      // maxOpacity: 0.8,
+      draw: "heatmap"
+    });
+  }
+
+  // @action.bound
+  // fillKriging() {
+  //   let values = [] as any,
+  //     lngs = [] as any,
+  //     lats = [] as any;
+  //   const gridPath = [this.polygonPath.map(i => [i.lng, i.lat])];
+  //   this.pointsc.forEach(i => {
+  //     values.push(i.number);
+  //     lngs.push(i.position.lng);
+  //     lats.push(i.position.lat);
+  //   });
+  //   const params = {
+  //     model: "exponential", //'gaussian','spherical',
+  //     colors: ["#006837", "#1a9850", "#66bd63", "#a6d96a", "#d9ef8b", "#ffffbf", "#fee08b", "#fdae61", "#f46d43", "#d73027", "#a50026"]
+  //   };
+  //   const variogram = kriging.train(values, lngs, lats, params.model, 0, 100);
+  //   const grid = kriging.grid(gridPath.slice(), variogram, 100);
+  //   let canvas;
+  //   const canvasOverlay = new BMap.CanvasLayer({ update });
+  //   function update() {
+  //     //@ts-ignore
+  //     kriging.plot(this.canvas, grid, [100.220276, 200.476929], [10.737915, 100.965698], params.colors);
+  //     console.log(variogram);
+  //   }
+  //   this.map.addOverlay(canvasOverlay);
+  // }
+
+  @action.bound
   draw() {
-    for (let x in this.pointsc) {
-      const pixel = this.map.pointToOverlayPixel(new BMap.Point(this.pointsc[x].position.lng, this.pointsc[x].position.lat));
-      this.pointsc[x].mapPos.left = pixel.x - 15 + "px";
-      this.pointsc[x].mapPos.top = pixel.y - 15 + "px";
-    }
+    this.pointsc.forEach((item, index) => {
+      const pixel = this.map.pointToOverlayPixel(new BMap.Point(item.position.lng, item.position.lat));
+      this.pointsc[index].mapPos.left = pixel.x - 15 + "px";
+      this.pointsc[index].mapPos.top = pixel.y - 15 + "px";
+    });
   }
 
   @action.bound
   onMapUpdate(e: any) {
     if (!this.map) {
-      this.map = e.target;
+      this.map = e.currentTarget;
       //@ts-ignore
       this.map.setMapStyle({ features: [], style: "midnight" });
-      let mapViewObj = this.map.getViewport(this.polygonPath, {});
 
-      this.map.centerAndZoom(mapViewObj.center, mapViewObj.zoom);
+      this.fillPollution();
     } else {
       this.draw();
     }
