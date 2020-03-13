@@ -44,7 +44,13 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
       form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log("Received values of form: ", values);
-          const result = api.MapMonitor.getPollutantDistributionByPmCode(values);
+          const { parkId, pmCode, timeStart, timeEnd } = values;
+          const result = api.MapMonitor.getPollutantDistributionByPmCode({
+            parkId,
+            pmCode,
+            timeStart: moment(timeStart).format("YYYY-MM-DD HH"),
+            timeEnd: moment(timeEnd).format("YYYY-MM-DD HH")
+          });
         }
       });
     }
@@ -56,9 +62,9 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
         <Icon type="caret-right" theme="filled" className="primary-text-color" />
         <span className="ml-2">污染分布情况</span>
       </div>
-      <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
+      <Form {...store.formItemLayout} onSubmit={store.handleSubmit} key="PollutionDistribution">
         <Form.Item label="选择园区">
-          {getFieldDecorator("parkId", { initialValue: mapMonitor.currentFactory, rules: [{ required: true }] })(
+          {getFieldDecorator("parkId", { initialValue: "all", rules: [{ required: true }] })(
             <Select onChange={store.selectPark}>
               <Select.Option value="all">全部</Select.Option>
               {mapMonitor.parks.map((item, index) => (

@@ -1,12 +1,20 @@
 import React from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
+import { useEffect } from "react";
+import api from "services";
 
 export const MonitorAlert = () => {
   const store = useLocalStore(() => ({
-    count: 0,
-    addCount() {
-      this.count += 1;
+    alarms: [],
+    async loadAlarms() {
+      const result = await api.MapMonitor.getUncheckedAlarmInformation();
+      console.log(result);
+      this.alarms = result.data;
     }
   }));
-  return useObserver(() => <div onClick={store.addCount}>Template: {store.count}</div>);
+
+  useEffect(() => {
+    store.loadAlarms();
+  }, []);
+  return useObserver(() => <div>Template: {JSON.stringify(store.alarms)}</div>);
 };

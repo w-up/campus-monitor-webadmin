@@ -92,7 +92,7 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
         <Icon type="caret-right" theme="filled" className="primary-text-color" />
         <span className="ml-2">实时数据监测</span>
       </div>
-      <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
+      <Form {...store.formItemLayout} onSubmit={store.handleSubmit} key="RuntimeMonitor">
         <Form.Item label="选择园区">
           {getFieldDecorator("park", { initialValue: mapMonitor.currentPark, rules: [{ required: true }] })(
             <Select onChange={mapMonitor.selectPark}>

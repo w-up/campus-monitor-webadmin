@@ -11,7 +11,7 @@ import moment from "moment";
 
 //@ts-ignore
 export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => {
-  const { getFieldDecorator } = form;
+  const { getFieldDecorator, setFields } = form;
   const { mapMonitor } = useStore();
 
   const store = useLocalStore(() => ({
@@ -23,6 +23,32 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
         span: 16
       }
     },
+    dateTypes: {
+      date: {
+        startOf: "day",
+        format: "YYYY-MM-DD",
+        type: 1
+      },
+      month: { type: 2, startOf: "month", format: "YYYY-MM" },
+      year: { type: 3, startOf: "year", format: "YYYY" }
+    },
+    type: "date" as any,
+    get dateType() {
+      return this.dateTypes[this.type];
+    },
+    statisticalTime: moment() as any,
+    dateOpen: false,
+    setDateOpen(status) {
+      if (status) {
+        this.dateOpen = true;
+      } else {
+        this.dateOpen = false;
+      }
+    },
+    setDate(value) {
+      this.statisticalTime = moment(value).startOf(this.dateType.startOf);
+      this.dateOpen = false;
+    },
     monitorPanel: {
       historyData: [
         { name: "平均浓度", value: "1073.20 up/m3" },
@@ -33,19 +59,18 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
         { name: "环比", value: "7.98" }
       ]
     },
-    type: "day" as any,
-    handleSubmit: e => {
+    handleSubmit(e) {
       e.preventDefault();
       form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log("Received values of form: ", values);
-          // cosnst { } = values
-          // const result = api.MapMonitor.getFactoryEmissionsTrendByPmCode({
-          //   parkId,
-          //   pmcCode,
-          //   statisticalType,
-          //   type
-          // })
+          const { factoryId, pmCode, type } = values;
+          const result = api.MapMonitor.getFactoryEmissionsTrendByPmCode({
+            factoryId,
+            pmCode,
+            statisticalTime: moment(this.statisticalTime).format(this.dateType.format),
+            type: this.dateType.type
+          });
         }
       });
     }
@@ -57,7 +82,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
         <Icon type="caret-right" theme="filled" className="primary-text-color" />
         <span className="ml-2">排放趋势</span>
       </div>
-      <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
+      <Form {...store.formItemLayout} onSubmit={store.handleSubmit} key="Trending">
         <Form.Item label="选择园区">
           {getFieldDecorator("parkId", { initialValue: mapMonitor.currentPark, rules: [{ required: true }] })(
             <Select onChange={mapMonitor.selectPark}>
@@ -96,13 +121,24 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
         <Form.Item label="统计类型">
           {getFieldDecorator("type", { initialValue: store.type })(
             <Radio.Group onChange={e => (store.type = e.target.value)}>
-              <Radio.Button value="day">日</Radio.Button>
+              <Radio.Button value="date">日</Radio.Button>
               <Radio.Button value="month">月</Radio.Button>
               <Radio.Button value="year">年</Radio.Button>
             </Radio.Group>
           )}
         </Form.Item>
-        <Form.Item label="统计时间">{getFieldDecorator("statisticalType", { initialValue: moment() })(<DatePicker className="w-full" mode={store.type} />)}</Form.Item>
+        <Form.Item label="统计时间">
+          <DatePicker
+            className="w-full"
+            format={store.dateType.format}
+            mode={store.type}
+            onChange={store.setDate}
+            open={store.dateOpen}
+            value={store.statisticalTime}
+            onOpenChange={store.setDateOpen}
+            onPanelChange={store.setDate}
+          />
+        </Form.Item>
 
         <Form.Item wrapperCol={{ span: 22 }}>
           <Button type="primary" htmlType="submit" className="w-full">

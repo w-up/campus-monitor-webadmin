@@ -5,13 +5,13 @@ export default {
     return GET("/mapMonitor/getMapConfigLogin", data);
   },
   getDynamicSourceByPmCodeAndParkId(data: {}) {
-    return GET("/mapMonitor/getDynamicSourceByPmCodeAndParkId", data);
+    return POST("/mapMonitor/getDynamicSourceByPmCodeAndParkId", data);
   },
-  getEmissionsContributionByPmCodeAndParkId(data: { parkId: number; pmcCode: string; rankingType: number; statisticalTime: string; statisticalType: string }) {
-    return GET("/mapMonitor/getEmissionsContributionByPmCodeAndParkId", data);
+  getEmissionsContributionByPmCodeAndParkId(data: { parkId: number; pmCode: string; rankingType: number; statisticalTime: string; statisticalType: number }) {
+    return POST("/mapMonitor/getEmissionsContributionByPmCodeAndParkId", data);
   },
-  getFactoryEmissionsTrendByPmCode(data: { parkId: number; pmcCode: string; statisticalType: string; type: number }) {
-    return GET("/mapMonitor/getFactoryEmissionsTrendByPmCode", data);
+  getFactoryEmissionsTrendByPmCode(data: { factoryId: number; pmCode: string; type: number; statisticalTime: string }) {
+    return POST("/mapMonitor/getFactoryEmissionsTrendByPmCode", data);
   },
   getParkList() {
     return GET("/mapMonitor/getParkList");
@@ -32,6 +32,9 @@ export default {
     return GET("/mapMonitor/getPmCodeListByParkId", data);
   },
   getPollutantDistributionByPmCode(data: { parkId: number; pmCode: string; timeStart: string; timeEnd: string }) {
-    return GET("/mapMonitor/getPollutantDistributionByPmCode", data);
+    return POST("/mapMonitor/getPollutantDistributionByPmCode", data);
+  },
+  getUncheckedAlarmInformation() {
+    return POST("/mapMonitor/getUncheckedAlarmInformation");
   }
 };
