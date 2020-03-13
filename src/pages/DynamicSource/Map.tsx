@@ -35,7 +35,7 @@ export const DynamicSourceMap = () => {
             item={item.name}
           ></Label>
         ))}
-        {dynamicSource.computeType == "1" && (
+        {false && dynamicSource.computeType == "1" && (
           <CustomOverlay paneName="floatPane">
             {dynamicSource.pointsc.map((item, index) => (
               <div key={index} style={{ position: "absolute", left: item.mapPos.left, top: item.mapPos.top, transform: `rotate(${Math.random() * 360}deg)` }}>
