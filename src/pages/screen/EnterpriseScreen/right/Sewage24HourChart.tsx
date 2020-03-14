@@ -16,32 +16,20 @@ export const Sewage24HourChart = () => {
   } = useStore();
 
   const store = useLocalStore(() => ({
-    options: {
-      name: "",
-      dataIndex: 0,
-      date: ["12/01", "12/02", "12/03", "12/04", "12/05", "12/06", "12/07", "12/08", "12/09", "12/10", "12/11", "12/12", "12/13", "12/14"],
-      series: [
-        {
-          name: "COD",
-          data: [1.2, 1.6, 1.8, 1.92, 2.02, 2.22, 1.89, 1.2, 1.6, 1.8, 1.92, 2.02, 2.22, 1.89]
-        },
-        { name: "氨氮", data: [1.2, 1.5, 1.8, 2.0, 1.8, 1.6, 1.3, 1.2, 1.5, 1.8, 2.0, 1.8, 1.6, 1.3] },
-        { name: "PH", data: [1.2, 1.8, 1.5, 1.2, 1.5, 1.2, 1.6, 1.2, 1.8, 1.5, 1.2, 1.5, 1.2, 1.6] },
-        { name: "流量", data: [0.8, 1.2, 1.0, 1.3, 1.5, 2.0, 1.8, 0.8, 1.2, 1.0, 1.3, 1.5, 2.0, 1.8] }
-      ]
-    }
+    dataIndex: 0
   }));
   useEffect(() => {
     setInterval(() => {
-      store.options.dataIndex >= enterpriseScreenMap.HoursSewage.dates.length ? (store.options.dataIndex = 0) : store.options.dataIndex++;
+      const dataIndeMax = enterpriseScreenMap.dailySewage.dates.length;
+      store.dataIndex >= dataIndeMax ? (store.dataIndex = 0) : store.dataIndex++;
 
       const mapInst = mapRef.current?.getEchartsInstance();
       if (mapInst) {
         mapInst.dispatchAction({
           type: "showTip",
           seriesIndex: 0, // 显示第几个serindexes
-          dataIndex: store.options.dataIndex >= 6 ? 6 : store.options.dataIndex, // 显示第几个数据
-          position: ["45%", "10%"]
+          dataIndex: store.dataIndex >= 6 ? 6 : store.dataIndex // 显示第几个数据
+          // position: ["45%", "10%"]
         });
       }
     }, 1000);
@@ -53,13 +41,13 @@ export const Sewage24HourChart = () => {
         <div>污水排放浓度24小时趋势图</div>
         <img src="/images/right1.png" className="img" />
       </div>
-      <ReactEcharts ref={mapRef} option={makeOption({ data: enterpriseScreenMap.HoursSewage, dataIndex: store.options.dataIndex })} style={{ width: "100%", height: "180px" }} />
+      <ReactEcharts ref={mapRef} option={makeOption({ data: enterpriseScreenMap.HoursSewage, dataIndex: store.dataIndex })} style={{ width: "100%", height: "180px" }} />
     </div>
   ));
 };
 
-export const makeOption = ({ data, dataIndex }: { data: EnterpriseScreenMapStore["HoursSewage"]; dataIndex: number }) => {
-  const option = {
+export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScreenMapStore["HoursSewage"]; dataIndex: number; count?: number }) => {
+  return {
     title: {
       text: "",
       textStyle: {
@@ -97,7 +85,7 @@ export const makeOption = ({ data, dataIndex }: { data: EnterpriseScreenMapStore
             <div style="display:flex;align-items: center;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value.toFixed(1) + "*10¹mg/L"}</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? value + "*10¹mg/L" : ""}</div>
           </div>
           `;
         }
@@ -133,7 +121,7 @@ export const makeOption = ({ data, dataIndex }: { data: EnterpriseScreenMapStore
           fontSize: "10"
         }
       },
-      data: utils.array.sliceArray(data.dates, dataIndex, data.dates.length)
+      data: utils.array.sliceArray(data.dates, dataIndex, count)
     },
     yAxis: {
       name: "（mg/m³）",
@@ -169,7 +157,7 @@ export const makeOption = ({ data, dataIndex }: { data: EnterpriseScreenMapStore
       data: utils.array.sliceArray(
         item.datas.map(i => i.collectValue),
         dataIndex,
-        item.datas.length
+        count
       ),
       type: "line",
       itemStyle: {
@@ -185,5 +173,4 @@ export const makeOption = ({ data, dataIndex }: { data: EnterpriseScreenMapStore
       symbolSize: 2 //设定实心点的大小,
     }))
   };
-  return option;
 };

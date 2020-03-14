@@ -19,7 +19,7 @@ export const ParkScreenPage = () => {
   } = useStore();
 
   useEffect(() => {
-    parkScreenMap.loadData();
+    parkScreenMap.init();
   }, []);
 
   return useObserver(() => (

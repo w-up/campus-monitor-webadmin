@@ -64,19 +64,42 @@ export class ParkScreenMapStore {
   ];
   @observable gasData = [] as any;
   @observable waterData = [] as any;
+  @observable allSites = [] as any;
+  @observable allParks: Array<{
+    id: string;
+    parkNo: string;
+    parkName: string;
+    remark: string;
+    selected: boolean;
+  }> = [] as any;
 
   @action.bound
-  async loadData() {
-    const [{ data: gasData }, { data: waterData }, data] = await Promise.all([
+  async init() {
+    const [{ data: gasData }, { data: waterData }, { data: allSites }, { data: allParks }] = await Promise.all([
       api.DeviceData.getFactoryPMByParkId({ type: "1" }),
       api.DeviceData.getFactoryPMByParkId({ type: "2" }),
-      api.DeviceSite.getAllSitesByParkId()
+      api.DeviceSite.getAllSitesByParkId(),
+      api.Park.getAllParksSelect()
     ]);
     Object.assign(this, {
       gasData,
-      waterData
+      waterData,
+      allSites,
+      allParks
     });
-    console.log(data);
+    allParks.forEach(i => {
+      if (i.selected) {
+        console.log(i);
+        this.currentFactory = i.id;
+      }
+    });
+  }
+
+  @observable currentFactory = "";
+
+  @action.bound
+  async selectFactory(factoryId) {
+    this.currentFactory = factoryId;
   }
 
   @action.bound

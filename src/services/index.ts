@@ -15,6 +15,7 @@ import DeviceSite from "./deviceSite";
 import Factory from "./factory";
 import DevicePM from "./devicePM";
 import Other from "./other";
+import Park from "./park";
 
 export default {
   // company: new CompanyService(),
@@ -26,5 +27,6 @@ export default {
   DeviceSite,
   Factory,
   DevicePM,
-  Other
+  Other,
+  Park
 };
