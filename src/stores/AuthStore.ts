@@ -41,9 +41,9 @@ export class AuthStore {
   @action.bound
   async getAuthUser() {
     if (!this.token) return;
-    const result = await api.AuthService.getAuthUser();
+    // const result = await api.AuthService.getAuthUser();
     // window.localStorage.setItem("user", JSON.stringify(user));
-    console.log(result);
+    // console.log(result);
   }
 
   @action.bound

@@ -5,15 +5,20 @@ import { useEffect } from "react";
 import { utils } from "../../../../utils/index";
 import { _ } from "../../../../utils/lodash";
 import { constant } from "../../../../common/constants";
+import { useStore } from "../../../../stores/index";
+import { EnterpriseScreenMapStore } from "../../../../stores/screen/EnterpriseScreenMapStore";
 
 export const Sewage24HourChart = () => {
   const mapRef = React.useRef<any>();
 
+  const {
+    screen: { enterpriseScreenMap }
+  } = useStore();
+
   const store = useLocalStore(() => ({
     options: {
-      name: "24小时排放趋势图",
-      dataIndex: -1,
-      dataIndexMax: 7,
+      name: "",
+      dataIndex: 0,
       date: ["12/01", "12/02", "12/03", "12/04", "12/05", "12/06", "12/07", "12/08", "12/09", "12/10", "12/11", "12/12", "12/13", "12/14"],
       series: [
         {
@@ -28,7 +33,7 @@ export const Sewage24HourChart = () => {
   }));
   useEffect(() => {
     setInterval(() => {
-      store.options.dataIndex >= store.options.date.length ? (store.options.dataIndex = 0) : store.options.dataIndex++;
+      store.options.dataIndex >= enterpriseScreenMap.HoursSewage.dates.length ? (store.options.dataIndex = 0) : store.options.dataIndex++;
 
       const mapInst = mapRef.current?.getEchartsInstance();
       if (mapInst) {
@@ -48,15 +53,15 @@ export const Sewage24HourChart = () => {
         <div>污水排放浓度24小时趋势图</div>
         <img src="/images/right1.png" className="img" />
       </div>
-      <ReactEcharts ref={mapRef} option={makeOption(store.options)} style={{ width: "100%", height: "180px" }} />
+      <ReactEcharts ref={mapRef} option={makeOption({ data: enterpriseScreenMap.HoursSewage, dataIndex: store.options.dataIndex })} style={{ width: "100%", height: "180px" }} />
     </div>
   ));
 };
 
-export const makeOption = ({ name, series, date, dataIndex, dataIndexMax = 7 }: { name: string; series: any[]; date: any[]; dataIndex: number; dataIndexMax?: number }) => {
+export const makeOption = ({ data, dataIndex }: { data: EnterpriseScreenMapStore["HoursSewage"]; dataIndex: number }) => {
   const option = {
     title: {
-      text: name,
+      text: "",
       textStyle: {
         color: "#88A8C5FF",
         fontSize: "14",
@@ -79,7 +84,7 @@ export const makeOption = ({ name, series, date, dataIndex, dataIndexMax = 7 }: 
         show: false
       },
       formatter: (params: any, ticket: any, callback: any) => {
-        var showHtm = [] as any;
+        let showHtml = "";
         for (var i = 0; i < params.length; i++) {
           var list = {} as any;
           //x轴名称
@@ -88,26 +93,24 @@ export const makeOption = ({ name, series, date, dataIndex, dataIndexMax = 7 }: 
           var text = params[i].axisValue;
           //值
           var value = params[i].data;
-          list.name = name;
-          list.value = value;
-          showHtm.push(list);
+          showHtml += `
+            <div style="display:flex;align-items: center;">
+            <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
+            <div>${name}</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value.toFixed(1) + "*10¹mg/L"}</div>
+          </div>
+          `;
         }
         return `<div style="color: #04F9CC;text-align:left;line-height:20px">${text} 日均</div>
             <div style="color:#88A8C5;text-align:left;font-size:10px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
-            <div style="display:flex;align-items: center;"><div style="margin-right:10px;width:10px;height:1px;border:1px solid #1089E7;background:#1089E7"></div><div>${showHtm[0].name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${showHtm[0].value.toFixed(1) + "*10¹mg/L"}</div></div>
-             <div style="display:flex;align-items: center;"><div style="margin-right:10px;width:10px;height:1px;border:1px solid #FE7B43;background:#FE7B43"></div><div>${showHtm[1].name}</div>
-             <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${showHtm[1].value.toFixed(1) + "mg/L"}</div></div>
-           <div style="display:flex;align-items: center;"><div style="margin-right:10px;width:10px;height:1px;border:1px solid #12FFEE;background:#12FFEE"></div><div>${showHtm[2].name}</div>
-           <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${showHtm[2].value.toFixed(1)}</div></div>
-            <div style="display:flex;align-items: center;"><div style="margin-right:10px;width:10px;height:1px;border:1px solid #AB90DF;background:#AB90DF"></div><div>${showHtm[3].name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${showHtm[3].value.toFixed(1) + "/L"}</div></div>
-            </div></div>`;
+            ${showHtml}
+            </div>
+          </div>`;
       }
     },
     // 上册图列配置
     legend: {
-      data: ["COD", "氨氮", "PH", "流量"],
+      data: data.pms.map(i => i.pmName),
       textStyle: {
         fontSize: 10,
         color: "#88A8C5" // 图例文字颜色
@@ -130,7 +133,7 @@ export const makeOption = ({ name, series, date, dataIndex, dataIndexMax = 7 }: 
           fontSize: "10"
         }
       },
-      data: utils.array.sliceArray(date, dataIndex, dataIndexMax)
+      data: utils.array.sliceArray(data.dates, dataIndex, data.dates.length)
     },
     yAxis: {
       name: "（mg/m³）",
@@ -141,8 +144,8 @@ export const makeOption = ({ name, series, date, dataIndex, dataIndexMax = 7 }: 
         padding: [5, 0, 15, 20]
       },
       type: "value",
-      min: 0,
-      max: 3,
+      // min: 0,
+      // max: 3,
       splitNumber: 3,
       axisLabel: {
         textStyle: {
@@ -161,9 +164,13 @@ export const makeOption = ({ name, series, date, dataIndex, dataIndexMax = 7 }: 
         show: false
       }
     },
-    series: series.map((item, index) => ({
-      name: item.name,
-      data: utils.array.sliceArray(item.data, dataIndex, dataIndexMax),
+    series: data.pms.map((item, index) => ({
+      name: item.pmName,
+      data: utils.array.sliceArray(
+        item.datas.map(i => i.collectValue),
+        dataIndex,
+        item.datas.length
+      ),
       type: "line",
       itemStyle: {
         normal: {

@@ -1,46 +1,17 @@
 import React from "react";
-import {useLocalStore, useObserver} from "mobx-react-lite";
-import {Form, Icon} from "antd";
-import {WrappedFormUtils} from "antd/lib/form/Form";
+import { useLocalStore, useObserver } from "mobx-react-lite";
+import { Form, Icon, Button } from "antd";
+import { WrappedFormUtils } from "antd/lib/form/Form";
 import Input from "antd/lib/input";
 import Upload from "antd/lib/upload";
 import Modal from "antd/lib/modal";
-import {UploadFile} from "antd/lib/upload/interface";
+import { useStore } from "stores";
 
-
-export const MapSettingTab = Form.create()(({form}: { form: WrappedFormUtils }) => {
-  const {getFieldDecorator} = form;
-
-  const fileList: UploadFile<any>[] = [
-    {
-      uid: '-1',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      size: 1,
-      type: "",
-    }, {
-      uid: '-2',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      size: 1,
-      type: ""
-    }, {
-      uid: '-3',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      size: 1,
-      type: ""
-    }, {
-      uid: '-4',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      size: 1,
-      type: ""
-    }];
+export const MapSettingTab = Form.create()(({ form }: { form: WrappedFormUtils }) => {
+  const { getFieldDecorator } = form;
+  const {
+    screen: { enterpriseScreenMap }
+  } = useStore();
 
   const store = useLocalStore(() => ({
     formItemLayout: {
@@ -52,8 +23,7 @@ export const MapSettingTab = Form.create()(({form}: { form: WrappedFormUtils }) 
       }
     },
     previewVisible: false,
-    previewImage: '',
-    fileList: fileList,
+    previewImage: "",
     getBase64: file => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -62,7 +32,7 @@ export const MapSettingTab = Form.create()(({form}: { form: WrappedFormUtils }) 
         reader.onerror = error => reject(error);
       });
     },
-    handleCancel: () => store.previewVisible = false,
+    handleCancel: () => (store.previewVisible = false),
     handlePreview: async file => {
       if (!file.url && !file.preview) {
         file.preview = await store.getBase64(file.originFileObj);
@@ -70,7 +40,18 @@ export const MapSettingTab = Form.create()(({form}: { form: WrappedFormUtils }) 
       store.previewVisible = true;
       store.previewImage = file.url || file.preview;
     },
-    handleChange: ({fileList}) => store.fileList = fileList,
+    handleChange: async ({ file }) => {
+      const formData = new FormData();
+      formData.append("files[]", file);
+      console.log(file);
+      enterpriseScreenMap.curMapConfig.pic = formData;
+      const base64 = await store.getBase64(file);
+      //@ts-ignore
+      enterpriseScreenMap.curMapConfig.picUrl = base64;
+    },
+    beforeUpload: file => {
+      return false;
+    },
     handleSubmit: e => {
       e.preventDefault();
       form.validateFieldsAndScroll((err, values) => {
@@ -82,57 +63,61 @@ export const MapSettingTab = Form.create()(({form}: { form: WrappedFormUtils }) 
   }));
   const uploadButton = (
     <div>
-      <Icon type="plus"/>
+      <Icon type="plus" />
       <div className="ant-upload-text">Upload</div>
     </div>
   );
 
   return useObserver(() => (
-
     <div className="">
       <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
         <Form.Item label="俯视角度">
-          {getFieldDecorator("type", {initialValue: 1})(
-            <Input style={{width: '80%'}}/>
-          )}
+          <Input type="number" value={enterpriseScreenMap.curMapConfig.highAngle} onChange={e => (enterpriseScreenMap.curMapConfig.highAngle = Number(e.target.value))} style={{ width: "80%" }} />
         </Form.Item>
-        <Form.Item label="中心坐标">
-          {getFieldDecorator("pmCode", {initialValue: 2})(
+        <div>
+          <Form.Item label="中心坐标">
             <span>
-            <Input style={{width: '45%', marginRight: '5%'}}/>
-            <Input style={{width: '45%'}}/>
+              <Input
+                type="number"
+                value={enterpriseScreenMap.curMapConfig.longitude}
+                onChange={e => (enterpriseScreenMap.curMapConfig.longitude = Number(e.target.value))}
+                style={{ width: "45%", marginRight: "5%" }}
+              />
+              <Input type="number" value={enterpriseScreenMap.curMapConfig.latitude} onChange={e => (enterpriseScreenMap.curMapConfig.latitude = Number(e.target.value))} style={{ width: "45%" }} />
             </span>
-          )}
-        </Form.Item>
+          </Form.Item>
+        </div>
         <Form.Item label="缩放比例">
-          {getFieldDecorator("type", {initialValue: 1})(
-            <Input style={{width: '80%'}}/>
-          )}
+          <Input type="number" value={enterpriseScreenMap.curMapConfig.zoom} onChange={e => (enterpriseScreenMap.curMapConfig.zoom = Number(e.target.value))} style={{ width: "80%" }} />
         </Form.Item>
         <Form.Item label="旋转角度">
-          {getFieldDecorator("type", {initialValue: 1})(
-            <Input style={{width: '80%'}}/>
-          )}
+          <Input
+            type="number"
+            value={enterpriseScreenMap.curMapConfig.rotationAngle}
+            onChange={e => (enterpriseScreenMap.curMapConfig.rotationAngle = Number(e.target.value))}
+            style={{ width: "80%" }}
+          />
         </Form.Item>
         <Form.Item label="3D仿真地图">
-          {getFieldDecorator("type", {initialValue: 1})(
+          {getFieldDecorator("type", { initialValue: 1 })(
             <div className="clearfix">
-              <Upload
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                listType="picture-card"
-                fileList={store.fileList}
-                onPreview={store.handlePreview}
-                onChange={store.handleChange}
-              >
-                {store.fileList.length >= 8 ? null : uploadButton}
+              <Upload listType="picture-card" showUploadList={false} beforeUpload={store.beforeUpload} onPreview={store.handlePreview} onChange={store.handleChange}>
+                {enterpriseScreenMap.curMapConfig.picUrl ? <img src={enterpriseScreenMap.curMapConfig.picUrl} alt="avatar" style={{ width: "100%" }} /> : uploadButton}
               </Upload>
               <Modal visible={store.previewVisible} footer={null} onCancel={store.handleCancel}>
-                <img alt="example" style={{width: '100%'}} src={store.previewImage}/>
+                <img alt="example" style={{ width: "100%" }} src={store.previewImage} />
               </Modal>
             </div>
           )}
         </Form.Item>
-
+        <div className="setting-box-footer">
+          <Button type="primary" size="default" onClick={enterpriseScreenMap.saveMapConfig}>
+            确定
+          </Button>
+          <Button className="ml-4" type="default" size="default" onClick={e => enterpriseScreenMap.toggleBox()}>
+            取消
+          </Button>
+        </div>
       </Form>
     </div>
   ));

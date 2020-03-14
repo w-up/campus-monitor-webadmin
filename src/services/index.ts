@@ -14,6 +14,7 @@ import PmCode from "./pmCode";
 import DeviceSite from "./deviceSite";
 import Factory from "./factory";
 import DevicePM from "./devicePM";
+import Other from "./other";
 
 export default {
   // company: new CompanyService(),
@@ -24,5 +25,6 @@ export default {
   PmCode,
   DeviceSite,
   Factory,
-  DevicePM
+  DevicePM,
+  Other
 };

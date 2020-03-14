@@ -1,5 +1,11 @@
 import { action, observable } from "mobx";
 import { ComplexCustomOverlay } from "../../pages/screen/EnterpriseScreen/customOverlay";
+import api from "services";
+import { SitlePMData, DailySewage } from "../../type";
+import keyBy from "lodash/keyBy";
+import { _ } from "utils/lodash";
+import { message, notification } from "antd";
+import { store } from "../index";
 //@ts-ignore
 const BMapGL = window.BMapGL;
 
@@ -14,6 +20,196 @@ export class EnterpriseScreenMapStore {
   @observable curIndex = 0;
 
   playTimer?: any;
+
+  @action.bound
+  async init() {
+    await Promise.all([this.loadAllFactory(), this.loadMapConfig(), this.loadAllPmCode()]);
+    await this.loadSiteRuntimePmData();
+    await this.loadDailySewage();
+    await this.loadDailyGas();
+    await this.loadHoursSewage();
+  }
+
+  @observable boxDisplay = false;
+  @action.bound
+  toggleBox(value?: boolean) {
+    this.boxDisplay = value ? value : !this.boxDisplay;
+  }
+
+  @observable SiteRuntimePmDate: Array<SitlePMData> = [];
+  @action.bound
+  async loadSiteRuntimePmData() {
+    const result = await api.DeviceData.getAllPMDataLogin();
+    this.SiteRuntimePmDate = result.data.sites || [];
+  }
+
+  @observable HoursSewage: {
+    pms: Array<DailySewage>;
+    dates: Array<string>;
+  } = {
+    pms: [],
+    dates: []
+  };
+  @action.bound
+  async loadHoursSewage() {
+    // const result = await api.DeviceData.get24HourDatas();
+    const result = await api.DeviceData.getAllPM24HourDatasLogin({ pmType: 2 });
+    let HoursSewage: EnterpriseScreenMapStore["HoursSewage"] = {
+      pms: _.get(result, "data.pms", []) || [],
+      dates: []
+    };
+    if (HoursSewage.pms.length > 0) {
+      HoursSewage.dates = HoursSewage.pms[0].datas.map(i => i.time);
+    }
+    this.HoursSewage = HoursSewage;
+  }
+
+  @observable dailySewage: {
+    pms: Array<DailySewage>;
+    dates: Array<string>;
+  } = {
+    pms: [],
+    dates: []
+  };
+  @action.bound
+  async loadDailySewage() {
+    // const result = await api.DeviceData.get24HourDatas();
+    const result = await api.DeviceData.getAllPM7DayDatasLogin({ pmType: 2 });
+    let dailySewage: EnterpriseScreenMapStore["dailySewage"] = {
+      pms: _.get(result, "data.pms", []) || [],
+      dates: []
+    };
+    if (dailySewage.pms.length > 0) {
+      dailySewage.dates = dailySewage.pms[0].datas.map(i => i.time);
+    }
+    this.dailySewage = dailySewage;
+  }
+
+  @observable dailyGas: Array<{
+    pmCode: string;
+    pmName: string;
+    upperLimit: number;
+    unit: string;
+    sites: Array<{
+      siteId: string;
+      siteName: string;
+      datas: Array<{
+        collectValue: number;
+        unit: string;
+        time: string;
+      }>;
+    }>;
+  }> = [];
+  @action.bound
+  async loadDailyGas() {
+    const result = await api.DeviceData.getAllSitesPM7DayDatasByFactoryId({ pmType: 1 });
+    this.dailyGas = result.data.pms || [];
+  }
+
+  @observable allfactoriy: Array<{
+    factoryId: string;
+    factoryName: string;
+    select: boolean;
+  }> = [];
+  @observable currentFactory = "";
+
+  @action.bound
+  async loadAllFactory() {
+    const result = await api.Factory.getAllFactoryLogin();
+    this.allfactoriy = result.data;
+    this.allfactoriy.forEach(i => {
+      if (i.select) {
+        this.currentFactory = i.factoryId;
+      }
+    });
+  }
+
+  @action.bound
+  async selectFactory(factoryId) {
+    // await api.Other.setSelectedFactory({ factoryId });
+    this.currentFactory = factoryId;
+  }
+
+  @action.bound
+  async saveSelectedFactory() {
+    await api.Other.setSelectedFactory({ factoryId: this.currentFactory });
+    notification.success({ message: "更新成功" });
+    this.toggleBox();
+  }
+
+  @observable allPmCode: {
+    water: Array<{
+      pmCode: string;
+      pmName: string;
+      isSelected: boolean;
+    }>;
+    gas: Array<{
+      pmCode: string;
+      pmName: string;
+      isSelected: boolean;
+    }>;
+  } = {
+    water: [],
+    gas: []
+  };
+  @observable selectedPmCodes = [];
+  @action.bound
+  async loadAllPmCode() {
+    const result = await api.DevicePM.getAllPMsByFactoryId();
+    this.allPmCode = result.data || {};
+    const selectedPmCodes = [] as any;
+    Object.values(this.allPmCode).forEach(datas => {
+      datas.forEach(i => {
+        if (i.isSelected) {
+          selectedPmCodes.push(i.pmCode);
+        }
+      });
+    });
+    console.log(this.allPmCode);
+    this.selectedPmCodes = selectedPmCodes;
+  }
+
+  @action.bound
+  async selectPmCode(data) {
+    this.selectedPmCodes = data;
+  }
+
+  @action.bound
+  async saveSelectedPmCodes() {
+    await api.DevicePM.setFactorySelectedPM({ pmCodes: this.selectedPmCodes });
+    notification.success({ message: "更新成功" });
+    this.toggleBox();
+  }
+
+  @observable curMapConfig = {
+    highAngle: 0,
+    latitude: 0,
+    longitude: 0,
+    rotationAngle: 0,
+    picUrl: "",
+    pic: undefined as FormData | undefined,
+    zoom: 15
+  };
+  @action.bound
+  async loadMapConfig() {
+    const result = await api.MapConfig.getMapConfigLogin();
+    this.curMapConfig = result.data;
+  }
+
+  @action.bound
+  async saveMapConfig() {
+    const { highAngle, latitude, longitude, rotationAngle, zoom, pic } = this.curMapConfig;
+    const result = await api.MapConfig.updateMapConfig(
+      _.pickBy({
+        highAngle,
+        latitude,
+        longitude,
+        rotationAngle,
+        zoom,
+        pic
+      })
+    );
+  }
 
   @action.bound
   addpoints(index: number) {

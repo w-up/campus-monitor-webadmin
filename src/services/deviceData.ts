@@ -16,19 +16,19 @@ export default {
   get24HourDatas(data: { pmCode: string }) {
     return POST("/device-data-history/get24HourDatas", data);
   },
-  getAllPMDataLogin(data: { pmCode: string }) {
-    return GET("/device-data/getAllPMDataLogin", data);
+  getAllPMDataLogin() {
+    return GET("/device-data/getAllPMDataLogin");
   },
   getAllPM24HourDatasBySiteId(data: { siteId: number }) {
     return POST("/device-data-history/getAllPM24HourDatasBySiteId", data);
   },
-  getAllPM24HourDatasLogin(data: { pmType: string }) {
+  getAllPM24HourDatasLogin(data: { pmType: number }) {
     return POST("/device-data-history/getAllPM24HourDatasLogin", data);
   },
-  getAllPM7DayDatasLogin(data: { pmType: string }) {
+  getAllPM7DayDatasLogin(data: { pmType: number }) {
     return POST("/device-data-history/getAllPM7DayDatasLogin", data);
   },
-  getAllSitesPM7DayDatasByFactoryId(data: { pmType: string }) {
+  getAllSitesPM7DayDatasByFactoryId(data: { pmType: number }) {
     return POST("/device-data-history/getAllSitesPM7DayDatasByFactoryId", data);
   }
 };

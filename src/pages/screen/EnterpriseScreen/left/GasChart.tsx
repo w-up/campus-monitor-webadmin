@@ -1,64 +1,28 @@
-import React, {createRef, useRef} from "react";
-import {useObserver, useLocalStore} from "mobx-react-lite";
+import React, { createRef, useRef } from "react";
+import { useObserver, useLocalStore } from "mobx-react-lite";
 import ReactEcharts from "echarts-for-react";
-import {CarouselProvider, Dot, DotGroup, Slide, Slider} from "pure-react-carousel";
-import {useEffect} from "react";
-import {constant} from "../../../../common/constants";
-import {utils} from "../../../../utils/index";
-import {_} from "../../../../utils/lodash";
+import { CarouselProvider, Dot, DotGroup, Slide, Slider } from "pure-react-carousel";
+import { useEffect } from "react";
+import { constant } from "../../../../common/constants";
+import { _ } from "../../../../utils/lodash";
+import { useStore } from "../../../../stores/index";
+import { EnterpriseScreenMapStore } from "../../../../stores/screen/EnterpriseScreenMapStore";
 
 export const EnterpriseScreenGasChart = () => {
+  const {
+    screen: { enterpriseScreenMap }
+  } = useStore();
+
   const store = useLocalStore(() => ({
     dataIndex: 0,
-    dataIndexMax: 6,
-    listtotal: [
-      {
-        name: "非甲烷中经",
-        date: ["12/01", "12/02", "12/03", "12/04", "12/05", "12/06", "12/07"],
-        series: [
-          {name: "东南角", data: [1.2, 1.6, 1.8, 1.92, 2.02, 2.22, 1.89]},
-          {name: "东北角", data: [1.2, 1.5, 1.8, 2.0, 1.8, 1.6, 1.3]},
-          {name: "西南角", data: [1.2, 1.8, 1.5, 1.2, 1.5, 1.2, 1.6]},
-          {name: "西北角", data: [0.8, 1.2, 1.0, 1.3, 1.5, 2.0, 1.8]}
-        ]
-      },
-      {
-        name: "TVOC",
-        date: ["12/01", "12/02", "12/03", "12/04", "12/05", "12/06", "12/07"],
-        series: [
-          {name: "东南角", data: [1.2, 1.6, 1.8, 1.92, 2.02, 2.22, 1.89]},
-          {name: "东北角", data: [1.2, 1.5, 1.8, 2.0, 1.8, 1.6, 1.3]},
-          {name: "西南角", data: [1.2, 1.8, 1.5, 1.2, 1.5, 1.2, 1.6]},
-          {name: "西北角", data: [0.8, 1.2, 1.0, 1.3, 1.5, 2.0, 1.8]}
-        ]
-      },
-      {
-        name: "苯",
-        date: ["12/01", "12/02", "12/03", "12/04", "12/05", "12/06", "12/07"],
-        series: [
-          {name: "东南角", data: [1.2, 1.6, 1.8, 1.92, 2.02, 2.22, 1.89]},
-          {name: "东北角", data: [1.2, 1.5, 1.8, 2.0, 1.8, 1.6, 1.3]},
-          {name: "西南角", data: [1.2, 1.8, 1.5, 1.2, 1.5, 1.2, 1.6]},
-          {name: "西北角", data: [0.8, 1.2, 1.0, 1.3, 1.5, 2.0, 1.8]}
-        ]
-      },
-      {
-        name: "甲苯",
-        date: ["12/01", "12/02", "12/03", "12/04", "12/05", "12/06", "12/07"],
-        series: [
-          {name: "东南角", data: [1.2, 1.6, 1.8, 1.92, 2.02, 2.22, 1.89]},
-          {name: "东北角", data: [1.2, 1.5, 1.8, 2.0, 1.8, 1.6, 1.3]},
-          {name: "西南角", data: [1.2, 1.8, 1.5, 1.2, 1.5, 1.2, 1.6]},
-          {name: "西北角", data: [0.8, 1.2, 1.0, 1.3, 1.5, 2.0, 1.8]}
-        ]
-      }
-    ]
+    dataIndexMax: 6
   }));
-  const elementsRef = useRef(store.listtotal.map(() => createRef<any>()));
+  const elementsRef = useRef(_.range(1, 10).map(() => createRef<any>()));
 
   useEffect(() => {
     setInterval(() => {
       store.dataIndex >= store.dataIndexMax ? (store.dataIndex = 0) : store.dataIndex++;
+
       elementsRef.current.forEach((item, index) => {
         const inst = item.current?.getEchartsInstance();
         if (inst) {
@@ -74,23 +38,22 @@ export const EnterpriseScreenGasChart = () => {
   }, []);
 
   return useObserver(() => (
-    <div className="screenTable mt-4" style={{height: "377px"}}>
+    <div className="screenTable mt-4" style={{ height: "377px" }}>
       <div className="tableTitle flex justify-between items-center">
-        <img src="/images/left.png" className="img"/>
+        <img src="/images/left.png" className="img" />
         <div>气体日均排放浓度趋势图</div>
-        <img src="/images/right1.png" className="img"/>
+        <img src="/images/right1.png" className="img" />
       </div>
-      <CarouselProvider naturalSlideWidth={100} isPlaying naturalSlideHeight={80} interval={5000}
-                        totalSlides={store.listtotal.length}>
+      <CarouselProvider naturalSlideWidth={100} isPlaying naturalSlideHeight={80} interval={5000} totalSlides={enterpriseScreenMap.dailyGas.length}>
         <Slider>
-          {store.listtotal.map((item, index) => {
+          {enterpriseScreenMap.dailyGas.map((item, index) => {
             return (
               <Slide index={index} key={index}>
                 <ReactEcharts
                   //@ts-ignore
                   ref={elementsRef.current[index]}
-                  option={makeOption({name: item.name, series: item.series, date: item.date})}
-                  style={{marginTop: "20px", padding: "10px", height: "260px", width: "100%"}}
+                  option={makeOption(item)}
+                  style={{ marginTop: "20px", padding: "10px", height: "260px", width: "100%" }}
                   className="react_for_echarts"
                 />
               </Slide>
@@ -98,8 +61,8 @@ export const EnterpriseScreenGasChart = () => {
           })}
         </Slider>
         <DotGroup className="text-center">
-          {store.listtotal.map((item, index) => (
-            <Dot slide={index} key={index} className="text-white sliderDotButton" children={""}/>
+          {enterpriseScreenMap.dailyGas.map((item, index) => (
+            <Dot slide={index} key={index} className="text-white sliderDotButton" children={""} />
           ))}
         </DotGroup>
       </CarouselProvider>
@@ -107,10 +70,10 @@ export const EnterpriseScreenGasChart = () => {
   ));
 };
 
-export const makeOption = ({name, series, date}: { name: string; series: any[]; date: any[] }) => {
+export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
   const option = {
     title: {
-      text: name,
+      text: site.pmName,
       textStyle: {
         color: "rgba(4,248,204,0.8)",
         fontSize: "14"
@@ -129,7 +92,7 @@ export const makeOption = ({name, series, date}: { name: string; series: any[]; 
         show: true
       },
       formatter(params: any, ticket: any, callback: any) {
-        var showHtm = [] as any;
+        let showHtml = "";
         for (var i = 0; i < params.length; i++) {
           var list = {} as any;
           //x轴名称
@@ -138,42 +101,27 @@ export const makeOption = ({name, series, date}: { name: string; series: any[]; 
           var text = params[i].axisValue;
           //值
           var value = params[i].data;
-          list.name = name;
-          list.value = value;
-          showHtm.push(list);
+          showHtml += `
+            <div style="display:flex;align-items: center;">
+            <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
+            <div>${name}</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value.toFixed(1) + "*10¹mg/L"}</div>
+          </div>
+          `;
         }
         return `<div class="tableFloat text-left primary-text-dark">
                     <div>${text} 日均</div>
                     <div class="primary-text-dark">${option.title.text}</div>
                     <div class="primary-red">日均值上限：2（mg/m³）</div>
                     <div style="color:#88A8C5;font-size:10px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
-                    <div class="flex items-center">
-                        <div style="margin-right:10px;width:10px;height:1px;border:1px solid #1089E7;background:#1089E7"></div>
-                        <div>${showHtm[0].name}</div>
-                        <div class="tableFloatNumber">${showHtm[0].value.toFixed(1)}</div>
-                    </div>
-                    <div class="flex items-center">
-                        <div style="margin-right:10px;width:10px;height:1px;border:1px solid #FE7B43;background:#FE7B43"></div>
-                        <div>${showHtm[1].name}</div>
-                        <div class="tableFloatNumber">${showHtm[1].value.toFixed(1)}</div>
-                    </div>
-                    <div class="flex items-center">
-                        <div style="margin-right:10px;width:10px;height:1px;border:1px solid #12FFEE;background:#12FFEE"></div>
-                        <div>${showHtm[2].name}</div>
-                        <div class="tableFloatNumber">${showHtm[2].value.toFixed(1)}</div>
-                    </div>
-                    <div class="flex items-center">
-                        <div style="margin-right:10px;width:10px;height:1px;border:1px solid #AB90DF;background:#AB90DF"></div>
-                        <div>${showHtm[3].name}</div>
-                        <div class="tableFloatNumber">${showHtm[3].value.toFixed(1)}</div>
-                    </div>
+                    ${showHtml}
             </div></div></div>`;
       }
     },
     // 上册图列配置
     legend: [
       {
-        data: ["东南角", "东北角"],
+        data: site.sites.map(i => i.siteName),
         x: "right",
         textStyle: {
           color: "#88A8C5",
@@ -183,20 +131,20 @@ export const makeOption = ({name, series, date}: { name: string; series: any[]; 
         y: 0,
         itemHeight: 2,
         itemWidth: 20
-      },
-      {
-        data: ["西南角", "西北角"],
-        x: "right",
-        textStyle: {
-          color: "#88A8C5",
-          fontSize: 12
-        },
-        icon: "rect",
-        y: 20,
-        bottom: 10,
-        itemHeight: 2,
-        itemWidth: 20
       }
+      // {
+      //   data: ["西南角", "西北角"],
+      //   x: "right",
+      //   textStyle: {
+      //     color: "#88A8C5",
+      //     fontSize: 12
+      //   },
+      //   icon: "rect",
+      //   y: 20,
+      //   bottom: 10,
+      //   itemHeight: 2,
+      //   itemWidth: 20
+      // }
     ],
     grid: {
       top: "25%",
@@ -213,13 +161,13 @@ export const makeOption = ({name, series, date}: { name: string; series: any[]; 
           fontSize: "10"
         }
       },
-      data: date
+      data: site.sites[0].datas.map(i => i.time)
     },
     yAxis: {
       name: "日均值（mg/m³）",
       type: "value",
-      min: 0,
-      // max: 3,
+      // min: 1,
+      // max: 100,
       splitNumber: 3,
       nameTextStyle: {
         color: "rgba(136,168,197,0.5)",
@@ -244,9 +192,9 @@ export const makeOption = ({name, series, date}: { name: string; series: any[]; 
         show: false
       }
     },
-    series: series.map((item, index) => ({
-      name: item.name,
-      data: item.data,
+    series: site.sites.map((item, index) => ({
+      name: item.siteName,
+      data: item.datas.map(i => i.collectValue),
       type: "line",
       itemStyle: {
         normal: {

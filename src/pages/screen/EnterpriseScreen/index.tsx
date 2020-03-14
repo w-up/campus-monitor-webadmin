@@ -11,13 +11,15 @@ import { SewageDailyChart } from "./right/SewageDailyChart";
 import { ScreenTop } from "./top/ScreenTop";
 import { useEffect } from "react";
 import api from "services";
+import { useStore } from "../../../stores/index";
 
 export const EnterpriseScreenPage = () => {
+  const {
+    screen: { enterpriseScreenMap }
+  } = useStore();
   const fullScreenRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    (async () => {
-      const result = await api.MapConfig.getMapConfigLogin();
-    })();
+    enterpriseScreenMap.init();
   }, []);
 
   return useObserver(() => (
