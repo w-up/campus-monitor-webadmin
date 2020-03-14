@@ -15,7 +15,7 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
   const store = useLocalStore(() => ({
     formItemLayout: {
       labelCol: {
-        span: 6
+        span: 7
       },
       wrapperCol: {
         span: 16
@@ -135,7 +135,7 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
           )}
         </Form.Item>
 
-        <Form.Item wrapperCol={{ span: 22 }}>
+        <Form.Item wrapperCol={{ span: 22, offset: 1 }}>
           <Button type="primary" htmlType="submit" className="w-full">
             开始计算
           </Button>

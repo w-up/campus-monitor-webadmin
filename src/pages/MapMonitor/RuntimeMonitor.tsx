@@ -18,10 +18,10 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
     siteData: null as PMValue | null,
     formItemLayout: {
       labelCol: {
-        span: 6
+        span: 7
       },
       wrapperCol: {
-        span: 16
+        span: 15
       }
     },
     handleSubmit: e => {
@@ -128,7 +128,7 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
             </Select>
           )}
         </Form.Item>
-        <Form.Item wrapperCol={{ span: 4, offset: 18 }}>
+        <Form.Item wrapperCol={{ span: 5, offset: 17 }}>
           <Button type="primary" htmlType="submit">
             确定
           </Button>

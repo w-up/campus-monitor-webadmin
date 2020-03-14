@@ -9,7 +9,7 @@ import {SettingBox} from "./SettingBox";
 export const ScreenTop = () => {
 
   const store = useLocalStore(() => ({
-    boxDisplay: true,
+    boxDisplay: false,
     toggleSettingBox: () => {
       store.boxDisplay = !store.boxDisplay;
     },

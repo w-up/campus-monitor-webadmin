@@ -16,10 +16,10 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
     isPlaying: false,
     formItemLayout: {
       labelCol: {
-        span: 8
+        span: 7
       },
       wrapperCol: {
-        span: 16
+        span: 15
       }
     },
     togglePlay() {
@@ -78,6 +78,11 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
         <span className="ml-2">动态朔源</span>
       </div>
       <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
+        <div className="mb-4">
+          <div className="primary-text-color mb-4">计算方法</div>
+          {getFieldDecorator("computeType", { initialValue: "1" })(
+            <RadioGroup options={store.form.options} onChange={e => (dynamicSource.computeType = e.target.value)}></RadioGroup>)}
+        </div>
         <Form.Item label="选择园区">
           {getFieldDecorator("park", { initialValue: "all" })(
             <Select>
@@ -92,35 +97,33 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
             </Select>
           )}
         </Form.Item>
-        <Form.Item label="是否自选敏感点">
-          <Switch checked={store.form.isChecked} onChange={() => (store.form.isChecked = !store.form.isChecked)} />
-        </Form.Item>
-        {store.form.isChecked ? (
-          <div>
-            <Form.Item label="敏感点经度">{getFieldDecorator("data1", { initialValue: "" })(<Input />)}</Form.Item>
-            <Form.Item label="敏感点维度">{getFieldDecorator("data2", { initialValue: "" })(<Input />)}</Form.Item>
-            <Form.Item label="检测物质浓度">{getFieldDecorator("data3", { initialValue: "" })(<Input />)}</Form.Item>
-            <Form.Item label="风向">{getFieldDecorator("data4", { initialValue: "" })(<Input suffix={<span>°</span>} />)}</Form.Item>
-            <Form.Item label="风速">{getFieldDecorator("data5", { initialValue: "" })(<Input suffix={<span>m/s</span>} />)}</Form.Item>
-            <Form.Item label="温度">{getFieldDecorator("data6", { initialValue: "" })(<Input suffix={<span>°</span>} />)}</Form.Item>
-            <Form.Item label="相对湿度">{getFieldDecorator("data7", { initialValue: "" })(<Input suffix={<span>%</span>} />)}</Form.Item>
-          </div>
-        ) : (
-          <Form.Item label="选择敏感点">
-            {getFieldDecorator("point", { initialValue: "1" })(
-              <Select>
-                <Select.Option value="1">敏感点1</Select.Option>
-              </Select>
-            )}
-          </Form.Item>
-        )}
+        {/*<Form.Item label="是否自选敏感点">*/}
+        {/*  <Switch checked={store.form.isChecked} onChange={() => (store.form.isChecked = !store.form.isChecked)} />*/}
+        {/*</Form.Item>*/}
+        {/*{store.form.isChecked ? (*/}
+        {/*  <div>*/}
+        {/*    <Form.Item label="敏感点经度">{getFieldDecorator("data1", { initialValue: "" })(<Input />)}</Form.Item>*/}
+        {/*    <Form.Item label="敏感点维度">{getFieldDecorator("data2", { initialValue: "" })(<Input />)}</Form.Item>*/}
+        {/*    <Form.Item label="检测物质浓度">{getFieldDecorator("data3", { initialValue: "" })(<Input />)}</Form.Item>*/}
+        {/*    <Form.Item label="风向">{getFieldDecorator("data4", { initialValue: "" })(<Input suffix={<span>°</span>} />)}</Form.Item>*/}
+        {/*    <Form.Item label="风速">{getFieldDecorator("data5", { initialValue: "" })(<Input suffix={<span>m/s</span>} />)}</Form.Item>*/}
+        {/*    <Form.Item label="温度">{getFieldDecorator("data6", { initialValue: "" })(<Input suffix={<span>°</span>} />)}</Form.Item>*/}
+        {/*    <Form.Item label="相对湿度">{getFieldDecorator("data7", { initialValue: "" })(<Input suffix={<span>%</span>} />)}</Form.Item>*/}
+        {/*  </div>*/}
+        {/*) : (*/}
+        {/*  <Form.Item label="选择敏感点">*/}
+        {/*    {getFieldDecorator("point", { initialValue: "1" })(*/}
+        {/*      <Select>*/}
+        {/*        <Select.Option value="1">敏感点1</Select.Option>*/}
+        {/*      </Select>*/}
+        {/*    )}*/}
+        {/*  </Form.Item>*/}
+        {/*)}*/}
+        <Form.Item label="敏感点经度">{getFieldDecorator("data1", { initialValue: "" })(<Input />)}</Form.Item>
+        <Form.Item label="敏感点维度">{getFieldDecorator("data2", { initialValue: "" })(<Input />)}</Form.Item>
         <Form.Item label="起始时间">{getFieldDecorator("startTime", { initialValue: "" })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}</Form.Item>
         <Form.Item label="终止时间">{getFieldDecorator("endTime", { initialValue: "" })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}</Form.Item>
-        <div className="my-8 mx-2">
-          <div className="primary-text-color">计算方法</div>
-          {getFieldDecorator("computeType", { initialValue: "1" })(<RadioGroup options={store.form.options} onChange={e => (dynamicSource.computeType = e.target.value)}></RadioGroup>)}
-        </div>
-        <Form.Item wrapperCol={{ span: 22 }}>
+        <Form.Item wrapperCol={{ span: 22, offset: 1 }}>
           <Button type="primary" htmlType="submit" className="w-full">
             开始计算
           </Button>

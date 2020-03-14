@@ -429,6 +429,7 @@
     .ant-table-tbody > tr > td {
       border-color: #303747;
       color: white;
+      padding: 8px 16px;
     }
   }
 
@@ -466,6 +467,14 @@
   .ant-btn-primary {
     background-color: #0dacf2;
     border-color: #0dacf2;
+  }
+
+  .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab {
+    border-radius: 0;
+    &.ant-tabs-tab-active {
+      background: #0BABF2;
+      border-color: #00B1FF;
+    }
   }
 }
 

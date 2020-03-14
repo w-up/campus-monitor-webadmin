@@ -15,7 +15,7 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
     isPlaying: false,
     formItemLayout: {
       labelCol: {
-        span: 6
+        span: 7
       },
       wrapperCol: {
         span: 16
@@ -93,7 +93,7 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
           {getFieldDecorator("timeEnd", { initialValue: moment(), rules: [{ required: true }] })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}
         </Form.Item>
 
-        <Form.Item wrapperCol={{ span: 22 }}>
+        <Form.Item wrapperCol={{ span: 22, offset:1 }}>
           <Button type="primary" htmlType="submit" className="w-full">
             调取回顾
           </Button>

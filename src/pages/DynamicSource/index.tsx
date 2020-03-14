@@ -6,10 +6,10 @@ import { DynamicSourcePanel } from "./Panel";
 export const DynamicSourcePage = () => {
   return useObserver(() => (
     <div className="dynamicsource-page flex" style={{ width: "100vw", height: "100vh", backgroundColor: "#061630" }}>
-      <div style={{ width: "20%" }}>
+      <div style={{ width: "25%" }}>
         <DynamicSourcePanel />
       </div>
-      <div style={{ width: "80%" }}>
+      <div style={{ width: "75%" }}>
         <DynamicSourceMap />
       </div>
     </div>
