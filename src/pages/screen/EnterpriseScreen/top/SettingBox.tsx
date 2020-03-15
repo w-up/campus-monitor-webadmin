@@ -13,7 +13,7 @@ export const SettingBox = () => {
 
   return useObserver(() => (
     <div className="absolute screenSetting z-50 mt-8"
-         style={{width: 350, height: 500, left: 100, display: enterpriseScreenMap.boxDisplay ? "block" : "none"}}>
+         style={{width: 350, height: 500, left: 250, display: enterpriseScreenMap.boxDisplay ? "block" : "none"}}>
       <div className="setting-box-header text-center">
         驾驶舱显示设置
         <span className="text-red-600 z-50 absolute right-0 top-0" onClick={e => enterpriseScreenMap.toggleBox()}>
