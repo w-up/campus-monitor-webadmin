@@ -43,7 +43,7 @@ export const MapSettingTab = Form.create()(({form}: { form: WrappedFormUtils }) 
     },
     handleChange: async ({file}) => {
       const formData = new FormData();
-      formData.append("files[]", file);
+      formData.append("pic", file);
       console.log(file);
       enterpriseScreenMap.curMapConfig.pic = formData;
       const base64 = await store.getBase64(file);
