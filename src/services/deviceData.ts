@@ -13,7 +13,7 @@ export default {
   getParkMapData(data: { pmCode: string }) {
     return POST("/device-data/getParkMapData", data);
   },
-  get24HourDatas(data: { pmCode: string }) {
+  get24HourDatas(data: { pmCode: string; siteId: string }) {
     return POST("/device-data-history/get24HourDatas", data);
   },
   getAllPMDataLogin() {

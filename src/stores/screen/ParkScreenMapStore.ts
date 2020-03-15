@@ -1,8 +1,11 @@
 import { action, observable, computed } from "mobx";
 import api from "services";
 import { notification } from "antd";
-import { allSiteRes, Tree, ConcernSiteData } from "../../type";
+import { allSiteRes, Tree, ConcernSiteData, AllParkData, PMValue } from "../../type";
 import { _ } from "utils/lodash";
+import * as geolib from "geolib";
+import { utils } from "../../utils/index";
+import { store } from "../index";
 
 export class ParkScreenMapStore {
   //@ts-ignore
@@ -141,28 +144,33 @@ export class ParkScreenMapStore {
   // 监测面板
   @observable currentPmCode = "";
   @observable allConcernSiteData: Array<ConcernSiteData> = [];
-  @observable allParkMapData: {
-    parkId: string;
-    parkName: string;
-    parkPoints: Array<{
-      longitude: string;
-      latitude: string;
-    }>;
-    siteDatas: Array<ConcernSiteData>;
-    factoryDatas: Array<{
-      factoryId: string;
-      factoryName: string;
-      factoryPoints: any;
-      averageValue: string;
-      unit: string;
-    }>;
-  } = {
+  @observable allParkMapData: AllParkData = {
     parkId: "",
     parkName: "",
     parkPoints: [],
     siteDatas: [],
     factoryDatas: []
   };
+  @observable dailyData: {
+    siteId: string;
+    points: Array<{
+      collectValue: number;
+      time: string;
+      unit: string;
+    }>;
+    unit: string;
+    upperLimit: string;
+  } = {
+    siteId: "",
+    points: [],
+    unit: "",
+    upperLimit: ""
+  };
+  @observable currentSiteId = "";
+
+  get curPmValue() {
+    return store.config.allPmCodes.find(i => i.pmCode == this.currentPmCode);
+  }
 
   @action.bound
   setCurrentPmCode(currentPmCode: string) {
@@ -171,11 +179,23 @@ export class ParkScreenMapStore {
 
   @action.bound
   async loadConcernSiteData(pmCode: string) {
-    const result = await api.DeviceData.getConcernSiteData({ pmCode });
-    const result1 = await api.DeviceData.getParkMapData({ pmCode });
-    this.allConcernSiteData = result.data;
-    this.allParkMapData = result1.data;
+    this.currentPmCode = pmCode;
+    const [convernData, parkMapData] = await Promise.all([api.DeviceData.getConcernSiteData({ pmCode }), api.DeviceData.getParkMapData({ pmCode })]);
+    Object.assign(this, {
+      allConcernSiteData: convernData.data,
+      allParkMapData: parkMapData.data
+    });
+    this.updateMap();
+    this.currentSiteId = this.allParkMapData.siteDatas[0].siteId;
+    await this.loadDadilyData();
   }
+  @action.bound
+  async loadDadilyData() {
+    if (!this.currentSiteId) return;
+    const result = await api.DeviceData.get24HourDatas({ pmCode: this.currentPmCode, siteId: this.currentSiteId });
+    this.dailyData = result.data;
+  }
+
   // 设置面板
   @observable boxDisplay = false;
   @action.bound
@@ -207,6 +227,7 @@ export class ParkScreenMapStore {
     this.reload();
   }
 
+  //地图相关
   @action.bound
   draw() {
     for (let x in this.pointsc) {
@@ -222,11 +243,16 @@ export class ParkScreenMapStore {
       this.map = e.target;
       //@ts-ignore
       this.map.setMapStyle({ features: [], style: "midnight" });
-      let mapViewObj = this.map.getViewport(this.polygonPath, {});
-
-      this.map.centerAndZoom(mapViewObj.center, mapViewObj.zoom);
     } else {
       this.draw();
     }
+  }
+
+  @action.bound
+  updateMap() {
+    if (!this.map) return;
+    let mapViewObj = this.map.getViewport(utils.array.formatLatLngLong(this.allParkMapData.parkPoints), {});
+    console.log(mapViewObj);
+    this.map.centerAndZoom(mapViewObj.center, mapViewObj.zoom);
   }
 }

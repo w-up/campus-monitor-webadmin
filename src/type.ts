@@ -106,3 +106,20 @@ export interface ConcernSiteData {
   limit: string;
   overRate: string;
 }
+
+export type AllParkData = {
+  parkId: string;
+  parkName: string;
+  parkPoints: Array<{
+    longitude: string;
+    latitude: string;
+  }>;
+  siteDatas: Array<ConcernSiteData>;
+  factoryDatas: Array<{
+    factoryId: string;
+    factoryName: string;
+    factoryPoints: any;
+    averageValue: string;
+    unit: string;
+  }>;
+};

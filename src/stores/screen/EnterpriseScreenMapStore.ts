@@ -6,6 +6,9 @@ import keyBy from "lodash/keyBy";
 import { _ } from "utils/lodash";
 import { message, notification } from "antd";
 import { store } from "../index";
+import style from "../../common/mapStyle";
+import ExampleMap from "../../assets/img/ps23ab282a19d8effb-a4e4-48b5-98dd-2e7d611be405.png";
+
 //@ts-ignore
 const BMapGL = window.BMapGL;
 
@@ -233,6 +236,41 @@ export class EnterpriseScreenMapStore {
       this.map.addOverlay(myCompOverlay);
     }
   }
+
+  @action.bound
+  initMap() {
+    this.map = new BMapGL.Map("allmap", {
+      style: { styleJson: style }
+    }); // 创建Map实例
+
+    this.map.centerAndZoom(this.center, this.zoom); // 初始化地图,设置中心点坐标和地图级别
+    this.map.setHeading(this.heading); //俯视角度
+    this.map.setTilt(this.tilt); //旋转角度
+    let SW = new BMapGL.Point(116.38179, 39.900146);
+    let NE = new BMapGL.Point(116.384451, 39.901146);
+    // bus.$on("changeBottomIndex", this.addpoints)
+
+    setTimeout(() => {
+      if (!this.map) return;
+      this.addpoints(0); //添加站点覆盖物
+      this.play();
+    }, 100);
+
+    setTimeout(() => {
+      if (!this.map) return;
+      let groundOverlayOptions = {
+        displayOnMinLevel: 10,
+        displayOnMaxLevel: 30,
+        imageURL: ExampleMap
+      };
+      // 初始化GroundOverlay
+      let groundOverlay = new BMapGL.GroundOverlay(new BMapGL.Bounds(SW, NE), groundOverlayOptions);
+      this.map.addOverlay(groundOverlay); //添加图片覆盖物
+    }, 500);
+  }
+
+  @action.bound
+  updateMap() {}
 
   @action.bound
   play() {
