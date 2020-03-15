@@ -4,15 +4,24 @@ import { Form, Select, Button, Table, Icon } from "antd";
 import { WrappedFormUtils } from "antd/lib/form/Form";
 import { useStore } from "../../../../stores/index";
 import { useLocalStorage } from "react-use";
+import { useEffect } from "react";
 
 //@ts-ignore
 export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtils }) => {
   const { getFieldDecorator } = form;
-  const { config } = useStore();
+  const {
+    config,
+    screen: { parkScreenMap }
+  } = useStore();
 
   const [currentPmType, setCurrentType] = useLocalStorage("screen.parkScreen.MonitorParamForm.currentPmType", "all");
-
   const [currentPmCode, setCurrentPmCode] = useLocalStorage("screen.parkScreen.MonitorParamForm.currentPmCode", "温度");
+
+  useEffect(() => {
+    if (currentPmCode) {
+      parkScreenMap.loadConcernSiteData(currentPmCode);
+    }
+  }, []);
 
   const store = useLocalStore(() => ({
     get pmCodes() {
@@ -35,6 +44,7 @@ export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtil
       form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log("Received values of form: ", values);
+          parkScreenMap.loadConcernSiteData(values.pmCode);
         }
       });
     }
@@ -54,7 +64,7 @@ export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtil
           )}
         </Form.Item>
         <Form.Item label="监测因子">
-          {getFieldDecorator("pmCode", { initialValue: currentPmCode })(
+          {getFieldDecorator("pmCode", { initialValue: currentPmCode, rules: [{ required: true }] })(
             <Select onChange={setCurrentPmCode}>
               {store.pmCodes.map((item, index) => (
                 <Select.Option value={item.pmCode}>{item.pmName}</Select.Option>

@@ -1,5 +1,11 @@
-import { action, observable } from "mobx";
+import { action, observable, computed } from "mobx";
 import api from "services";
+import { notification } from "antd";
+import { allSiteRes, Tree, ConcernSiteData, AllParkData, PMValue } from "../../type";
+import { _ } from "utils/lodash";
+import * as geolib from "geolib";
+import { utils } from "../../utils/index";
+import { store } from "../index";
 
 export class ParkScreenMapStore {
   //@ts-ignore
@@ -64,7 +70,7 @@ export class ParkScreenMapStore {
   ];
   @observable gasData = [] as any;
   @observable waterData = [] as any;
-  @observable allSites = [] as any;
+  @observable allSites: Tree = [];
   @observable allParks: Array<{
     id: string;
     parkNo: string;
@@ -73,35 +79,155 @@ export class ParkScreenMapStore {
     selected: boolean;
   }> = [] as any;
 
+  // 初始化
   @action.bound
   async init() {
-    const [{ data: gasData }, { data: waterData }, { data: allSites }, { data: allParks }] = await Promise.all([
+    const [{ data: gasData }, { data: waterData }, allSiteResult, { data: allParks }] = await Promise.all([
       api.DeviceData.getFactoryPMByParkId({ type: "1" }),
       api.DeviceData.getFactoryPMByParkId({ type: "2" }),
       api.DeviceSite.getAllSitesByParkId(),
       api.Park.getAllParksSelect()
     ]);
+
+    if (this.currentPmCode) {
+      this.loadConcernSiteData(this.currentPmCode);
+    }
+
+    const _allSite: allSiteRes = allSiteResult.data;
+    const allSites = _allSite.map(i => ({
+      title: i.companyName,
+      key: `company-${i.companyId}`,
+      children: i.factorys
+        ? i.factorys.map(factory => ({
+            key: `factory-${factory.factoryId}`,
+            title: factory.factoryName,
+            children: factory.sites
+              ? factory.sites.map(site => ({
+                  key: site.siteId,
+                  title: site.siteName,
+                  selected: site.concern
+                }))
+              : []
+          }))
+        : []
+    }));
+
     Object.assign(this, {
       gasData,
       waterData,
       allSites,
       allParks
     });
+    let selectedSites: string[] = [];
+    this.allSites.forEach(park => {
+      park.children?.forEach(factory => {
+        factory.children?.forEach(i => {
+          if (i.selected) {
+            selectedSites.push(i.key);
+          }
+        });
+      });
+    });
+    console.log(selectedSites);
+    this.selectedSites = selectedSites;
     allParks.forEach(i => {
       if (i.selected) {
-        console.log(i);
-        this.currentFactory = i.id;
+        this.currentPark = i.id;
       }
     });
   }
-
-  @observable currentFactory = "";
-
   @action.bound
-  async selectFactory(factoryId) {
-    this.currentFactory = factoryId;
+  reload() {
+    this.init();
   }
 
+  // 监测面板
+  @observable currentPmCode = "";
+  @observable allConcernSiteData: Array<ConcernSiteData> = [];
+  @observable allParkMapData: AllParkData = {
+    parkId: "",
+    parkName: "",
+    parkPoints: [],
+    siteDatas: [],
+    factoryDatas: []
+  };
+  @observable dailyData: {
+    siteId: string;
+    points: Array<{
+      collectValue: number;
+      time: string;
+      unit: string;
+    }>;
+    unit: string;
+    upperLimit: string;
+  } = {
+    siteId: "",
+    points: [],
+    unit: "",
+    upperLimit: ""
+  };
+  @observable currentSiteId = "";
+
+  get curPmValue() {
+    return store.config.allPmCodes.find(i => i.pmCode == this.currentPmCode);
+  }
+
+  @action.bound
+  setCurrentPmCode(currentPmCode: string) {
+    this.currentPmCode = currentPmCode;
+  }
+
+  @action.bound
+  async loadConcernSiteData(pmCode: string) {
+    this.currentPmCode = pmCode;
+    const [convernData, parkMapData] = await Promise.all([api.DeviceData.getConcernSiteData({ pmCode }), api.DeviceData.getParkMapData({ pmCode })]);
+    Object.assign(this, {
+      allConcernSiteData: convernData.data,
+      allParkMapData: parkMapData.data
+    });
+    this.updateMap();
+    this.currentSiteId = this.allParkMapData.siteDatas[0].siteId;
+    await this.loadDadilyData();
+  }
+  @action.bound
+  async loadDadilyData() {
+    if (!this.currentSiteId) return;
+    const result = await api.DeviceData.get24HourDatas({ pmCode: this.currentPmCode, siteId: this.currentSiteId });
+    this.dailyData = result.data;
+  }
+
+  // 设置面板
+  @observable boxDisplay = false;
+  @action.bound
+  toggleBox(value?: boolean) {
+    this.boxDisplay = value ? value : !this.boxDisplay;
+  }
+
+  //厂区相关
+  @observable currentPark = 0;
+  @action.bound
+  async selectFactory(factoryId) {
+    this.currentPark = factoryId;
+  }
+  @action.bound
+  async saveSelectedFactory() {
+    await api.Other.setSelectedPark({ parkId: this.currentPark });
+    notification.success({ message: "更新成功" });
+    this.toggleBox();
+    this.reload();
+  }
+
+  //站点相关
+  @observable selectedSites: string[] = [];
+  @action.bound
+  async saveSelectedSites(siteIds: number[]) {
+    await api.Other.addConcernSite({ parkId: this.currentPark, siteIds });
+    notification.success({ message: "更新成功" });
+    this.toggleBox();
+    this.reload();
+  }
+
+  //地图相关
   @action.bound
   draw() {
     for (let x in this.pointsc) {
@@ -117,11 +243,16 @@ export class ParkScreenMapStore {
       this.map = e.target;
       //@ts-ignore
       this.map.setMapStyle({ features: [], style: "midnight" });
-      let mapViewObj = this.map.getViewport(this.polygonPath, {});
-
-      this.map.centerAndZoom(mapViewObj.center, mapViewObj.zoom);
     } else {
       this.draw();
     }
+  }
+
+  @action.bound
+  updateMap() {
+    if (!this.map) return;
+    let mapViewObj = this.map.getViewport(utils.array.formatLatLngLong(this.allParkMapData.parkPoints), {});
+    console.log(mapViewObj);
+    this.map.centerAndZoom(mapViewObj.center, mapViewObj.zoom);
   }
 }

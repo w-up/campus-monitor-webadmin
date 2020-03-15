@@ -72,3 +72,54 @@ export interface DailySewage {
     time: string;
   }>;
 }
+
+export type allSiteRes = Array<{
+  companyId: string;
+  companyName: string;
+  factorys: Array<{
+    factoryId: string;
+    factoryName: string;
+    sites: Array<{
+      siteId: string;
+      siteName: string;
+      concern: boolean;
+    }>;
+  }>;
+}>;
+
+export type Tree = Array<{
+  key: string;
+  title: string;
+  selected?: boolean;
+  children: Tree;
+}>;
+
+export interface ConcernSiteData {
+  siteId: string;
+  gpsX: string;
+  gpsY: string;
+  factoryId?: any;
+  siteName: string;
+  device_code: string;
+  collectValue: string;
+  unit: string;
+  limit: string;
+  overRate: string;
+}
+
+export type AllParkData = {
+  parkId: string;
+  parkName: string;
+  parkPoints: Array<{
+    longitude: string;
+    latitude: string;
+  }>;
+  siteDatas: Array<ConcernSiteData>;
+  factoryDatas: Array<{
+    factoryId: string;
+    factoryName: string;
+    factoryPoints: any;
+    averageValue: string;
+    unit: string;
+  }>;
+};
