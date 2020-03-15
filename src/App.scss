@@ -66,8 +66,7 @@
   .head-left,
   .head-right {
     position: relative;
-    width: 25%;
-    min-width: 350px;
+    width: 100%;
     padding: 20px 12px 12px 0;
     color: #04b2f0;
     opacity: 0.9;
@@ -105,8 +104,8 @@
   }
 
   .screenTable {
-    width: 25%;
-    min-width: 350px;
+    width: 100%;
+    //min-width: 320px;
     border: 1px solid #2e3b61;
   }
 

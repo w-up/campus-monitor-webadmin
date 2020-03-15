@@ -16,7 +16,7 @@ export const TimeDisplay = () => {
   });
 
   return useObserver(() => (
-      <div className="leading-5 flex-1 flex items-end ml-4">
+      <div className="leading-5 flex items-end w-1/4 pl-4">
         <div className="head-left font-bold">
           <Icon className="ml-5 float-left" style={{fontSize:20}} type="clock-circle" theme="filled" />
           <span className="text-lg m-2">{time}</span>
