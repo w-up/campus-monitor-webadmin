@@ -1,5 +1,8 @@
-import { action, observable } from "mobx";
+import { action, observable, computed } from "mobx";
 import api from "services";
+import { notification } from "antd";
+import { allSiteRes, Tree, ConcernSiteData } from "../../type";
+import { _ } from "utils/lodash";
 
 export class ParkScreenMapStore {
   //@ts-ignore
@@ -64,7 +67,7 @@ export class ParkScreenMapStore {
   ];
   @observable gasData = [] as any;
   @observable waterData = [] as any;
-  @observable allSites = [] as any;
+  @observable allSites: Tree = [];
   @observable allParks: Array<{
     id: string;
     parkNo: string;
@@ -73,33 +76,135 @@ export class ParkScreenMapStore {
     selected: boolean;
   }> = [] as any;
 
+  // 初始化
   @action.bound
   async init() {
-    const [{ data: gasData }, { data: waterData }, { data: allSites }, { data: allParks }] = await Promise.all([
+    const [{ data: gasData }, { data: waterData }, allSiteResult, { data: allParks }] = await Promise.all([
       api.DeviceData.getFactoryPMByParkId({ type: "1" }),
       api.DeviceData.getFactoryPMByParkId({ type: "2" }),
       api.DeviceSite.getAllSitesByParkId(),
       api.Park.getAllParksSelect()
     ]);
+
+    if (this.currentPmCode) {
+      this.loadConcernSiteData(this.currentPmCode);
+    }
+
+    const _allSite: allSiteRes = allSiteResult.data;
+    const allSites = _allSite.map(i => ({
+      title: i.companyName,
+      key: `company-${i.companyId}`,
+      children: i.factorys
+        ? i.factorys.map(factory => ({
+            key: `factory-${factory.factoryId}`,
+            title: factory.factoryName,
+            children: factory.sites
+              ? factory.sites.map(site => ({
+                  key: site.siteId,
+                  title: site.siteName,
+                  selected: site.concern
+                }))
+              : []
+          }))
+        : []
+    }));
+
     Object.assign(this, {
       gasData,
       waterData,
       allSites,
       allParks
     });
+    let selectedSites: string[] = [];
+    this.allSites.forEach(park => {
+      park.children?.forEach(factory => {
+        factory.children?.forEach(i => {
+          if (i.selected) {
+            selectedSites.push(i.key);
+          }
+        });
+      });
+    });
+    console.log(selectedSites);
+    this.selectedSites = selectedSites;
     allParks.forEach(i => {
       if (i.selected) {
-        console.log(i);
-        this.currentFactory = i.id;
+        this.currentPark = i.id;
       }
     });
   }
+  @action.bound
+  reload() {
+    this.init();
+  }
 
-  @observable currentFactory = "";
+  // 监测面板
+  @observable currentPmCode = "";
+  @observable allConcernSiteData: Array<ConcernSiteData> = [];
+  @observable allParkMapData: {
+    parkId: string;
+    parkName: string;
+    parkPoints: Array<{
+      longitude: string;
+      latitude: string;
+    }>;
+    siteDatas: Array<ConcernSiteData>;
+    factoryDatas: Array<{
+      factoryId: string;
+      factoryName: string;
+      factoryPoints: any;
+      averageValue: string;
+      unit: string;
+    }>;
+  } = {
+    parkId: "",
+    parkName: "",
+    parkPoints: [],
+    siteDatas: [],
+    factoryDatas: []
+  };
 
   @action.bound
+  setCurrentPmCode(currentPmCode: string) {
+    this.currentPmCode = currentPmCode;
+  }
+
+  @action.bound
+  async loadConcernSiteData(pmCode: string) {
+    const result = await api.DeviceData.getConcernSiteData({ pmCode });
+    const result1 = await api.DeviceData.getParkMapData({ pmCode });
+    this.allConcernSiteData = result.data;
+    this.allParkMapData = result1.data;
+  }
+  // 设置面板
+  @observable boxDisplay = false;
+  @action.bound
+  toggleBox(value?: boolean) {
+    this.boxDisplay = value ? value : !this.boxDisplay;
+  }
+
+  //厂区相关
+  @observable currentPark = 0;
+  @action.bound
   async selectFactory(factoryId) {
-    this.currentFactory = factoryId;
+    this.currentPark = factoryId;
+  }
+  @action.bound
+  async saveSelectedFactory() {
+    await api.Other.setSelectedPark({ parkId: this.currentPark });
+    notification.success({ message: "更新成功" });
+    this.toggleBox();
+    this.reload();
+  }
+
+  //站点相关
+  @observable selectedSites: string[] = [];
+  @action.bound
+  async saveSelectedSites(siteIds: number[]) {
+    await api.Other.addConcernSite({ parkId: this.currentPark, siteIds });
+    notification.success({ message: "更新成功" });
+    this.toggleBox();
+    this.reload();
   }
 
   @action.bound

@@ -30,6 +30,11 @@ export class EnterpriseScreenMapStore {
     await this.loadHoursSewage();
   }
 
+  @action.bound
+  async reload() {
+    this.init();
+  }
+
   @observable boxDisplay = false;
   @action.bound
   toggleBox(value?: boolean) {
@@ -126,7 +131,6 @@ export class EnterpriseScreenMapStore {
 
   @action.bound
   async selectFactory(factoryId) {
-    // await api.Other.setSelectedFactory({ factoryId });
     this.currentFactory = factoryId;
   }
 
@@ -135,6 +139,7 @@ export class EnterpriseScreenMapStore {
     await api.Other.setSelectedFactory({ factoryId: this.currentFactory });
     notification.success({ message: "更新成功" });
     this.toggleBox();
+    this.reload();
   }
 
   @observable allPmCode: {
@@ -159,7 +164,7 @@ export class EnterpriseScreenMapStore {
     this.allPmCode = result.data || {};
     const selectedPmCodes = [] as any;
     Object.values(this.allPmCode).forEach(datas => {
-      datas.forEach(i => {
+      datas?.forEach(i => {
         if (i.isSelected) {
           selectedPmCodes.push(i.pmCode);
         }
@@ -179,6 +184,7 @@ export class EnterpriseScreenMapStore {
     await api.DevicePM.setFactorySelectedPM({ pmCodes: this.selectedPmCodes });
     notification.success({ message: "更新成功" });
     this.toggleBox();
+    this.reload();
   }
 
   @observable curMapConfig = {
@@ -200,6 +206,7 @@ export class EnterpriseScreenMapStore {
   async saveMapConfig() {
     const { highAngle, latitude, longitude, rotationAngle, zoom, pic } = this.curMapConfig;
     const result = await api.MapConfig.updateMapConfig(
+      //@ts-ignore
       _.pickBy({
         highAngle,
         latitude,
@@ -209,6 +216,7 @@ export class EnterpriseScreenMapStore {
         pic
       })
     );
+    this.reload();
   }
 
   @action.bound
