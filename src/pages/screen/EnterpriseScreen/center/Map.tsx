@@ -25,7 +25,7 @@ export const EnterpriseMap = () => {
       <span className="corner cornerBr" />
       <div id="allmap" style={{ height: "40vh" }} />
       <div className="my-4 p-2 px-6 mapExplain flex flex-row">
-        <div className="primary-text-dark w-2/3">当前厂区：A厂区</div>
+        <div className="primary-text-dark w-2/3">当前厂区：{enterpriseScreenMap.currentFactoryData?.factoryName}</div>
         <div className="flex flex-row w-1/3 screen-text-color-2 justify-between">
           <div>
             <div className="blockNormal" />

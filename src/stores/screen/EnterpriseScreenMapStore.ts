@@ -38,12 +38,14 @@ export class EnterpriseScreenMapStore {
     this.init();
   }
 
+  // 设置
   @observable boxDisplay = false;
   @action.bound
   toggleBox(value?: boolean) {
     this.boxDisplay = value ? value : !this.boxDisplay;
   }
 
+  // 图表数据相关
   @observable SiteRuntimePmDate: Array<SitlePMData> = [];
   @action.bound
   async loadSiteRuntimePmData() {
@@ -60,7 +62,6 @@ export class EnterpriseScreenMapStore {
   };
   @action.bound
   async loadHoursSewage() {
-    // const result = await api.DeviceData.get24HourDatas();
     const result = await api.DeviceData.getAllPM24HourDatasLogin({ pmType: 2 });
     let HoursSewage: EnterpriseScreenMapStore["HoursSewage"] = {
       pms: _.get(result, "data.pms", []) || [],
@@ -114,12 +115,17 @@ export class EnterpriseScreenMapStore {
     this.dailyGas = result.data.pms || [];
   }
 
+  // 厂区相关
   @observable allfactoriy: Array<{
     factoryId: string;
     factoryName: string;
     select: boolean;
   }> = [];
   @observable currentFactory = "";
+
+  get currentFactoryData() {
+    return this.allfactoriy.find(i => i.factoryId == this.currentFactory);
+  }
 
   @action.bound
   async loadAllFactory() {
@@ -145,6 +151,7 @@ export class EnterpriseScreenMapStore {
     this.reload();
   }
 
+  // 因子相关
   @observable allPmCode: {
     water: Array<{
       pmCode: string;
@@ -160,6 +167,7 @@ export class EnterpriseScreenMapStore {
     water: [],
     gas: []
   };
+
   @observable selectedPmCodes = [];
   @action.bound
   async loadAllPmCode() {
@@ -190,6 +198,7 @@ export class EnterpriseScreenMapStore {
     this.reload();
   }
 
+  // 地图设置相关
   @observable curMapConfig = {
     highAngle: 0,
     latitude: 0,
@@ -222,21 +231,7 @@ export class EnterpriseScreenMapStore {
     this.reload();
   }
 
-  @action.bound
-  addpoints(index: number) {
-    if (!this.map) return;
-    for (let x in this.overlays) {
-      this.map.removeOverlay(this.overlays[x]);
-    }
-    this.curIndex = index;
-    this.overlays = [];
-    for (let x in this.lists) {
-      const myCompOverlay = new ComplexCustomOverlay(new BMapGL.Point(this.lists[x].position[0], this.lists[x].position[1]), this.lists[x], x, this);
-      this.overlays.push(myCompOverlay);
-      this.map.addOverlay(myCompOverlay);
-    }
-  }
-
+  // 地图相关
   @action.bound
   initMap() {
     this.map = new BMapGL.Map("allmap", {
@@ -271,6 +266,21 @@ export class EnterpriseScreenMapStore {
 
   @action.bound
   updateMap() {}
+
+  @action.bound
+  addpoints(index: number) {
+    if (!this.map) return;
+    for (let x in this.overlays) {
+      this.map.removeOverlay(this.overlays[x]);
+    }
+    this.curIndex = index;
+    this.overlays = [];
+    for (let x in this.lists) {
+      const myCompOverlay = new ComplexCustomOverlay(new BMapGL.Point(this.lists[x].position[0], this.lists[x].position[1]), this.lists[x], x, this);
+      this.overlays.push(myCompOverlay);
+      this.map.addOverlay(myCompOverlay);
+    }
+  }
 
   @action.bound
   play() {
