@@ -67,11 +67,11 @@ export const ScreenTopSetting = () => {
                     {renderTreeNodes(parkScreenMap.allSites)}
                   </Tree>
                 </Scrollbars>
-                <div className="setting-box-footer p-2" onClick={store.saveSelectedSites}>
-                  <Button type="primary" size="default">
+                <div className="setting-box-footer p-2">
+                  <Button type="primary" size="default" onClick={store.saveSelectedSites}>
                     确定
                   </Button>
-                  <Button className="ml-4" type="default" size="default">
+                  <Button className="ml-4" type="default" size="default" onClick={e => parkScreenMap.toggleBox()}>
                     取消
                   </Button>
                 </div>
@@ -84,11 +84,11 @@ export const ScreenTopSetting = () => {
                     })}
                   </Radio.Group>
                 </Scrollbars>
-                <div className="setting-box-footer p-2" onClick={parkScreenMap.saveSelectedFactory}>
-                  <Button type="primary" size="default">
+                <div className="setting-box-footer p-2">
+                  <Button type="primary" size="default" onClick={parkScreenMap.saveSelectedFactory}>
                     确定
                   </Button>
-                  <Button className="ml-4" type="default" size="default">
+                  <Button className="ml-4" type="default" size="default" onClick={e => parkScreenMap.toggleBox()}>
                     取消
                   </Button>
                 </div>
