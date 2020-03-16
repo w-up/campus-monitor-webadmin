@@ -105,9 +105,16 @@ export class MyEnterprise {
 
   @action
   async getIndustryType() {
-    const { data }: any = await GET(`/dict-data/getDictDataByCode?typeCode=industry_type`, {});
-    console.log('type', data)
+    let { data }: any = await GET(`/dict-data/getDictDataByCode`, { typeCode: 'industry_category' });
+    data = data.map(v => ({ ...v, value: v.id, label: v.dictName }));
+
+    for (let i = 0; i < data.length; i++) {
+      const { data: innerData }: any = await GET(`/dict-data/getDictDataByCode`, { typeCode: data[i].dictCode });
+      data[i].children = innerData.map(k => ({ ...k, value: k.id, label: k.dictName }));
+    }
+
     this.industryType = data;
+    console.log(data);
   }
   
 
@@ -122,6 +129,7 @@ export class MyEnterprise {
       title: item.label,
       key: item.id,
     }));
+    
     if (!this.selectedEnterprise.id) {
       this.selectedEnterprise = this.treeData[0];
     }

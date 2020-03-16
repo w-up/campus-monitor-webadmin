@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useObserver, useLocalStore, observer } from "mobx-react-lite";
-import { Radio, Select, DatePicker, Input, Form, Icon, Spin, Card, Row, Col, Tree, Descriptions, Button, Table, Divider, InputNumber, Modal } from "antd";
+import { Cascader, Radio, Select, DatePicker, Input, Form, Icon, Spin, Card, Row, Col, Tree, Descriptions, Button, Table, Divider, InputNumber, Modal } from "antd";
 import Search from "antd/lib/input/Search";
 import { toJS } from 'mobx';
 import moment from 'moment';
@@ -24,14 +24,16 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
     handleSearchSubmit, handleSearchChange, handleSearchReset, resetSelectedRowKeys
   } = myEnterprise;
 
+  console.log(toJS(industryType))
+
   const {
     businessPeriodEnd, businessPeriodStart, businessScope, companyAddress, companyName, companyNature, companyNatureId,
     legalRepresentative, profession, professionId, registerCapital, registerDate, id,
   } = enterpriseInfo;
 
-  // const {
-  //   factoryName, parkId, factoryAddress, contactPerson, contactPhone, contactPosition, email, scope,
-  // } = factoryInfo;
+  const {
+    factoryName, parkId, factoryAddress, contactPerson, contactPhone, contactPosition, email, scope,
+  } = factoryInfo;
 
   useEffect(() => {
     myEnterprise.getTree();
@@ -169,12 +171,8 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                       )}
                     </Descriptions.Item>
                     <Descriptions.Item label="行业" span={1.5}>
-                      {getFieldDecorator("professionId", { initialValue: professionId, rules: [{ required: false }] })(
-                        <Select disabled={!enterpriseInfoEditable} placeholder="">
-                          {industryType.map(item => (
-                            <Option value={item.id}>{item.dictName}</Option>
-                          ))}
-                        </Select>
+                      {getFieldDecorator("professionId", { initialValue: [professionId], rules: [{ required: false }] })(
+                        <Cascader fieldNames={{ label: 'label', value: 'value', children: 'children' }} disabled={!enterpriseInfoEditable} placeholder="" options={toJS(industryType)} />
                       )}
                     </Descriptions.Item>
                     <Descriptions.Item label="注册资本" span={1.5}>
@@ -231,7 +229,7 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
               </Card>
             </Form>
             <Divider />
-            <Card bordered size="small" title="厂区信息" extra={<Row><Button icon="delete">删除</Button><Divider type="vertical" /><Button icon="file-add" type="primary">添加厂区</Button></Row>}>
+            <Card bordered size="small" title="厂区信息" extra={<Row><Button icon="delete">删除</Button><Divider type="vertical" /><Button icon="file-add" onClick={() => setAddFactoryModalVisible(true)} type="primary">添加厂区</Button></Row>}>
               <Table size="small" bordered rowSelection={rowSelection} columns={columns} dataSource={data} />
             </Card>
           </Card>
@@ -301,24 +299,24 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
             {getFieldValue('scopeType') === 'map' ? 
               <Row style={{ width: '100%', height: '400px' }}>
                 <DrawBaiduMap />
-              </Row> : null
-              // <Table pagination={false} size="small" bordered dataSource={toJS(scope) || []}>
-              //   <Table.Column
-              //     title="名称"
-              //     dataIndex="scopeName"
-              //     key="scopeName"
-              //   />
-              //   <Table.Column
-              //     title="精度"
-              //     dataIndex="longitude"
-              //     key="longitude"
-              //   />
-              //   <Table.Column
-              //     title="纬度"
-              //     dataIndex="latitude"
-              //     key="latitude"
-              //   />
-              // </Table>
+              </Row> :
+              <Table pagination={false} size="small" bordered dataSource={toJS(scope) || []}>
+                <Table.Column
+                  title="名称"
+                  dataIndex="scopeName"
+                  key="scopeName"
+                />
+                <Table.Column
+                  title="精度"
+                  dataIndex="longitude"
+                  key="longitude"
+                />
+                <Table.Column
+                  title="纬度"
+                  dataIndex="latitude"
+                  key="latitude"
+                />
+              </Table>
             }
           </Card>
         </Form>
