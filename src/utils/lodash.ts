@@ -14,6 +14,7 @@ import mapValues from "lodash/mapValues";
 import omitBy from "lodash/omitBy";
 import isNil from "lodash/isNil";
 import pickBy from "lodash/pickBy";
+import chunk from "lodash/chunk";
 
 export const _ = {
   get,
@@ -31,5 +32,6 @@ export const _ = {
   mapValues,
   isNil,
   omitBy,
-  pickBy
+  pickBy,
+  chunk
 };

@@ -38,7 +38,7 @@ export const EnterpriseScreenGasChart = () => {
   }, []);
 
   return useObserver(() => (
-    <div className="screenTable mt-4" style={{ height: "377px" }}>
+    <div className="screenTable mt-4" style={{ height: "350px" }}>
       <div className="tableTitle flex justify-between items-center">
         <img src="/images/left.png" className="img" />
         <div>气体日均排放浓度趋势图</div>
@@ -105,7 +105,7 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
             <div style="display:flex;align-items: center;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value.toFixed(1) + "*10¹mg/L"}</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? value.toFixed(1) + "*10¹mg/L" : ""}</div>
           </div>
           `;
         }

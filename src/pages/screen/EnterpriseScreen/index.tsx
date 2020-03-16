@@ -28,19 +28,19 @@ export const EnterpriseScreenPage = () => {
         <Icon className="text-3xl font-black" type="fullscreen" />
         <span className="ml-2">全屏展示</span>
       </div>
-      <div ref={fullScreenRef} className="flex-col w-full h-full" style={{ backgroundColor: "#061630" }}>
+      <div ref={fullScreenRef} className="flex flex-col w-full h-full pb-4" style={{ backgroundColor: "#061630", height: "calc(100vh)" }}>
         <ScreenTop />
-        <div className="px-4">
-          <div className="flex-1 flex mt-4">
-            <div>
+        <div className="pb-4 flex-1" style={{ backgroundColor: "#061630"}}>
+          <div className="flex mt-4 justify-between">
+            <div className="w-1/4 pl-4">
               <GasTable />
               <EnterpriseScreenGasChart />
             </div>
-            <div className="flex-1 pl-4 pr-4">
+            <div className="w-2/4 pl-4 pr-4">
               <EnterpriseMap />
               <EnterpriseScreenGroupChart />
             </div>
-            <div className="flex flex-col">
+            <div className="w-1/4 pr-4 flex flex-col items-end">
               <SewageTableDynamic />
               <Sewage24HourChart />
               <SewageDailyChart />

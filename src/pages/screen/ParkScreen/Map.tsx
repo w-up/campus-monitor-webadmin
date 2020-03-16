@@ -3,31 +3,32 @@ import { useObserver } from "mobx-react-lite";
 import { Map, APILoader, Polygon, Label, CustomOverlay } from "@uiw/react-baidu-map";
 import { useStore } from "../../../stores/index";
 import "./Map.css";
+import { utils } from "../../../utils/index";
 
 export const ParkScreenMap = () => {
   const {
     config,
-    screen: { parkScreenMap: mapStore }
+    screen: { parkScreenMap }
   } = useStore();
 
   useEffect(() => {
     return () => {
       //@ts-ignore
-      mapStore.map = null;
+      parkScreenMap.map = null;
     };
-  }, [mapStore.map]);
+  }, [parkScreenMap.map]);
 
   return useObserver(() => (
     <div style={{ width: "100%", height: "50vh" }}>
       <APILoader akay={config.baiduMapApiKey}>
-        <Map onTilesLoaded={mapStore.onMapUpdate} zoom={mapStore.zoom} center={mapStore.center} enableScrollWheelZoom onZoomEnd={e => (mapStore.zoom = e.target.getZoom())}>
-          <Polygon path={mapStore.polygonPath} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor=""></Polygon>
-          {mapStore.compamys.map((item, index) => (
+        <Map onTilesLoaded={parkScreenMap.onMapUpdate} enableScrollWheelZoom onZoomEnd={e => (parkScreenMap.zoom = e.target.getZoom())}>
+          <Polygon path={utils.array.formatLatLngLong(parkScreenMap.allParkMapData.parkPoints)} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor=""></Polygon>
+          {parkScreenMap.compamys.map((item, index) => (
             <Polygon path={item} key={index} strokeStyle="dashed" fillColor="#FFD800" strokeColor="#FFD800" strokeWeight={2}></Polygon>
           ))}
-          {mapStore.compname.map((item, index) => (
+          {parkScreenMap.compname.map((item, index) => (
             <Label
-              offset={mapStore.offset}
+              offset={parkScreenMap.offset}
               content={item.name}
               key={item.name}
               position={item.position}
@@ -36,9 +37,9 @@ export const ParkScreenMap = () => {
               item={item.name}
             ></Label>
           ))}
-          {mapStore.zoom > 17 && (
+          {parkScreenMap.zoom > 17 && (
             <CustomOverlay paneName="floatPane">
-              {mapStore.pointsc.map((item, index) => (
+              {parkScreenMap.pointsc.map((item, index) => (
                 <div key={index} style={{ position: "absolute", left: item.mapPos.left, top: item.mapPos.top }}>
                   {item.number < 15 ? (
                     <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../../assets/green.png")} />

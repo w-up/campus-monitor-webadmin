@@ -38,7 +38,7 @@ export const Sewage24HourChart = () => {
     <div className="screenTable mt-4" style={{ height: "252px" }}>
       <div className="tableTitle flex justify-between items-center">
         <img src="/images/left.png" className="img" />
-        <div>污水排放浓度24小时趋势图</div>
+        <div>污水排放浓度24小时趋势</div>
         <img src="/images/right1.png" className="img" />
       </div>
       <ReactEcharts ref={mapRef} option={makeOption({ data: enterpriseScreenMap.HoursSewage, dataIndex: store.dataIndex })} style={{ width: "100%", height: "180px" }} />
