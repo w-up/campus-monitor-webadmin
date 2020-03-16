@@ -3,10 +3,11 @@ import { useObserver, useLocalStore } from "mobx-react-lite";
 import { Form, Select, Button, Table, Icon } from "antd";
 import { WrappedFormUtils } from "antd/lib/form/Form";
 import { TableProps } from "antd/lib/table";
-import { LineChart } from "../../components/LineChart";
 import { useStore } from "stores";
-import { PMValue } from "../../type";
+import { PMValue, SiteData } from "../../type";
 import api from "services";
+import ReactEcharts from "echarts-for-react";
+import { constant } from "../../common/constants";
 
 //@ts-ignore
 export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils }) => {
@@ -15,7 +16,7 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
 
   const store = useLocalStore(() => ({
     curSiteId: null as any,
-    siteData: null as PMValue | null,
+    siteData: null as SiteData | null,
     formItemLayout: {
       labelCol: {
         span: 7
@@ -33,33 +34,152 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
         }
       });
     },
-    monitorPanel: {
-      table: {
-        dataSource: [
-          { key: "TVOCs", name: "总挥发有机物", data1: "1073.20", data2: "2000.00" },
-          { key: "H2S", name: "硫化氢", data1: "4.00", data2: "60.00" },
-          { key: "S02", name: "二氧化硫", data1: "2.00", data2: "500.00" },
-          { key: "NH3", name: "氨", data1: "25.50", data2: "1500.00" }
-        ],
+    get options() {
+      return {
+        //   标题配置
+        title: {
+          text: "24小时排放趋势图",
+          textStyle: {
+            color: "#88A8C5FF",
+            fontSize: "14",
+            fontWeight: "normal"
+          },
+          x: "center",
+          y: "20px",
+          padding: [5, 20]
+        },
+        // 提示配置
+        tooltip: {
+          trigger: "axis",
+          backgroundColor: "rgba(38,95,163,0.6)",
+          padding: 10,
+          textStyle: {
+            color: "#88A8C5",
+            fontSize: 10
+          },
+          alwaysShowContent: {
+            show: true
+          },
+          formatter: (params: any, ticket: any, callback: any) => {
+            let showHtml = "";
+            for (var i = 0; i < params.length; i++) {
+              var list = {} as any;
+              //x轴名称
+              var name = params[i].seriesName;
+              //名称
+              var text = params[i].axisValue;
+              //值
+              var value = params[i].data;
+              showHtml += `
+            <div style="display:flex;align-items: center;">
+            <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
+            <div>${name}</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? value + "*10¹mg/L" : ""}</div>
+          </div>
+          `;
+            }
+            return `<div style="color: #04F9CC;text-align:left;line-height:20px">${text} 日均</div>
+            <div style="color:#88A8C5;text-align:left;font-size:10px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
+            ${showHtml}
+            </div>
+          </div>`;
+          }
+        },
+        // 上册图列配置
+        legend: {
+          data: this.siteData?.dataTrend.map(i => i.pmName),
+          textStyle: {
+            fontSize: 10,
+            color: "#88A8C5" // 图例文字颜色
+          }
+          // y:"-10px",
+        },
+        grid: {
+          top: "25%",
+          left: "4%",
+          right: "2%",
+          bottom: "0%",
+          containLabel: true
+        },
+        xAxis: {
+          type: "category",
+          axisLabel: {
+            textStyle: {
+              color: "rgba(136,168,197,0.5)",
+              fontSize: "10"
+            }
+          },
+          data: this.siteData?.dataTrend[0].points.map(i => i.time)
+        },
+        yAxis: {
+          name: "（mg/m³）",
+          nameTextStyle: {
+            color: "rgba(136,168,197,0.5)",
+            align: "center",
+            verticalAlign: "middle",
+            padding: [5, 0, 15, 20]
+          },
+          type: "value",
+          // min: 1,
+          // max: 100,
+          splitNumber: 3,
+          axisLabel: {
+            textStyle: {
+              color: "rgba(136,168,197,0.5)",
+              fontSize: "10"
+            }
+          },
+          //   分割线
+          splitLine: {
+            lineStyle: {
+              color: "rgba(101,198,231,0.2)"
+            }
+          },
+          //   刻度线
+          axisLine: {
+            show: false
+          }
+        },
+        series: this.siteData?.dataTrend.map((item, index) => ({
+          name: item.pmName,
+          type: "line",
+          data: item.points.map(i => i.collectValue),
+          itemStyle: {
+            normal: {
+              color: constant.seriesColors[index], //改变折线点的颜色
+              lineStyle: {
+                color: constant.seriesColors[index] //改变折线颜色
+              }
+            }
+          },
+          symbol: "circle", //设定为实心点
+          symbolSize: 6 //设定实心点的大小
+        }))
+      };
+    },
+
+    get monitorTable() {
+      return {
+        dataSource: this.siteData?.realTimeData,
         columns: [
           {
             title: "检测物质",
-            dataIndex: "key"
+            dataIndex: "pmCode"
           },
           {
             title: "检测物质中文名",
-            dataIndex: "name"
+            dataIndex: "pmName"
           },
           {
             title: "监测浓度(ug/m3)",
-            dataIndex: "data1"
+            dataIndex: "collectValue"
           },
           {
             title: "排放限制(ug/m3)",
-            dataIndex: "data2"
+            dataIndex: "pmLimitValue"
           }
         ]
-      }
+      };
     }
   }));
 
@@ -142,21 +262,23 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
       {store.siteData && (
         <div className="monitor-row-panel p-4 ">
           <div className="flex justify-between items-center mt-4">
-            <div className="primary-button-text-dark text-lg">{store.siteData?.pmName}</div>
+            <div className="primary-button-text-dark text-lg">{store.siteData?.siteName}</div>
             <div className="primary-button-text-dark text-sm"> 更新时间: 2020-01-02 14:00:00</div>
           </div>
           <div className="stat-panel grid grid-flow-col grid-cols-3 grid-rows-2 gap-4 text-white mt-8 p-4">
-            <div>风速: 0.0m/s</div>
-            <div>风向: 北风</div>
-            <div>温度: 15.0℃</div>
-            <div>湿度: 55%RH</div>
-            <div>气压: 101.6kPa</div>
+            <div>风速: {store.siteData?.environmentData?.windSpeed}</div>
+            <div>风向: {store.siteData?.environmentData?.windDirection}</div>
+            <div>温度: {store.siteData?.environmentData?.temperature}</div>
+            <div>湿度: {store.siteData?.environmentData?.humidity}</div>
+            <div>气压: {store.siteData?.environmentData?.airPressure}</div>
           </div>
-          <Table className="monitor-table mt-10" {...store.monitorPanel.table} pagination={false} />
+          <Table className="monitor-table mt-10" {...store.monitorTable} pagination={false} />
 
           <div>
             <div className="primary-text-color mt-10 text-center">24小时监测浓度趋势图</div>
-            <LineChart />
+            <div className="mt-4">
+              <ReactEcharts option={store.options} style={{ width: "100%", height: "180px" }} />
+            </div>
           </div>
         </div>
       )}

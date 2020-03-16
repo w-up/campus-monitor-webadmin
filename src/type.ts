@@ -123,3 +123,32 @@ export type AllParkData = {
     unit: string;
   }>;
 };
+
+export type SiteData = {
+  siteId: string;
+  siteName: string;
+  environmentData: {
+    windSpeed: string;
+    windDirection: string;
+    temperature: string;
+    humidity: string;
+    airPressure: string;
+  };
+  realTimeData: Array<{
+    pmCode: string;
+    pmName: string;
+    unit: string;
+    collectValue: string;
+    pmLimitValue: any;
+  }>;
+  dataTrend: Array<{
+    pmCode: string;
+    pmName: string;
+    points: Array<{
+      collectValue: number;
+      time: string;
+      unit: string;
+    }>;
+    unit: string;
+  }>;
+};

@@ -186,7 +186,9 @@ export class ParkScreenMapStore {
       allParkMapData: parkMapData.data
     });
     this.updateMap();
-    this.currentSiteId = this.allParkMapData.siteDatas[0].siteId;
+    if (this.allParkMapData.siteDatas.length > 0) {
+      this.currentSiteId = this.allParkMapData.siteDatas[0].siteId;
+    }
     await this.loadDadilyData();
   }
   @action.bound
