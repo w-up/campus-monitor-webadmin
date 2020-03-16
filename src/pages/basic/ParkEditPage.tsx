@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
 import { toJS } from 'mobx';
-import { Card, Form, Input, Button, Radio, Breadcrumb, Modal, Table, message } from "antd";
+import { Spin, Card, Form, Input, Button, Radio, Breadcrumb, Modal, Table, message } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import { useStore } from "../../stores/index";
-import { APILoader, Map, Polygon, Control } from "@uiw/react-baidu-map";
 import { DrawBaiduMap } from "../../components/DrawBaiduMap";
 
 const { Column } = Table;
@@ -35,6 +34,11 @@ const tailFormItemLayout = {
 
 export const ParkEditPage = Form.create()(observer(({ form }: any) => {
 
+  const { state = {} }: any = useLocation();
+  console.log('state', state)
+
+  const { id, parkName, parkNo, remark, scope, parkStatus } = state.park || {};
+
   const history = useHistory();
 
   const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields } = form;
@@ -47,8 +51,8 @@ export const ParkEditPage = Form.create()(observer(({ form }: any) => {
 
   const {
     onSubmit,
-    parkName, parkNo, remark, scope, parkStatus,
     updateMapPoints,
+    loading,
   } = parkEdit;
 
   const doUpdateMapPoints = () => {
@@ -72,7 +76,7 @@ export const ParkEditPage = Form.create()(observer(({ form }: any) => {
   console.log(toJS(drawMap));
 
   return(
-    <div>
+    <Spin spinning={loading}>
       <div style={{height: 100, background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px"}}>
         <Breadcrumb>
           <Breadcrumb.Item>基础信息</Breadcrumb.Item>
@@ -80,13 +84,18 @@ export const ParkEditPage = Form.create()(observer(({ form }: any) => {
             <Link to="/base/park">园区管理</Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
-            <a>新增园区</a>
+            <a>{state.park ? '编辑园区' : '新增园区'}</a>
           </Breadcrumb.Item>
         </Breadcrumb>
-      <div style={{margin: 10, marginLeft: 0, fontWeight: "bold", fontSize: 20}}>新增园区</div>
+      <div style={{margin: 10, marginLeft: 0, fontWeight: "bold", fontSize: 20}}>{state.park ? '编辑园区' : '新增园区'}</div>
       </div>
       <Card>
         <Form {...formItemLayout} onSubmit={doSubmit}>
+          <Form.Item label="园区代码" style={{ display: 'none' }}>
+            {getFieldDecorator("id", { initialValue: id, rules: [{ required: false }] })(
+              <Input placeholder="请输入园区ID" />
+            )}
+          </Form.Item>
           <Form.Item label="园区代码">
             {getFieldDecorator("parkNo", { initialValue: parkNo, rules: [{ required: true }] })(
               <Input placeholder="请输入园区代码" />
@@ -98,7 +107,7 @@ export const ParkEditPage = Form.create()(observer(({ form }: any) => {
             )}
           </Form.Item>
           <Form.Item label="园区状态" style={{ display: 'none' }} >
-            {getFieldDecorator("parkStatus", { initialValue: parkStatus, rules: [{ required: true }] })(
+            {getFieldDecorator("parkStatus", { initialValue: 1, rules: [{ required: true }] })(
               <Input placeholder="请输入园区状态" />
             )}
           </Form.Item>
@@ -146,13 +155,11 @@ export const ParkEditPage = Form.create()(observer(({ form }: any) => {
             )}
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">
-              提交
-            </Button>
-            <Button style={{marginLeft: 5, marginRight: 5}} >保存</Button>
+            <Button type="primary" htmlType="submit">提交</Button>
+            <Button style={{marginLeft: 5, marginRight: 5}} onClick={() => history.goBack()} >取消</Button>
           </Form.Item>
         </Form>
       </Card>
-    </div>
+    </Spin>
   );
 }));

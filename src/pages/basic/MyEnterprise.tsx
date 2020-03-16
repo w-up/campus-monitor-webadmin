@@ -1,45 +1,59 @@
-import React from "react";
-import { useObserver, useLocalStore } from "mobx-react-lite";
-import { Card, Row, Col, Tree, Descriptions, Button, Table, Divider } from "antd";
+import React, { useEffect, useState } from "react";
+import { useObserver, useLocalStore, observer } from "mobx-react-lite";
+import { Radio, Select, DatePicker, Input, Form, Icon, Spin, Card, Row, Col, Tree, Descriptions, Button, Table, Divider, InputNumber, Modal } from "antd";
 import Search from "antd/lib/input/Search";
+import { CarryOutOutlined, FormOutlined } from '@ant-design/icons';
+import { toJS } from 'mobx';
+import moment from 'moment';
+import { useStore } from "../../stores/index";
+import { DrawBaiduMap } from "../../components/DrawBaiduMap";
 
-export const MyEnterprisePage = () => {
+const { Option } = Select;
 
-  const treeData = [
-    {
-      title: 'parent 1',
-      key: '0-0',
-      children: [
-        {
-          title: 'parent 1-0',
-          key: '0-0-0',
-          children: [
-            { title: 'leaf', key: '0-0-0-0'},
-            { title: 'leaf', key: '0-0-0-1'},
-            { title: 'leaf', key: '0-0-0-2'},
-          ],
-        },
-        {
-          title: 'parent 1-1',
-          key: '0-0-1',
-          children: [{ title: 'leaf', key: '0-0-1-0'}],
-        },
-        {
-          title: 'parent 1-2',
-          key: '0-0-2',
-          children: [
-            { title: 'leaf', key: '0-0-2-0' },
-            {
-              title: 'leaf',
-              key: '0-0-2-1',
-            },
-          ],
-        },
-      ],
-    },
-  ]
-  const showLine = true
-  const showIcon = true
+export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
+
+  const {
+    base: { myEnterprise }
+  } = useStore();
+
+  const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields, resetFields } = form;
+
+  const {
+    loading,
+    treeData, onTreeItemSelect, enterpriseInfo, factoryInfo, selectedEnterprise, doSubmitEnterpriseInfo, companyNatureType, industryType,
+    dataSource, query, selectedRowKeys, total, onSelectChange, paginationChange, deleteEnterprise, 
+    handleSearchSubmit, handleSearchChange, handleSearchReset, resetSelectedRowKeys
+  } = myEnterprise;
+
+  const {
+    businessPeriodEnd, businessPeriodStart, businessScope, companyAddress, companyName, companyNature, companyNatureId,
+    legalRepresentative, profession, professionId, registerCapital, registerDate, id,
+  } = enterpriseInfo;
+
+  // const {
+  //   factoryName, parkId, factoryAddress, contactPerson, contactPhone, contactPosition, email, scope,
+  // } = factoryInfo;
+
+  useEffect(() => {
+    myEnterprise.getTree();
+    myEnterprise.getCompanyNatureType();
+    myEnterprise.getIndustryType();
+  }, []);
+
+  const submitEnterpriseInfo = (e) => {
+    e.preventDefault();
+    validateFields(async (err, values) => {
+      if (err) {
+        return;
+      }
+      await doSubmitEnterpriseInfo(values);
+    })
+  }
+
+  const [ addFactoryModalVisible, setAddFactoryModalVisible] = useState(false);
+
+  const enterpriseInfoEditable = getFieldValue('enterpriseInfoEditable');
+
   const columns = useLocalStore(() => ([
     {
       title: '厂区名称',
@@ -119,71 +133,198 @@ export const MyEnterprisePage = () => {
       name: record.name,
     }),
   }))
-  return useObserver(() => <div>
-    <Row>
-      <Col span={18} push={6}>
-        <Card title="企业名称">
-          <Descriptions title="工商基本" bordered>
-            <Descriptions.Item label="法人代表" span={1.5}>王XX</Descriptions.Item>
-            <Descriptions.Item label="行业" span={1.5}>制造业</Descriptions.Item>
-            <Descriptions.Item label="注册资本" span={1.5}>12021万元 </Descriptions.Item>
-            <Descriptions.Item label="注册日期" span={1.5}>2018-04-24</Descriptions.Item>
-            <Descriptions.Item label="公司性质" span={1.5}>有限公司 </Descriptions.Item>
-            <Descriptions.Item label="经营期限" span={1.5}>2018-04-24 至 2032-12-11</Descriptions.Item>
-            <Descriptions.Item label="所在地" span={3}>
-              上海市外滩19号
-            </Descriptions.Item>
-            <Descriptions.Item label="经营范围" span={3}>
-              Data disk type: MongoDB
-              <br />
-              Database version: 3.4
-              <br />
-              Package: dds.mongo.mid
-              <br />
-              Storage space: 10 GB
-              <br />
-              Replication factor: 3
-              <br />
-              Region: East China 1<br />
-            </Descriptions.Item>
-            
-          </Descriptions>
-            <Row  justify="end" style={{marginTop: 20,marginBottom: 20}}>
-              <Col span={4}>厂区信息</Col>
-              <Col span={20} style={{textAlign: "right"}}>
-                <Button style={{marginRight: 5}} shape="round">删除</Button>
-                <Button shape="round" type="primary">添加厂区</Button>
-              </Col>
-            </Row>
+  return (
+    <Spin spinning={loading}>
+      <Row gutter={10}>
+        <Col span={6}>
+          <Card bordered title="企业信息">
             <div>
-              <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+              <Search
+                placeholder="请输入关键词"
+                onSearch={value => console.log(value)}
+                style={{ width: 200 }}
+              />
             </div>
-        </Card>
-      </Col>
-      <Col span={6} pull={18}>
-        <Card  style={{width: 300, marginRight: 20}} title="企业信息">
-          <div>
-            <Search
-              placeholder="请输入关键词"
-              onSearch={value => console.log(value)}
-              style={{ width: 200 }}
+            <div>
+            <Tree
+              showLine={true}
+              showIcon={true}
+              onSelect={onTreeItemSelect}
+              treeData={toJS(treeData)}
             />
-          </div>
-          <div>
-          <Tree
-            showLine={showLine}
-            showIcon={showIcon}
-            defaultExpandedKeys={['0-0-0']}
-            onSelect={()=> {console.log('aa')}}
-            treeData={treeData}
-          />
-          </div>
-        </Card>
-      </Col>
-    </Row>
-    <Row>
-      
-    </Row>
-    
-  </div>);
-};
+            </div>
+          </Card>
+        </Col>
+        <Col span={18}>
+          <Card bordered title={selectedEnterprise.title}>
+            <Form onSubmit={submitEnterpriseInfo}>
+              <Card bordered size="small" title="工商基本信息" extra={enterpriseInfoEditable ? <Row><Button icon="save" htmlType="submit" type="primary">保存</Button><Divider type="vertical" /><Button onClick={() => resetFields()} icon="save" >取消</Button></Row> : <Button icon="edit" onClick={() => setFieldsValue({ enterpriseInfoEditable: true })} type="primary">编辑</Button>}>
+                  {getFieldDecorator("enterpriseInfoEditable", { initialValue: false })(<Input style={{ display: 'none' }} />)}
+                  {getFieldDecorator("companyId", { initialValue: selectedEnterprise.id, rules: [{ required: false }] })(
+                    <Input style={{ display: 'none' }} placeholder="" />
+                  )}
+                  <Descriptions size="small" bordered>
+                    <Descriptions.Item label="法人代表" span={1.5}>
+                      {getFieldDecorator("legalRepresentative", { initialValue: legalRepresentative, rules: [{ required: false }] })(
+                        <Input disabled={!enterpriseInfoEditable}  placeholder="" />
+                      )}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="行业" span={1.5}>
+                      {getFieldDecorator("professionId", { initialValue: professionId, rules: [{ required: false }] })(
+                        <Select disabled={!enterpriseInfoEditable} placeholder="">
+                          {industryType.map(item => (
+                            <Option value={item.id}>{item.dictName}</Option>
+                          ))}
+                        </Select>
+                      )}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="注册资本" span={1.5}>
+                      <Row type="flex" justify="center">
+                        <Col span={20}>
+                          {getFieldDecorator("registerCapital", { initialValue: registerCapital, rules: [{ required: false }] })(
+                            <InputNumber style={{ width: '100%' }} disabled={!enterpriseInfoEditable} placeholder="" />
+                          )}
+                        </Col>
+                        <Col span={4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>万</Col>
+                      </Row>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="注册日期" span={1.5}>
+                      {getFieldDecorator("registerDate", { initialValue: moment(registerDate), rules: [{ required: false }] })(
+                        <DatePicker disabled={!enterpriseInfoEditable} placeholder="" />
+                      )}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="公司性质" span={1.5}>
+                      {getFieldDecorator("companyNatureId", { initialValue: companyNatureId, rules: [{ required: false }] })(
+                        <Select disabled={!enterpriseInfoEditable} placeholder="">
+                          {companyNatureType.map(item => (
+                            <Option value={item.id}>{item.dictName}</Option>
+                          ))}
+                        </Select>
+                      )}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="经营期限" span={1.5}>
+                      <Row type="flex" justify="center" gutter={6}>
+                        <Col span={10}>
+                          {getFieldDecorator("businessPeriodStart", { initialValue: moment(businessPeriodStart), rules: [{ required: false }] })(
+                            <DatePicker disabled={!enterpriseInfoEditable} placeholder="" />
+                          )}
+                        </Col>
+                        <Col span={4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>至</Col>
+                        <Col span={10}>
+                          {getFieldDecorator("businessPeriodEnd", { initialValue: moment(businessPeriodEnd), rules: [{ required: false }] })(
+                            <DatePicker disabled={!enterpriseInfoEditable} placeholder="" />
+                          )}
+                        </Col>
+                      </Row>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="所在地" span={3}>
+                      {getFieldDecorator("companyAddress", { initialValue: companyAddress, rules: [{ required: false }] })(
+                        <Input disabled={!enterpriseInfoEditable} placeholder="" />
+                      )}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="经营范围" span={3}>
+                      {getFieldDecorator("businessScope", { initialValue: businessScope, rules: [{ required: false }] })(
+                        <Input.TextArea disabled={!enterpriseInfoEditable} placeholder="" />
+                      )}
+                    </Descriptions.Item>
+                    
+                  </Descriptions>
+              </Card>
+            </Form>
+            <Divider />
+            <Card bordered size="small" title="厂区信息" extra={<Row><Button icon="delete">删除</Button><Divider type="vertical" /><Button icon="file-add" type="primary">添加厂区</Button></Row>}>
+              <Table size="small" bordered rowSelection={rowSelection} columns={columns} dataSource={data} />
+            </Card>
+          </Card>
+        </Col>
+      </Row>
+      <Modal
+        title="添加厂区"
+        width={800}
+        visible={addFactoryModalVisible}
+        // onOk={this.handleOk}
+        onCancel={() => setAddFactoryModalVisible(false)}
+      >
+        <Form layout="horizontal">
+          <Card title="厂区信息" bordered size="small">
+            <Descriptions size="small" bordered>
+              <Descriptions.Item label="厂区名称" span={1.5}>
+                {getFieldDecorator("factoryName", { initialValue: '', rules: [{ required: false }] })(
+                  <Input placeholder='请输入厂区名称' />
+                )}
+              </Descriptions.Item>
+              <Descriptions.Item label="所属园区" span={1.5}>
+                {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: false }] })(
+                  <Input placeholder='请输入所属园区' />
+                )}
+              </Descriptions.Item>
+              <Descriptions.Item label="地址" span={1.5}>
+                {getFieldDecorator("factoryAddress", { initialValue: '', rules: [{ required: false }] })(
+                  <Input placeholder='请输入地址' />
+                )}
+              </Descriptions.Item>
+            </Descriptions>
+          </Card>
+          <Divider />
+          <Card title="联络人信息" bordered size="small">
+            <Descriptions size="small" bordered>
+                <Descriptions.Item label="联络人" span={1.5}>
+                  {getFieldDecorator("contactPerson", { initialValue: '', rules: [{ required: false }] })(
+                    <Input placeholder='请输入联络人' />
+                  )}
+                </Descriptions.Item>
+                <Descriptions.Item label="电话" span={1.5}>
+                  {getFieldDecorator("contactPhone", { initialValue: '', rules: [{ required: false }] })(
+                    <Input placeholder='请输入电话' />
+                  )}
+                </Descriptions.Item>
+                <Descriptions.Item label="职位" span={1.5}>
+                  {getFieldDecorator("contactPosition", { initialValue: '', rules: [{ required: false }] })(
+                    <Input placeholder='请输入职位' />
+                  )}
+                </Descriptions.Item>
+                <Descriptions.Item label="邮箱" span={1.5}>
+                  {getFieldDecorator("email", { initialValue: '', rules: [{ required: false }] })(
+                    <Input placeholder='请输入邮箱' />
+                  )}
+                </Descriptions.Item>
+              </Descriptions>
+          </Card>
+          <Divider />
+          <Card title="厂区范围" bordered size="small">
+            {getFieldDecorator("scopeType", { initialValue: 'location', rules: [{ required: false }] })(
+              <Radio.Group>
+                <Radio value="map">地图绘制</Radio>
+                <Radio value="location">输入经纬度</Radio>
+              </Radio.Group>
+            )}
+            <Divider />
+            {getFieldValue('scopeType') === 'map' ? 
+              <Row style={{ width: '100%', height: '400px' }}>
+                <DrawBaiduMap />
+              </Row> : null
+              // <Table pagination={false} size="small" bordered dataSource={toJS(scope) || []}>
+              //   <Table.Column
+              //     title="名称"
+              //     dataIndex="scopeName"
+              //     key="scopeName"
+              //   />
+              //   <Table.Column
+              //     title="精度"
+              //     dataIndex="longitude"
+              //     key="longitude"
+              //   />
+              //   <Table.Column
+              //     title="纬度"
+              //     dataIndex="latitude"
+              //     key="latitude"
+              //   />
+              // </Table>
+            }
+          </Card>
+        </Form>
+        
+      </Modal>
+    </Spin>
+  );
+}))

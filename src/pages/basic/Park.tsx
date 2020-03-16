@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { toJS } from 'mobx';
 import { useStore } from "../../stores/index";
-import { Card, Form, Button, Input, Select, Table, Badge, Divider, Breadcrumb, Alert, Modal, message } from 'antd';
+import { Row, Col, Spin, Card, Form, Button, Input, Select, Table, Badge, Divider, Breadcrumb, Alert, Modal, message } from 'antd';
 import { Link } from "react-router-dom";
 
 export const ParkPage = observer(() => {
@@ -12,7 +12,8 @@ export const ParkPage = observer(() => {
   } = useStore();
 
   const {
-    dataSource, query, selectedRowKeys, total, onSelectChange, paginationChange, deletePark, editPark,
+    loading,
+    dataSource, query, selectedRowKeys, total, onSelectChange, paginationChange, deletePark,
     handleSearchSubmit, handleSearchChange, handleSearchReset, resetSelectedRowKeys
   } = park;
 
@@ -21,6 +22,11 @@ export const ParkPage = observer(() => {
   }, []);
   
   console.log('dataSource', toJS(dataSource));
+
+  const handleSearch = e => {
+    e.preventDefault();
+    park.getParkList();
+  }
 
   const rowSelection = {
     selectedRowKeys,
@@ -37,6 +43,7 @@ export const ParkPage = observer(() => {
       return '共 ' + total + ' 条记录'
     },
     onChange: paginationChange,
+    onShowSizeChange: paginationChange,
   };
 
   const clickDeletePark = (item) => {
@@ -55,21 +62,47 @@ export const ParkPage = observer(() => {
     });
   }
 
+  const onBatchDeletePark = () => {
+    console.log(toJS(selectedRowKeys));
+    const selectedRows = toJS(selectedRowKeys)
+    if (selectedRows.length === 0) {
+      return;
+    }
+    const ids = selectedRows.map(key => toJS(dataSource)[key].id);
+    Modal.confirm({
+      title: '删除确认',
+      content: `确定删除这${ids.length}条记录吗？`,
+      async onOk() {
+        try {
+          await deletePark(ids);
+          message.success('删除成功');
+          resetSelectedRowKeys();
+        } catch {
+          message.error('删除失败');
+        }
+      },
+    });
+  }
+
   const columns = [
     {
       title: '园区编号',
       dataIndex: 'parkNo',
+      width: 200,
     },
     {
       title: '园区名称',
       dataIndex: 'parkName',
+      width: 200,
     },
     {
       title: '描述',
       dataIndex: 'remark',
+      width: 300,
     },
     {
       title: '园区范围',
+      width: 100,
       render: () => {
         return <a>查看</a>
       }
@@ -77,18 +110,22 @@ export const ParkPage = observer(() => {
     {
       title: '创建时间',
       dataIndex: 'createTime',
+      width: 200,
       sorter: (a, b) => a.createTime - b.createTime,
     },
     {
       title: '操作',
       dataIndex: 'action',
-      render: (text: any, record: any) => (
-        <span>
-          <a onClick={() => clickDeletePark(record)}>删除</a>
-          <Divider type="vertical" />
-          <a onClick={() => editPark(record)}>修改</a>
-        </span>
-      )
+      width: 100,
+      render: (_: any, park: any) => {
+        return (
+          <span>
+            <a onClick={() => clickDeletePark(park)}>删除</a>
+            <Divider type="vertical" />
+            <Link to={{ pathname: `/base/park-edit/${park.id}`, state: { park } }}>修改</Link>
+          </span>
+        )
+      } 
     }
   ];
 
@@ -99,7 +136,7 @@ export const ParkPage = observer(() => {
   }
 
   return (
-    <div>
+    <Spin spinning={loading}>
       <div style={{ minHeight: 50, background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px" }}>
         <Breadcrumb>
           <Breadcrumb.Item>基础信息</Breadcrumb.Item>
@@ -108,34 +145,37 @@ export const ParkPage = observer(() => {
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <Card>
-        <div>
-          <Form layout="inline" onSubmit={handleSearchSubmit}>
-            <Form.Item label="园区名称">
-              <Input placeholder="请输入" value={query.parkName} onChange={handleSearchChange} />
-            </Form.Item>
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                查询
-            </Button>
-              <Button style={{ marginLeft: 5 }} onClick={handleSearchReset}>
-                重置
-            </Button>
-            </Form.Item>
-          </Form>
-        </div>
+      <Card size="small">
+        <Row>
+          <Col span={16}>
+            <Form layout="inline" onSubmit={handleSearch}>
+              <Form.Item label="园区名称">
+                <Input placeholder="请输入" value={query.parkName} onChange={handleSearchChange} />
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  查询
+              </Button>
+                <Button style={{ marginLeft: 5 }} onClick={handleSearchReset}>
+                  重置
+              </Button>
+              </Form.Item>
+            </Form>
+          </Col>
 
-        <div style={{ marginTop: 20, marginBottom: 10 }}>
-          <Button type="primary"><Link to="/base/park-edit">新建</Link></Button>
-          <Button style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button>
-        </div>
-        <div style={{ marginTop: 20, marginBottom: 10 }}>
+          <Col span={8} style={{ textAlign: 'right' }}>
+            <Button type="primary"><Link to="/base/park-edit">新建</Link></Button>
+            <Button onClick={onBatchDeletePark} style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button>
+          </Col>
+        </Row>
+        <Row style={{ marginTop: 20, marginBottom: 10 }}>
           <Alert message={selectMsg(selectedRowKeys.length)} type="info" showIcon />
-        </div>
-        <div>
-          <Table rowSelection={rowSelection} columns={columns} dataSource={toJS(dataSource)} pagination={pagination} />
-        </div>
+        </Row>
+        <Divider />
+        <Row>
+          <Table bordered size="small" rowSelection={rowSelection} columns={columns} dataSource={toJS(dataSource)} pagination={pagination} />
+        </Row>
       </Card>
-    </div>
+    </Spin>
   );
 })

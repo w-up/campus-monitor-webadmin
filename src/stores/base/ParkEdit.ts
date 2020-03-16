@@ -2,17 +2,19 @@ import { action, observable } from "mobx";
 import { GET, POST } from "../../utils/request";
 
 export class ParkEdit {
-  @observable parkName: string = '';
-  @observable parkNo: string = '';
-  @observable parkStatus: number = 1;
-  @observable remark: string = '';
   @observable scope: Array<any> = [];
-  @observable scopeType: string = 'location';
+  @observable loading: boolean = false;
   
 
   @action.bound
   async onSubmit(param) {
-    await POST('/park/addPark', param);
+    this.loading = true;
+    if (!param.id) {
+      await POST('/park/addPark', param);
+    } else {
+      await POST('/park/editPark', param);
+    }
+    this.loading = false;
   }
 
   @action.bound

@@ -1,136 +1,187 @@
-import React from "react";
-import { useObserver, useLocalStore } from "mobx-react-lite";
-import { Badge, Divider, Card, Form, Input, Select, Button, Table, Breadcrumb } from "antd";
-import { RouteComponentProps } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useObserver, useLocalStore, observer } from "mobx-react-lite";
+import { RouteComponentProps, Link } from "react-router-dom";
+import { toJS } from 'mobx';
+import { useStore } from "../../stores/index";
+import { message, Modal, Alert, Row, Col, Spin, Badge, Divider, Card, Form, Input, Select, Button, Table, Breadcrumb } from "antd";
 
-const { Option } = Select;
+export const EnterprisePage = observer(() => {
 
-type Props = RouteComponentProps<{}>
-export const EnterprisePage = (props: Props) => {
-  const rowSelection = useLocalStore(() => ({
-    onChange: (selectedRowKeys:any, selectedRows:any) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+  const {
+    base: { enterprise }
+  } = useStore();
+
+  const {
+    loading,
+    dataSource, query, selectedRowKeys, total, onSelectChange, paginationChange, deleteEnterprise,
+    handleSearchSubmit, handleSearchChange, handleSearchReset, resetSelectedRowKeys
+  } = enterprise;
+
+  const handleSearch = e => {
+    e.preventDefault();
+    enterprise.getCompanyList();
+  }
+
+  useEffect(() => {
+    enterprise.getCompanyList();
+  }, []);
+
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+  };
+
+  const pagination = {
+    current: query.current,
+    pageSize: query.pageSize,
+    total,
+    showSizeChanger: true,
+    showQuickJumper: true,
+    showTotal: (total) => {
+      return '共 ' + total + ' 条记录'
     },
-    getCheckboxProps: (record:any) => ({
-      disabled: record.name === 'Disabled User', // Column configuration not to be checked
-      name: record.name,
-    }),
-  }))
-  const columns = useLocalStore(() => ([
-    {
-      title: '企业代码',
-      dataIndex: 'id',
-    },
+    onChange: paginationChange,
+    onShowSizeChange: paginationChange,
+  };
+
+  const clickDeleteEnterprise = (item) => {
+    console.log(item);
+    Modal.confirm({
+      title: '删除确认',
+      content: '确定删除这条记录吗？',
+      async onOk() {
+        try {
+          await deleteEnterprise([ item.id ]);
+          message.success('删除成功');
+        } catch {
+          message.error('删除失败');
+        }
+      },
+    });
+  }
+
+  const onBatchDeleteEnterprise = () => {
+    console.log(toJS(selectedRowKeys));
+    const selectedRows = toJS(selectedRowKeys)
+    if (selectedRows.length === 0) {
+      return;
+    }
+    const ids = selectedRows.map(key => toJS(dataSource)[key].id);
+    Modal.confirm({
+      title: '删除确认',
+      content: `确定删除这${ids.length}条记录吗？`,
+      async onOk() {
+        try {
+          await deleteEnterprise(ids);
+          message.success('删除成功');
+          resetSelectedRowKeys();
+        } catch {
+          message.error('删除失败');
+        }
+      },
+    });
+  }
+
+  const columns = [
     {
       title: '企业名称',
-      dataIndex: 'name',
+      dataIndex: 'companyName',
+      width: 200,
+    },
+    {
+      title: '企业统一社会信用代码',
+      dataIndex: 'companyCode',
+      width: 250,
     },
     {
       title: '描述',
-      dataIndex: 'desc',
+      dataIndex: 'remark',
+      width: 250,
     },
     {
       title: '状态',
-      dataIndex: 'status',
-      render: () => {
-        return <Badge status="processing" text="正常" />
+      dataIndex: 'companyStatus',
+      width: 100,
+      render: (val) => {
+        if (val === 1) {
+          return <Badge status="success" text="正常" />
+        } else {
+          return <Badge status="warning" text="停用" />
+        }
       }
     },
     {
       title: '创建时间',
+      width: 200,
       dataIndex: 'createTime',
     },
     {
       title: '操作',
       dataIndex: 'action',
-      render: (text:any, record:any) => (
+      width: 100,
+      render: (_:any, enterprise:any) => (
         <span>
-          <a>删除</a>
+          <a onClick={() => clickDeleteEnterprise(enterprise)}>删除</a>
           <Divider type="vertical" />
-          <a onClick={() => props.history.push('add-enterprise')}>修改</a>
+          <Link to={{ pathname: `/base/enterprise-edit/${enterprise.id}`, state: { enterprise } }}>修改</Link>
         </span>
       ),
     }
-  ]))
-  const data = useLocalStore(() => ([
-    {
-      key: '1',
-      id: 'TradeCode21',
-      desc: '这是一段描述，关于这个应用的描述',
-      name: '园区1',
-      status: '正常',
-      createTime: '2019-02-21',
-    },
-    {
-      key: '2',
-      id: 'TradeCode21',
-      desc: '这是一段描述，关于这个应用的描述',
-      name: '园区1',
-      status: '正常',
-      createTime: '2019-02-21',
-    },
-    {
-      key: '3',
-      id: 'TradeCode21',
-      desc: '这是一段描述，关于这个应用的描述',
-      name: '园区1',
-      status: '正常',
-      createTime: '2019-02-21',
-    },
-    {
-      key: '4',
-      id: 'TradeCode21',
-      desc: '这是一段描述，关于这个应用的描述',
-      name: '园区1',
-      status: '正常',
-      createTime: '2019-02-21',
-    },
-  ]))
+  ];
+
+  const selectMsg = (num: number) => {
+    return (
+      <div>已选择 <a>{num}</a> 项 <a onClick={resetSelectedRowKeys}>清空</a></div>
+    )
+  }
   
   const goPage = ()=> {
     console.log('submit click')
   }
   
-  return useObserver(() => <div>
-    <div style={{minHeight: 50, background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px"}}>
-      <Breadcrumb>
-        <Breadcrumb.Item>基础信息</Breadcrumb.Item>
-        <Breadcrumb.Item>
-          <a href="">企业管理</a>
-        </Breadcrumb.Item>
-      </Breadcrumb>
-    </div>
-    <Card>
-      <div>
-        <Form layout="inline" onSubmit={()=> console.log('aaa')}>
-        <Form.Item  label="规则编号">
-        <Input placeholder="请输入"/>
-        </Form.Item>
-        <Form.Item  label="状态">
-          <Select style={{ width: 150 }}>
-            <Option value="86">status</Option>
-            <Option value="87">status</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            查询
-          </Button>
-          <Button style={{ marginLeft: 5}} onClick={goPage}>
-            重置
-          </Button>
-        </Form.Item>
-      </Form>
+  return (
+    <Spin spinning={loading}>
+      <div style={{minHeight: 50, background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px"}}>
+        <Breadcrumb>
+          <Breadcrumb.Item>基础信息</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <a href="">企业管理</a>
+          </Breadcrumb.Item>
+        </Breadcrumb>
       </div>
+      <Card size="small">
+        <Row>
+          <Col span={16}>
+            <Form layout="inline" onSubmit={handleSearch}>
+            <Form.Item  label="企业代码">
+              <Input placeholder="请输入" value={query.companyCode} onChange={handleSearchChange} />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                查询
+              </Button>
+              <Button style={{ marginLeft: 5}} onClick={handleSearchReset}>
+                重置
+              </Button>
+            </Form.Item>
+          </Form>
+          </Col>
 
-      <div style={{marginTop: 20, marginBottom: 10}}>
-        <Button type="primary" onClick={() => props.history.push('add-enterprise')}>新建</Button>
-        <Button  style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button>
-      </div>
+          <Col span={8} style={{ textAlign: 'right' }}>
+            <Button type="primary"><Link to="/base/enterprise-edit">新建</Link></Button>
+            <Button onClick={onBatchDeleteEnterprise} style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button>
+          </Col>
+        </Row>
+        <Row style={{ marginTop: 20, marginBottom: 10 }}>
+          <Alert message={selectMsg(selectedRowKeys.length)} type="info" showIcon />
+        </Row>
+        <Divider />
 
-      <div>
-        <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
-      </div>
-    </Card>;
-  </div>);
-};
+        <Row>
+          <Table size="small" bordered rowSelection={rowSelection} columns={columns} dataSource={toJS(dataSource)} pagination={pagination} />
+        </Row>
+      </Card>
+    </Spin>
+  );
+});

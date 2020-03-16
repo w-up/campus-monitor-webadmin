@@ -1,10 +1,9 @@
 import { action, observable } from "mobx";
 import { GET, POST } from "../../utils/request";
-import Mock, { Random } from 'mockjs';
 
-export class Park {
+export class Enterprise {
   @observable query: any = {
-    parkName: '',
+    companyCode: '',
     current: 1,
     pageSize: 10
   };
@@ -21,20 +20,19 @@ export class Park {
 
   @action.bound
   paginationChange(page, pageSize) {
-    debugger
     console.log(page, pageSize);
     this.query = {
       ...this.query,
       current: page,
       pageSize,
     };
-    this.getParkList();
+    this.getCompanyList();
   }
 
   @action.bound
-  async deletePark(parkIds) {
-    await POST('/park/deletePark', parkIds);
-    await this.getParkList();
+  async deleteEnterprise(ids) {
+    await POST('/company/deleteCompany', ids);
+    await this.getCompanyList();
   }
 
   @action.bound
@@ -47,7 +45,7 @@ export class Park {
     console.log(e)
     this.query = {
       ...this.query,
-      parkName: e.target.value,
+      companyCode: e.target.value,
     }
   }
 
@@ -55,7 +53,7 @@ export class Park {
   handleSearchReset(e) {
     console.log(e)
     this.query = {
-      parkName: '',
+      companyCode: '',
       current: 1,
       pageSize: 20,
     }
@@ -67,15 +65,16 @@ export class Park {
   }
 
   @action
-  async getParkList() {
+  async getCompanyList() {
     this.loading = true;
-    const { data }: any = await POST('/park/getParkListPage', {
+    const { data }: any = await POST('/company/getCompanyListPage', {
       current: this.query.current,
       pageNo: this.query.current,
       pageSize: this.query.pageSize,
-      parkName: this.query.parkName,
+      companyCode: this.query.companyCode,
       size: this.query.pageSize,
     });
+    console.log(data)
 
     this.total = data.total;
     this.query.pageSize = data.size;

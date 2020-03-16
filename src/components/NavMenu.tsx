@@ -10,7 +10,7 @@ export const NavMenu = () => {
 
   const renderMenu = (data: any[]) => {
     return data.filter(item => !item.isHide).map(item => {
-      if (item.children && item.children.length > 0) {
+      if (item.children && item.children.length > 0 && item.children.some(item => !item.isHide)) {
         return (
           <SubMenu
             title={
