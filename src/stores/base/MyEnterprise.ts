@@ -20,6 +20,12 @@ export class MyEnterprise {
   @observable factoryInfo: any = {
     scope: [],
   };
+  @observable factoryListInfo: any = {
+    data: [],
+    total: 0,
+    pageSize: 10,
+    current: 1,
+  };
   @observable companyNatureType: Array<any> = [];
   @observable industryType: Array<any> = [];
 
@@ -87,6 +93,7 @@ export class MyEnterprise {
       return false;
     });
     await this.getCompanyInfo();
+    await this.getFactoryList();
     this.loading = false;
   }
 
@@ -133,16 +140,15 @@ export class MyEnterprise {
     const { data }: any = await GET('/company/getCompanyTreeByUserId', {});
     console.log(data);
 
-    this.treeData = data.map(item => ({
-      ...item,
-      title: item.label,
-      key: item.id,
-    }));
+    const transformList = list => list.map(v => ({ ...v, title: v.label, key: v.id, children: v.children.length > 0 ? transformList(v.children) : [] }));
+
+    this.treeData = transformList(data);
     
     if (!this.selectedEnterprise.id) {
       this.selectedEnterprise = this.treeData[0];
     }
     await this.getCompanyInfo();
+    await this.getFactoryList();
   }
 
   @action.bound
@@ -154,22 +160,41 @@ export class MyEnterprise {
   }
 
   @action.bound
+  setFactoryInfo(data) {
+    this.factoryInfo = data;
+  }
+
+  @action.bound
   async getParkList() {
     const { data }: any = await GET('/park/getAllParks', {});
     this.parkList = data;
   }
 
   @action.bound
-  async saveFactory(param) {
-    this.loading = true;
-
-    if (!param.id) {
-      const { data }: any = await POST('/factory/addFactory', param);
-    } else {
-      const { data }: any = await POST('/factory/editFactory', param);
+  async getFactoryList() {
+    if (this.selectedEnterprise.id) {
+      const { data }: any = await POST('/factory/getFactoryListPage', { companyId: this.selectedEnterprise.id });
+      this.factoryListInfo.data = data.records || [];
+      this.factoryListInfo.total = data.total;
+      this.factoryListInfo.pageSize = data.size;
+      this.factoryListInfo.current = data.current;
     }
+  }
 
-    this.loading = false;
+  @action.bound
+  async saveFactory(param) {
+    if (!param.id) {
+      await POST('/factory/addFactory', param);
+    } else {
+      await POST('/factory/editFactory', param);
+    }
+    await this.getFactoryList();
+  }
+
+  @action.bound
+  async deleteFactory(param) {
+    await POST('/factory/deleteFactory', param);
+    await this.getFactoryList();
   }
 
   @action.bound
