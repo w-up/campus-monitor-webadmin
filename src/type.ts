@@ -152,3 +152,37 @@ export type SiteData = {
     unit: string;
   }>;
 };
+
+export type TrendDataType = {
+  factoryAverageConcentration: {
+    averageConcentration: string;
+    comparedWithLastYear: string;
+    comparedWithLastTime: string;
+  };
+  pmValueUpperLimit: any;
+  factoryConcentrationMonitoringTrend: Array<{
+    pmValue: string;
+    pmValueUnit: string;
+    pmEmissions: string;
+    pmEmissionsUnit: string;
+    statisticalTime: string;
+  }>;
+  siteConcentrationMonitoringTrend: Array<{
+    time: string;
+    pmValue: Array<{
+      siteId: string;
+      siteName: string;
+      pmCode: string;
+      avgValue: string;
+      unit: string;
+      statisticalTime: string;
+      specificValue: any;
+    }>;
+  }>;
+};
+
+export type ContributionData = {
+  factoryName: string;
+  percent: string;
+  percentValue: number;
+};
