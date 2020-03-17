@@ -12,7 +12,7 @@ import { store } from "../stores/index";
 Axios.defaults.withCredentials = true;
 
 let http = Axios.create({
-  baseURL: process.env.NODE_ENV == "development" ? "http://nmgjeg.natappfree.cc/" : "http://nmgjeg.natappfree.cc/",
+  baseURL: process.env.NODE_ENV == "development" ? "http://ehauub.natappfree.cc/" : "http://ehauub.natappfree.cc/",
   timeout: 60 * 1000
 });
 
