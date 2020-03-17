@@ -4,38 +4,48 @@ export class DrawMapStore {
   @observable center = { lng: 120.983642, lat: 31.36556 };
   @observable zoom = 17;
   @observable map: any = null;
-  @observable overlays = [];
   @observable polygon = {
-    paths: [
-      [
-        { lng: 120.97411996159416, lat: 31.369259853030464 },
-        { lng: 120.98989420634938, lat: 31.368519871554376 },
-        { lng: 120.9846301360609, lat: 31.361844356051616 },
-        { lng: 120.97598843705491, lat: 31.365621554119674 }
-      ]
-    ] as any[],
+    paths: [] as Array<Array<{ lng: number; lat: number }>>,
     editType: "add" as "add" | "edit"
   };
   @action.bound
   init(data: Partial<DrawMapStore> = {}) {
     Object.assign(this, {
-      center: { lng: 120.983642, lat: 31.36556 },
-      zoom: 17,
       map: null,
-      overlays: [],
       polygon: {
-        paths: [
-          [
-            { lng: 120.97411996159416, lat: 31.369259853030464 },
-            { lng: 120.98989420634938, lat: 31.368519871554376 },
-            { lng: 120.9846301360609, lat: 31.361844356051616 },
-            { lng: 120.97598843705491, lat: 31.365621554119674 }
-          ]
-        ],
-        editing: false
+        paths: [],
+        editType: "add"
       },
       ...data
     });
+  }
+
+  @action.bound
+  getCurLocation() {
+    const local = new BMap.LocalCity();
+    local.get(result => {
+      console.log(result);
+
+      Object.assign(this, {
+        center: result.center,
+        zoom: result.level
+      });
+      console.log(this.center);
+    });
+  }
+
+  @action.bound
+  setPaths(paths: DrawMapStore["polygon"]["paths"]) {
+    this.polygon.paths = paths;
+    console.log(paths);
+    if (!this.map) return;
+    this.autoCenterAndZoom();
+  }
+
+  @action.bound
+  autoCenterAndZoom() {
+    let mapViewObj = this.map.getViewport(this.polygon.paths[0], {});
+    this.map.centerAndZoom(mapViewObj.center, mapViewObj.zoom);
   }
 
   @action.bound
@@ -44,8 +54,17 @@ export class DrawMapStore {
       this.map = e.target;
       //@ts-ignore
       this.map.setMapStyle({ features: [], style: "midnight" });
+      this.autoCenterAndZoom();
     } else {
     }
+  }
+
+  @action.bound
+  search(val: string) {
+    const local = new BMap.LocalSearch(this.map, {
+      renderOptions: { map: this.map, autoViewport: true, selectFirstResult: true, panel: "results" }
+    });
+    local.search(val);
   }
 
   @action.bound

@@ -2,14 +2,16 @@ import React, { useEffect } from "react";
 import { useObserver } from "mobx-react-lite";
 import { useStore } from "../stores/index";
 import { APILoader, Map, Polygon, Control } from "@uiw/react-baidu-map";
-import { Button, Radio } from "antd";
+import { Button, Radio, Input } from "antd";
 import { IPolygon } from "./Polygon/index";
+import Search from "antd/lib/input/Search";
 
 export const DrawBaiduMap = () => {
   const {
     map: { drawMap },
     config
   } = useStore();
+
   useEffect(() => {
     return () => {
       drawMap.init();
@@ -23,7 +25,6 @@ export const DrawBaiduMap = () => {
           onDblClick={drawMap.drawPolygon}
           onRightClick={drawMap.newPolygon}
           zoom={drawMap.zoom}
-          center={drawMap.center}
           enableScrollWheelZoom
           enableDoubleClickZoom={false}
           onZoomEnd={e => (drawMap.zoom = e.target.getZoom())}
@@ -46,10 +47,13 @@ export const DrawBaiduMap = () => {
             />
           ))}
           <Control>
-            <Radio.Group onChange={drawMap.toggleDrawPolygon} defaultValue="add">
-              <Radio.Button value="add">添加</Radio.Button>
-              <Radio.Button value="edit">修改</Radio.Button>
-            </Radio.Group>
+            <div>
+              <Search onSearch={drawMap.search} placeholder="请输入关键字" />
+              <Radio.Group onChange={drawMap.toggleDrawPolygon} defaultValue="add">
+                <Radio.Button value="add">添加</Radio.Button>
+                <Radio.Button value="edit">修改</Radio.Button>
+              </Radio.Group>
+            </div>
           </Control>
         </Map>
       </APILoader>
