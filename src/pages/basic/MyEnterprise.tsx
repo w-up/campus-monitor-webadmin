@@ -8,6 +8,7 @@ import { useStore } from "../../stores/index";
 import { DrawBaiduMap } from "../../components/DrawBaiduMap";
 
 const { Option } = Select;
+const { Column } = Table;
 
 export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
 
@@ -19,9 +20,15 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
 
   const {
     loading,
+    saveFactory, parkList,
     treeData, onTreeItemSelect, enterpriseInfo, factoryInfo, selectedEnterprise, doSubmitEnterpriseInfo, companyNatureType, industryType,
     dataSource, query, selectedRowKeys, total, onSelectChange, paginationChange, deleteEnterprise, 
-    handleSearchSubmit, handleSearchChange, handleSearchReset, resetSelectedRowKeys
+    handleSearchSubmit, handleSearchChange, handleSearchReset, resetSelectedRowKeys,
+    addScope,
+    setScope,
+    scopeNameInput,
+    longitudeInput,
+    latitudeInput,
   } = myEnterprise;
 
   console.log(toJS(industryType))
@@ -39,6 +46,7 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
     myEnterprise.getTree();
     myEnterprise.getCompanyNatureType();
     myEnterprise.getIndustryType();
+    myEnterprise.getParkList();
   }, []);
 
   const submitEnterpriseInfo = (e) => {
@@ -47,6 +55,7 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
       if (err) {
         return;
       }
+      values.professionId = values.professionId[1];
       await doSubmitEnterpriseInfo(values);
     })
   }
@@ -54,6 +63,21 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
   const [ addFactoryModalVisible, setAddFactoryModalVisible] = useState(false);
 
   const enterpriseInfoEditable = getFieldValue('enterpriseInfoEditable');
+
+  const handleFactorySubmit = e => {
+    e.preventDefault();
+    const param = getFieldValue('factoryInfo');
+    saveFactory({ ...param, scope });
+  }
+
+  let initialProfessionId: any = [];
+  if (professionId) {
+    industryType.some(k => k.children.some(v => {
+      if (v.id === professionId) {
+        initialProfessionId = [k.id, v.id];
+      }
+    }));
+  }
 
   const columns = useLocalStore(() => ([
     {
@@ -117,6 +141,7 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
       area: '2356.89 396547.98'
     },
     {
+      key: '4',
       id: 'TradeCode21',
       name: 'A化工XX厂',
       address: '上海市杨浦区XXXX街道1001号',
@@ -134,6 +159,8 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
       name: record.name,
     }),
   }))
+
+
   return (
     <Spin spinning={loading}>
       <Row gutter={10}>
@@ -171,7 +198,7 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                       )}
                     </Descriptions.Item>
                     <Descriptions.Item label="行业" span={1.5}>
-                      {getFieldDecorator("professionId", { initialValue: [professionId], rules: [{ required: false }] })(
+                      {getFieldDecorator("professionId", { initialValue: initialProfessionId, rules: [{ required: false }] })(
                         <Cascader fieldNames={{ label: 'label', value: 'value', children: 'children' }} disabled={!enterpriseInfoEditable} placeholder="" options={toJS(industryType)} />
                       )}
                     </Descriptions.Item>
@@ -230,7 +257,7 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
             </Form>
             <Divider />
             <Card bordered size="small" title="厂区信息" extra={<Row><Button icon="delete">删除</Button><Divider type="vertical" /><Button icon="file-add" onClick={() => setAddFactoryModalVisible(true)} type="primary">添加厂区</Button></Row>}>
-              <Table size="small" bordered rowSelection={rowSelection} columns={columns} dataSource={data} />
+              <Table size="small" rowKey="key" bordered rowSelection={rowSelection} columns={columns} dataSource={data} />
             </Card>
           </Card>
         </Col>
@@ -239,24 +266,34 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
         title="添加厂区"
         width={800}
         visible={addFactoryModalVisible}
-        // onOk={this.handleOk}
+        onOk={handleFactorySubmit}
         onCancel={() => setAddFactoryModalVisible(false)}
       >
         <Form layout="horizontal">
+          {getFieldDecorator("factoryInfo.id", { initialValue: '', rules: [{ required: false }] })(
+            <Input hidden placeholder='请输入厂区ID' />
+          )}
+          {getFieldDecorator("factoryInfo.companyId", { initialValue: selectedEnterprise.id, rules: [{ required: false }] })(
+            <Input hidden placeholder='请输入公司ID' />
+          )}
           <Card title="厂区信息" bordered size="small">
             <Descriptions size="small" bordered>
               <Descriptions.Item label="厂区名称" span={1.5}>
-                {getFieldDecorator("factoryName", { initialValue: '', rules: [{ required: false }] })(
+                {getFieldDecorator("factoryInfo.factoryName", { initialValue: '', rules: [{ required: false }] })(
                   <Input placeholder='请输入厂区名称' />
                 )}
               </Descriptions.Item>
               <Descriptions.Item label="所属园区" span={1.5}>
-                {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: false }] })(
-                  <Input placeholder='请输入所属园区' />
+                {getFieldDecorator("factoryInfo.parkId", { initialValue: '', rules: [{ required: false }] })(
+                  <Select placeholder="请输入所属园区">
+                    {parkList.map(item => (
+                      <Option value={item.id}>{item.parkName}</Option>
+                    ))}
+                  </Select>
                 )}
               </Descriptions.Item>
               <Descriptions.Item label="地址" span={1.5}>
-                {getFieldDecorator("factoryAddress", { initialValue: '', rules: [{ required: false }] })(
+                {getFieldDecorator("factoryInfo.factoryAddress", { initialValue: '', rules: [{ required: false }] })(
                   <Input placeholder='请输入地址' />
                 )}
               </Descriptions.Item>
@@ -266,22 +303,22 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
           <Card title="联络人信息" bordered size="small">
             <Descriptions size="small" bordered>
                 <Descriptions.Item label="联络人" span={1.5}>
-                  {getFieldDecorator("contactPerson", { initialValue: '', rules: [{ required: false }] })(
+                  {getFieldDecorator("factoryInfo.contactPerson", { initialValue: '', rules: [{ required: false }] })(
                     <Input placeholder='请输入联络人' />
                   )}
                 </Descriptions.Item>
                 <Descriptions.Item label="电话" span={1.5}>
-                  {getFieldDecorator("contactPhone", { initialValue: '', rules: [{ required: false }] })(
+                  {getFieldDecorator("factoryInfo.contactPhone", { initialValue: '', rules: [{ required: false }] })(
                     <Input placeholder='请输入电话' />
                   )}
                 </Descriptions.Item>
                 <Descriptions.Item label="职位" span={1.5}>
-                  {getFieldDecorator("contactPosition", { initialValue: '', rules: [{ required: false }] })(
+                  {getFieldDecorator("factoryInfo.contactPosition", { initialValue: '', rules: [{ required: false }] })(
                     <Input placeholder='请输入职位' />
                   )}
                 </Descriptions.Item>
                 <Descriptions.Item label="邮箱" span={1.5}>
-                  {getFieldDecorator("email", { initialValue: '', rules: [{ required: false }] })(
+                  {getFieldDecorator("factoryInfo.email", { initialValue: '', rules: [{ required: false }] })(
                     <Input placeholder='请输入邮箱' />
                   )}
                 </Descriptions.Item>
@@ -300,21 +337,24 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
               <Row style={{ width: '100%', height: '400px' }}>
                 <DrawBaiduMap />
               </Row> :
-              <Table pagination={false} size="small" bordered dataSource={toJS(scope) || []}>
-                <Table.Column
+              <Table pagination={false} size="small" bordered dataSource={toJS(scope)} footer={_ => <Button onClick={addScope} size="small" shape="circle" icon="plus" />}>
+                <Column
                   title="名称"
                   dataIndex="scopeName"
                   key="scopeName"
+                  render={(scopeName, _, index) => <Input size="small" onChange={(e) => scopeNameInput(e.target.value, index)} value={scopeName} />}
                 />
-                <Table.Column
-                  title="精度"
+                <Column
+                  title="经度"
                   dataIndex="longitude"
                   key="longitude"
+                  render={(longitude, _, index) => <Input size="small" onChange={(e) => longitudeInput(e.target.value, index)} value={longitude} />}
                 />
-                <Table.Column
+                <Column
                   title="纬度"
                   dataIndex="latitude"
                   key="latitude"
+                  render={(latitude, _, index) => <Input size="small" onChange={(e) => latitudeInput(e.target.value, index)} value={latitude} />}
                 />
               </Table>
             }

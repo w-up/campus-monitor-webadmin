@@ -18,6 +18,31 @@ export class ParkEdit {
   }
 
   @action.bound
+  addScope() {
+    this.scope = [ ...this.scope, { scopeName: `点${this.scope.length + 1}`, longitude: '', latitude: '' } ];
+  }
+
+  @action.bound
+  setScope(scope) {
+    this.scope = scope;
+  }
+
+  @action.bound
+  scopeNameInput(value, index) {
+    this.scope[index].scopeName = value;
+  }
+
+  @action.bound
+  longitudeInput(value, index) {
+    this.scope[index].longitude = value;
+  }
+
+  @action.bound
+  latitudeInput(value, index) {
+    this.scope[index].latitude = value;
+  }
+
+  @action.bound
   updateMapPoints(map) {
     this.scope = map.polygon.paths[0].map((item, index) => ({
       key: index,

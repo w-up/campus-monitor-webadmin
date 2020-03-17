@@ -11,12 +11,15 @@ export class MyEnterprise {
   @observable total: number = 100;
   @observable selectedRowKeys: any = [];
   @observable dataSource: any = [];
+  @observable parkList: any = [];
 
   @observable loading: boolean = false;
   @observable treeData: Array<any> = [];
   @observable selectedEnterprise: any = {};
   @observable enterpriseInfo: any = {};
-  @observable factoryInfo: any = {};
+  @observable factoryInfo: any = {
+    scope: [],
+  };
   @observable companyNatureType: Array<any> = [];
   @observable industryType: Array<any> = [];
 
@@ -73,7 +76,8 @@ export class MyEnterprise {
   }
 
   @action.bound
-  onTreeItemSelect(selectedKeys) {
+  async onTreeItemSelect(selectedKeys) {
+    this.loading = true;
     console.log('selectedKeys', selectedKeys);
     this.treeData.some(item => {
       if (item.id === selectedKeys[0]) {
@@ -82,18 +86,22 @@ export class MyEnterprise {
       }
       return false;
     });
+    await this.getCompanyInfo();
+    this.loading = false;
   }
 
   @action.bound
   async doSubmitEnterpriseInfo(param) {
+    this.loading = true;
     param = {
       ...param,
       registerDate: moment(param.registerDate).format('YYYY-MM-DD HH:mm:ss'),
       businessPeriodStart: moment(param.businessPeriodStart).format('YYYY-MM-DD HH:mm:ss'),
       businessPeriodEnd: moment(param.businessPeriodEnd).format('YYYY-MM-DD HH:mm:ss'),
     }
-    const { data }: any = await POST(`/company-business-info/editCompanyBusinessInfo?companyId=${param.companyId}`, param);
-
+    
+    await POST(`/company-business-info/editCompanyBusinessInfo?companyId=${param.companyId}`, param);
+    this.loading = false;
   }
 
   @action
@@ -105,6 +113,7 @@ export class MyEnterprise {
 
   @action
   async getIndustryType() {
+    this.loading = true;
     let { data }: any = await GET(`/dict-data/getDictDataByCode`, { typeCode: 'industry_category' });
     data = data.map(v => ({ ...v, value: v.id, label: v.dictName }));
 
@@ -115,12 +124,12 @@ export class MyEnterprise {
 
     this.industryType = data;
     console.log(data);
+    this.loading = false;
   }
   
 
   @action
   async getTree() {
-    this.loading = true;
     const { data }: any = await GET('/company/getCompanyTreeByUserId', {});
     console.log(data);
 
@@ -134,17 +143,58 @@ export class MyEnterprise {
       this.selectedEnterprise = this.treeData[0];
     }
     await this.getCompanyInfo();
-    this.loading = false;
   }
 
-  @action
+  @action.bound
   async getCompanyInfo() {
-    this.loading = true;
     if (this.selectedEnterprise.id) {
       const { data }: any = await GET('/company-business-info/getCompanyBusinessInfoById', { companyId: this.selectedEnterprise.id });
       this.enterpriseInfo = data || {};
     }
+  }
+
+  @action.bound
+  async getParkList() {
+    const { data }: any = await GET('/park/getAllParks', {});
+    this.parkList = data;
+  }
+
+  @action.bound
+  async saveFactory(param) {
+    this.loading = true;
+
+    if (!param.id) {
+      const { data }: any = await POST('/factory/addFactory', param);
+    } else {
+      const { data }: any = await POST('/factory/editFactory', param);
+    }
+
     this.loading = false;
+  }
+
+  @action.bound
+  addScope() {
+    this.factoryInfo.scope = [ ...this.factoryInfo.scope, { scopeName: `点${this.factoryInfo.scope.length + 1}`, longitude: '', latitude: '' } ];
+  }
+
+  @action.bound
+  setScope(scope) {
+    this.factoryInfo.scope = scope;
+  }
+
+  @action.bound
+  scopeNameInput(value, index) {
+    this.factoryInfo.scope[index].scopeName = value;
+  }
+
+  @action.bound
+  longitudeInput(value, index) {
+    this.factoryInfo.scope[index].longitude = value;
+  }
+
+  @action.bound
+  latitudeInput(value, index) {
+    this.factoryInfo.scope[index].latitude = value;
   }
 
 }

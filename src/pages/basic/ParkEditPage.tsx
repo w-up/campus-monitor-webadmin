@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { toJS } from 'mobx';
 import { Spin, Card, Form, Input, Button, Radio, Breadcrumb, Modal, Table, message } from "antd";
@@ -37,8 +37,6 @@ export const ParkEditPage = Form.create()(observer(({ form }: any) => {
   const { state = {} }: any = useLocation();
   console.log('state', state)
 
-  const { id, parkName, parkNo, remark, scope, parkStatus } = state.park || {};
-
   const history = useHistory();
 
   const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields } = form;
@@ -53,8 +51,22 @@ export const ParkEditPage = Form.create()(observer(({ form }: any) => {
     onSubmit,
     updateMapPoints,
     loading,
+    scope,
+    addScope,
+    setScope,
+    scopeNameInput,
+    longitudeInput,
+    latitudeInput,
   } = parkEdit;
 
+  const { id, parkName, parkNo, remark, scope: initialScope, parkStatus } = state.park || {};
+
+  useEffect(() => {
+    if (initialScope) {
+      setScope(initialScope);
+    }
+  }, []);
+  
   const doUpdateMapPoints = () => {
     setFieldsValue({ scopeType: 'location' });
     updateMapPoints(toJS(drawMap));
@@ -118,21 +130,24 @@ export const ParkEditPage = Form.create()(observer(({ form }: any) => {
                 <Radio value="location">输入经纬度</Radio>
               </Radio.Group>
             )}
-            <Table pagination={false} size="small" bordered dataSource={toJS(scope)}>
+            <Table pagination={false} size="small" bordered dataSource={toJS(scope)} footer={_ => <Button onClick={addScope} size="small" shape="circle" icon="plus" />}>
               <Column
                 title="名称"
                 dataIndex="scopeName"
                 key="scopeName"
+                render={(scopeName, _, index) => <Input size="small" onChange={(e) => scopeNameInput(e.target.value, index)} value={scopeName} />}
               />
               <Column
-                title="精度"
+                title="经度"
                 dataIndex="longitude"
                 key="longitude"
+                render={(longitude, _, index) => <Input size="small" onChange={(e) => longitudeInput(e.target.value, index)} value={longitude} />}
               />
               <Column
                 title="纬度"
                 dataIndex="latitude"
                 key="latitude"
+                render={(latitude, _, index) => <Input size="small" onChange={(e) => latitudeInput(e.target.value, index)} value={latitude} />}
               />
             </Table>
           </Form.Item>
@@ -149,11 +164,11 @@ export const ParkEditPage = Form.create()(observer(({ form }: any) => {
               <DrawBaiduMap />
             </div>
           </Modal>
-          <Form.Item label="描述" >
+          {/* <Form.Item label="描述" >
             {getFieldDecorator("remark", { initialValue: remark })(
               <TextArea rows={4} placeholder='请输入描述' />
             )}
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">提交</Button>
             <Button style={{marginLeft: 5, marginRight: 5}} onClick={() => history.goBack()} >取消</Button>
