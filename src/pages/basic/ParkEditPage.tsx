@@ -1,91 +1,87 @@
-import React, { useState, useEffect } from "react";
-import { observer } from "mobx-react-lite";
-import { toJS } from 'mobx';
+import React, { useState } from "react";
+import { observer, useLocalStore } from "mobx-react-lite";
+import { toJS } from "mobx";
 import { Spin, Card, Form, Input, Button, Radio, Breadcrumb, Modal, Table, message } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import { useStore } from "../../stores/index";
 import { DrawBaiduMap } from "../../components/DrawBaiduMap";
+import { useEffect } from "react";
 
 const { Column } = Table;
 
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 8 },
+    sm: { span: 8 }
   },
   wrapperCol: {
     xs: { span: 10 },
-    sm: { span: 10 },
-  },
+    sm: { span: 10 }
+  }
 };
 const tailFormItemLayout = {
   wrapperCol: {
     xs: {
       span: 10,
-      offset: 0,
+      offset: 0
     },
     sm: {
       span: 12,
-      offset: 8,
-    },
-  },
+      offset: 8
+    }
+  }
 };
 
-export const ParkEditPage = Form.create()(observer(({ form }: any) => {
+export const ParkEditPage = Form.create()(
+  observer(({ form }: any) => {
+    const { state = {} }: any = useLocation();
+    console.log("state", state);
 
-  const { state = {} }: any = useLocation();
-  console.log('state', state)
+    const { id, parkName, parkNo, remark, scope: initialScope, parkStatus } = state.park || {};
 
-  const history = useHistory();
+    const history = useHistory();
 
-  const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields } = form;
+    const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields } = form;
 
-  const {
-    base: { parkEdit },
-    map: { drawMap },
-    config
-  } = useStore();
+    const {
+      base: { parkEdit },
+      map: { drawMap },
+      config
+    } = useStore();
 
-  const {
-    onSubmit,
-    updateMapPoints,
-    loading,
-    scope,
-    addScope,
-    setScope,
-    scopeNameInput,
-    longitudeInput,
-    latitudeInput,
-  } = parkEdit;
+    const {
+      onSubmit, updateMapPoints, loading, scope,
+      addScope, setScope, scopeNameInput, longitudeInput, latitudeInput,
+    } = parkEdit;
 
-  const { id, parkName, parkNo, remark, scope: initialScope, parkStatus } = state.park || {};
-
-  useEffect(() => {
-    if (initialScope) {
-      setScope(initialScope);
-    }
-  }, []);
-  
-  const doUpdateMapPoints = () => {
-    setFieldsValue({ scopeType: 'location' });
-    updateMapPoints(toJS(drawMap));
-  }
-
-  const doSubmit = (e) => {
-    e.preventDefault();
-    validateFields(async (err, values) => {
-      if (err) {
-        return;
+    const store = useLocalStore(() => ({
+      doUpdateMapPoints() {
+        setFieldsValue({ scopeType: "location" });
+        updateMapPoints();
+      },
+      doSubmit: e => {
+        e.preventDefault();
+        validateFields(async (err, values) => {
+          if (err) {
+            return;
+          }
+          const param = { ...values, scope: parkEdit.scope };
+          await onSubmit(param);
+          history.replace("/base/park");
+        });
       }
-      const param = { ...values, scope: toJS(scope) };
-      await onSubmit(param);
-      history.replace("/base/park");
-    })
-  }
+    }));
 
-  console.log(toJS(scope));
-  console.log(toJS(drawMap));
+    useEffect(() => {
+      if (initialScope && initialScope.length > 0) {
+        setScope(initialScope);
+        drawMap.setPathsByScope(initialScope);
+      }
+    }, []);
+
+    console.log(toJS(scope));
+    console.log(toJS(drawMap));
 
   return(
     <Spin spinning={loading}>
@@ -102,7 +98,7 @@ export const ParkEditPage = Form.create()(observer(({ form }: any) => {
       <div style={{margin: 10, marginLeft: 0, fontWeight: "bold", fontSize: 20}}>{state.park ? '编辑园区' : '新增园区'}</div>
       </div>
       <Card>
-        <Form {...formItemLayout} onSubmit={doSubmit}>
+        <Form {...formItemLayout} onSubmit={store.doSubmit}>
           <Form.Item label="园区代码" style={{ display: 'none' }}>
             {getFieldDecorator("id", { initialValue: id, rules: [{ required: false }] })(
               <Input placeholder="请输入园区ID" />
@@ -153,14 +149,14 @@ export const ParkEditPage = Form.create()(observer(({ form }: any) => {
           </Form.Item>
           <Modal
             title="地图绘制"
-            visible={getFieldValue('scopeType') === 'map'}
-            onOk={doUpdateMapPoints}
-            onCancel={() => setFieldsValue({ scopeType: 'location' })}
+            visible={getFieldValue("scopeType") === "map"}
+            onOk={store.doUpdateMapPoints}
+            onCancel={() => setFieldsValue({ scopeType: "location" })}
             okText="确认"
             cancelText="取消"
             width={800}
           >
-            <div style={{ width: '100%', height: '400px' }}>
+            <div style={{ width: "100%", height: "400px" }}>
               <DrawBaiduMap />
             </div>
           </Modal>

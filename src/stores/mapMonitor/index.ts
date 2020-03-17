@@ -1,4 +1,4 @@
-import { action, observable } from "mobx";
+import { action, observable, computed } from "mobx";
 import api from "services";
 import { store } from "../index";
 import { Park, Factory, PMCode, PMValue } from "../../type";
@@ -75,6 +75,16 @@ export class MapMonitorStore {
   @observable currentPark = "all";
   @observable currentFactory = "all";
   @observable currentPmCode = "";
+
+  @computed
+  get curentFactorData() {
+    return this.factories.find(i => i.id == this.currentFactory);
+  }
+
+  @computed
+  get currentPmCodeData() {
+    return this.pmcodes.find(i => i.pmCode == this.currentPmCode);
+  }
 
   @observable parks: Array<Park> = [];
   @observable factories: Array<Factory> = [];

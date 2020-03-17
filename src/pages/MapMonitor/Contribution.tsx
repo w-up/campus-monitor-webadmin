@@ -5,8 +5,9 @@ import { WrappedFormUtils } from "antd/lib/form/Form";
 import { PieChart } from "../../components/PieChart";
 import moment from "moment";
 import { useStore } from "../../stores/index";
-import { PMCode } from "../../type";
+import { PMCode, ContributionData } from "../../type";
 import api from "services";
+import ReactEcharts from "echarts-for-react";
 
 export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils }) => {
   const { getFieldDecorator } = form;
@@ -34,6 +35,7 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
     get dateType() {
       return this.dateTypes[this.type];
     },
+    siteData: null as Array<ContributionData> | null,
     statisticalTime: moment() as any,
     dateOpen: false,
     setDateOpen(status) {
@@ -60,15 +62,56 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
         if (!err) {
           const { parkId, pmCode, rankingType, statisticalType } = values;
           console.log("Received values of form: ", values);
-          const resut = await api.MapMonitor.getEmissionsContributionByPmCodeAndParkId({
+          const result = await api.MapMonitor.getEmissionsContributionByPmCodeAndParkId({
             parkId,
             pmCode,
             rankingType,
             statisticalTime: moment(this.statisticalTime).format(this.dateType.format),
             statisticalType: this.dateType.type
           });
+          this.siteData = result.data;
         }
       });
+    },
+    get options() {
+      return {
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+          show: true,
+          orient: "vertical",
+          bottom: "0",
+          left: "40%",
+          data: this.siteData?.map(i => i.factoryName)
+        },
+        series: [
+          {
+            name: "访问来源",
+            type: "pie",
+            radius: "55%",
+            center: ["50%", "30%"],
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            data: this.siteData?.map(i => ({
+              name: i.factoryName,
+              value: i.percentValue
+            })),
+            label: {
+              normal: {
+                formatter: params => {
+                  return params.percent + "%";
+                },
+                position: "inner"
+              }
+            }
+          }
+        ]
+      };
     }
   }));
 
@@ -144,7 +187,9 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
 
       <div>
         <div className="primary-text-color mt-10 text-center">园区TVOCs排放贡献率</div>
-        <PieChart />
+        <div className="mt-4">
+          <ReactEcharts option={store.options} style={{ width: "100%", height: "350px" }} />
+        </div>
       </div>
     </div>
   ));
