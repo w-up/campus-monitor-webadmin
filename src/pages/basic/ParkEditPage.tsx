@@ -57,9 +57,6 @@ export const ParkEditPage = Form.create()(
         setFieldsValue({ scopeType: "location" });
         updateMapPoints();
       },
-      setMapPaths() {
-        drawMap.setPaths([parkEdit.scope.map(i => ({ lng: Number(i.longitude), lat: Number(i.latitude) }))]);
-      },
       doSubmit: e => {
         e.preventDefault();
         validateFields(async (err, values) => {
@@ -75,7 +72,7 @@ export const ParkEditPage = Form.create()(
 
     useEffect(() => {
       parkEdit.scope = scope;
-      store.setMapPaths();
+      drawMap.setPathsByScope(scope);
     }, []);
 
     console.log(toJS(scope));

@@ -14,7 +14,7 @@ export const DrawBaiduMap = () => {
 
   useEffect(() => {
     return () => {
-      drawMap.init();
+      drawMap.reset();
     };
   }, []);
   return useObserver(() => (
@@ -33,28 +33,30 @@ export const DrawBaiduMap = () => {
             <IPolygon
               path={item}
               key={index}
-              enableEditing={drawMap.polygon.editType == "edit"}
-              updateable={drawMap.polygon.editType == "add"}
+              enableEditing={drawMap.editType == "edit"}
+              updateable={drawMap.editType == "add"}
               strokeColor="#00FF66"
               strokeStyle="dashed"
               strokeWeight={2}
               onLineUpdate={e => {
-                if (drawMap.polygon.editType === "edit") {
+                if (drawMap.editType === "edit") {
                   const path = e.target.getPath();
                   drawMap.polygon.paths[index] = path;
                 }
               }}
             />
           ))}
-          <Control>
-            <div>
-              <Search onSearch={drawMap.search} placeholder="请输入关键字" />
-              <Radio.Group onChange={drawMap.toggleDrawPolygon} defaultValue="add">
-                <Radio.Button value="add">添加</Radio.Button>
-                <Radio.Button value="edit">修改</Radio.Button>
-              </Radio.Group>
-            </div>
-          </Control>
+          {drawMap.editType !== "view" && (
+            <Control>
+              <div>
+                <Search onSearch={drawMap.search} placeholder="请输入关键字" />
+                <Radio.Group onChange={drawMap.toggleDrawPolygon} defaultValue="add">
+                  <Radio.Button value="add">添加</Radio.Button>
+                  <Radio.Button value="edit">修改</Radio.Button>
+                </Radio.Group>
+              </div>
+            </Control>
+          )}
         </Map>
       </APILoader>
     </div>

@@ -1,23 +1,31 @@
 import { observable, action } from "mobx";
+import { ParkEdit } from "../base/ParkEdit";
 
 export class DrawMapStore {
   @observable center = { lng: 120.983642, lat: 31.36556 };
   @observable zoom = 17;
   @observable map: any = null;
   @observable polygon = {
-    paths: [] as Array<Array<{ lng: number; lat: number }>>,
-    editType: "add" as "add" | "edit"
+    paths: [] as Array<Array<{ lng: number; lat: number }>>
   };
+  @observable editType = "add" as "view" | "add" | "edit";
+
   @action.bound
   init(data: Partial<DrawMapStore> = {}) {
+    Object.assign(this, { ...data });
+    return this;
+  }
+
+  @action.bound
+  reset(data: Partial<DrawMapStore> = {}) {
     Object.assign(this, {
       map: null,
       polygon: {
-        paths: [],
-        editType: "add"
+        paths: []
       },
       ...data
     });
+    return this;
   }
 
   @action.bound
@@ -38,6 +46,13 @@ export class DrawMapStore {
   setPaths(paths: DrawMapStore["polygon"]["paths"]) {
     this.polygon.paths = paths;
     console.log(paths);
+    if (!this.map) return;
+    this.autoCenterAndZoom();
+  }
+
+  @action.bound
+  setPathsByScope(scope: ParkEdit["scope"]) {
+    this.polygon.paths = [scope.map(i => ({ lng: Number(i.longitude), lat: Number(i.latitude) }))];
     if (!this.map) return;
     this.autoCenterAndZoom();
   }
@@ -69,12 +84,12 @@ export class DrawMapStore {
 
   @action.bound
   toggleDrawPolygon(e: any) {
-    this.polygon.editType = e.target.value;
+    this.editType = e.target.value;
   }
 
   @action.bound
   drawPolygon(e: any) {
-    if (this.polygon.editType !== "add") {
+    if (this.editType !== "add") {
       return;
     }
     const { paths } = this.polygon;
@@ -85,7 +100,7 @@ export class DrawMapStore {
 
   @action.bound
   newPolygon(e: any) {
-    if (this.polygon.editType !== "add") {
+    if (this.editType !== "add") {
       return;
     }
     const { paths } = this.polygon;
