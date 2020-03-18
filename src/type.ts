@@ -191,3 +191,16 @@ export type ContributionData = {
   percent: string;
   percentValue: number;
 };
+
+export type AlarmInfo = {
+  id: string;
+  monitorType: string;
+  siteName: string;
+  warnName: string;
+  warnLevel: string;
+  warnTime: string;
+  totalTime: string;
+  warnPeriod: number;
+  pmValue: string;
+  deviceName: string;
+}
