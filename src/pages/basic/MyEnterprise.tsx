@@ -50,10 +50,24 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
     myEnterprise.getFactoryList();
   }, []);
 
-  const handleTreeItemSelect = (selectedKeys) => {
-    onTreeItemSelect(selectedKeys);
-    setFieldsValue({ enterpriseInfoEditable: false });
-    setAddFactoryModalVisible(false);
+  const handleTreeItemSelect = (selectedKeys, e) => {
+    if (e.node.props.level === 1) {
+      onTreeItemSelect(selectedKeys);
+      setFieldsValue({ enterpriseInfoEditable: false });
+      setAddFactoryModalVisible(false);
+    } else if (e.node.props.level === 2) {
+      setFieldsValue({ enterpriseInfoEditable: false });
+      let info = {};
+      factoryListInfo.data.some(v => {
+        if (v.id === selectedKeys[0]) {
+          info = { ...v };
+          return true;
+        }
+      });
+      setFactoryInfo(info);
+      setAddFactoryModalVisible(true);
+
+    }
     resetFields();
   }
 
