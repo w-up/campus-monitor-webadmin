@@ -14,7 +14,7 @@ export const MonitorAlert = () => {
     mapMonitor.loadAlarms();
   }, []);
 
-  return useObserver(() => <div className="text-white px-4">
+  return useObserver(() => <div className="text-white px-4 pb-4">
     <div className="text-lg text-white mb-4 flex items-center">
       <Icon type="caret-right" theme="filled" className="primary-text-color" />
       <span className="ml-2">告警信息</span>
@@ -80,7 +80,7 @@ export const MonitorAlert = () => {
           </Row>
           <Row className="mt-4">
             <Col className="text-right" span={8} offset={16}>
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" onClick={() => mapMonitor.doConfirmAlarmInfoById(item.id)}>
                 处理
               </Button>
             </Col>

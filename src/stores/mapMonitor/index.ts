@@ -97,6 +97,14 @@ export class MapMonitorStore {
   }
 
   @action.bound
+  async doConfirmAlarmInfoById(alarmId) {
+    const result = await api.MapMonitor.confirmAlarmInfoById({alarmId: alarmId});
+    if(result) {
+      this.loadAlarms();
+    }
+  }
+
+  @action.bound
   selectPark(parkId) {
     this.currentPark = parkId;
     if (parkId !== "all") {

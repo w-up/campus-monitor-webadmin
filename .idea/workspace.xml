@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b5aa787-9ba3-4839-bcb1-9b38c1c54b5a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/MapMonitor/MonitorAlert.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MapMonitor/MonitorAlert.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasChart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasChart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/mapMonitor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/mapMonitor.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/stores/mapMonitor/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/mapMonitor/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/type.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,41 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/SewageTableDynamic.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="31">
-              <caret line="8" column="22" lean-forward="true" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/stores/screen/EnterpriseScreenMapStore.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="48">
-              <caret line="55" column="31" selection-start-line="55" selection-start-column="14" selection-end-line="55" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/type.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="203" column="18" lean-forward="true" selection-start-line="203" selection-start-column="18" selection-end-line="203" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/pages/MapMonitor/MonitorAlert.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="487">
-              <caret line="83" column="18" lean-forward="true" selection-start-line="83" selection-start-column="18" selection-end-line="83" selection-end-column="18" />
+            <state relative-caret-position="468">
+              <caret line="86" column="16" lean-forward="true" selection-start-line="86" selection-start-column="16" selection-end-line="86" selection-end-column="16" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -65,8 +32,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/services/mapMonitor.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="452">
-              <caret line="38" column="56" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="56" />
+            <state relative-caret-position="389">
+              <caret line="41" column="23" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/stores/mapMonitor/index.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="292">
+              <caret line="99" column="30" selection-start-line="99" selection-start-column="8" selection-end-line="99" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -104,7 +80,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>font-weigh</find>
       <find>ell</find>
       <find>text</find>
       <find>text-</find>
@@ -134,6 +109,7 @@
       <find>mo</find>
       <find>pmValue</find>
       <find>SiteRuntimePmDate</find>
+      <find>getMapConfigLogin</find>
     </findStrings>
     <replaceStrings>
       <replace>$screen-text-color-2</replace>
@@ -147,7 +123,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/Header.tsx" />
         <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/ScreenHeader.tsx" />
         <option value="$PROJECT_DIR$/src/stores/screen/SewageTableStore.ts" />
         <option value="$PROJECT_DIR$/src/stores/index.ts" />
@@ -195,8 +170,9 @@
         <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasChart.tsx" />
         <option value="$PROJECT_DIR$/src/App.scss" />
         <option value="$PROJECT_DIR$/src/type.ts" />
-        <option value="$PROJECT_DIR$/src/stores/mapMonitor/index.ts" />
         <option value="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasTable.tsx" />
+        <option value="$PROJECT_DIR$/src/stores/mapMonitor/index.ts" />
+        <option value="$PROJECT_DIR$/src/services/mapMonitor.ts" />
         <option value="$PROJECT_DIR$/src/pages/MapMonitor/MonitorAlert.tsx" />
       </list>
     </option>
@@ -231,6 +207,19 @@
               <item name="campus-monitor-webadmin" type="b2602c69:ProjectViewProjectNode" />
               <item name="campus-monitor-webadmin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="campus-monitor-webadmin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="campus-monitor-webadmin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="stores" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="campus-monitor-webadmin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="campus-monitor-webadmin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="stores" type="462c0819:PsiDirectoryNode" />
+              <item name="mapMonitor" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -298,18 +287,18 @@
       <workItem from="1583918193353" duration="3000000" />
       <workItem from="1583989806373" duration="13143000" />
       <workItem from="1584160800289" duration="28380000" />
-      <workItem from="1584531510387" duration="5751000" />
+      <workItem from="1584531510387" duration="6888000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="206108000" />
+    <option name="totallyTimeSpent" value="207245000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49924585" weight="0.4292845" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49924585" weight="0.4292566" />
       <window_info id="Structure" order="1" sideWeight="0.5007542" side_tool="true" weight="0.24940048" />
       <window_info id="npm" order="2" sideWeight="0.5007542" side_tool="true" weight="0.24940048" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -325,7 +314,7 @@
       <window_info anchor="bottom" id="GraphQL" order="9" weight="0.32880846" />
       <window_info anchor="bottom" id="TypeScript" order="10" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="12" weight="0.39064857" />
+      <window_info anchor="bottom" id="Terminal" order="12" weight="0.3898305" />
       <window_info anchor="bottom" id="Messages" order="13" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -492,13 +481,6 @@
             <element signature="n#!!doc" expanded="true" />
             <element signature="e#195#228#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/mapConfig.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="14" column="15" lean-forward="true" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
         </state>
       </provider>
     </entry>
@@ -739,24 +721,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/mapConfig.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="4" column="2" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/services/mapMonitor.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="452">
-          <caret line="38" column="56" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="56" />
+        <state relative-caret-position="389">
+          <caret line="41" column="23" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/stores/mapMonitor/index.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="94" column="45" selection-start-line="94" selection-start-column="45" selection-end-line="94" selection-end-column="45" />
+        <state relative-caret-position="292">
+          <caret line="99" column="30" selection-start-line="99" selection-start-column="8" selection-end-line="99" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/MapMonitor/MonitorAlert.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="487">
-          <caret line="83" column="18" lean-forward="true" selection-start-line="83" selection-start-column="18" selection-end-line="83" selection-end-column="18" />
+        <state relative-caret-position="468">
+          <caret line="86" column="16" lean-forward="true" selection-start-line="86" selection-start-column="16" selection-end-line="86" selection-end-column="16" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
