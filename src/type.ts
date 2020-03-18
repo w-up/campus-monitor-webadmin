@@ -58,6 +58,8 @@ export interface SitlePMData {
   siteId: string;
   siteName: string;
   siteCode: string;
+  longitude: string;
+  latitude: string;
   pmInfos: Array<SitePMValue>;
 }
 
@@ -168,8 +170,11 @@ export type TrendDataType = {
     statisticalTime: string;
   }>;
   siteConcentrationMonitoringTrend: Array<{
-    time: string;
-    pmValue: Array<{
+    siteId: "1";
+    siteName: "厂界1";
+    longitude: null;
+    latitude: null;
+    pmValues: Array<{
       siteId: string;
       siteName: string;
       pmCode: string;

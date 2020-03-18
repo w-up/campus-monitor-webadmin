@@ -1,6 +1,13 @@
 import { _ } from "./lodash";
+import { globalConfig } from "../config";
 
 export const utils = {
+  img: {
+    getImageUrl(path: string) {
+      if (path.startsWith("data:image")) return path;
+      return `${globalConfig.apiEndpoint}/${path}`;
+    }
+  },
   obj: {
     formatLatLngShort(i) {
       return {
@@ -11,6 +18,7 @@ export const utils = {
   },
   array: {
     formatLatLngLong(arr) {
+      if (!arr) return [];
       return arr.map(i => ({
         latitude: i.lat,
         longitude: i.lng

@@ -1,10 +1,7 @@
 import { action, observable, computed } from "mobx";
 import api from "services";
-import { store } from "../index";
 import { Park, Factory, PMCode, PMValue } from "../../type";
-import { CanvasOverlay } from "./canvasOverlay";
 import * as mapv from "mapv";
-import times from "lodash/times";
 import { _ } from "utils/lodash";
 //@ts-ignore
 const kriging = window.kriging;

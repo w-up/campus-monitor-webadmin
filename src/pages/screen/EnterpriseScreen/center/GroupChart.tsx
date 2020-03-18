@@ -1,14 +1,14 @@
 import React from "react";
-import {useObserver, useLocalStore} from "mobx-react-lite";
+import { useObserver, useLocalStore } from "mobx-react-lite";
 import ReactEcharts from "echarts-for-react";
-import {useStore} from "../../../../stores/index";
-import {useEffect} from "react";
-import {_} from "../../../../utils/lodash";
-import {Icon, Tabs} from "antd";
+import { useStore } from "../../../../stores/index";
+import { useEffect } from "react";
+import { _ } from "../../../../utils/lodash";
+import { Icon, Tabs } from "antd";
 
 export const EnterpriseScreenGroupChart = () => {
   const {
-    screen: {enterpriseScreenMap}
+    screen: { enterpriseScreenMap }
   } = useStore();
   const mapRef = React.useRef<any>();
 
@@ -207,53 +207,21 @@ export const EnterpriseScreenGroupChart = () => {
   }, []);
   return useObserver(() => (
     <div className="screenCenterTable mt-4 pb-4">
-      {/*<div className="title">*/}
-      {/*  <ul>*/}
-      {/*    {enterpriseScreenMap.lists.map((item, index) => {*/}
-      {/*      const isActive = index == enterpriseScreenMap.curIndex;*/}
-      {/*      return (*/}
-      {/*        <li key={index}>*/}
-      {/*          <div className={isActive ? "active t-b-con" : "t-b-con"}>*/}
-      {/*            {isActive && <img src="/images/map2.png" />}*/}
-      {/*            {item.text}*/}
-      {/*          </div>*/}
-      {/*        </li>*/}
-      {/*      );*/}
-      {/*    })}*/}
-      {/*  </ul>*/}
-      {/*</div>*/}
-      <Tabs type="card" size="large">
-        <Tabs.TabPane key="1" tab={<span><Icon type="environment" theme="filled"/> 东南角</span>}>
-          <ReactEcharts ref={mapRef} option={store.options} style={{width: "100%"}} className="react_for_echarts"/>
-        </Tabs.TabPane>
-        <Tabs.TabPane key="2" tab={<span><Icon type="environment" theme="filled"/> 东南角</span>}>
-          <ReactEcharts ref={mapRef} option={store.options} style={{width: "100%"}} className="react_for_echarts"/>
-        </Tabs.TabPane>
-        <Tabs.TabPane key="3" tab={<span><Icon type="environment" theme="filled"/> 东南角</span>}>
-          <ReactEcharts ref={mapRef} option={store.options} style={{width: "100%"}} className="react_for_echarts"/>
-        </Tabs.TabPane>
-        <Tabs.TabPane key="4" tab={<span><Icon type="environment" theme="filled"/> 东南角</span>}>
-          <ReactEcharts ref={mapRef} option={store.options} style={{width: "100%"}} className="react_for_echarts"/>
-        </Tabs.TabPane>
-        <Tabs.TabPane key="5" tab={<span><Icon type="environment" theme="filled"/> 东南角</span>}>
-          <ReactEcharts ref={mapRef} option={store.options} style={{width: "100%"}} className="react_for_echarts"/>
-        </Tabs.TabPane>
-        <Tabs.TabPane key="6" tab={<span><Icon type="environment" theme="filled"/> 东南角</span>}>
-          <ReactEcharts ref={mapRef} option={store.options} style={{width: "100%"}} className="react_for_echarts"/>
-        </Tabs.TabPane>
-        <Tabs.TabPane key="7" tab={<span><Icon type="environment" theme="filled"/> 东南角</span>}>
-          <ReactEcharts ref={mapRef} option={store.options} style={{width: "100%"}} className="react_for_echarts"/>
-        </Tabs.TabPane>
-        <Tabs.TabPane key="8" tab={<span><Icon type="environment" theme="filled"/> 东南角</span>}>
-          <ReactEcharts ref={mapRef} option={store.options} style={{width: "100%"}} className="react_for_echarts"/>
-        </Tabs.TabPane>
-        <Tabs.TabPane key="9" tab={<span><Icon type="environment" theme="filled"/> 东南角</span>}>
-          <ReactEcharts ref={mapRef} option={store.options} style={{width: "100%"}} className="react_for_echarts"/>
-        </Tabs.TabPane>
-        <Tabs.TabPane key="10" tab={<span><Icon type="environment" theme="filled"/> 东南角</span>}>
-          <ReactEcharts ref={mapRef} option={store.options} style={{width: "100%"}} className="react_for_echarts"/>
-        </Tabs.TabPane>
+      <Tabs type="card" size="large" activeKey={String(enterpriseScreenMap.curSiteIndex)}>
+        {enterpriseScreenMap.SiteRuntimePmDate.map((item, index) => (
+          <Tabs.TabPane
+            key={String(index)}
+            tab={
+              <span>
+                {enterpriseScreenMap.curSiteIndex == index && <Icon type="environment" theme="filled" />}
+                {item.siteName}
+              </span>
+            }
+          ></Tabs.TabPane>
+        ))}
       </Tabs>
+
+      <ReactEcharts ref={mapRef} option={store.options} style={{ width: "100%" }} className="react_for_echarts" />
     </div>
   ));
 };

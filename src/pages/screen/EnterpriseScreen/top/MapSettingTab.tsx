@@ -7,6 +7,7 @@ import Upload from "antd/lib/upload";
 import Modal from "antd/lib/modal";
 import { useStore } from "stores";
 import { Scrollbars } from "react-custom-scrollbars";
+import { utils } from "../../../../utils/index";
 
 export const MapSettingTab = Form.create()(({ form }: { form: WrappedFormUtils }) => {
   const { getFieldDecorator } = form;
@@ -104,7 +105,7 @@ export const MapSettingTab = Form.create()(({ form }: { form: WrappedFormUtils }
             {getFieldDecorator("type", { initialValue: 1 })(
               <div className="clearfix">
                 <Upload listType="picture-card" showUploadList={false} beforeUpload={store.beforeUpload} onPreview={store.handlePreview} onChange={store.handleChange}>
-                  {enterpriseScreenMap.curMapConfig.picUrl ? <img src={enterpriseScreenMap.curMapConfig.picUrl} alt="avatar" style={{ width: "100%" }} /> : uploadButton}
+                  {enterpriseScreenMap.curMapConfig.picUrl ? <img src={utils.img.getImageUrl(enterpriseScreenMap.curMapConfig.picUrl)} alt="avatar" style={{ width: "100%" }} /> : uploadButton}
                 </Upload>
                 <Modal visible={store.previewVisible} footer={null} onCancel={store.handleCancel}>
                   <img alt="example" style={{ width: "100%" }} src={store.previewImage} />

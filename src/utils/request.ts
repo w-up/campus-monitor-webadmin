@@ -8,11 +8,12 @@
 import Axios from "axios";
 import { message } from "antd";
 import { store } from "../stores/index";
+import { globalConfig } from "../config";
 
 Axios.defaults.withCredentials = true;
 
 let http = Axios.create({
-  baseURL: process.env.NODE_ENV == "development" ? "http://ehauub.natappfree.cc/" : "http://ehauub.natappfree.cc/",
+  baseURL: globalConfig.apiEndpoint,
   timeout: 60 * 1000
 });
 
@@ -36,6 +37,10 @@ http.interceptors.response.use(
   error => {
     if (error && error.response) {
       message.error(error.response.msg);
+      if (error.response.msg == "未登录") {
+        store.auth.logout();
+        window.location.reload();
+      }
     }
     return Promise.reject(error);
   }
