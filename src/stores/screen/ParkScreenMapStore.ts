@@ -167,7 +167,6 @@ export class ParkScreenMapStore {
     upperLimit: ""
   };
   @observable currentSiteId = "";
-
   get curPmValue() {
     return store.config.allPmCodes.find(i => i.pmCode == this.currentPmCode);
   }
@@ -253,7 +252,7 @@ export class ParkScreenMapStore {
   @action.bound
   updateMap() {
     if (!this.map) return;
-    let mapViewObj = this.map.getViewport(utils.array.formatLatLngLong(this.allParkMapData.parkPoints), {});
+    let mapViewObj = this.map.getViewport(utils.array.formatToLatLngShort(this.allParkMapData.parkPoints), {});
     console.log(mapViewObj);
     this.map.centerAndZoom(mapViewObj.center, mapViewObj.zoom);
   }
