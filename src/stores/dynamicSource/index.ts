@@ -16,7 +16,7 @@ export class DynamicSourceStore {
 
   @computed
   get polyCenter(): ReturnType<typeof geolib.getCenterOfBounds> {
-    const result = geolib.getCenterOfBounds(utils.array.formatLatLngLong(this.polygonPath));
+    const result = geolib.getCenterOfBounds(utils.array.formatToLatLngLong(this.polygonPath));
     return result;
   }
   @observable compamys = [

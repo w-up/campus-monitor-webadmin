@@ -20,7 +20,7 @@ export const GasTable = () => {
           }
         });
       });
-      return _.chunk<any>(datas, 6);
+      return _.chunk<any>(datas, 8);
     }
   }));
 

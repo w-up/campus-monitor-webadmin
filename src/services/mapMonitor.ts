@@ -1,7 +1,7 @@
 import { GET, POST } from "../utils/request";
 
 export default {
-  confirmAlarmInfoById(data: { alarmId: number; companyId?: number; unitId?: number; userId?: number; username?: string }) {
+  confirmAlarmInfoByIdxxx(data: { alarmId: number; companyId?: number; unitId?: number; userId?: number; username?: string }) {
     return GET("/mapMonitor/getMapConfigLogin", data);
   },
   getDynamicSourceByPmCodeAndParkId(data: {}) {
@@ -37,5 +37,9 @@ export default {
 
   getUncheckedAlarmInformation() {
     return GET("/mapMonitor/getUncheckedAlarmInformation");
+  },
+
+  confirmAlarmInfoById(data: { alarmId: string }) {
+    return GET("/mapMonitor/confirmAlarmInfoById", data)
   }
 };

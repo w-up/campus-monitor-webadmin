@@ -1,4 +1,4 @@
-import { action, observable } from "mobx";
+import { action, observable, computed } from "mobx";
 import { ComplexCustomOverlay } from "../../pages/screen/EnterpriseScreen/customOverlay";
 import api from "services";
 import { SitlePMData, DailySewage } from "../../type";
@@ -8,6 +8,7 @@ import { message, notification } from "antd";
 import { store } from "../index";
 import style from "../../common/mapStyle";
 import ExampleMap from "../../assets/img/ps23ab282a19d8effb-a4e4-48b5-98dd-2e7d611be405.png";
+import { utils } from "../../utils/index";
 
 //@ts-ignore
 const BMapGL = window.BMapGL;
@@ -20,12 +21,18 @@ export class EnterpriseScreenMapStore {
   @observable tilt = 53;
   @observable overlays = [] as any;
   @observable activeFlag = true;
-  @observable curIndex = 0;
+  @observable curSiteIndex = 0;
+
+  @computed
+  get curSiteData() {
+    return this.SiteRuntimePmDate[this.curSiteIndex];
+  }
 
   playTimer?: any;
 
   @action.bound
   async init() {
+    this.boxDisplay = false;
     await Promise.all([this.loadAllFactory(), this.loadMapConfig(), this.loadAllPmCode()]);
     await this.loadSiteRuntimePmData();
     await this.loadDailySewage();
@@ -47,6 +54,19 @@ export class EnterpriseScreenMapStore {
 
   // 图表数据相关
   @observable SiteRuntimePmDate: Array<SitlePMData> = [];
+  @computed
+  get SiteRuntimePmDateForMap() {
+    return this.SiteRuntimePmDate.map((v, i) => ({
+      text: v.siteName,
+      // update: "15:30:30",
+      position: new BMapGL.Point(v.longitude, v.latitude),
+      children: v.pmInfos.map(pmInfo => ({
+        name: pmInfo.pmName,
+        value: pmInfo.collectValue + pmInfo.unit,
+        limit: pmInfo.limit
+      }))
+    }));
+  }
   @action.bound
   async loadSiteRuntimePmData() {
     const result = await api.DeviceData.getAllPMDataLogin();
@@ -181,7 +201,6 @@ export class EnterpriseScreenMapStore {
         }
       });
     });
-    console.log(this.allPmCode);
     this.selectedPmCodes = selectedPmCodes;
   }
 
@@ -212,6 +231,12 @@ export class EnterpriseScreenMapStore {
   async loadMapConfig() {
     const result = await api.MapConfig.getMapConfigLogin();
     this.curMapConfig = result.data;
+    this.updateMap({
+      center: new BMapGL.Point(this.curMapConfig.longitude, this.curMapConfig.latitude),
+      heading: this.curMapConfig.highAngle,
+      zoom: this.curMapConfig.zoom,
+      tilt: this.curMapConfig.rotationAngle
+    });
   }
 
   @action.bound
@@ -237,13 +262,21 @@ export class EnterpriseScreenMapStore {
     this.map = new BMapGL.Map("allmap", {
       style: { styleJson: style }
     }); // 创建Map实例
+    this.map.disableDragging();
+    this.map.disableScrollWheelZoom();
+    this.updateMap();
+  }
+
+  @action.bound
+  updateMap(data: Partial<EnterpriseScreenMapStore> = {}) {
+    if (data) {
+      Object.assign(this, data);
+    }
+    console.log(this);
 
     this.map.centerAndZoom(this.center, this.zoom); // 初始化地图,设置中心点坐标和地图级别
     this.map.setHeading(this.heading); //俯视角度
     this.map.setTilt(this.tilt); //旋转角度
-    let SW = new BMapGL.Point(116.38179, 39.900146);
-    let NE = new BMapGL.Point(116.384451, 39.901146);
-    // bus.$on("changeBottomIndex", this.addpoints)
 
     setTimeout(() => {
       if (!this.map) return;
@@ -253,19 +286,25 @@ export class EnterpriseScreenMapStore {
 
     setTimeout(() => {
       if (!this.map) return;
+
+      // @observable center = new BMapGL.Point(116.384405, 39.9001)
+      // let SW = new BMapGL.Point(116.38179 , 39.900146);
+      let SW = new BMapGL.Point(Number(this.curMapConfig.longitude) - 0.002615, Number(this.curMapConfig.latitude) + 0.000046);
+      let NE = new BMapGL.Point(Number(this.curMapConfig.longitude) + 0.00005, Number(this.curMapConfig.latitude) + 0.001046);
+      // let NE = new BMapGL.Point(116.384451, 39.901146);
+      console.log({ SW, NE }, this.curSiteData);
       let groundOverlayOptions = {
-        displayOnMinLevel: 10,
-        displayOnMaxLevel: 30,
-        imageURL: ExampleMap
+        displayOnMinLevel: 1,
+        displayOnMaxLevel: 999,
+        imageURL: utils.img.getImageUrl(this.curMapConfig.picUrl)
       };
+      // const bound = this.map.getBounds();
+      // console.log(bound);
       // 初始化GroundOverlay
       let groundOverlay = new BMapGL.GroundOverlay(new BMapGL.Bounds(SW, NE), groundOverlayOptions);
       this.map.addOverlay(groundOverlay); //添加图片覆盖物
-    }, 500);
+    }, 1000);
   }
-
-  @action.bound
-  updateMap() {}
 
   @action.bound
   addpoints(index: number) {
@@ -273,91 +312,20 @@ export class EnterpriseScreenMapStore {
     for (let x in this.overlays) {
       this.map.removeOverlay(this.overlays[x]);
     }
-    this.curIndex = index;
+    this.curSiteIndex = index;
     this.overlays = [];
-    for (let x in this.lists) {
-      const myCompOverlay = new ComplexCustomOverlay(new BMapGL.Point(this.lists[x].position[0], this.lists[x].position[1]), this.lists[x], x, this);
+    this.SiteRuntimePmDateForMap.forEach((v, i) => {
+      const myCompOverlay = new ComplexCustomOverlay(v.position, v, i, this);
       this.overlays.push(myCompOverlay);
       this.map.addOverlay(myCompOverlay);
-    }
+    });
   }
 
   @action.bound
   play() {
     clearInterval(this.playTimer);
     this.playTimer = setInterval(() => {
-      this.addpoints(this.curIndex >= this.lists.length - 1 ? 0 : this.curIndex + 1);
+      this.addpoints(this.curSiteIndex >= this.SiteRuntimePmDateForMap.length - 1 ? 0 : this.curSiteIndex + 1);
     }, 5000);
   }
-
-  lists = [
-    {
-      class: "dnj",
-      text: "东南角",
-      update: "15:30:30",
-      position: [116.384405, 39.9001],
-      children: [
-        { name: "非甲烷总经", value: "111ppm", display: "true" },
-        { name: "苯乙烯", value: "200ppm", display: "true" },
-        { name: "H2S", value: "111ppm", display: "true" },
-        { name: "NH3", value: "111ppm", display: "true" },
-        { name: "Test", value: "111ppm", display: "true" }
-        // {name:"非甲烷总经",value:"111ppm",display:"true"},
-        // {name:"苯乙烯",value:"200ppm",display:"true"},
-        // {name:"H2S",value:"111ppm",display:"true"},
-        // {name:"NH3",value:"111ppm",display:"true"}
-      ]
-    },
-    {
-      class: "dbj",
-      text: "东北角",
-      update: "15:30:30",
-      position: [116.384305, 39.9011],
-      children: [
-        { name: "非甲烷总经", value: "111ppm", display: "true" },
-        { name: "苯乙烯", value: "200ppm", display: "true" },
-        { name: "H2S", value: "111ppm", display: "true" },
-        { name: "NH3", value: "111ppm", display: "true" },
-        { name: "Test", value: "111ppm", display: "true" }
-        // {name:"非甲烷总经",value:"111ppm",display:"true"},
-        // {name:"苯乙烯",value:"200ppm",display:"true"},
-        // {name:"H2S",value:"111ppm",display:"true"},
-        // {name:"NH3",value:"111ppm",display:"true"}
-      ]
-    },
-    {
-      class: "xbj",
-      text: "西北角",
-      update: "15:30:30",
-      position: [116.383805, 39.9005],
-      children: [
-        { name: "非甲烷总经", value: "111ppm", display: "true" },
-        { name: "苯乙烯", value: "200ppm", display: "true" },
-        { name: "H2S", value: "111ppm", display: "true" },
-        { name: "NH3", value: "111ppm", display: "true" },
-        { name: "Test", value: "111ppm", display: "true" }
-        // {name:"非甲烷总经",value:"111ppm",display:"true"},
-        // {name:"苯乙烯",value:"200ppm",display:"true"},
-        // {name:"H2S",value:"111ppm",display:"true"},
-        // {name:"NH3",value:"111ppm",display:"true"}
-      ]
-    },
-    {
-      class: "xnj",
-      text: "西南角",
-      update: "15:30:30",
-      position: [116.383305, 39.9001],
-      children: [
-        { name: "非甲烷总经", value: "111ppm", display: "true" },
-        { name: "苯乙烯", value: "200ppm", display: "true" },
-        { name: "H2S", value: "111ppm", display: "true" },
-        { name: "NH3", value: "111ppm", display: "true" },
-        { name: "Test", value: "111ppm", display: "true" }
-        // {name:"非甲烷总经",value:"111ppm",display:"true"},
-        // {name:"苯乙烯",value:"200ppm",display:"true"},
-        // {name:"H2S",value:"111ppm",display:"true"},
-        // {name:"NH3",value:"111ppm",display:"true"}
-      ]
-    }
-  ];
 }

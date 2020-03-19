@@ -14,7 +14,7 @@ export function ComplexCustomOverlay(point, obj, index, store) {
 ComplexCustomOverlay.prototype = new BMapGL.Overlay();
 ComplexCustomOverlay.prototype.initialize = function(map) {
   let _index = this._index;
-  const index = this._store.curIndex;
+  const index = this._store.curSiteIndex;
   const isActive = _index == index;
 
   this._map = map;

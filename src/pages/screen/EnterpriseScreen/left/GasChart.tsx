@@ -76,9 +76,15 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
       text: site.pmName,
       textStyle: {
         color: "rgba(4,248,204,0.8)",
-        fontSize: "14"
+        fontSize: "14",
+        width: 20,
+        height: 20
       },
-      padding: [5, 20]
+      padding: [10, 20],
+      backgroundColor: "rgba(8,46,66,0.5)",
+      borderColor: "rgba(8,46,66,0.5)",
+      borderWidth: 1,
+      top: -5
     },
     tooltip: {
       trigger: "axis",
@@ -102,7 +108,7 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
           //值
           var value = params[i].data;
           showHtml += `
-            <div style="display:flex;align-items: center;">
+            <div style="display:flex;align-items: center;z-index: 1000">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
             <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? value.toFixed(1) + "*10¹mg/L" : ""}</div>
