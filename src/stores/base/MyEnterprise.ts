@@ -26,8 +26,16 @@ export class MyEnterprise {
     pageSize: 10,
     current: 1,
   };
+  @observable deviceSiteListInfo: any = {
+    data: [],
+    total: 0,
+    pageSize: 10,
+    current: 1,
+  };
   @observable companyNatureType: Array<any> = [];
   @observable industryType: Array<any> = [];
+
+  @observable deviceSiteInfo: any = {};
 
   @action.bound
   onSelectChange(selectedRowKeys) {
@@ -124,10 +132,12 @@ export class MyEnterprise {
     let { data }: any = await GET(`/dict-data/getDictDataByCode`, { typeCode: 'industry_category' });
     data = data.map(v => ({ ...v, value: v.id, label: v.dictName }));
 
-    for (let i = 0; i < data.length; i++) {
-      const { data: innerData }: any = await GET(`/dict-data/getDictDataByCode`, { typeCode: data[i].dictCode });
-      data[i].children = innerData.map(k => ({ ...k, value: k.id, label: k.dictName }));
-    }
+    const promiseArr = data.map((_, i) => {
+      const p = GET(`/dict-data/getDictDataByCode`, { typeCode: data[i].dictCode }).then(({ data: innerData }) => data[i].children = innerData.map(k => ({ ...k, value: k.id, label: k.dictName })));
+      return p;
+    });
+
+    await Promise.all(promiseArr);
 
     this.industryType = data;
     console.log(data);
@@ -168,6 +178,17 @@ export class MyEnterprise {
   async getParkList() {
     const { data }: any = await GET('/park/getAllParks', {});
     this.parkList = data;
+  }
+
+  @action.bound
+  async getDeviceSiteList(factoryId) {
+    this.loading = true;
+    const { data }: any = await POST('/device-site/getSiteListPage', { factoryId });
+    this.deviceSiteListInfo.data = data.records || [];
+    this.deviceSiteListInfo.total = data.total;
+    this.deviceSiteListInfo.pageSize = data.size;
+    this.deviceSiteListInfo.current = data.current;
+    this.loading = false;
   }
 
   @action.bound

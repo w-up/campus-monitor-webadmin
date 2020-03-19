@@ -20,7 +20,7 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
 
   const {
     loading,
-    saveFactory, parkList, factoryListInfo, deleteFactory, setFactoryInfo,
+    saveFactory, parkList, factoryListInfo, deleteFactory, setFactoryInfo, deviceSiteInfo, getDeviceSiteList, deviceSiteListInfo,
     treeData, onTreeItemSelect, enterpriseInfo, factoryInfo, selectedEnterprise, doSubmitEnterpriseInfo, companyNatureType, industryType,
     dataSource, query, selectedRowKeys, total, onSelectChange, paginationChange, deleteEnterprise, 
     handleSearchSubmit, handleSearchChange, handleSearchReset, resetSelectedRowKeys,
@@ -50,14 +50,22 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
     myEnterprise.getFactoryList();
   }, []);
 
-  const handleTreeItemSelect = (selectedKeys, e) => {
+  const handleTreeItemSelect = async (selectedKeys, e) => {
     if (e.node.props.level === 1) {
-      onTreeItemSelect(selectedKeys);
+      await onTreeItemSelect(selectedKeys);
       setFieldsValue({ enterpriseInfoEditable: false });
-      setAddFactoryModalVisible(false);
+      setEditFactoryModalVisible(false);
     } else if (e.node.props.level === 2) {
+      let parentKey = '';
+      treeData.some(item => {
+        if (item.children.some(v => v.id === selectedKeys[0])) {
+          parentKey = item.id;
+          return true;
+        }
+      });
+      await onTreeItemSelect([parentKey]);
       setFieldsValue({ enterpriseInfoEditable: false });
-      let info = {};
+      let info: any = {};
       factoryListInfo.data.some(v => {
         if (v.id === selectedKeys[0]) {
           info = { ...v };
@@ -65,8 +73,11 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
         }
       });
       setFactoryInfo(info);
-      setAddFactoryModalVisible(true);
-
+      console.log('factoryListInfo', toJS(factoryListInfo));
+      console.log('selectedKeys', selectedKeys);
+      console.log('info', info);
+      setEditFactoryModalVisible(true);
+      await getDeviceSiteList(info.id);
     }
     resetFields();
   }
@@ -83,7 +94,9 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
     })
   }
 
-  const [ addFactoryModalVisible, setAddFactoryModalVisible] = useState(false);
+  const [ editFactoryModalVisible, setEditFactoryModalVisible] = useState(false);
+  const [ factoryInfoEditable, setFactoryInfoEditable] = useState(false);
+  const [ editDeviceSiteModalVisible, setEditDeviceSiteModalVisible] = useState(false);
 
   const enterpriseInfoEditable = getFieldValue('enterpriseInfoEditable');
 
@@ -91,7 +104,7 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
     e.preventDefault();
     const param = getFieldValue('factoryInfo');
     await saveFactory({ ...param, scope });
-    setAddFactoryModalVisible(false);
+    setEditFactoryModalVisible(false);
   }
 
   let initialProfessionId: any = [];
@@ -117,6 +130,45 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
       },
     });
   }
+
+  const handleDeviceSiteSubmit = () => {
+    setEditDeviceSiteModalVisible(false);
+  }
+
+  const deviceSiteListcolumns = [
+    {
+      title: '厂区名称',
+      dataIndex: 'factoryName',
+      width: 200,
+    },
+    {
+      title: '站点名称',
+      dataIndex: 'siteName',
+      width: 300,
+    },
+    {
+      title: '监测类型',
+      dataIndex: 'belongChildType',
+      width: 300,
+    },
+    {
+      title: '经度',
+      dataIndex: 'gpsX',
+      width: 100,
+    },
+    {
+      title: '纬度',
+      dataIndex: 'gpsY',
+      width: 100,
+    },
+    {
+      title: '操作',
+      width: 100,
+      render: () => {
+        return <a >删除</a>
+      }
+    },
+  ];
 
   const columns = [
     {
@@ -152,7 +204,7 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
         <Row style={{ textAlign: 'center' }}>
           <a onClick={() => {
             setFactoryInfo(record);
-            setAddFactoryModalVisible(true);
+            setEditFactoryModalVisible(true);
           }}>编辑</a>
           <Divider type="vertical" />
           <a onClick={() => doDeleteFactory(record)}>删除</a>
@@ -185,7 +237,7 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
           </Card>
         </Col>
         <Col span={18}>
-          {!addFactoryModalVisible &&
+          {!editFactoryModalVisible &&
           <Card bordered title={selectedEnterprise.title}>
             <Form onSubmit={submitEnterpriseInfo}>
               <Card bordered size="small" title="工商基本信息" extra={enterpriseInfoEditable ? <Row><Button icon="save" htmlType="submit" type="primary">保存</Button><Divider type="vertical" /><Button onClick={() => resetFields()} icon="save" >取消</Button></Row> : <Button icon="edit" onClick={() => setFieldsValue({ enterpriseInfoEditable: true })} type="primary">编辑</Button>}>
@@ -266,7 +318,7 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                 <Row>
                   {/* <Button icon="delete">删除</Button> */}
                   {/* <Divider type="vertical" /> */}
-                  <Button icon="file-add" onClick={() => setAddFactoryModalVisible(true)} type="primary">添加厂区</Button>
+                  <Button icon="file-add" onClick={() => setEditFactoryModalVisible(true)} type="primary">添加厂区</Button>
                 </Row>
               }>
               <Table size="small" rowKey="key" bordered columns={columns} dataSource={toJS(factoryListInfo.data) || []} />
@@ -274,16 +326,20 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
           </Card>
           }
 
-        {addFactoryModalVisible &&
+        {editFactoryModalVisible &&
         <Form layout="horizontal">
           <Card
             bordered
             title="编辑厂区"
             extra={
+              factoryInfoEditable ?
               <Row>
                 <Button type="primary" onClick={handleFactorySubmit}>保存</Button>
                 <Divider type="vertical" />
-                <Button onClick={() => setAddFactoryModalVisible(false)}>取消</Button>
+                <Button onClick={() => setFactoryInfoEditable(false)}>取消</Button>
+              </Row> :
+              <Row>
+                <Button onClick={() => setFactoryInfoEditable(true)}>编辑</Button>
               </Row>
             }>
               {getFieldDecorator("factoryInfo.id", { initialValue: factoryInfo.id, rules: [{ required: false }] })(
@@ -296,12 +352,12 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                 <Descriptions size="small" bordered>
                   <Descriptions.Item label="厂区名称" span={1.5}>
                     {getFieldDecorator("factoryInfo.factoryName", { initialValue: factoryInfo.factoryName, rules: [{ required: false }] })(
-                      <Input placeholder='请输入厂区名称' />
+                      <Input disabled={!factoryInfoEditable} placeholder='请输入厂区名称' />
                     )}
                   </Descriptions.Item>
                   <Descriptions.Item label="所属园区" span={1.5}>
                     {getFieldDecorator("factoryInfo.parkId", { initialValue: factoryInfo.parkId, rules: [{ required: false }] })(
-                      <Select placeholder="请输入所属园区">
+                      <Select disabled={!factoryInfoEditable} placeholder="请输入所属园区">
                         {parkList.map(item => (
                           <Option value={item.id}>{item.parkName}</Option>
                         ))}
@@ -310,7 +366,7 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                   </Descriptions.Item>
                   <Descriptions.Item label="地址" span={1.5}>
                     {getFieldDecorator("factoryInfo.factoryAddress", { initialValue: factoryInfo.factoryAddress, rules: [{ required: false }] })(
-                      <Input placeholder='请输入地址' />
+                      <Input disabled={!factoryInfoEditable} placeholder='请输入地址' />
                     )}
                   </Descriptions.Item>
                 </Descriptions>
@@ -320,22 +376,22 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                 <Descriptions size="small" bordered>
                     <Descriptions.Item label="联络人" span={1.5}>
                       {getFieldDecorator("factoryInfo.contactPerson", { initialValue: factoryInfo.contactPerson, rules: [{ required: false }] })(
-                        <Input placeholder='请输入联络人' />
+                        <Input disabled={!factoryInfoEditable} placeholder='请输入联络人' />
                       )}
                     </Descriptions.Item>
                     <Descriptions.Item label="电话" span={1.5}>
                       {getFieldDecorator("factoryInfo.contactPhone", { initialValue: factoryInfo.contactPhone, rules: [{ required: false }] })(
-                        <Input placeholder='请输入电话' />
+                        <Input disabled={!factoryInfoEditable} placeholder='请输入电话' />
                       )}
                     </Descriptions.Item>
                     <Descriptions.Item label="职位" span={1.5}>
                       {getFieldDecorator("factoryInfo.contactPosition", { initialValue: factoryInfo.contactPosition, rules: [{ required: false }] })(
-                        <Input placeholder='请输入职位' />
+                        <Input disabled={!factoryInfoEditable} placeholder='请输入职位' />
                       )}
                     </Descriptions.Item>
                     <Descriptions.Item label="邮箱" span={1.5}>
                       {getFieldDecorator("factoryInfo.email", { initialValue: factoryInfo.email, rules: [{ required: false }] })(
-                        <Input placeholder='请输入邮箱' />
+                        <Input disabled={!factoryInfoEditable} placeholder='请输入邮箱' />
                       )}
                     </Descriptions.Item>
                   </Descriptions>
@@ -343,7 +399,7 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
               <Divider />
               <Card title="厂区范围" bordered size="small">
                 {getFieldDecorator("scopeType", { initialValue: 'location', rules: [{ required: false }] })(
-                  <Radio.Group>
+                  <Radio.Group disabled={!factoryInfoEditable}>
                     <Radio value="map">地图绘制</Radio>
                     <Radio value="location">输入经纬度</Radio>
                   </Radio.Group>
@@ -358,23 +414,76 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                       title="名称"
                       dataIndex="scopeName"
                       key="scopeName"
-                      render={(scopeName, _, index) => <Input size="small" onChange={(e) => scopeNameInput(e.target.value, index)} value={scopeName} />}
+                      render={(scopeName, _, index) => <Input disabled={!factoryInfoEditable} size="small" onChange={(e) => scopeNameInput(e.target.value, index)} value={scopeName} />}
                     />
                     <Column
                       title="经度"
                       dataIndex="longitude"
                       key="longitude"
-                      render={(longitude, _, index) => <Input size="small" onChange={(e) => longitudeInput(e.target.value, index)} value={longitude} />}
+                      render={(longitude, _, index) => <Input disabled={!factoryInfoEditable} size="small" onChange={(e) => longitudeInput(e.target.value, index)} value={longitude} />}
                     />
                     <Column
                       title="纬度"
                       dataIndex="latitude"
                       key="latitude"
-                      render={(latitude, _, index) => <Input size="small" onChange={(e) => latitudeInput(e.target.value, index)} value={latitude} />}
+                      render={(latitude, _, index) => <Input disabled={!factoryInfoEditable} size="small" onChange={(e) => latitudeInput(e.target.value, index)} value={latitude} />}
                     />
                   </Table>
                 }
               </Card>
+              <Divider />
+              <Card
+                bordered
+                size="small"
+                title="站点信息"
+                extra={
+                  <Row>
+                    <Button icon="delete">删除</Button>
+                    <Divider type="vertical" />
+                    <Button icon="file-add" onClick={() => setEditDeviceSiteModalVisible(true)} type="primary">添加站点</Button>
+                  </Row>
+                }>
+                <Table size="small" rowKey="key" bordered columns={deviceSiteListcolumns} dataSource={toJS(deviceSiteListInfo.data) || []} />
+              </Card>
+
+              <Modal title="" visible={editDeviceSiteModalVisible} onOk={handleDeviceSiteSubmit} onCancel={() => setEditDeviceSiteModalVisible(false)} width={800}>
+                <Descriptions title="站点信息" size="small" bordered>
+                  <Descriptions.Item label="厂区名称" span={1.5}>
+                    {getFieldDecorator("deviceSiteInfo.factoryId", { initialValue: deviceSiteInfo.factoryId, rules: [{ required: false }] })(
+                      <Select style={{ width: '100%' }} placeholder="">
+                        {factoryListInfo.data.map(item => (
+                          <Option value={item.id}>{item.factoryName}</Option>
+                        ))}
+                      </Select>
+                    )}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="站点编号" span={1.5}>
+                    {getFieldDecorator("deviceSiteInfo.siteId", { initialValue: deviceSiteInfo.siteId, rules: [{ required: false }] })(
+                      <Input placeholder='请输入站点编号' />
+                    )}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="站点名称" span={1.5}>
+                    {getFieldDecorator("deviceSiteInfo.siteName", { initialValue: deviceSiteInfo.siteName, rules: [{ required: false }] })(
+                      <Input placeholder='请输入站点名称' />
+                    )}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="监测类型" span={1.5}>
+                    {getFieldDecorator("deviceSiteInfo.belongChildType", { initialValue: deviceSiteInfo.belongChildType, rules: [{ required: false }] })(
+                      <Input placeholder='请输入监测类型' />
+                    )}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="经度" span={1.5}>
+                    {getFieldDecorator("deviceSiteInfo.gpsX", { initialValue: deviceSiteInfo.gpsX, rules: [{ required: false }] })(
+                      <Input placeholder='请输入经度' />
+                    )}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="纬度" span={1.5}>
+                    {getFieldDecorator("deviceSiteInfo.gpsY", { initialValue: deviceSiteInfo.gpsY, rules: [{ required: false }] })(
+                      <Input placeholder='请输入纬度' />
+                    )}
+                  </Descriptions.Item>
+                </Descriptions>
+              </Modal>
           </Card>
         </Form>
         }
