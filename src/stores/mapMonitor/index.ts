@@ -123,6 +123,7 @@ export class MapMonitorStore {
     this.currentPark = parkId;
     if (parkId !== "all") {
       this.loadFactories({ parkId });
+      this.loadParkData();
     }
   }
 
@@ -137,9 +138,17 @@ export class MapMonitorStore {
   @action.bound
   async selectPmcode(pmCode) {
     this.currentPmCode = pmCode;
-    const result = await api.MapMonitor.getMapInfoByPmCodeAndParkId({ parkId: Number(this.currentPark), pmCode });
-    this.curParkData = result.data;
-    this.updateMap();
+    this.loadParkData();
+  }
+
+  @action.bound
+  async loadParkData({ parkId, pmCode }: { parkId?: string; pmCode?: string } = { parkId: this.currentPark, pmCode: this.currentPmCode }) {
+    if (!parkId || !pmCode) return;
+    const result = await api.MapMonitor.getMapInfoByPmCodeAndParkId({ parkId: Number(parkId), pmCode });
+    if (result.data) {
+      this.curParkData = result.data;
+      this.updateMap();
+    }
   }
 
   @action.bound
