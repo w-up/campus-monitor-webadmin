@@ -22,7 +22,7 @@
 }
 
 svg {
-  vertical-align: baseline!important;
+  vertical-align: baseline !important;
 }
 
 .screen-background {
@@ -47,6 +47,13 @@ svg {
   background: #1e2538;
   font-family: "Microsoft Yahei", sans-serif;
 
+  .groundImg {
+    position: absolute;
+    object-fit: contain;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
   .header-bg {
     background: url("/images/topbg.png") no-repeat center;
     background-size: contain;
@@ -127,25 +134,25 @@ svg {
       height: 44px;
       line-height: 44px;
       background: url("/images/title.png") center;
-      background-size:contain;
+      background-size: contain;
       border-bottom: 0;
     }
     .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab {
       background: transparent;
-      color: #55B7FE;
+      color: #55b7fe;
       border: none;
       border-radius: 0;
       height: 44px;
       line-height: 44px;
       &.ant-tabs-tab-active {
-        background: #1082DA;
+        background: #1082da;
         color: #04f9cc;
         height: 44px;
-
       }
     }
-    .ant-tabs-tab-prev, .ant-tabs-tab-next {
-      color: #55B7FE;
+    .ant-tabs-tab-prev,
+    .ant-tabs-tab-next {
+      color: #55b7fe;
     }
     .ant-tabs-tab-btn-disabled {
       color: gray;
@@ -229,7 +236,7 @@ svg {
 }
 
 .t-b-con.active {
-  background: #1082DA;
+  background: #1082da;
   color: #04f9cc;
 }
 
@@ -508,13 +515,13 @@ svg {
   .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab {
     border-radius: 0;
     &.ant-tabs-tab-active {
-      background: #0BABF2;
-      border-color: #00B1FF;
+      background: #0babf2;
+      border-color: #00b1ff;
     }
   }
 
   .alertCardRow {
-    border-bottom: 1px solid #383E55;
+    border-bottom: 1px solid #383e55;
     color: white;
     height: 40px;
     line-height: 40px;
@@ -711,7 +718,7 @@ svg {
     height: 80px;
     background: #103266;
     border-radius: 0;
-    border: 1px dashed #5195C3;
+    border: 1px dashed #5195c3;
   }
   .ant-upload-list-picture-card .ant-upload-list-item-uploading-text {
     color: $primary-white;
@@ -729,7 +736,7 @@ svg {
   .ant-upload-list-picture-card .ant-upload-list-item {
     width: 80px;
     height: 80px;
-    border: 1px dashed #5195C3;
+    border: 1px dashed #5195c3;
     border-radius: 0;
     background: #103266;
   }

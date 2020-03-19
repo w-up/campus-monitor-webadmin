@@ -283,35 +283,19 @@ export class EnterpriseScreenMapStore {
       this.addpoints(0); //添加站点覆盖物
       this.play();
     }, 100);
-
-    setTimeout(() => {
-      if (!this.map) return;
-
-      // @observable center = new BMapGL.Point(116.384405, 39.9001)
-      // let SW = new BMapGL.Point(116.38179 , 39.900146);
-      let SW = new BMapGL.Point(Number(this.curMapConfig.longitude) - 0.002615, Number(this.curMapConfig.latitude) + 0.000046);
-      let NE = new BMapGL.Point(Number(this.curMapConfig.longitude) + 0.00005, Number(this.curMapConfig.latitude) + 0.001046);
-      // let NE = new BMapGL.Point(116.384451, 39.901146);
-      console.log({ SW, NE }, this.curSiteData);
-      let groundOverlayOptions = {
-        displayOnMinLevel: 1,
-        displayOnMaxLevel: 999,
-        imageURL: utils.img.getImageUrl(this.curMapConfig.picUrl)
-      };
-      // const bound = this.map.getBounds();
-      // console.log(bound);
-      // 初始化GroundOverlay
-      let groundOverlay = new BMapGL.GroundOverlay(new BMapGL.Bounds(SW, NE), groundOverlayOptions);
-      this.map.addOverlay(groundOverlay); //添加图片覆盖物
-    }, 1000);
   }
 
   @action.bound
-  addpoints(index: number) {
+  async addpoints(index: number) {
     if (!this.map) return;
     for (let x in this.overlays) {
       this.map.removeOverlay(this.overlays[x]);
     }
+    const nextSite = this.SiteRuntimePmDate[index];
+    if (nextSite) {
+      const nextSiteRuntimeData = await api.DeviceData.getAllPM24HourDatasBySiteId({ siteId: Number(nextSite.siteId) });
+    }
+
     this.curSiteIndex = index;
     this.overlays = [];
     this.SiteRuntimePmDateForMap.forEach((v, i) => {
@@ -324,7 +308,7 @@ export class EnterpriseScreenMapStore {
   @action.bound
   play() {
     clearInterval(this.playTimer);
-    this.playTimer = setInterval(() => {
+    this.playTimer = setInterval(async () => {
       this.addpoints(this.curSiteIndex >= this.SiteRuntimePmDateForMap.length - 1 ? 0 : this.curSiteIndex + 1);
     }, 5000);
   }

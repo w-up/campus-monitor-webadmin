@@ -27,6 +27,10 @@ http.interceptors.request.use(async config => {
 http.interceptors.response.use(
   response => {
     const res = response.data;
+    if (res.msg == "未登录") {
+      store.auth.logout();
+      window.location.reload();
+    }
     if (res.msg !== "success") {
       message.error(res.msg);
       return Promise.reject(response);

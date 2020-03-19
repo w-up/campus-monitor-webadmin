@@ -22,11 +22,19 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
       }
     },
     currentPark: "all",
+    currentPmCode: "",
     pmcodes: [] as Array<PMCode>,
     async selectPark(parkId) {
       this.currentPark = parkId;
       const result = await api.MapMonitor.getPmCodeListByParkId({ parkId });
       this.pmcodes = result.data;
+      if (this.currentPmCode) {
+        mapMonitor.loadParkData({ parkId: this.currentPark, pmCode: this.currentPmCode });
+      }
+    },
+    async selectPmCode(pmCode) {
+      this.currentPmCode = pmCode;
+      mapMonitor.loadParkData({ parkId: this.currentPark, pmCode: this.currentPmCode });
     },
     graphs: [
       { value: "350", color: "#6eb447" },
@@ -77,7 +85,7 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
         </Form.Item>
         <Form.Item label="监测因子">
           {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
-            <Select>
+            <Select onChange={store.selectPmCode}>
               {store.pmcodes.map((item, index) => (
                 <Select.Option value={item.pmCode} key={index}>
                   {item.pmName}
@@ -93,7 +101,7 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
           {getFieldDecorator("timeEnd", { initialValue: moment(), rules: [{ required: true }] })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}
         </Form.Item>
 
-        <Form.Item wrapperCol={{ span: 22, offset:1 }}>
+        <Form.Item wrapperCol={{ span: 22, offset: 1 }}>
           <Button type="primary" htmlType="submit" className="w-full">
             调取回顾
           </Button>
