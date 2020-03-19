@@ -1,5 +1,6 @@
 import { action, observable } from "mobx";
 import moment from 'moment';
+import { message } from "antd";
 import { GET, POST } from "../../utils/request";
 
 export class MyEnterprise {
@@ -12,6 +13,8 @@ export class MyEnterprise {
   @observable selectedRowKeys: any = [];
   @observable dataSource: any = [];
   @observable parkList: any = [];
+
+  @observable belongChildTypeList: any = [];
 
   @observable loading: boolean = false;
   @observable treeData: Array<any> = [];
@@ -32,10 +35,17 @@ export class MyEnterprise {
     pageSize: 10,
     current: 1,
   };
+  @observable deviceListInfo: any = {
+    data: [],
+    total: 0,
+    pageSize: 10,
+    current: 1,
+  };
   @observable companyNatureType: Array<any> = [];
   @observable industryType: Array<any> = [];
 
   @observable deviceSiteInfo: any = {};
+  @observable deviceInfo: any = {};
 
   @action.bound
   onSelectChange(selectedRowKeys) {
@@ -170,8 +180,25 @@ export class MyEnterprise {
   }
 
   @action.bound
+  async getDeviceInfo(deviceCode) {
+    const { data }: any = await POST('/device/getDeviceByCode', { deviceCode });
+    debugger
+  }
+
+  @action.bound
+  async getBelongChildType() {
+    const { data }: any = await GET('/dict-data/getDictDataByCode', { typeCode: 'belong_child_type' });
+    this.belongChildTypeList = data;
+  }
+
+  @action.bound
   setFactoryInfo(data) {
     this.factoryInfo = data;
+  }
+
+  @action.bound
+  setDeviceInfo(data) {
+    this.deviceInfo = data;
   }
 
   @action.bound
@@ -181,12 +208,39 @@ export class MyEnterprise {
   }
 
   @action.bound
-  async getDeviceSiteList(factoryId) {
+  setDeviceSiteInfo(info) {
+    this.deviceSiteInfo = { ...info };
+  }
+
+  @action.bound
+  async getDeviceSiteInfo(siteCode) {
+    const { data }: any = await GET('/device-site/getSiteByCode', { siteCode });
+    console.log('getDeviceSiteInfo', data)
+    if (!data) {
+      message.error('获取站点信息失败');
+      return;
+    }
+    this.deviceSiteInfo = { ...this.deviceSiteInfo, ...data };
+  }
+
+  @action.bound
+  async getDeviceSiteList() {
     this.loading = true;
-    const { data }: any = await POST('/device-site/getSiteListPage', { factoryId });
+    const { data }: any = await POST('/device-site/getSiteListPage', { factoryId: this.factoryInfo.id });
     this.deviceSiteListInfo.data = data.records || [];
     this.deviceSiteListInfo.total = data.total;
     this.deviceSiteListInfo.pageSize = data.size;
+    this.deviceSiteListInfo.current = data.current;
+    this.loading = false;
+  }
+
+  @action.bound
+  async getDeviceList() {
+    this.loading = true;
+    const { data }: any = await POST('/device/getDeviceListPage', { siteId: this.deviceSiteInfo.id });
+    this.deviceListInfo.data = data.records || [];
+    this.deviceListInfo.total = data.total;
+    this.deviceListInfo.pageSize = data.size;
     this.deviceSiteListInfo.current = data.current;
     this.loading = false;
   }
@@ -213,9 +267,23 @@ export class MyEnterprise {
   }
 
   @action.bound
+  async addDeviceSite({ factoryId, id }) {
+    await POST('/device-site/addFactorySite', { factoryId, siteId: id });
+    await this.getDeviceSiteList();
+    await this.getTree();
+  }
+
+  @action.bound
   async deleteFactory(param) {
     await POST('/factory/deleteFactory', param);
     await this.getFactoryList();
+  }
+
+  @action.bound
+  async deleteDeviceSite(ids) {
+    await POST('/device-site/deleteFactorySite', ids);
+    await this.getDeviceSiteList();
+    await this.getTree();
   }
 
   @action.bound

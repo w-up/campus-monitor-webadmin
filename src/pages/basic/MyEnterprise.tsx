@@ -21,6 +21,7 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
   const {
     loading,
     saveFactory, parkList, factoryListInfo, deleteFactory, setFactoryInfo, deviceSiteInfo, getDeviceSiteList, deviceSiteListInfo,
+    belongChildTypeList, getDeviceSiteInfo, addDeviceSite, deleteDeviceSite, setDeviceSiteInfo, deviceListInfo, getDeviceList, setDeviceInfo, deviceInfo, getDeviceInfo,
     treeData, onTreeItemSelect, enterpriseInfo, factoryInfo, selectedEnterprise, doSubmitEnterpriseInfo, companyNatureType, industryType,
     dataSource, query, selectedRowKeys, total, onSelectChange, paginationChange, deleteEnterprise, 
     handleSearchSubmit, handleSearchChange, handleSearchReset, resetSelectedRowKeys,
@@ -48,36 +49,114 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
     myEnterprise.getIndustryType();
     myEnterprise.getParkList();
     myEnterprise.getFactoryList();
+    myEnterprise.getBelongChildType();
+
   }, []);
+
+  const firstLevelClick = async (selectedKeys) => {
+    await onTreeItemSelect(selectedKeys);
+    setEnterpriseInfoVisible(true);
+    setFactoryInfoVisible(false);
+    setDeviceSiteInfoVisible(false);
+
+    setFieldsValue({ enterpriseInfoEditable: false });
+    setEditFactoryModalVisible(false);
+    setDeviceListModalVisible(false);
+    setDeviceInfoVisible(false);
+  }
+
+  const secondLevelClick = async (selectedKeys) => {
+    let parentKey = '';
+    treeData.some(item => {
+      if (item.children.some(v => v.id === selectedKeys[0])) {
+        parentKey = item.id;
+        return true;
+      }
+    });
+    await onTreeItemSelect([parentKey]);
+    setEnterpriseInfoVisible(false);
+    setFactoryInfoVisible(true);
+    setDeviceSiteInfoVisible(false);
+    setDeviceInfoVisible(false);
+
+
+    setFieldsValue({ enterpriseInfoEditable: false });
+    setDeviceListModalVisible(false);
+    let info: any = {};
+    factoryListInfo.data.some(v => {
+      if (v.id === selectedKeys[0]) {
+        info = { ...v };
+        return true;
+      }
+    });
+    setFactoryInfo(info);
+    setEditFactoryModalVisible(true);
+    setDeviceListModalVisible(true);
+    await getDeviceSiteList();
+  }
+
+  const thirdLevelClick = async (selectedKeys) => {
+    let parentKey = '';
+    treeData.some(item => {
+      if (item.children.some(v => v.children.some(k => k.id === selectedKeys[0]))) {
+        parentKey = item.id;
+        return true;
+      }
+    });
+    await onTreeItemSelect([parentKey]);
+    setEnterpriseInfoVisible(false);
+    setFactoryInfoVisible(false);
+    setDeviceSiteInfoVisible(true);
+    setDeviceInfoVisible(false);
+
+    setFieldsValue({ enterpriseInfoEditable: false });
+    let info: any = {};
+    deviceSiteListInfo.data.some(v => {
+      if (v.id === selectedKeys[0]) {
+        info = { ...v };
+        return true;
+      }
+    });
+    setDeviceSiteInfo(info);
+    await getDeviceList();
+    console.log(toJS(deviceSiteListInfo));
+    console.log(toJS(selectedKeys));
+    setEditFactoryModalVisible(false);
+    setDeviceListModalVisible(true);
+  }
+
+  const forthLevelClick = async (selectedKeys) => {
+    let parentKey = '';
+    treeData.some(item => {
+      if (item.children.some(v => v.children.some(k => k.children.some(l => l.id === selectedRowKeys[0])))) {
+        parentKey = item.id;
+        return true;
+      }
+    });
+    await onTreeItemSelect([parentKey]);
+    setEnterpriseInfoVisible(false);
+    setFactoryInfoVisible(false);
+    setDeviceSiteInfoVisible(false);
+    setDeviceInfoVisible(true);
+
+    setFieldsValue({ enterpriseInfoEditable: false });
+    
+    console.log(toJS(deviceListInfo));
+    console.log(toJS(selectedKeys));
+    await getDeviceInfo(selectedKeys[0]);
+    setEditFactoryModalVisible(false);
+    setDeviceListModalVisible(false);
+  }
 
   const handleTreeItemSelect = async (selectedKeys, e) => {
     if (e.node.props.level === 1) {
-      await onTreeItemSelect(selectedKeys);
-      setFieldsValue({ enterpriseInfoEditable: false });
-      setEditFactoryModalVisible(false);
+      await firstLevelClick(selectedKeys);
     } else if (e.node.props.level === 2) {
-      let parentKey = '';
-      treeData.some(item => {
-        if (item.children.some(v => v.id === selectedKeys[0])) {
-          parentKey = item.id;
-          return true;
-        }
-      });
-      await onTreeItemSelect([parentKey]);
-      setFieldsValue({ enterpriseInfoEditable: false });
-      let info: any = {};
-      factoryListInfo.data.some(v => {
-        if (v.id === selectedKeys[0]) {
-          info = { ...v };
-          return true;
-        }
-      });
-      setFactoryInfo(info);
-      console.log('factoryListInfo', toJS(factoryListInfo));
-      console.log('selectedKeys', selectedKeys);
-      console.log('info', info);
-      setEditFactoryModalVisible(true);
-      await getDeviceSiteList(info.id);
+      await secondLevelClick(selectedKeys);
+    } else if (e.node.props.level === 3) {
+      await thirdLevelClick(selectedKeys);
+    } else if (e.node.props.level === 4) {
+      await forthLevelClick(selectedKeys);
     }
     resetFields();
   }
@@ -94,9 +173,16 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
     })
   }
 
+  const [ enterpriseInfoVisible, setEnterpriseInfoVisible] = useState(true);
+  const [ factoryInfoVisible, setFactoryInfoVisible] = useState(false);
+  const [ deviceSiteInfoVisible, setDeviceSiteInfoVisible] = useState(false);
+  const [ deviceInfoVisible, setDeviceInfoVisible] = useState(false);
+
   const [ editFactoryModalVisible, setEditFactoryModalVisible] = useState(false);
-  const [ factoryInfoEditable, setFactoryInfoEditable] = useState(false);
   const [ editDeviceSiteModalVisible, setEditDeviceSiteModalVisible] = useState(false);
+  const [ deviceListModalVisible, setDeviceListModalVisible] = useState(false);
+
+  const [ factoryInfoEditable, setFactoryInfoEditable] = useState(false);
 
   const enterpriseInfoEditable = getFieldValue('enterpriseInfoEditable');
 
@@ -132,8 +218,54 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
   }
 
   const handleDeviceSiteSubmit = () => {
-    setEditDeviceSiteModalVisible(false);
+    validateFields(['deviceSiteInfo'], async (err, { deviceSiteInfo }) => {
+      if (err) {
+        return;
+      }
+      
+      await addDeviceSite(deviceSiteInfo);
+      setEditDeviceSiteModalVisible(false);
+    });
   }
+
+  const deviceListColumns = [
+    {
+      title: '厂区名称',
+      dataIndex: 'factoryName',
+      width: 200,
+    },
+    {
+      title: '站点名称',
+      dataIndex: 'siteName',
+      width: 300,
+    },
+    {
+      title: '设备名称',
+      dataIndex: 'deviceName',
+      width: 300,
+      
+    },
+    {
+      title: '设备类型',
+      dataIndex: 'deviceModelName',
+      width: 300,
+    },
+    {
+      title: '负责人',
+      dataIndex: 'chargerName',
+      width: 200,
+    },
+    {
+      title: '负责人电话',
+      dataIndex: 'phone',
+      width: 300,
+    },
+    {
+      title: '负责人邮箱',
+      dataIndex: 'email',
+      width: 400,
+    },
+  ];
 
   const deviceSiteListcolumns = [
     {
@@ -150,22 +282,46 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
       title: '监测类型',
       dataIndex: 'belongChildType',
       width: 300,
+      render: (text: any, record: any, index) => {
+        console.log('belongChildTypeList', toJS(belongChildTypeList), text);
+        let val = '';
+        belongChildTypeList.some(item => {
+          if (item.dictCode === text) {
+            val = item.dictName;
+            return true;
+          }
+        });
+        return val;
+      }
     },
     {
       title: '经度',
       dataIndex: 'gpsX',
-      width: 100,
+      width: 200,
     },
     {
       title: '纬度',
       dataIndex: 'gpsY',
-      width: 100,
+      width: 200,
     },
     {
       title: '操作',
       width: 100,
-      render: () => {
-        return <a >删除</a>
+      render: (text:any, record: any, index: any) => {
+        return <a onClick={() => {
+          Modal.confirm({
+            title: '删除确认',
+            content: '确定删除这条记录吗？',
+            async onOk() {
+              try {
+                await deleteDeviceSite([record.factorySiteId]);
+                message.success('删除成功');
+              } catch {
+                message.error('删除失败');
+              }
+            },
+          });
+        }}>删除</a>
       }
     },
   ];
@@ -231,13 +387,14 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
               showLine={true}
               showIcon={true}
               onSelect={handleTreeItemSelect}
+              onExpand={(keys, e) => handleTreeItemSelect(keys.slice(-1), e)}
               treeData={toJS(treeData)}
             />
             </div>
           </Card>
         </Col>
         <Col span={18}>
-          {!editFactoryModalVisible &&
+          {enterpriseInfoVisible &&
           <Card bordered title={selectedEnterprise.title}>
             <Form onSubmit={submitEnterpriseInfo}>
               <Card bordered size="small" title="工商基本信息" extra={enterpriseInfoEditable ? <Row><Button icon="save" htmlType="submit" type="primary">保存</Button><Divider type="vertical" /><Button onClick={() => resetFields()} icon="save" >取消</Button></Row> : <Button icon="edit" onClick={() => setFieldsValue({ enterpriseInfoEditable: true })} type="primary">编辑</Button>}>
@@ -326,7 +483,7 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
           </Card>
           }
 
-        {editFactoryModalVisible &&
+        {factoryInfoVisible &&
         <Form layout="horizontal">
           <Card
             bordered
@@ -438,15 +595,21 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                 title="站点信息"
                 extra={
                   <Row>
-                    <Button icon="delete">删除</Button>
-                    <Divider type="vertical" />
-                    <Button icon="file-add" onClick={() => setEditDeviceSiteModalVisible(true)} type="primary">添加站点</Button>
+                    {/* <Button icon="delete">删除</Button> */}
+                    {/* <Divider type="vertical" /> */}
+                    <Button icon="file-add" onClick={() => {
+                      setEditDeviceSiteModalVisible(true);
+                      resetFields();
+                    }} type="primary">添加站点</Button>
                   </Row>
                 }>
                 <Table size="small" rowKey="key" bordered columns={deviceSiteListcolumns} dataSource={toJS(deviceSiteListInfo.data) || []} />
               </Card>
 
               <Modal title="" visible={editDeviceSiteModalVisible} onOk={handleDeviceSiteSubmit} onCancel={() => setEditDeviceSiteModalVisible(false)} width={800}>
+                {getFieldDecorator("deviceSiteInfo.id", { initialValue: deviceSiteInfo.id, rules: [{ required: false }] })(
+                  <Input hidden placeholder='请输入站点ID' />
+                )}
                 <Descriptions title="站点信息" size="small" bordered>
                   <Descriptions.Item label="厂区名称" span={1.5}>
                     {getFieldDecorator("deviceSiteInfo.factoryId", { initialValue: deviceSiteInfo.factoryId, rules: [{ required: false }] })(
@@ -458,34 +621,112 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                     )}
                   </Descriptions.Item>
                   <Descriptions.Item label="站点编号" span={1.5}>
-                    {getFieldDecorator("deviceSiteInfo.siteId", { initialValue: deviceSiteInfo.siteId, rules: [{ required: false }] })(
-                      <Input placeholder='请输入站点编号' />
+                    {getFieldDecorator("deviceSiteInfo.siteCode", { initialValue: deviceSiteInfo.siteCode, rules: [{ required: false }] })(
+                      <Input.Search enterButton onSearch={getDeviceSiteInfo} placeholder='请输入站点编号' />
                     )}
                   </Descriptions.Item>
                   <Descriptions.Item label="站点名称" span={1.5}>
                     {getFieldDecorator("deviceSiteInfo.siteName", { initialValue: deviceSiteInfo.siteName, rules: [{ required: false }] })(
-                      <Input placeholder='请输入站点名称' />
+                      <Input disabled placeholder='请输入站点名称' />
                     )}
                   </Descriptions.Item>
                   <Descriptions.Item label="监测类型" span={1.5}>
                     {getFieldDecorator("deviceSiteInfo.belongChildType", { initialValue: deviceSiteInfo.belongChildType, rules: [{ required: false }] })(
-                      <Input placeholder='请输入监测类型' />
+                      <Select disabled style={{ width: '100%' }} placeholder="请输入监测类型">
+                        {belongChildTypeList.map(item => (
+                          <Option value={item.dictCode}>{item.dictName}</Option>
+                        ))}
+                      </Select>
                     )}
                   </Descriptions.Item>
                   <Descriptions.Item label="经度" span={1.5}>
                     {getFieldDecorator("deviceSiteInfo.gpsX", { initialValue: deviceSiteInfo.gpsX, rules: [{ required: false }] })(
-                      <Input placeholder='请输入经度' />
+                      <Input disabled placeholder='请输入经度' />
                     )}
                   </Descriptions.Item>
                   <Descriptions.Item label="纬度" span={1.5}>
                     {getFieldDecorator("deviceSiteInfo.gpsY", { initialValue: deviceSiteInfo.gpsY, rules: [{ required: false }] })(
-                      <Input placeholder='请输入纬度' />
+                      <Input disabled placeholder='请输入纬度' />
                     )}
                   </Descriptions.Item>
                 </Descriptions>
               </Modal>
           </Card>
         </Form>
+        }
+
+        {deviceSiteInfoVisible &&
+          <Row>
+            <Card
+              bordered
+              title={deviceSiteInfo.siteName}
+            >
+              <Descriptions title="" size="small" bordered>
+                <Descriptions.Item label="厂区名称" span={1.5}>
+                  {factoryListInfo.data.map(item => {
+                    if (item.factorySiteId === deviceSiteInfo.factoryId) {
+                      return item.factoryName;
+                    }
+                    return null;
+                  })}
+                </Descriptions.Item>
+                <Descriptions.Item label="站点名称" span={1.5}>
+                  {deviceSiteInfo.siteName}
+                </Descriptions.Item>
+                <Descriptions.Item label="监测类型" span={1.5}>
+                  {belongChildTypeList.map(item => {
+                    if (item.dictCode === deviceSiteInfo.belongChildType) {
+                      return item.dictName;
+                    }
+                    return null;
+                  })}
+                </Descriptions.Item>
+                <Descriptions.Item label="经度" span={1.5}>
+                  {deviceSiteInfo.gpsX}
+                </Descriptions.Item>
+                <Descriptions.Item label="纬度" span={1.5}>
+                  {deviceSiteInfo.gpsY}
+                </Descriptions.Item>
+              </Descriptions>
+            </Card>
+            <Divider />
+            <Card
+              bordered
+              title="设备信息"
+              >
+              <Table size="small" rowKey="key" bordered columns={deviceListColumns} dataSource={toJS(deviceListInfo.data) || []} />
+            </Card>
+          </Row>
+        }
+
+        {deviceInfoVisible &&
+          <Row>
+            <Card
+              bordered
+              title={deviceInfo.deviceName}
+            >
+              <Descriptions title="" size="small" bordered>
+                <Descriptions.Item label="设备编号" span={1.5}>
+                  {deviceInfo.deviceCode}
+                </Descriptions.Item>
+                <Descriptions.Item label="设备名称" span={1.5}>
+                  {deviceSiteInfo.deviceName}
+                </Descriptions.Item>
+                <Descriptions.Item label="设备用途" span={1.5}>
+                  {deviceSiteInfo.features}
+                </Descriptions.Item>
+                <Descriptions.Item label="出厂日期" span={1.5}>
+                  {deviceSiteInfo.productionDate}
+                </Descriptions.Item>
+                <Descriptions.Item label="设备特点" span={1.5}>
+                  {deviceSiteInfo.manufacturerName}
+                </Descriptions.Item>
+                <Descriptions.Item label="设备型号" span={1.5}>
+                  {deviceSiteInfo.modelName}
+                </Descriptions.Item>
+              </Descriptions>
+            </Card>
+          </Row>
         }
 
         </Col>
