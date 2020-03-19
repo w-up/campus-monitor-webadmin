@@ -284,26 +284,26 @@ export class EnterpriseScreenMapStore {
       this.play();
     }, 100);
 
-    setTimeout(() => {
-      if (!this.map) return;
+    // setTimeout(() => {
+    //   if (!this.map) return;
 
-      // @observable center = new BMapGL.Point(116.384405, 39.9001)
-      // let SW = new BMapGL.Point(116.38179 , 39.900146);
-      let SW = new BMapGL.Point(Number(this.curMapConfig.longitude) - 0.002615, Number(this.curMapConfig.latitude) + 0.000046);
-      let NE = new BMapGL.Point(Number(this.curMapConfig.longitude) + 0.00005, Number(this.curMapConfig.latitude) + 0.001046);
-      // let NE = new BMapGL.Point(116.384451, 39.901146);
-      console.log({ SW, NE }, this.curSiteData);
-      let groundOverlayOptions = {
-        displayOnMinLevel: 1,
-        displayOnMaxLevel: 999,
-        imageURL: utils.img.getImageUrl(this.curMapConfig.picUrl)
-      };
-      // const bound = this.map.getBounds();
-      // console.log(bound);
-      // 初始化GroundOverlay
-      let groundOverlay = new BMapGL.GroundOverlay(new BMapGL.Bounds(SW, NE), groundOverlayOptions);
-      this.map.addOverlay(groundOverlay); //添加图片覆盖物
-    }, 1000);
+    //   // @observable center = new BMapGL.Point(116.384405, 39.9001)
+    //   // let SW = new BMapGL.Point(116.38179 , 39.900146);
+    //   let SW = new BMapGL.Point(Number(this.curMapConfig.longitude) - 0.002615, Number(this.curMapConfig.latitude) + 0.000046);
+    //   let NE = new BMapGL.Point(Number(this.curMapConfig.longitude) + 0.00005, Number(this.curMapConfig.latitude) + 0.001046);
+    //   // let NE = new BMapGL.Point(116.384451, 39.901146);
+    //   console.log({ SW, NE }, this.curSiteData);
+    //   let groundOverlayOptions = {
+    //     displayOnMinLevel: 1,
+    //     displayOnMaxLevel: 999,
+    //     imageURL: utils.img.getImageUrl(this.curMapConfig.picUrl)
+    //   };
+    //   // const bound = this.map.getBounds();
+    //   // console.log(bound);
+    //   // 初始化GroundOverlay
+    //   let groundOverlay = new BMapGL.GroundOverlay(new BMapGL.Bounds(SW, NE), groundOverlayOptions);
+    //   this.map.addOverlay(groundOverlay); //添加图片覆盖物
+    // }, 1000);
   }
 
   @action.bound

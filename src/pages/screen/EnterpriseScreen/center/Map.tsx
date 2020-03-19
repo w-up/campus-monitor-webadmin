@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useObserver } from "mobx-react-lite";
 import { useStore } from "../../../../stores";
+import { utils } from "../../../../utils/index";
 
 //@ts-ignore
 const BMapGL = window.BMapGL;
@@ -24,6 +25,7 @@ export const EnterpriseMap = () => {
       <span className="corner cornerBl" />
       <span className="corner cornerBr" />
       <div id="allmap" style={{ height: "40vh" }} />
+      <img className="groundImg" style={{ height: "40vh" }} src={utils.img.getImageUrl(enterpriseScreenMap.curMapConfig.picUrl)} />
       <div className="my-4 p-2 px-6 mapExplain flex flex-row">
         <div className="primary-text-dark w-2/3">当前厂区：{enterpriseScreenMap.currentFactoryData?.factoryName}</div>
         <div className="flex flex-row w-1/3 screen-text-color-2 justify-between">
