@@ -1,8 +1,9 @@
 import { action, observable, computed } from "mobx";
 import api from "services";
-import {Park, Factory, PMCode, PMValue, AlarmInfo} from "../../type";
+import { Park, Factory, PMCode, PMValue, AlarmInfo, AllParkData } from "../../type";
 import * as mapv from "mapv";
 import { _ } from "utils/lodash";
+import { utils } from "../../utils/index";
 //@ts-ignore
 const kriging = window.kriging;
 
@@ -73,6 +74,12 @@ export class MapMonitorStore {
   @observable currentFactory = "all";
   @observable currentPmCode = "";
 
+  @action.bound
+  selectTab(key: string) {
+    this.currentTabKey = key;
+    this.clearOverlay();
+  }
+
   @computed
   get curentFactorData() {
     return this.factories.find(i => i.id == this.currentFactory);
@@ -87,9 +94,16 @@ export class MapMonitorStore {
   @observable factories: Array<Factory> = [];
   @observable pmcodes: Array<PMCode> = [];
   @observable pmValues: Array<PMValue> = [];
-
+  @observable curOverlays = [] as Array<any>;
 
   @observable alarms: Array<AlarmInfo> = [];
+  @observable curParkData: AllParkData = {
+    parkId: "",
+    parkName: "",
+    parkPoints: [],
+    siteDatas: [],
+    factoryDatas: []
+  };
   @action.bound
   async loadAlarms() {
     const result = await api.MapMonitor.getUncheckedAlarmInformation();
@@ -98,8 +112,8 @@ export class MapMonitorStore {
 
   @action.bound
   async doConfirmAlarmInfoById(alarmId) {
-    const result = await api.MapMonitor.confirmAlarmInfoById({alarmId: alarmId});
-    if(result) {
+    const result = await api.MapMonitor.confirmAlarmInfoById({ alarmId: alarmId });
+    if (result) {
       this.loadAlarms();
     }
   }
@@ -121,8 +135,11 @@ export class MapMonitorStore {
   }
 
   @action.bound
-  selectPmcode(pmCode) {
+  async selectPmcode(pmCode) {
     this.currentPmCode = pmCode;
+    const result = await api.MapMonitor.getMapInfoByPmCodeAndParkId({ parkId: Number(this.currentPark), pmCode });
+    this.curParkData = result.data;
+    this.updateMap();
   }
 
   @action.bound
@@ -151,8 +168,19 @@ export class MapMonitorStore {
   }
 
   @action.bound
+  clearOverlay() {
+    console.log(this.curOverlays);
+    this.curOverlays.map(i => {
+      if (i.destroy) {
+        i.destroy();
+      }
+    });
+  }
+
+  @action.bound
   fillPollution() {
     let data = [] as any;
+
     this.pointsc.forEach((i, index) => {
       if (index % 4) return;
       _.times(20, () => {
@@ -175,34 +203,8 @@ export class MapMonitorStore {
       // maxOpacity: 0.8,
       draw: "heatmap"
     });
+    this.curOverlays.push(mapvLayer);
   }
-
-  // @action.bound
-  // fillKriging() {
-  //   let values = [] as any,
-  //     lngs = [] as any,
-  //     lats = [] as any;
-  //   const gridPath = [this.polygonPath.map(i => [i.lng, i.lat])];
-  //   this.pointsc.forEach(i => {
-  //     values.push(i.number);
-  //     lngs.push(i.position.lng);
-  //     lats.push(i.position.lat);
-  //   });
-  //   const params = {
-  //     model: "exponential", //'gaussian','spherical',
-  //     colors: ["#006837", "#1a9850", "#66bd63", "#a6d96a", "#d9ef8b", "#ffffbf", "#fee08b", "#fdae61", "#f46d43", "#d73027", "#a50026"]
-  //   };
-  //   const variogram = kriging.train(values, lngs, lats, params.model, 0, 100);
-  //   const grid = kriging.grid(gridPath.slice(), variogram, 100);
-  //   let canvas;
-  //   const canvasOverlay = new BMap.CanvasLayer({ update });
-  //   function update() {
-  //     //@ts-ignore
-  //     kriging.plot(this.canvas, grid, [100.220276, 200.476929], [10.737915, 100.965698], params.colors);
-  //     console.log(variogram);
-  //   }
-  //   this.map.addOverlay(canvasOverlay);
-  // }
 
   @action.bound
   draw() {
@@ -211,6 +213,13 @@ export class MapMonitorStore {
       this.pointsc[index].mapPos.left = pixel.x - 15 + "px";
       this.pointsc[index].mapPos.top = pixel.y - 15 + "px";
     });
+  }
+
+  @action.bound
+  updateMap() {
+    if (!this.map) return;
+    let mapViewObj = this.map.getViewport(utils.array.formatToLatLngShort(this.curParkData.parkPoints), {});
+    this.map.centerAndZoom(mapViewObj.center, mapViewObj.zoom);
   }
 
   @action.bound

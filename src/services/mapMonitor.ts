@@ -40,6 +40,9 @@ export default {
   },
 
   confirmAlarmInfoById(data: { alarmId: string }) {
-    return GET("/mapMonitor/confirmAlarmInfoById", data)
+    return GET("/mapMonitor/confirmAlarmInfoById", data);
+  },
+  getMapInfoByPmCodeAndParkId(data: { parkId: number; pmCode: string }) {
+    return POST("/mapMonitor/getMapInfoByPmCodeAndParkId", data);
   }
 };

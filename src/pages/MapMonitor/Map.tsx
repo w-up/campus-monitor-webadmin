@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useObserver } from "mobx-react-lite";
 import { Map, APILoader, Polygon, Label, CustomOverlay } from "@uiw/react-baidu-map";
 import { useStore } from "../../stores/index";
+import { utils } from "../../utils/index";
 
 export const MapMonitorMap = () => {
   const { config, mapMonitor } = useStore();
@@ -16,7 +17,7 @@ export const MapMonitorMap = () => {
   return useObserver(() => (
     <APILoader akay={config.baiduMapApiKey}>
       <Map onTilesLoaded={mapMonitor.onMapUpdate} zoom={mapMonitor.zoom} center={mapMonitor.center} enableScrollWheelZoom onZoomEnd={e => (mapMonitor.zoom = e.target.getZoom())}>
-        <Polygon path={mapMonitor.polygonPath} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor={""}></Polygon>
+        <Polygon path={utils.array.formatToLatLngShort(mapMonitor.curParkData.parkPoints)} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor={""}></Polygon>
         {mapMonitor.compamys.map((item, index) => (
           <Polygon path={item} key={index} strokeStyle="dashed" fillColor="#FFD800" strokeColor="#FFD800" strokeWeight={2}></Polygon>
         ))}
