@@ -101,7 +101,6 @@ export class MyEnterprise {
 
   @action.bound
   async onTreeItemSelect(selectedKeys) {
-    this.loading = true;
     console.log('selectedKeys', selectedKeys);
     this.treeData.some(item => {
       if (item.id === selectedKeys[0]) {
@@ -112,7 +111,6 @@ export class MyEnterprise {
     });
     await this.getCompanyInfo();
     await this.getFactoryList();
-    this.loading = false;
   }
 
   @action.bound
@@ -138,7 +136,6 @@ export class MyEnterprise {
 
   @action
   async getIndustryType() {
-    this.loading = true;
     let { data }: any = await GET(`/dict-data/getDictDataByCode`, { typeCode: 'industry_category' });
     data = data.map(v => ({ ...v, value: v.id, label: v.dictName }));
 
@@ -151,7 +148,6 @@ export class MyEnterprise {
 
     this.industryType = data;
     console.log(data);
-    this.loading = false;
   }
   
 
@@ -181,8 +177,8 @@ export class MyEnterprise {
 
   @action.bound
   async getDeviceInfo(deviceCode) {
-    const { data }: any = await POST('/device/getDeviceByCode', { deviceCode });
-    debugger
+    const { data }: any = await GET('/device/getDeviceByCode', { deviceCode });
+    this.deviceInfo ={ ...data };
   }
 
   @action.bound
@@ -225,24 +221,20 @@ export class MyEnterprise {
 
   @action.bound
   async getDeviceSiteList() {
-    this.loading = true;
     const { data }: any = await POST('/device-site/getSiteListPage', { factoryId: this.factoryInfo.id });
     this.deviceSiteListInfo.data = data.records || [];
     this.deviceSiteListInfo.total = data.total;
     this.deviceSiteListInfo.pageSize = data.size;
     this.deviceSiteListInfo.current = data.current;
-    this.loading = false;
   }
 
   @action.bound
   async getDeviceList() {
-    this.loading = true;
     const { data }: any = await POST('/device/getDeviceListPage', { siteId: this.deviceSiteInfo.id });
     this.deviceListInfo.data = data.records || [];
     this.deviceListInfo.total = data.total;
     this.deviceListInfo.pageSize = data.size;
     this.deviceSiteListInfo.current = data.current;
-    this.loading = false;
   }
 
   @action.bound

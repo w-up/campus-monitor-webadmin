@@ -385,7 +385,7 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
             <div>
             <Tree
               showLine={true}
-              showIcon={true}
+              showIcon={false}
               onSelect={handleTreeItemSelect}
               onExpand={(keys, e) => handleTreeItemSelect(keys.slice(-1), e)}
               treeData={toJS(treeData)}
@@ -710,19 +710,19 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                   {deviceInfo.deviceCode}
                 </Descriptions.Item>
                 <Descriptions.Item label="设备名称" span={1.5}>
-                  {deviceSiteInfo.deviceName}
+                  {deviceInfo.deviceName}
                 </Descriptions.Item>
                 <Descriptions.Item label="设备用途" span={1.5}>
-                  {deviceSiteInfo.features}
+                  {deviceInfo.features}
                 </Descriptions.Item>
                 <Descriptions.Item label="出厂日期" span={1.5}>
-                  {deviceSiteInfo.productionDate}
+                  {deviceInfo.productionDate}
                 </Descriptions.Item>
                 <Descriptions.Item label="设备特点" span={1.5}>
-                  {deviceSiteInfo.manufacturerName}
+                  {deviceInfo.manufacturerName}
                 </Descriptions.Item>
                 <Descriptions.Item label="设备型号" span={1.5}>
-                  {deviceSiteInfo.modelName}
+                  {deviceInfo.modelName}
                 </Descriptions.Item>
               </Descriptions>
             </Card>
