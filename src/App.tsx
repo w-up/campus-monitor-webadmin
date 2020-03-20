@@ -14,9 +14,9 @@ import { System } from "./pages/basic/System/System";
 import zhCN from "antd/es/locale/zh_CN";
 import { useEffect } from "react";
 
-const App = () => {
+const App = props => {
   const { menu, auth, config } = useStore();
-
+  console.log(props);
   useEffect(() => {
     auth.getAuthUser();
     config.loadPmCode();
@@ -34,24 +34,29 @@ const App = () => {
       return <Route exact path={item.path} key={item.path} component={item.component} />;
     });
   };
-  const MainRoute = useObserver(() =>
-    auth.token ? (
+  const MainRoute = useObserver(() => {
+    return auth.token ? (
       <Router>
         <Layout style={{ minHeight: "100vh" }}>
           <NavHead></NavHead>
           {/* <Layout.Sider collapsible collapsed={menu.collapsed} onCollapse={menu.toggleCollapsed} style={{ borderTop: "1px solid #00B1FF" }}>
           <NavMenu></NavMenu>
         </Layout.Sider> */}
-          <Layout style={{marginTop: 64}}>
-            <Layout.Sider style={{
-              overflow: 'auto',
-              height: '100vh',
-              position: 'fixed',
-              left: 0,
-            }} trigger={null} collapsible collapsed={menu.collapsed}>
+          <Layout style={{ marginTop: 64 }}>
+            <Layout.Sider
+              style={{
+                overflow: "auto",
+                height: "100vh",
+                position: "fixed",
+                left: 0
+              }}
+              trigger={null}
+              collapsible
+              collapsed={menu.collapsed}
+            >
               <NavMenu></NavMenu>
             </Layout.Sider>
-            <Layout.Content style={{ marginLeft: menu.collapsed?80:200 }}>
+            <Layout.Content style={{ marginLeft: menu.collapsed ? 80 : 200 }}>
               <Switch>
                 <Route path="/base" component={Basic}></Route>
                 <Route path="/user" component={User}></Route>
@@ -64,8 +69,8 @@ const App = () => {
       </Router>
     ) : (
       <Redirect to={{ pathname: "/login" }} />
-    )
-  );
+    );
+  });
 
   return useObserver(() => (
     <ConfigProvider locale={zhCN}>
