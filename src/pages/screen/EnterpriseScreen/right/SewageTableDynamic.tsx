@@ -13,6 +13,7 @@ export const SewageTableDynamic = () => {
     get SiteRuntimePmDate() {
       let datas = [] as any;
       enterpriseScreenMap.SiteRuntimePmDate.forEach(site => {
+        if (!site.pmInfos) return;
         site.pmInfos.forEach(i => {
           if (i.pmType == 2) {
             datas.push({ ...i, siteName: site.siteName });

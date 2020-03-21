@@ -60,7 +60,7 @@ export class EnterpriseScreenMapStore {
       text: v.siteName,
       // update: "15:30:30",
       position: new BMapGL.Point(v.longitude, v.latitude),
-      children: v.pmInfos.map(pmInfo => ({
+      children: v.pmInfos?.map(pmInfo => ({
         name: pmInfo.pmName,
         value: pmInfo.collectValue + pmInfo.unit,
         limit: pmInfo.limit
@@ -285,6 +285,8 @@ export class EnterpriseScreenMapStore {
     }, 100);
   }
 
+  @observable curSiteRuntimeData: Array<DailySewage> = [];
+
   @action.bound
   async addpoints(index: number) {
     if (!this.map) return;
@@ -293,7 +295,8 @@ export class EnterpriseScreenMapStore {
     }
     const nextSite = this.SiteRuntimePmDate[index];
     if (nextSite) {
-      const nextSiteRuntimeData = await api.DeviceData.getAllPM24HourDatasBySiteId({ siteId: Number(nextSite.siteId) });
+      const res = await api.DeviceData.getAllPM24HourDatasBySiteId({ siteId: Number(nextSite.siteId) });
+      this.curSiteRuntimeData = res.data.pms || [];
     }
 
     this.curSiteIndex = index;
