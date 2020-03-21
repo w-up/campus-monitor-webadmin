@@ -150,14 +150,14 @@ export const ParkPage = observer(() => {
 
   return (
     <Spin spinning={loading}>
-      <div style={{ minHeight: 50, background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px" }}>
+      <Row style={{ minHeight: 50, background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px" }}>
         <Breadcrumb>
           <Breadcrumb.Item>基础信息</Breadcrumb.Item>
           <Breadcrumb.Item>
             <Link to="base/park">园区管理</Link>
           </Breadcrumb.Item>
         </Breadcrumb>
-      </div>
+      </Row>
       <Card size="small">
         <Row>
           <Col span={16}>

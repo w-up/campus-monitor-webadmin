@@ -21,7 +21,6 @@ export class Park {
 
   @action.bound
   paginationChange(page, pageSize) {
-    debugger
     console.log(page, pageSize);
     this.query = {
       ...this.query,
@@ -57,7 +56,7 @@ export class Park {
     this.query = {
       parkName: '',
       current: 1,
-      pageSize: 20,
+      pageSize: 10,
     }
   }
   
