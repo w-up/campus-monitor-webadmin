@@ -21,7 +21,7 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
         span: 16
       }
     },
-    currentPark: "all",
+    currentPark: "0",
     currentPmCode: "",
     pmcodes: [] as Array<PMCode>,
     async selectPark(parkId) {
@@ -52,13 +52,8 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
       form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log("Received values of form: ", values);
-          const { parkId, pmCode, timeStart, timeEnd } = values;
-          const result = api.MapMonitor.getPollutantDistributionByPmCode({
-            parkId,
-            pmCode,
-            timeStart: moment(timeStart).format("YYYY-MM-DD HH"),
-            timeEnd: moment(timeEnd).format("YYYY-MM-DD HH")
-          });
+          // const { parkId, pmCode, timeStart, timeEnd } = values;
+          mapMonitor.loadPollition(values);
         }
       });
     }
@@ -72,9 +67,9 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
       </div>
       <Form {...store.formItemLayout} onSubmit={store.handleSubmit} key="PollutionDistribution">
         <Form.Item label="选择园区">
-          {getFieldDecorator("parkId", { initialValue: "all", rules: [{ required: true }] })(
+          {getFieldDecorator("parkId", { initialValue: "0", rules: [{ required: true }] })(
             <Select onChange={store.selectPark}>
-              <Select.Option value="all">全部</Select.Option>
+              <Select.Option value="0">全部</Select.Option>
               {mapMonitor.parks.map((item, index) => (
                 <Select.Option value={item.id} key={index}>
                   {item.parkName}

@@ -203,4 +203,19 @@ export type AlarmInfo = {
   warnPeriod: number;
   pmValue: string;
   deviceName: string;
-}
+};
+
+export type PollutionData = {
+  siteId: string;
+  siteName: string;
+  longitude: string;
+  latitude: string;
+  pmValues: Array<{
+    pmCode: string;
+    avgValue: string;
+    avgLimit: string;
+    specificValue: string;
+    unit: string;
+    statisticalTime: string;
+  }>;
+};

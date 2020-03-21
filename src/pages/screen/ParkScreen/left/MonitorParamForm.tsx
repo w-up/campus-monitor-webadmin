@@ -14,23 +14,14 @@ export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtil
     screen: { parkScreenMap }
   } = useStore();
 
-  const [currentPmType, setCurrentType] = useLocalStorage("screen.parkScreen.MonitorParamForm.currentPmType", "all");
-  const [currentPmCode, setCurrentPmCode] = useLocalStorage("screen.parkScreen.MonitorParamForm.currentPmCode", "温度");
+  // const [currentPmType, setCurrentType] = useLocalStorage("screen.parkScreen.MonitorParamForm.currentPmType", "0");
+  // const [currentPmCode, setCurrentPmCode] = useLocalStorage("screen.parkScreen.MonitorParamForm.currentPmCode", "温度");
 
   useEffect(() => {
-    if (currentPmCode) {
-      parkScreenMap.loadConcernSiteData(currentPmCode);
-    }
+    parkScreenMap.loadConcernSiteData("0");
   }, []);
 
   const store = useLocalStore(() => ({
-    get pmCodes() {
-      if (currentPmType == "all") {
-        return config.allPmCodes || [];
-      } else {
-        return config.pmCodes[currentPmType] || [];
-      }
-    },
     formItemLayout: {
       labelCol: {
         span: 6
@@ -54,9 +45,9 @@ export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtil
     <div className="runtim-monitor screenFormStyle primary-text-color pr-6">
       <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
         <Form.Item label="监测类型">
-          {getFieldDecorator("type", { initialValue: currentPmType })(
-            <Select onChange={setCurrentType}>
-              <Select.Option value="all">全部</Select.Option>
+          {getFieldDecorator("type", { initialValue: parkScreenMap.currentPmType })(
+            <Select onChange={parkScreenMap.setCurrentPmType}>
+              <Select.Option value="0">全部</Select.Option>
               {Object.values(config.pmTypes).map((item, index) => (
                 <Select.Option value={item.id}>{item.label}</Select.Option>
               ))}
@@ -64,10 +55,13 @@ export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtil
           )}
         </Form.Item>
         <Form.Item label="监测因子">
-          {getFieldDecorator("pmCode", { initialValue: currentPmCode, rules: [{ required: true }] })(
-            <Select onChange={setCurrentPmCode}>
-              {store.pmCodes.map((item, index) => (
-                <Select.Option value={item.pmCode}>{item.pmName}</Select.Option>
+          {getFieldDecorator("pmCode", { initialValue: parkScreenMap.currentPmCode, rules: [{ required: true }] })(
+            <Select onChange={parkScreenMap.setCurrentPmCode}>
+              <Select.Option value="0">全部</Select.Option>
+              {parkScreenMap.currentPmcodes.map((item, index) => (
+                <Select.Option value={item.pmCode} key={index}>
+                  {item.pmName}
+                </Select.Option>
               ))}
             </Select>
           )}
