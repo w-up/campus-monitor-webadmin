@@ -1,9 +1,10 @@
 import { action, observable, computed } from "mobx";
 import api from "services";
-import { Park, Factory, PMCode, PMValue, AlarmInfo, AllParkData } from "../../type";
+import { Park, Factory, PMCode, PMValue, AlarmInfo, AllParkData, PollutionData } from "../../type";
 import * as mapv from "mapv";
 import { _ } from "utils/lodash";
 import { utils } from "../../utils/index";
+import moment from "moment";
 //@ts-ignore
 const kriging = window.kriging;
 
@@ -70,8 +71,8 @@ export class MapMonitorStore {
   ];
 
   @observable currentTabKey = "";
-  @observable currentPark = "all";
-  @observable currentFactory = "all";
+  @observable currentPark = "0";
+  @observable currentFactory = "0";
   @observable currentPmCode = "";
 
   @action.bound
@@ -121,7 +122,7 @@ export class MapMonitorStore {
   @action.bound
   selectPark(parkId) {
     this.currentPark = parkId;
-    if (parkId !== "all") {
+    if (parkId !== "0") {
       this.loadFactories({ parkId });
       this.loadParkData();
     }
@@ -130,7 +131,7 @@ export class MapMonitorStore {
   @action.bound
   selectFactory(factoryId) {
     this.currentFactory = factoryId;
-    if (factoryId !== "all") {
+    if (factoryId !== "0") {
       this.loadPmCodes({ factoryId });
     }
   }
@@ -143,8 +144,7 @@ export class MapMonitorStore {
 
   @action.bound
   async loadParkData({ parkId, pmCode }: { parkId?: string; pmCode?: string } = { parkId: this.currentPark, pmCode: this.currentPmCode }) {
-    if (!parkId || !pmCode) return;
-    const result = await api.MapMonitor.getMapInfoByPmCodeAndParkId({ parkId: Number(parkId), pmCode });
+    const result = await api.MapMonitor.getMapInfoByPmCodeAndParkId({ parkId: Number(parkId), pmCode: this.currentPmCode });
     if (result.data) {
       this.curParkData = result.data;
       this.updateMap();
@@ -155,6 +155,7 @@ export class MapMonitorStore {
   async loadPark() {
     const result = await api.MapMonitor.getParkList();
     this.parks = result.data;
+    this.loadParkData();
   }
   @action.bound
   async loadSitePmValueList() {
@@ -178,7 +179,6 @@ export class MapMonitorStore {
 
   @action.bound
   clearOverlay() {
-    console.log(this.curOverlays);
     this.curOverlays.map(i => {
       if (i.destroy) {
         i.destroy();
@@ -186,27 +186,42 @@ export class MapMonitorStore {
     });
   }
 
+  // 污染分布
+  @observable polltionDatas: Array<PollutionData> = [];
+  @action.bound
+  async loadPollition({ parkId, pmCode, timeStart, timeEnd }) {
+    const res = await api.MapMonitor.getPollutantDistributionByPmCode({
+      parkId,
+      pmCode,
+      timeStart: moment(timeStart).format("YYYY-MM-DD HH"),
+      timeEnd: moment(timeEnd).format("YYYY-MM-DD HH")
+    });
+    this.polltionDatas = res.data;
+    this.fillPollution();
+  }
+
   @action.bound
   fillPollution() {
+    this.clearOverlay();
     let data = [] as any;
 
-    this.pointsc.forEach((i, index) => {
+    this.polltionDatas.forEach((i, index) => {
       if (index % 4) return;
       _.times(20, () => {
         data.push({
           geometry: {
             type: "Point",
-            coordinates: [i.position.lng - 0.001 + Math.random() * 0.002, i.position.lat - 0.001 + Math.random() * 0.002]
+            coordinates: [Number(i.longitude) - 0.0005 + Math.random() * 0.001, Number(i.latitude) - 0.0005 + Math.random() * 0.001]
           },
-          count: 50 * Math.random() + i.number / 10,
-          time: 100 * Math.random()
+          count: 9999 * Math.random(),
+          time: 1
         });
       });
     });
     const mapvLayer = new mapv.baiduMapLayer(this.map, new mapv.DataSet(data), {
-      size: 13,
+      size: 20,
       gradient: { 0.25: "rgb(0,0,255)", 0.55: "rgb(0,255,0)", 0.85: "yellow", 1.0: "rgb(255,0,0)" },
-      max: 60,
+      max: 9999,
       // range: [0, 100], // 过滤显示数据范围
       // minOpacity: 0.2, // 热力图透明度
       // maxOpacity: 0.8,
@@ -238,7 +253,7 @@ export class MapMonitorStore {
       //@ts-ignore
       this.map.setMapStyle({ features: [], style: "midnight" });
 
-      this.fillPollution();
+      // this.fillPollution();
     } else {
       this.draw();
     }

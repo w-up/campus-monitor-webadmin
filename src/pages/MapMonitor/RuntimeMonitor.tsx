@@ -216,7 +216,7 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
         <Form.Item label="选择园区">
           {getFieldDecorator("park", { initialValue: mapMonitor.currentPark, rules: [{ required: true }] })(
             <Select onChange={mapMonitor.selectPark}>
-              <Select.Option value="all">全部</Select.Option>
+              <Select.Option value="0">全部</Select.Option>
               {mapMonitor.parks.map((item, index) => (
                 <Select.Option value={item.id} key={index}>
                   {item.parkName}
@@ -228,7 +228,7 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
         <Form.Item label="监测区域">
           {getFieldDecorator("factory", { initialValue: mapMonitor.currentFactory, rules: [{ required: true }] })(
             <Select onChange={mapMonitor.selectFactory}>
-              <Select.Option value="all">全部</Select.Option>
+              <Select.Option value="0">全部</Select.Option>
               {mapMonitor.factories.map((item, index) => (
                 <Select.Option value={item.id} key={index}>
                   {item.factoryName}

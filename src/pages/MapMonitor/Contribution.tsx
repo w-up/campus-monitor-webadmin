@@ -49,7 +49,7 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
       this.statisticalTime = moment(value).startOf(this.dateType.startOf);
       this.dateOpen = false;
     },
-    currentPark: "all",
+    currentPark: "0",
     pmcodes: [] as Array<PMCode>,
     async selectPark(parkId) {
       this.currentPark = parkId;
@@ -123,9 +123,9 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
       </div>
       <Form {...store.formItemLayout} onSubmit={store.handleSubmit} key="Contribution">
         <Form.Item label="选择园区">
-          {getFieldDecorator("parkId", { initialValue: "all", rules: [{ required: true }] })(
+          {getFieldDecorator("parkId", { initialValue: "0", rules: [{ required: true }] })(
             <Select onChange={store.selectPark}>
-              <Select.Option value="all">全部</Select.Option>
+              <Select.Option value="0">全部</Select.Option>
               {mapMonitor.parks.map((item, index) => (
                 <Select.Option value={item.id} key={index}>
                   {item.parkName}

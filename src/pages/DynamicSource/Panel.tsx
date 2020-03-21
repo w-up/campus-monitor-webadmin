@@ -80,20 +80,19 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
       <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
         <div className="mb-4">
           <div className="primary-text-color mb-4">计算方法</div>
-          {getFieldDecorator("computeType", { initialValue: "1" })(
-            <RadioGroup options={store.form.options} onChange={e => (dynamicSource.computeType = e.target.value)}></RadioGroup>)}
+          {getFieldDecorator("computeType", { initialValue: "1" })(<RadioGroup options={store.form.options} onChange={e => (dynamicSource.computeType = e.target.value)}></RadioGroup>)}
         </div>
         <Form.Item label="选择园区">
-          {getFieldDecorator("park", { initialValue: "all" })(
+          {getFieldDecorator("park", { initialValue: "0" })(
             <Select>
-              <Select.Option value="all">全部</Select.Option>
+              <Select.Option value="0">全部</Select.Option>
             </Select>
           )}
         </Form.Item>
         <Form.Item label="监测区域">
-          {getFieldDecorator("area", { initialValue: "all" })(
+          {getFieldDecorator("area", { initialValue: "0" })(
             <Select>
-              <Select.Option value="all">全部</Select.Option>
+              <Select.Option value="0">全部</Select.Option>
             </Select>
           )}
         </Form.Item>

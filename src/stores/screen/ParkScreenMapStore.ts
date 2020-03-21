@@ -142,7 +142,8 @@ export class ParkScreenMapStore {
   }
 
   // 监测面板
-  @observable currentPmCode = "";
+  @observable currentPmCode = "0";
+  @observable currentPmType = "0";
   @observable allConcernSiteData: Array<ConcernSiteData> = [];
   @observable allParkMapData: AllParkData = {
     parkId: "",
@@ -171,9 +172,22 @@ export class ParkScreenMapStore {
     return store.config.allPmCodes.find(i => i.pmCode == this.currentPmCode);
   }
 
+  @computed
+  get currentPmcodes() {
+    if (this.currentPmType == "0") {
+      return store.config.allPmCodes || [];
+    } else {
+      return store.config.pmCodes[this.currentPmType] || [];
+    }
+  }
+
   @action.bound
   setCurrentPmCode(currentPmCode: string) {
     this.currentPmCode = currentPmCode;
+  }
+  @action.bound
+  setCurrentPmType(currentPmType: string) {
+    this.currentPmType = currentPmType;
   }
 
   @action.bound
