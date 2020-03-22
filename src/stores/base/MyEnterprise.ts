@@ -118,9 +118,9 @@ export class MyEnterprise {
     this.loading = true;
     param = {
       ...param,
-      registerDate: moment(param.registerDate).format('YYYY-MM-DD HH:mm:ss'),
-      businessPeriodStart: moment(param.businessPeriodStart).format('YYYY-MM-DD HH:mm:ss'),
-      businessPeriodEnd: moment(param.businessPeriodEnd).format('YYYY-MM-DD HH:mm:ss'),
+      registerDate: param.registerDate ? moment(param.registerDate).format('YYYY-MM-DD HH:mm:ss') : '',
+      businessPeriodStart: param.businessPeriodStart ? moment(param.businessPeriodStart).format('YYYY-MM-DD HH:mm:ss') : '',
+      businessPeriodEnd: param.businessPeriodEnd ? moment(param.businessPeriodEnd).format('YYYY-MM-DD HH:mm:ss') : '',
     }
     
     await POST(`/company-business-info/editCompanyBusinessInfo?companyId=${param.companyId}`, param);
@@ -129,7 +129,7 @@ export class MyEnterprise {
 
   @action
   async getCompanyNatureType() {
-    const { data }: any = await GET(`/dict-data/getDictDataByCode?typeCode=company_nature`, {});
+    const { data }: any = await GET(`/dict-data/getDictDataByCode?typeCode=company_category`, {});
     console.log('type', data)
     this.companyNatureType = data;
   }
@@ -268,6 +268,7 @@ export class MyEnterprise {
   async deleteFactory(param) {
     await POST('/factory/deleteFactory', param);
     await this.getFactoryList();
+    await this.getTree();
   }
 
   @action.bound

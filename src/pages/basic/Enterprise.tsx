@@ -173,9 +173,13 @@ export const EnterprisePage = observer(() => {
             <Button onClick={onBatchDeleteEnterprise} style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button>
           </Col>
         </Row>
+
+        {!!selectedRowKeys.length &&
         <Row style={{ marginTop: 20, marginBottom: 10 }}>
           <Alert message={selectMsg(selectedRowKeys.length)} type="info" showIcon />
         </Row>
+        }
+        
         <Divider />
 
         <Row>
