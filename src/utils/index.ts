@@ -25,6 +25,7 @@ export const utils = {
       }));
     },
     formatToLatLngShort(arr) {
+      if (!arr) return;
       return arr.map(utils.obj.formatLatLngShort);
     },
     scrollArray(arr: any[]) {

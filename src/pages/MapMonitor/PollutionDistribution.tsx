@@ -81,7 +81,8 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
         <Form.Item label="监测因子">
           {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
             <Select onChange={store.selectPmCode}>
-              {store.pmcodes.map((item, index) => (
+              <Select.Option value="0">全部</Select.Option>
+              {mapMonitor.pmcodes.map((item, index) => (
                 <Select.Option value={item.pmCode} key={index}>
                   {item.pmName}
                 </Select.Option>
@@ -110,11 +111,11 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
           <span className="ml-2 text-sm">2020-01-03 15:00:00</span>
         </div>
         <div className="stat-panel p-2 text-white flex items-center mt-2">
-          <div onClick={store.togglePlay}>
-            <Icon type={store.isPlaying ? "pause-circle" : "play-circle"} theme="twoTone" className="text-white text-xl" />
+          <div onClick={e => mapMonitor.togglePlayPollution()}>
+            <Icon type={mapMonitor.playPollutionTimer ? "pause-circle" : "play-circle"} theme="twoTone" className="text-white text-xl" />
           </div>
           <div className="flex-1 ml-4">
-            <Slider></Slider>
+            <Slider value={mapMonitor.currentTime} max={mapMonitor.maxTime} onChange={e => mapMonitor.setCurrentTime(Number(e), { stop: true })}></Slider>
           </div>
         </div>
         <div className="primary-text-color mt-8">

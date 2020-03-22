@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useObserver } from "mobx-react-lite";
-import { Map, APILoader, Polygon, Label, CustomOverlay } from "@uiw/react-baidu-map";
+import { Map, APILoader, Polygon, Label, CustomOverlay, Marker } from "@uiw/react-baidu-map";
 import { useStore } from "../../stores/index";
 import { utils } from "../../utils/index";
 
@@ -32,20 +32,18 @@ export const MapMonitorMap = () => {
             item={item.name}
           ></Label>
         ))}
-        {mapMonitor.zoom > 17 && (
-          <CustomOverlay paneName="floatPane">
-            {mapMonitor.pointsc.map((item, index) => (
-              <div key={index} style={{ position: "absolute", left: item.mapPos.left, top: item.mapPos.top }}>
-                {item.number < 15 ? (
-                  <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../assets/green.png")} />
-                ) : (
-                  <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../assets/red.png")} />
-                )}
-                <div className="number">{item.number}</div>
-              </div>
-            ))}
+        {mapMonitor.curParkData?.siteDatas?.map((item, index) => (
+          <CustomOverlay position={{ lng: Number(item.gpsX), lat: Number(item.gpsY) }} key={index}>
+            <div>
+              {Number(item.collectValue) > Number(item.limit) ? (
+                <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../assets/red.png")} />
+              ) : (
+                <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../assets/green.png")} />
+              )}
+              <div className="number">{item.collectValue || 0}</div>
+            </div>
           </CustomOverlay>
-        )}
+        ))}
       </Map>
     </APILoader>
   ));

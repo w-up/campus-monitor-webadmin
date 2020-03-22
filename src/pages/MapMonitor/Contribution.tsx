@@ -137,6 +137,7 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
         <Form.Item label="监测因子">
           {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
             <Select>
+              <Select.Option value="0">全部</Select.Option>
               {store.pmcodes.map((item, index) => (
                 <Select.Option value={item.pmCode} key={index}>
                   {item.pmName}

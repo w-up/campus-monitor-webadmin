@@ -19,6 +19,12 @@ export default {
   getParkList() {
     return GET("/mapMonitor/getParkList");
   },
+  getFactoryListAll() {
+    return GET("mapMonitor/getFactoryListAll");
+  },
+  getPmCodeListAll() {
+    return GET("mapMonitor/getPmCodeListAll");
+  },
   getFactoryList(data: { parkId: number }) {
     return GET("/mapMonitor/getFactoryList", data);
   },

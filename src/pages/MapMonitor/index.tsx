@@ -13,7 +13,7 @@ import { useStore } from "../../stores/index";
 export const MapMonitorPage = () => {
   const { mapMonitor } = useStore();
   useEffect(() => {
-    mapMonitor.loadPark();
+    mapMonitor.init();
   }, []);
   return useObserver(() => (
     <div className="mapmonitor-page flex" style={{ width: "100vw", height: "100%", backgroundColor: "#061630" }}>
