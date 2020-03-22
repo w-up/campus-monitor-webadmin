@@ -6,6 +6,7 @@ import { useStore } from "stores";
 import api from "services";
 import { PMCode } from "../../type";
 import moment from "moment";
+import Progress from "antd/lib/progress";
 
 export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFormUtils }) => {
   const { getFieldDecorator } = form;
@@ -122,12 +123,26 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
           <div>污染状况图例</div>
           <div className="flex justify-between mt-8">
             <div>正常</div>
-            {store.graphs.map((item, index) => (
+            {/*{store.graphs.map((item, index) => (*/}
+            {/*  <div>*/}
+            {/*    <div className="mt-1" style={{ width: "30px", height: "10px", background: item.color }}></div>*/}
+            {/*    <div className="mt-4 text-xs">{item.value}</div>*/}
+            {/*  </div>*/}
+            {/*))}*/}
+            <div className="mx-2 w-9/12">
+              <Progress
+                strokeColor={{
+                  '0%': '#0AE612',
+                  '100%': '#F80901',
+                }}
+                percent={100}
+                showInfo={false}
+              />
               <div>
-                <div className="mt-1" style={{ width: "30px", height: "10px", background: item.color }}></div>
-                <div className="mt-4 text-xs">{item.value}</div>
+                <span>0</span>
+                <span className="float-right">100</span>
               </div>
-            ))}
+            </div>
             <div>报警</div>
           </div>
         </div>
