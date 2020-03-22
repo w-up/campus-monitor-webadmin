@@ -165,6 +165,7 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
     e.preventDefault();
     validateFields(async (err, values) => {
       if (err) {
+        message.error('请补充所有字段信息');
         return;
       }
       values.professionId = values.professionId[1];
@@ -404,19 +405,19 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                   )}
                   <Descriptions size="small" bordered>
                     <Descriptions.Item label="法人代表" span={1.5}>
-                      {getFieldDecorator("legalRepresentative", { initialValue: legalRepresentative, rules: [{ required: false }] })(
+                      {getFieldDecorator("legalRepresentative", { initialValue: legalRepresentative, rules: [{ required: true }] })(
                         <Input disabled={!enterpriseInfoEditable}  placeholder="" />
                       )}
                     </Descriptions.Item>
                     <Descriptions.Item label="行业" span={1.5}>
-                      {getFieldDecorator("professionId", { initialValue: initialProfessionId, rules: [{ required: false }] })(
+                      {getFieldDecorator("professionId", { initialValue: initialProfessionId, rules: [{ required: true }] })(
                         <Cascader fieldNames={{ label: 'label', value: 'value', children: 'children' }} disabled={!enterpriseInfoEditable} placeholder="" options={toJS(industryType)} />
                       )}
                     </Descriptions.Item>
                     <Descriptions.Item label="注册资本" span={1.5}>
                       <Row type="flex" justify="center">
                         <Col span={20}>
-                          {getFieldDecorator("registerCapital", { initialValue: registerCapital, rules: [{ required: false }] })(
+                          {getFieldDecorator("registerCapital", { initialValue: registerCapital, rules: [{ required: true }] })(
                             <InputNumber style={{ width: '100%' }} disabled={!enterpriseInfoEditable} placeholder="" />
                           )}
                         </Col>
@@ -424,12 +425,12 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                       </Row>
                     </Descriptions.Item>
                     <Descriptions.Item label="注册日期" span={1.5}>
-                      {getFieldDecorator("registerDate", { initialValue: registerDate && moment(registerDate), rules: [{ required: false }] })(
+                      {getFieldDecorator("registerDate", { initialValue: registerDate && moment(registerDate), rules: [{ required: true }] })(
                         <DatePicker disabled={!enterpriseInfoEditable} placeholder="" />
                       )}
                     </Descriptions.Item>
                     <Descriptions.Item label="公司性质" span={1.5}>
-                      {getFieldDecorator("companyNatureId", { initialValue: companyNatureId, rules: [{ required: false }] })(
+                      {getFieldDecorator("companyNatureId", { initialValue: companyNatureId, rules: [{ required: true }] })(
                         <Select disabled={!enterpriseInfoEditable} placeholder="">
                           {companyNatureType.map(item => (
                             <Option value={item.id}>{item.dictName}</Option>
@@ -440,13 +441,13 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                     <Descriptions.Item label="经营期限" span={1.5}>
                       <Row type="flex" justify="center" gutter={6}>
                         <Col span={10}>
-                          {getFieldDecorator("businessPeriodStart", { initialValue: businessPeriodStart && moment(businessPeriodStart), rules: [{ required: false }] })(
+                          {getFieldDecorator("businessPeriodStart", { initialValue: businessPeriodStart && moment(businessPeriodStart), rules: [{ required: true }] })(
                             <DatePicker disabled={!enterpriseInfoEditable} placeholder="" />
                           )}
                         </Col>
                         <Col span={4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>至</Col>
                         <Col span={10}>
-                          {getFieldDecorator("businessPeriodEnd", { initialValue: businessPeriodEnd && moment(businessPeriodEnd), rules: [{ required: false }] })(
+                          {getFieldDecorator("businessPeriodEnd", { initialValue: businessPeriodEnd && moment(businessPeriodEnd), rules: [{ required: true }] })(
                             <DatePicker disabled={!enterpriseInfoEditable} placeholder="" />
                           )}
                         </Col>

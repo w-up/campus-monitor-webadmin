@@ -141,9 +141,11 @@ export const Roles = Form.create()(observer((props: any) => {
 
         </Row>
 
+        {!!selectedRowKeys.length &&
         <Row style={{ marginTop: 20, marginBottom: 10 }}>
           <Alert message={selectMsg(selectedRowKeys.length)} type="info" showIcon />
         </Row>
+        }
 
         <Divider />
 

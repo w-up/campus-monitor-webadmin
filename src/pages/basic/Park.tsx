@@ -122,7 +122,6 @@ export const ParkPage = observer(() => {
       title: "创建时间",
       dataIndex: "createTime",
       width: 200,
-      sorter: (a, b) => a.createTime - b.createTime
     },
     {
       title: "操作",
@@ -166,12 +165,8 @@ export const ParkPage = observer(() => {
                 <Input placeholder="请输入" value={query.parkName} onChange={handleSearchChange} />
               </Form.Item>
               <Form.Item>
-                <Button type="primary" htmlType="submit">
-                  查询
-                </Button>
-                <Button style={{ marginLeft: 5 }} onClick={handleSearchReset}>
-                  重置
-                </Button>
+                <Button type="primary" htmlType="submit">查询</Button>
+                <Button style={{ marginLeft: 5 }} onClick={handleSearchReset}>重置</Button>
               </Form.Item>
             </Form>
           </Col>
@@ -185,9 +180,13 @@ export const ParkPage = observer(() => {
             </Button>
           </Col>
         </Row>
+
+        {!!selectedRowKeys.length &&
         <Row style={{ marginTop: 20, marginBottom: 10 }}>
           <Alert message={selectMsg(selectedRowKeys.length)} type="info" showIcon />
         </Row>
+        }
+        
         <Divider />
         <Row>
           <Table rowKey="id" bordered size="small" rowSelection={rowSelection} columns={columns} dataSource={toJS(dataSource)} pagination={pagination} />
