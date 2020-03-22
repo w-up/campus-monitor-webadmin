@@ -179,7 +179,7 @@ export const EnterprisePage = observer(() => {
         <Divider />
 
         <Row>
-          <Table size="small" bordered rowSelection={rowSelection} columns={columns} dataSource={toJS(dataSource)} pagination={pagination} />
+          <Table rowKey="id" size="small" bordered rowSelection={rowSelection} columns={columns} dataSource={toJS(dataSource)} pagination={pagination} />
         </Row>
       </Card>
     </Spin>

@@ -190,7 +190,7 @@ export const ParkPage = observer(() => {
         </Row>
         <Divider />
         <Row>
-          <Table bordered size="small" rowSelection={rowSelection} columns={columns} dataSource={toJS(dataSource)} pagination={pagination} />
+          <Table rowKey="id" bordered size="small" rowSelection={rowSelection} columns={columns} dataSource={toJS(dataSource)} pagination={pagination} />
         </Row>
       </Card>
       <Modal title="地图绘制" visible={store.showMap} onOk={e => (store.showMap = false)} onCancel={e => (store.showMap = false)} width={800}>
