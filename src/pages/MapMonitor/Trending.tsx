@@ -362,6 +362,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
         <Form.Item label="监测因子">
           {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
             <Select onChange={mapMonitor.selectPmcode}>
+              <Select.Option value="0">全部</Select.Option>
               {mapMonitor.pmcodes.map((item, index) => (
                 <Select.Option value={item.pmCode} key={index}>
                   {item.pmName}

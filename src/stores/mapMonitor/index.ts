@@ -70,10 +70,15 @@ export class MapMonitorStore {
     { position: { lng: 120.980022, lat: 31.3657 }, name: "群力化工" }
   ];
 
+  @action.bound
+  async init() {
+    await Promise.all([this.loadPark(), this.loadParkData()]);
+  }
+
   @observable currentTabKey = "";
   @observable currentPark = "0";
   @observable currentFactory = "0";
-  @observable currentPmCode = "";
+  @observable currentPmCode = "0";
 
   @action.bound
   selectTab(key: string) {
@@ -153,9 +158,10 @@ export class MapMonitorStore {
 
   @action.bound
   async loadPark() {
-    const result = await api.MapMonitor.getParkList();
-    this.parks = result.data;
-    this.loadParkData();
+    const [parkRes, factoryRes, pmCodesRes] = await Promise.all([api.MapMonitor.getParkList(), api.MapMonitor.getFactoryListAll(), api.MapMonitor.getPmCodeListAll()]);
+    this.parks = parkRes.data;
+    this.factories = factoryRes.data;
+    this.pmcodes = pmCodesRes.data;
   }
   @action.bound
   async loadSitePmValueList() {
@@ -188,6 +194,8 @@ export class MapMonitorStore {
 
   // 污染分布
   @observable polltionDatas: Array<PollutionData> = [];
+  @observable currentTime = 0;
+  @observable mapvLayer = null as any;
   @action.bound
   async loadPollition({ parkId, pmCode, timeStart, timeEnd }) {
     const res = await api.MapMonitor.getPollutantDistributionByPmCode({
@@ -197,7 +205,50 @@ export class MapMonitorStore {
       timeEnd: moment(timeEnd).format("YYYY-MM-DD HH")
     });
     this.polltionDatas = res.data;
+  }
+
+  @observable playPollutionTimer = 0 as any;
+  @action.bound
+  togglePlayPollution(val?: boolean) {
+    if (this.playPollutionTimer || val == false) {
+      clearInterval(this.playPollutionTimer);
+      return (this.playPollutionTimer = 0);
+    }
+
+    this.playPollutionTimer = setInterval(() => {
+      this.setCurrentTime(this.currentTime + 1);
+    }, 1000);
+  }
+
+  @action.bound
+  setCurrentTime(val: number, opt?: { stop: boolean }) {
+    if (val >= this.polltionDatas[0]?.pmValues.length) {
+      this.currentTime = 0;
+    } else {
+      this.currentTime = val;
+    }
+    if (opt?.stop) {
+      this.togglePlayPollution(false);
+    }
     this.fillPollution();
+    // this.mapvLayer.update({
+    //   animation: {
+    //     size: Math.random() * 40,
+    //     type: "time", // 按时间展示动画
+    //     stepsRange: {
+    //       // 动画时间范围,time字段中值
+    //       start: this.currentTime,
+    //       end: this.currentTime
+    //     },
+    //     trails: 10, // 时间动画的拖尾大小
+    //     duration: 5 // 单个动画的时间，单位秒
+    //   }
+    // });
+  }
+
+  @computed
+  get maxTime() {
+    return this.polltionDatas[0]?.pmValues.length;
   }
 
   @action.bound
@@ -205,29 +256,49 @@ export class MapMonitorStore {
     this.clearOverlay();
     let data = [] as any;
 
-    this.polltionDatas.forEach((i, index) => {
-      if (index % 4) return;
-      _.times(20, () => {
-        data.push({
-          geometry: {
-            type: "Point",
-            coordinates: [Number(i.longitude) - 0.0005 + Math.random() * 0.001, Number(i.latitude) - 0.0005 + Math.random() * 0.001]
-          },
-          count: 9999 * Math.random(),
-          time: 1
-        });
+    this.polltionDatas?.forEach(i => {
+      // _.range(this.currentTime, this.currentTime + 3).forEach(num => {
+      const pmValue = i.pmValues[this.currentTime];
+      data.push({
+        geometry: {
+          type: "Point",
+          coordinates: [Number(i.longitude) - 0.0005 + Math.random() * 0.001, Number(i.latitude) - 0.0005 + Math.random() * 0.001]
+        },
+        count: Math.random() * 1000
       });
+      // });
+
+      // i.pmValues.forEach((pmValue, pmIndex) => {
+      //   data.push({
+      //     geometry: {
+      //       type: "Point",
+      //       coordinates: [Number(i.longitude) - 0.0005 + Math.random() * 0.001, Number(i.latitude) - 0.0005 + Math.random() * 0.001]
+      //     },
+      //     count: Math.random() * 1000,
+      //     time: pmIndex
+      //   });
+      // });
     });
-    const mapvLayer = new mapv.baiduMapLayer(this.map, new mapv.DataSet(data), {
-      size: 20,
+    this.mapvLayer = new mapv.baiduMapLayer(this.map, new mapv.DataSet(data), {
+      size: 40,
       gradient: { 0.25: "rgb(0,0,255)", 0.55: "rgb(0,255,0)", 0.85: "yellow", 1.0: "rgb(255,0,0)" },
-      max: 9999,
+      max: 1000,
       // range: [0, 100], // 过滤显示数据范围
       // minOpacity: 0.2, // 热力图透明度
       // maxOpacity: 0.8,
       draw: "heatmap"
+      // animation: {
+      //   type: "time", // 按时间展示动画
+      //   stepsRange: {
+      //     // 动画时间范围,time字段中值
+      //     start: 0,
+      //     end: this.maxTime
+      //   },
+      //   trails: 10, // 时间动画的拖尾大小
+      //   duration: 5 // 单个动画的时间，单位秒
+      // }
     });
-    this.curOverlays.push(mapvLayer);
+    this.curOverlays.push(this.mapvLayer);
   }
 
   @action.bound
