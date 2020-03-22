@@ -15,8 +15,6 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
     base: { user }
   } = useStore();
 
-  const { state = {} }: any = useLocation();
-
   const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields } = props.form;
 
   const {
@@ -172,19 +170,16 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
                 </Select>
               </Form.Item>
               <Form.Item>
-                <Button type="primary" htmlType="submit">
-                  查询
-              </Button>
-                <Button onClick={handleSearchReset} style={{ marginLeft: 5 }}>
-                  重置
-              </Button>
+                <Button type="primary" htmlType="submit">查询</Button>
+                <Button onClick={handleSearchReset} style={{ marginLeft: 5 }}>重置</Button>
               </Form.Item>
             </Form>
           </Col>
 
           <Col span={8} style={{ textAlign: "right" }}>
             <Button type="primary" onClick={() => props.history.push('/user/user-edit')}>新建</Button>
-            <Button style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button>
+            <Divider type="vertical" />
+            {/* <Button style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button> */}
             <Button>密码重置</Button>
           </Col>
 
@@ -199,7 +194,7 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
         <Row>
           <Table bordered size="small" rowSelection={rowSelection} columns={columns} dataSource={toJS(userList)} />
         </Row>
-      </Card>;
+      </Card>
     </Spin>
   )
 }));

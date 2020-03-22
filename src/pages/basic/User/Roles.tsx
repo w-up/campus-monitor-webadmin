@@ -1,188 +1,156 @@
-import React from "react";
-import { useObserver, useLocalStore } from "mobx-react-lite";
-import { Card, Form, Button, Input, Select, Table, Badge, Divider, Breadcrumb, Modal, Tree } from 'antd'
-import { RouteChildrenProps } from "react-router";
+import React, { useEffect } from "react";
+import { useObserver, useLocalStore, observer } from "mobx-react-lite";
+import { Alert, Row, Col, Spin, Card, Form, Button, Input, Select, Table, Badge, Divider, Breadcrumb, Modal, Tree } from 'antd'
 import { Link } from "react-router-dom";
+import { useStore } from "../../../stores/index";
+import { toJS } from "mobx";
 
-const { TreeNode } = Tree;
 const { Option } = Select;
-type Props = RouteChildrenProps<{}>
+
+export const Roles = Form.create()(observer((props: any) => {
+
+  const {
+    base: { role }
+  } = useStore();
+
+  const {
+    loading,
+    roleList, query,
+    resetSelectedRowKeys, selectedRowKeys, handleSearchReset, handleSearchNameChange, handleSearchStatusChange, onSelectChange,
+  } = role;
+
+  useEffect(() => {
+    role.getRoleList();
+  }, []);
 
 
-export const Roles = (props: Props) => {
-  const rowSelection = useLocalStore(() => ({
-    onChange: (selectedRowKeys:any, selectedRows:any) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    },
-    getCheckboxProps: (record:any) => ({
-      disabled: record.name === 'Disabled User', // Column configuration not to be checked
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+    getCheckboxProps: record => ({
+      disabled: record.status !== 0,
       name: record.name,
     }),
-  }))
+  };
 
-  const isShowEle = useLocalStore(() => ({
-    isShowModal: false
-  }))
-
-  const configAuthorization = () => {
-    console.log('aaa')
-  }
-
-  const cancelConfig = () => {
-    isShowEle.isShowModal = false
-  }
-
-  const openModal = () => {
-    isShowEle.isShowModal = true
-    console.log('aa')
-  }
-
-  const columns = useLocalStore(() => ([
+  const columns = [
     {
       title: '角色编号',
-      dataIndex: 'roleId',
+      dataIndex: 'code',
+      width: 100,
     },
     {
       title: '角色名',
-      dataIndex: 'roleName',
+      dataIndex: 'name',
+      width: 100,
     },
     {
       title: '描述',
       dataIndex: 'desc',
+      width: 200,
     },
     {
       title: '状态',
       dataIndex: 'status',
-      render: () => {
-        return <Badge status="processing" text="正常" />
+      width: 100,
+      render: (val) => {
+        if (val === 0) {
+          return <Badge status="processing" text="正常" />
+        } else {
+          return <Badge status="error" text="作废" />
+        }
       }
     },
     {
       title: '创建时间',
       dataIndex: 'createTime',
+      width: 150,
     },
     {
       title: '操作',
       dataIndex: 'action',
-      render: (text:any, record:any) => (
+      width: 100,
+      render: (text: any, perm: any) => (
         <span>
-          <a>删除</a>
+          <a onClick={() => {
+            Modal.confirm({
+              title: "删除确认",
+              content: `确定删除这条记录吗？`,
+              async onOk() {
+                  await role.deleteRole([perm.id]);
+                  resetSelectedRowKeys();
+              }
+            });
+          }}>删除</a>
           <Divider type="vertical" />
-          <a onClick={() => props.history.push('addOrEditRole')}>修改</a>
-          <Divider type="vertical" />
-          <a onClick={() => openModal()}>权限配置</a>
+          <Link to={{ pathname: `/user/role-edit/${perm.id}`, state: { perm } }}>修改</Link>
+          {/* <Divider type="vertical" /> */}
+          {/* <a onClick={() => openModal()}>权限配置</a> */}
         </span>
       ),
     }
-  ]))
-  const data = useLocalStore(() => ([
-    {
-      key: '1',
-      id: 1,
-      roleId: 'TradeCode21',
-      roleName: '园区管理员',
-      desc: '园区1',
-      status: '正常',
-      createTime: '2019-02-21',
-    },
-    {
-      key: '2',
-      id: 2,
-      roleId: 'TradeCode21',
-      roleName: '园区管理员',
-      desc: '园区1',
-      status: '正常',
-      createTime: '2019-02-21',
-    },
-    {
-      key: '3',
-      id: 3,
-      roleId: 'TradeCode21',
-      roleName: '园区管理员',
-      desc: '园区1',
-      status: '正常',
-      createTime: '2019-02-21',
-    },
-    {
-      key: '4',
-      id: 4,
-      roleId: 'TradeCode21',
-      roleName: '园区管理员',
-      desc: '园区1',
-      status: '正常',
-      createTime: '2019-02-21',
-    },
-  ]))
+  ];
 
- return useObserver(() => 
- <div>
-    <div style={{minHeight: 50, background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px"}}>
-      <Breadcrumb>
-        <Breadcrumb.Item>基础信息</Breadcrumb.Item>
-        <Breadcrumb.Item>
-          <Link to="user/userlist">角色管理</Link>
-        </Breadcrumb.Item>
-      </Breadcrumb>
-    </div>
-    <Card>
+  const handleSearch = e => {
+    e.preventDefault();
+    role.getRoleList();
+  };
+
+  const selectMsg = (num: number) => {
+    return (
       <div>
-        <Form layout="inline" onSubmit={()=> console.log('aa')}>
-        <Form.Item label="角色名">
-        <Input placeholder="请输入"
-        />
-        </Form.Item>
-        <Form.Item label="状态">
-          <Select style={{ width: 150 }}>
-            <Option value="86">status</Option>
-            <Option value="87">status</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            查询
-          </Button>
-          <Button style={{ marginLeft: 5}}>
-            重置
-          </Button>
-        </Form.Item>
-      </Form>
+        已选择 <a>{num}</a> 项 <a onClick={resetSelectedRowKeys}>清空</a>
       </div>
+    );
+  };
 
-      <div style={{marginTop: 20, marginBottom: 10}}>
-        <Button type="primary" onClick={()=> props.history.push('addOrEditRole')}>新建</Button>
-        <Button  style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button>
-      </div>
+  return (
+    <Spin spinning={loading}>
+      <Row style={{ minHeight: 50, background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px" }}>
+        <Breadcrumb>
+          <Breadcrumb.Item>基础信息</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to="user/rolelist">角色管理</Link>
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      </Row>
+      <Card>
+        <Row>
+          <Col span={16}>
+            <Form layout="inline" onSubmit={handleSearch}>
+              <Form.Item label="角色名">
+                <Input placeholder="请输入" value={query.name} onChange={handleSearchNameChange} />
+              </Form.Item>
+              <Form.Item label="状态">
+                <Select style={{ width: 150 }} value={query.status} onChange={handleSearchStatusChange}>
+                  <Option value={0}>正常</Option>
+                  <Option value={1}>作废</Option>
+                </Select>
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">查询</Button>
+                <Button onClick={handleSearchReset} style={{ marginLeft: 5 }}>重置</Button>
+              </Form.Item>
+            </Form>
+          </Col>
 
-      <div>
-        <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
-      </div>
-    </Card>;
-    <div>
-      <Modal
-          title="权限配置"
-          visible={isShowEle.isShowModal}
-          onOk={() => configAuthorization}
-          onCancel={() => cancelConfig()}
-        >
-        <div>
-          <Tree
-            checkable
-            defaultExpandedKeys={['0-0-0', '0-0-1']}
-            defaultSelectedKeys={['0-0-0', '0-0-1']}
-            defaultCheckedKeys={['0-0-0', '0-0-1']}
-          >
-            <TreeNode title="parent 1" key="0-0">
-              <TreeNode title="parent 1-0" key="0-0-0">
-                <TreeNode title="leaf" key="0-0-0-0" />
-                <TreeNode title="leaf" key="0-0-0-1" />
-              </TreeNode>
-              <TreeNode title="parent 1-1" key="0-0-1">
-                <TreeNode title={<span style={{ color: '#1890ff' }}>sss</span>} key="0-0-1-0" />
-              </TreeNode>
-            </TreeNode>
-          </Tree>
-        </div>
-      </Modal>
-    </div>
-  </div>);
-};
+          <Col span={8} style={{ textAlign: "right" }}>
+            <Button type="primary" onClick={() => props.history.push('/user/role-edit')}>新建</Button>
+            {/* <Button style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button> */}
+          </Col>
+
+        </Row>
+
+        <Row style={{ marginTop: 20, marginBottom: 10 }}>
+          <Alert message={selectMsg(selectedRowKeys.length)} type="info" showIcon />
+        </Row>
+
+        <Divider />
+
+        <Row>
+          <Table bordered size="small" rowKey="id" rowSelection={rowSelection} columns={columns} dataSource={toJS(roleList)} />
+        </Row>
+      </Card>
+    </Spin>
+  );
+}));

@@ -15,6 +15,8 @@ import { EnterpriseEdit } from "./base/EnterpriseEdit";
 import { MyEnterprise } from "./base/MyEnterprise";
 import { UserManagement } from "./base/user/UserManagement";
 import { UserEdit } from "./base/user/UserEdit";
+import { Roles } from "./base/role/Roles";
+import { RoleEdit } from "./base/role/RoleEdit";
 import { DynamicSourceStore } from "./dynamicSource/index";
 
 export const store = {
@@ -40,6 +42,8 @@ export const store = {
     myEnterprise: new MyEnterprise(),
     user: new UserManagement(),
     userEdit: new UserEdit(),
+    role: new Roles(),
+    roleEdit: new RoleEdit(),
   }
 
 };

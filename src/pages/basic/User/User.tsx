@@ -2,7 +2,7 @@ import { Switch, Route, RouteComponentProps } from "react-router-dom";
 import React from 'react'
 import { UserManagementPage } from "./UserManagement";
 import { EditUser } from "./EditUser";
-import { AddEditRole } from "./AddEditRole";
+import { RoleEdit } from "./RoleEdit";
 import { Roles } from "./Roles";
 
 export const User = (props: RouteComponentProps) => {
@@ -12,7 +12,8 @@ export const User = (props: RouteComponentProps) => {
       <Route path={`${props.match.path}/user-edit`} component={EditUser}></Route>
       <Route path={`${props.match.path}/user-edit/:id`} component={EditUser}></Route>
       <Route path={`${props.match.path}/rolelist`} component={Roles}></Route>
-      <Route path={`${props.match.path}/addOrEditRole`} component={AddEditRole}></Route>
+      <Route path={`${props.match.path}/role-edit`} component={RoleEdit}></Route>
+      <Route path={`${props.match.path}/role-edit/:id`} component={RoleEdit}></Route>
     </Switch>
   )
 }

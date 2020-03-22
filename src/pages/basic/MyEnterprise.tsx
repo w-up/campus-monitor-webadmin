@@ -383,13 +383,13 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
               />
             </div>
             <div>
-            <Tree
-              showLine={true}
-              showIcon={false}
-              onSelect={handleTreeItemSelect}
-              onExpand={(keys, e) => handleTreeItemSelect(keys.slice(-1), e)}
-              treeData={toJS(treeData)}
-            />
+              <Tree
+                showLine={true}
+                showIcon={false}
+                onSelect={handleTreeItemSelect}
+                onExpand={(keys, e) => handleTreeItemSelect(keys.slice(-1), e)}
+                treeData={toJS(treeData)}
+              />
             </div>
           </Card>
         </Col>

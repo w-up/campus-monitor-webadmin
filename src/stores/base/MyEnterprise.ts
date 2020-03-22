@@ -154,7 +154,6 @@ export class MyEnterprise {
   @action
   async getTree() {
     const { data }: any = await GET('/company/getCompanyTreeByUserId', {});
-    console.log(data);
 
     const transformList = list => list.map(v => ({ ...v, title: v.label, key: v.id, children: v.children.length > 0 ? transformList(v.children) : [] }));
 
