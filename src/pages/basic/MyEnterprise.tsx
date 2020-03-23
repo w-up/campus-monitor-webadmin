@@ -361,7 +361,10 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
         <Row style={{ textAlign: 'center' }}>
           <a onClick={() => {
             setFactoryInfo(record);
-            setEditFactoryModalVisible(true);
+            setFactoryInfoVisible(true);
+            setEnterpriseInfoVisible(false);
+            setDeviceSiteInfoVisible(false);
+
           }}>编辑</a>
           <Divider type="vertical" />
           <a onClick={() => doDeleteFactory(record)}>删除</a>
@@ -476,7 +479,11 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                 <Row>
                   {/* <Button icon="delete">删除</Button> */}
                   {/* <Divider type="vertical" /> */}
-                  <Button icon="file-add" onClick={() => setEditFactoryModalVisible(true)} type="primary">添加厂区</Button>
+                  <Button icon="file-add" onClick={() => {
+                    setFactoryInfoVisible(true);
+                    setEnterpriseInfoVisible(false);
+                    setDeviceSiteInfoVisible(false);
+                  }} type="primary">添加厂区</Button>
                 </Row>
               }>
               <Table size="small" rowKey="key" bordered columns={columns} dataSource={toJS(factoryListInfo.data) || []} />
