@@ -16,7 +16,7 @@ export const ParkScreenMap = () => {
       //@ts-ignore
       parkScreenMap.map = null;
     };
-  }, [parkScreenMap.map]);
+  }, []);
 
   return useObserver(() => (
     <div style={{ width: "100%", height: "50vh" }}>

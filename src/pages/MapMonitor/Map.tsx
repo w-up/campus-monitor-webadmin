@@ -17,10 +17,13 @@ export const MapMonitorMap = () => {
   return useObserver(() => (
     <APILoader akay={config.baiduMapApiKey}>
       <Map onTilesLoaded={mapMonitor.onMapUpdate} zoom={mapMonitor.zoom} center={mapMonitor.center} enableScrollWheelZoom onZoomEnd={e => (mapMonitor.zoom = e.target.getZoom())}>
-        <Polygon path={utils.array.formatToLatLngShort(mapMonitor.curParkData.parkPoints)} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor={""}></Polygon>
+        {mapMonitor.curParkData?.map((park, index) => (
+          <Polygon path={utils.array.formatToLatLngShort(park.parkPoints)} key={index} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor={""}></Polygon>
+        ))}
         {mapMonitor.compamys.map((item, index) => (
           <Polygon path={item} key={index} strokeStyle="dashed" fillColor="#FFD800" strokeColor="#FFD800" strokeWeight={2}></Polygon>
         ))}
+
         {mapMonitor.compname.map((item, index) => (
           <Label
             offset={mapMonitor.offset}
@@ -32,18 +35,20 @@ export const MapMonitorMap = () => {
             item={item.name}
           ></Label>
         ))}
-        {mapMonitor.curParkData?.siteDatas?.map((item, index) => (
-          <CustomOverlay position={{ lng: Number(item.gpsX), lat: Number(item.gpsY) }} key={index}>
-            <div>
-              {Number(item.collectValue) > Number(item.limit) ? (
-                <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../assets/red.png")} />
-              ) : (
-                <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../assets/green.png")} />
-              )}
-              <div className="number">{item.collectValue || 0}</div>
-            </div>
-          </CustomOverlay>
-        ))}
+        {mapMonitor.curParkData?.map(park =>
+          park.siteDatas?.map((item, index) => (
+            <CustomOverlay position={{ lng: Number(item.gpsX), lat: Number(item.gpsY) }} key={index}>
+              <div>
+                {Number(item.collectValue) > Number(item.limit) ? (
+                  <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../assets/red.png")} />
+                ) : (
+                  <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../assets/green.png")} />
+                )}
+                <div className="number">{item.collectValue || 0}</div>
+              </div>
+            </CustomOverlay>
+          ))
+        )}
       </Map>
     </APILoader>
   ));
