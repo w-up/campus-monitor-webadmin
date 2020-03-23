@@ -1,220 +1,162 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
-import { Card, Row, Col, Form, Button, Select, Tabs, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal } from 'antd';
+import { Spin, Card, Row, Col, Form, Button, Select, Tabs, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal } from 'antd';
+import { useStore } from "../../stores/index";
+import { toJS } from "mobx";
+
 const { Option } = Select;
 const { TabPane } = Tabs;
 
 const columns = [
   {
     title: '提交时间',
-    dataIndex: 'time',
-    key: 'time',
+    dataIndex: 'checkTime',
+    key: 'checkTime',
   },
   {
     title: '提交人',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'checkUser',
+    key: 'checkUser',
   },
   {
     title: '园区名称',
-    dataIndex: 'parkname',
-    key: 'parkname',
+    dataIndex: 'parkName',
+    key: 'parkName',
   },
   {
     title: '监测区域',
-    dataIndex: 'area',
-    key: 'area',
+    dataIndex: 'areaName',
+    key: 'areaName',
   },
   {
-    title: '排放率',
-    dataIndex: 'age',
-    key: 'age',
+    title: '站点名称',
+    dataIndex: 'siteName',
+    key: 'siteName',
+  },
+  {
+    title: '数据类型',
+    dataIndex: '',
+    key: '',
+  },
+  {
+    title: '附件',
+    dataIndex: '',
+    key: '',
   },
   {
     title: '状态',
     key: 'status',
     dataIndex: 'status',
-    render: (item) => {
-      if (item === '审核不通过') {
-        return <Link to="/data/manage/reject" >{item}</Link>
-      } else if (item === '审核通过') {
-        return <Link to="/data/manage/resolve" >{item}</Link>
+    render: (val) => {
+      if (val === 0) {
+        return <Badge status="default" text="待审核" />
+      } else if ( val === 1) {
+        return <Badge status="success" text="审核通过" />
       } else {
-        return item;
+        return <Badge status="error" text="审核不通过" />
       }
+      
+    }
+  },
+  {
+    title: '操作',
+    dataIndex: '',
+    key: '',
+    render: () => {
+      return '查看';
     }
   },
 ];
 
-const data = [
-  {
-    time: '2019-10-24 17:00',
-    key: '1',
-    name: 'John Brown',
-    parkname: '园区2',
-    area: 'A化工',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-    status: '审核不通过',
+const pagination = {
+  showSizeChanger: true,
+  showQuickJumper: true,
+  showTotal: (total) => {
+    return '共 ' + total + ' 条记录'
   },
-  {
-    time: '2019-10-24 17:00',
-    key: '2',
-    name: 'Jim Green',
-    parkname: '园区2',
-    area: 'A化工',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-    status: '审核通过',
-  },
-  {
-    time: '2019-10-24 17:00',
-    key: '3',
-    name: 'Joe Black',
-    parkname: '园区2',
-    area: 'A化工',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-    status: '待审核',
-  },
-  {
-    time: '2019-10-24 17:00',
-    key: '1',
-    name: 'John Brown',
-    parkname: '园区2',
-    area: 'A化工',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-    status: '待审核',
-  },
-  {
-    time: '2019-10-24 17:00',
-    key: '2',
-    name: 'Jim Green',
-    parkname: '园区2',
-    area: 'A化工',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-    status: '待审核',
-  },
-  {
-    time: '2019-10-24 17:00',
-    key: '3',
-    name: 'Joe Black',
-    parkname: '园区2',
-    area: 'A化工',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-    status: '待审核',
-  },
-  {
-    time: '2019-10-24 17:00',
-    key: '1',
-    name: 'John Brown',
-    parkname: '园区2',
-    area: 'A化工',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-    status: '待审核',
-  },
-  {
-    time: '2019-10-24 17:00',
-    key: '2',
-    name: 'Jim Green',
-    parkname: '园区2',
-    area: 'A化工',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-    status: '待审核',
-  },
-  {
-    time: '2019-10-24 17:00',
-    key: '3',
-    name: 'Joe Black',
-    parkname: '园区2',
-    area: 'A化工',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-    status: '待审核',
-  },
-];
+};
 
-export const DataManagePage = observer(() => {
+export const DataManagePage = Form.create()(observer(({ form }: any) => {
 
-  const pagination = {
-    showSizeChanger: true,
-    showQuickJumper: true,
-    showTotal: (total) => {
-      return '共 ' + total + ' 条记录'
-    },
-  };
+  const {
+    data: { manage }
+  } = useStore();
+
+  const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields } = form;
+
+
+  const { loading, dataSource, parksAndFactories, getSitesList } = manage;
+
+  useEffect(() => {
+    manage.getCheckDataList();
+    manage.getAllParksAndFactories();
+  }, []);
+
+  let factoryList: any = [];
+  if (parksAndFactories.length) {
+    if (getFieldValue('parkId')) {
+      factoryList = parksAndFactories.find(item => item.parkId === getFieldValue('parkId')).factories;
+    } else {
+      factoryList = parksAndFactories[0].factories;
+    }
+  }
 
   return (
-    <div style={{ minHeight: '100%', background: '#fff' }}>
-      <Row>
+    <Spin spinning={loading}>
+      <div style={{ background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px"}}>
+        <Breadcrumb>
+          <Breadcrumb.Item>数据质量</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to="/data/manage">数据管理</Link>
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
+      <Row gutter={10}>
         <Col span={6}>
-          <Card title="数据质量管理">
+          <Card size="small" title="数据查询" extra={<Button type="primary">查询</Button>}>
             <Form>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="选择园区" hasFeedback>
-                <Select placeholder="请选择" size="small">
-                  <Option value="china">园区1</Option>
-                  <Option value="usa">园区1</Option>
-                </Select>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="选择园区" >
+                {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: false }] })(
+                  <Select onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
+                    {parksAndFactories.map(item => <Option key={item.parkId} value={item.parkId}>{item.parkName}</Option>)}
+                    <Option value="">不限</Option>
+                  </Select>
+                )}
               </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测区域" hasFeedback>
-                <Select placeholder="请选择" size="small">
-                  <Option value="china">气态污染物</Option>
-                  <Option value="usa">液态污染物</Option>
-                </Select>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测区域" >
+                {getFieldDecorator("factoryId", { initialValue: '', rules: [{ required: false }] })(
+                  <Select onChange={getSitesList} placeholder="请选择" size="small">
+                    {factoryList.map(item => <Option key={item.factoryId} value={item.factoryId}>{item.factoryName}</Option>)}
+                    <Option value="">不限</Option>
+                  </Select>
+                )}
               </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="站点名称" hasFeedback>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="站点名称" >
                 <Select placeholder="请选择" size="small">
                   <Option value="china">TVOCs</Option>
                   <Option value="usa">苯乙烯</Option>
                 </Select>
               </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测设备" hasFeedback>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测设备" >
                 <Select placeholder="请选择" size="small">
                   <Option value="china">TVOCs</Option>
                   <Option value="usa">苯乙烯</Option>
                 </Select>
               </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="补传原因" hasFeedback>
-                <Select placeholder="请选择" size="small">
-                  <Option value="china">TVOCs</Option>
-                  <Option value="usa">苯乙烯</Option>
-                </Select>
-              </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="操作人员" hasFeedback>
-                <Select placeholder="请选择" size="small">
-                  <Option value="china">TVOCs</Option>
-                  <Option value="usa">苯乙烯</Option>
-                </Select>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="补传原因" >
+                <Input.TextArea placeholder="请填写补传原因" />
               </Form.Item>
             </Form>
-
-            <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }}>
-              <Link to="/data/manage/replenish">
-                <Button type="primary" style={{ width: '100%' }}>补传数据</Button>
-              </Link>
-            </Form.Item>
           </Card>
         </Col>
-        <Col span={18} style={{ padding: '10px' }}>
-          <Table bordered size="small" pagination={pagination} columns={columns} dataSource={data} />
+        <Col span={18}>
+          <Card size="small" title="数据列表" extra={<Link to="/data/manage/replenish"><Button type="primary">补录数据</Button></Link>}>
+            <Table bordered size="small" pagination={pagination} columns={columns} dataSource={toJS(dataSource)} />
+          </Card>
         </Col>
       </Row>
 
-    </div>
+    </Spin>
   );
-})
+}));

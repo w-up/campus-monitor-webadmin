@@ -19,6 +19,9 @@ import { Roles } from "./base/role/Roles";
 import { RoleEdit } from "./base/role/RoleEdit";
 import { DynamicSourceStore } from "./dynamicSource/index";
 import { SystemConfig } from "./SystemConfig";
+import { DataManage } from "./data/DataManage";
+import { Replenish } from "./data/Replenish";
+import { RuntimeData } from "./query/RuntimeData";
 
 export const store = {
   menu: new MenuStore(),
@@ -47,6 +50,13 @@ export const store = {
     roleEdit: new RoleEdit(),
   },
   systemConfig: new SystemConfig(),
+  data: {
+    manage: new DataManage(),
+    replenish: new Replenish(),
+  },
+  query: {
+    runTimeData: new RuntimeData(),
+  }
 
 };
 //@ts-ignore

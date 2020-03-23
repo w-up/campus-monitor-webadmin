@@ -65,7 +65,7 @@ export class Park {
     this.selectedRowKeys = [];
   }
 
-  @action
+  @action.bound
   async getParkList() {
     this.loading = true;
     const { data }: any = await POST('/park/getParkListPage', {
