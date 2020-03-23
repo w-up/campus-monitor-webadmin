@@ -158,12 +158,8 @@ export const EnterprisePage = observer(() => {
               <Input placeholder="请输入" value={query.companyCode} onChange={handleSearchChange} />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit">
-                查询
-              </Button>
-              <Button style={{ marginLeft: 5}} onClick={handleSearchReset}>
-                重置
-              </Button>
+              <Button type="primary" htmlType="submit">查询</Button>
+              <Button style={{ marginLeft: 5}} onClick={handleSearchReset}>重置</Button>
             </Form.Item>
           </Form>
           </Col>

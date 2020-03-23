@@ -18,6 +18,7 @@ import { UserEdit } from "./base/user/UserEdit";
 import { Roles } from "./base/role/Roles";
 import { RoleEdit } from "./base/role/RoleEdit";
 import { DynamicSourceStore } from "./dynamicSource/index";
+import { SystemConfig } from "./SystemConfig";
 
 export const store = {
   menu: new MenuStore(),
@@ -44,7 +45,8 @@ export const store = {
     userEdit: new UserEdit(),
     role: new Roles(),
     roleEdit: new RoleEdit(),
-  }
+  },
+  systemConfig: new SystemConfig(),
 
 };
 //@ts-ignore
