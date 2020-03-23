@@ -249,11 +249,18 @@ export class MyEnterprise {
 
   @action.bound
   async saveFactory(param) {
-    if (!param.id) {
-      await POST('/factory/addFactory', param);
-    } else {
-      await POST('/factory/editFactory', param);
+    this.loading = true;
+    try {
+      if (!param.id) {
+        await POST('/factory/addFactory', param);
+      } else {
+        await POST('/factory/editFactory', param);
+      }
+    } catch {
+
     }
+    
+    this.loading = false;
     await this.getFactoryList();
   }
 
@@ -280,7 +287,11 @@ export class MyEnterprise {
 
   @action.bound
   addScope() {
-    this.factoryInfo.scope = [ ...this.factoryInfo.scope, { scopeName: `点${this.factoryInfo.scope.length + 1}`, longitude: '', latitude: '' } ];
+    if (this.factoryInfo.scope) { 
+      this.factoryInfo.scope = [ ...this.factoryInfo.scope, { scopeName: `点${this.factoryInfo.scope.length + 1}`, longitude: '', latitude: '' } ];
+    } else {
+      this.factoryInfo.scope = [{ scopeName: `点1`, longitude: '', latitude: '' }];
+    }
   }
 
   @action.bound

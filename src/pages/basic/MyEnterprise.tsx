@@ -191,7 +191,7 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
     e.preventDefault();
     const param = getFieldValue('factoryInfo');
     await saveFactory({ ...param, scope });
-    setEditFactoryModalVisible(false);
+    setFactoryInfoEditable(false);
   }
 
   let initialProfessionId: any = [];
@@ -483,6 +483,8 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                     setFactoryInfoVisible(true);
                     setEnterpriseInfoVisible(false);
                     setDeviceSiteInfoVisible(false);
+                    setFactoryInfoEditable(true);
+                    setFactoryInfo({});
                   }} type="primary">添加厂区</Button>
                 </Row>
               }>
@@ -501,7 +503,9 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
               <Row>
                 <Button type="primary" onClick={handleFactorySubmit}>保存</Button>
                 <Divider type="vertical" />
-                <Button onClick={() => setFactoryInfoEditable(false)}>取消</Button>
+                <Button onClick={() =>{
+                  setFactoryInfoEditable(false);
+                }}>取消</Button>
               </Row> :
               <Row>
                 <Button onClick={() => setFactoryInfoEditable(true)}>编辑</Button>
@@ -597,6 +601,8 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                 }
               </Card>
               <Divider />
+
+              {!!factoryInfo.id &&
               <Card
                 bordered
                 size="small"
@@ -613,7 +619,8 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                 }>
                 <Table size="small" rowKey="key" bordered columns={deviceSiteListcolumns} dataSource={toJS(deviceSiteListInfo.data) || []} />
               </Card>
-
+              }
+              
               <Modal title="" visible={editDeviceSiteModalVisible} onOk={handleDeviceSiteSubmit} onCancel={() => setEditDeviceSiteModalVisible(false)} width={800}>
                 {getFieldDecorator("deviceSiteInfo.id", { initialValue: deviceSiteInfo.id, rules: [{ required: false }] })(
                   <Input hidden placeholder='请输入站点ID' />
