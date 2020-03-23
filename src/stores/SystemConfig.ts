@@ -29,7 +29,7 @@ export class SystemConfig {
     this.query = {
       paramName: '',
       current: 1,
-      pageSize: 20,
+      pageSize: 10,
     }
     this.getSysParamList();
   }
