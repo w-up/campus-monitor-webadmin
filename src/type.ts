@@ -115,6 +115,7 @@ export type AllParkData = {
   parkPoints: Array<{
     longitude: string;
     latitude: string;
+    parkPointOrder: any;
   }>;
   siteDatas: Array<ConcernSiteData>;
   factoryDatas: Array<{

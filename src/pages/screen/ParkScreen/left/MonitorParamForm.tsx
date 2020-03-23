@@ -18,7 +18,7 @@ export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtil
   // const [currentPmCode, setCurrentPmCode] = useLocalStorage("screen.parkScreen.MonitorParamForm.currentPmCode", "温度");
 
   useEffect(() => {
-    parkScreenMap.loadConcernSiteData("0");
+    // parkScreenMap.loadConcernSiteData("0");
   }, []);
 
   const store = useLocalStore(() => ({

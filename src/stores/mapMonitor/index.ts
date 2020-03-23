@@ -103,13 +103,7 @@ export class MapMonitorStore {
   @observable curOverlays = [] as Array<any>;
 
   @observable alarms: Array<AlarmInfo> = [];
-  @observable curParkData: AllParkData = {
-    parkId: "",
-    parkName: "",
-    parkPoints: [],
-    siteDatas: [],
-    factoryDatas: []
-  };
+  @observable curParkData: Array<AllParkData> = [];
   @action.bound
   async loadAlarms() {
     const result = await api.MapMonitor.getUncheckedAlarmInformation();
@@ -303,17 +297,17 @@ export class MapMonitorStore {
 
   @action.bound
   draw() {
-    this.pointsc.forEach((item, index) => {
-      const pixel = this.map.pointToOverlayPixel(new BMap.Point(item.position.lng, item.position.lat));
-      this.pointsc[index].mapPos.left = pixel.x - 15 + "px";
-      this.pointsc[index].mapPos.top = pixel.y - 15 + "px";
-    });
+    // this.pointsc.forEach((item, index) => {
+    //   const pixel = this.map.pointToOverlayPixel(new BMap.Point(item.position.lng, item.position.lat));
+    //   this.pointsc[index].mapPos.left = pixel.x - 15 + "px";
+    //   this.pointsc[index].mapPos.top = pixel.y - 15 + "px";
+    // });
   }
 
   @action.bound
   updateMap() {
-    if (!this.map) return;
-    let mapViewObj = this.map.getViewport(utils.array.formatToLatLngShort(this.curParkData.parkPoints), {});
+    if (!this.map || !this.curParkData[0]) return;
+    let mapViewObj = this.map.getViewport(utils.array.formatToLatLngShort(this.curParkData[0].parkPoints), {});
     this.map.centerAndZoom(mapViewObj.center, mapViewObj.zoom);
   }
 
@@ -325,6 +319,7 @@ export class MapMonitorStore {
       this.map.setMapStyle({ features: [], style: "midnight" });
 
       // this.fillPollution();
+      this.updateMap();
     } else {
       this.draw();
     }

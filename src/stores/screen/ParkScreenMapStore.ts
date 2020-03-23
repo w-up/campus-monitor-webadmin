@@ -128,7 +128,6 @@ export class ParkScreenMapStore {
         });
       });
     });
-    console.log(selectedSites);
     this.selectedSites = selectedSites;
     allParks.forEach(i => {
       if (i.selected) {
@@ -247,21 +246,23 @@ export class ParkScreenMapStore {
   //地图相关
   @action.bound
   draw() {
-    for (let x in this.pointsc) {
-      const pixel = this.map.pointToOverlayPixel(new BMap.Point(this.pointsc[x].position.lng, this.pointsc[x].position.lat));
-      this.pointsc[x].mapPos.left = pixel.x - 15 + "px";
-      this.pointsc[x].mapPos.top = pixel.y - 15 + "px";
-    }
+    // for (let x in this.pointsc) {
+    //   const pixel = this.map.pointToOverlayPixel(new BMap.Point(this.pointsc[x].position.lng, this.pointsc[x].position.lat));
+    //   this.pointsc[x].mapPos.left = pixel.x - 15 + "px";
+    //   this.pointsc[x].mapPos.top = pixel.y - 15 + "px";
+    // }
   }
 
   @action.bound
   onMapUpdate(e: any) {
     if (!this.map) {
       this.map = e.target;
+
       //@ts-ignore
       this.map.setMapStyle({ features: [], style: "midnight" });
+      this.updateMap();
     } else {
-      this.draw();
+      // this.draw();
     }
   }
 
@@ -269,7 +270,6 @@ export class ParkScreenMapStore {
   updateMap() {
     if (!this.map) return;
     let mapViewObj = this.map.getViewport(utils.array.formatToLatLngShort(this.allParkMapData.parkPoints), {});
-    console.log(mapViewObj);
     this.map.centerAndZoom(mapViewObj.center, mapViewObj.zoom);
   }
 }
