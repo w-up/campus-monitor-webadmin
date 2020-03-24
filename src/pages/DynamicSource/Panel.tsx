@@ -6,6 +6,8 @@ import { TableProps } from "antd/lib/table";
 import RadioGroup from "antd/lib/radio/group";
 import { PieChart } from "../../components/PieChart";
 import { useStore } from "../../stores/index";
+import api from "services";
+import moment from "moment";
 
 //@ts-ignore
 export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUtils }) => {
@@ -27,9 +29,31 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
     },
     handleSubmit: e => {
       e.preventDefault();
-      form.validateFieldsAndScroll((err, values) => {
+      form.validateFieldsAndScroll(async (err, values) => {
         if (!err) {
           console.log("Received values of form: ", values);
+          const { parkId: _parkId, endTime: _endTime, lat, lng, pmCode, startTime: _startTime } = values;
+          const parkId = Number(_parkId);
+          const startTime = moment(_startTime).format("YYYY-MM-DD HH");
+          const endTime = moment(_endTime).format("YYYY-MM-DD HH");
+          if (dynamicSource.computeType == "1") {
+            const res = await api.MapMonitor.getDynamicSourceContribution({ parkId, lat, lng, pmCode, startTime, endTime });
+            if (res) {
+              dynamicSource.DynamicSourceContribution = res.data;
+            }
+          }
+          if (dynamicSource.computeType == "2") {
+            const res = await api.MapMonitor.getDynamicSourceWindRose({ endTime, parkId, pmCode, startTime });
+            if (res) {
+              dynamicSource.DynamicSourceWindRose = res.data;
+            }
+          }
+          if (dynamicSource.computeType == "3") {
+            const res = await api.MapMonitor.getDynamicSourceTraceSource({ endTime, parkId, pmCode, startTime });
+            if (res) {
+              dynamicSource.DynamicSourceTraceSource = res.data;
+            }
+          }
         }
       });
     },
@@ -83,45 +107,37 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
           {getFieldDecorator("computeType", { initialValue: "1" })(<RadioGroup options={store.form.options} onChange={e => (dynamicSource.computeType = e.target.value)}></RadioGroup>)}
         </div>
         <Form.Item label="选择园区">
-          {getFieldDecorator("park", { initialValue: "0" })(
-            <Select>
+          {getFieldDecorator("parkId", { initialValue: dynamicSource.currentPark, rules: [{ required: true }] })(
+            <Select onChange={dynamicSource.selectPark}>
               <Select.Option value="0">全部</Select.Option>
+              {dynamicSource.parks.map((item, index) => (
+                <Select.Option value={item.id} key={index}>
+                  {item.parkName}
+                </Select.Option>
+              ))}
             </Select>
           )}
         </Form.Item>
-        <Form.Item label="监测区域">
-          {getFieldDecorator("area", { initialValue: "0" })(
-            <Select>
+        <Form.Item label="监测因子">
+          {getFieldDecorator("pmCode", { initialValue: dynamicSource.currentPmCode, rules: [{ required: true }] })(
+            <Select onChange={dynamicSource.selectPmcode}>
               <Select.Option value="0">全部</Select.Option>
+              {dynamicSource.pmcodes.map((item, index) => (
+                <Select.Option value={item.pmCode} key={index}>
+                  {item.pmName}
+                </Select.Option>
+              ))}
             </Select>
           )}
         </Form.Item>
-        {/*<Form.Item label="是否自选敏感点">*/}
-        {/*  <Switch checked={store.form.isChecked} onChange={() => (store.form.isChecked = !store.form.isChecked)} />*/}
-        {/*</Form.Item>*/}
-        {/*{store.form.isChecked ? (*/}
-        {/*  <div>*/}
-        {/*    <Form.Item label="敏感点经度">{getFieldDecorator("data1", { initialValue: "" })(<Input />)}</Form.Item>*/}
-        {/*    <Form.Item label="敏感点维度">{getFieldDecorator("data2", { initialValue: "" })(<Input />)}</Form.Item>*/}
-        {/*    <Form.Item label="检测物质浓度">{getFieldDecorator("data3", { initialValue: "" })(<Input />)}</Form.Item>*/}
-        {/*    <Form.Item label="风向">{getFieldDecorator("data4", { initialValue: "" })(<Input suffix={<span>°</span>} />)}</Form.Item>*/}
-        {/*    <Form.Item label="风速">{getFieldDecorator("data5", { initialValue: "" })(<Input suffix={<span>m/s</span>} />)}</Form.Item>*/}
-        {/*    <Form.Item label="温度">{getFieldDecorator("data6", { initialValue: "" })(<Input suffix={<span>°</span>} />)}</Form.Item>*/}
-        {/*    <Form.Item label="相对湿度">{getFieldDecorator("data7", { initialValue: "" })(<Input suffix={<span>%</span>} />)}</Form.Item>*/}
-        {/*  </div>*/}
-        {/*) : (*/}
-        {/*  <Form.Item label="选择敏感点">*/}
-        {/*    {getFieldDecorator("point", { initialValue: "1" })(*/}
-        {/*      <Select>*/}
-        {/*        <Select.Option value="1">敏感点1</Select.Option>*/}
-        {/*      </Select>*/}
-        {/*    )}*/}
-        {/*  </Form.Item>*/}
-        {/*)}*/}
-        <Form.Item label="敏感点经度">{getFieldDecorator("data1", { initialValue: "" })(<Input />)}</Form.Item>
-        <Form.Item label="敏感点维度">{getFieldDecorator("data2", { initialValue: "" })(<Input />)}</Form.Item>
-        <Form.Item label="起始时间">{getFieldDecorator("startTime", { initialValue: "" })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}</Form.Item>
-        <Form.Item label="终止时间">{getFieldDecorator("endTime", { initialValue: "" })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}</Form.Item>
+        {dynamicSource.computeType == "1" && (
+          <div>
+            <Form.Item label="敏感点经度">{getFieldDecorator("lat", { initialValue: "" })(<Input />)}</Form.Item>
+            <Form.Item label="敏感点维度">{getFieldDecorator("lng", { initialValue: "" })(<Input />)}</Form.Item>
+          </div>
+        )}
+        <Form.Item label="起始时间">{getFieldDecorator("startTime", { initialValue: moment() })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}</Form.Item>
+        <Form.Item label="终止时间">{getFieldDecorator("endTime", { initialValue: moment().subtract(1, "day") })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}</Form.Item>
         <Form.Item wrapperCol={{ span: 22, offset: 1 }}>
           <Button type="primary" htmlType="submit" className="w-full">
             开始计算

@@ -122,7 +122,7 @@ export class MapMonitorStore {
   selectPark(parkId) {
     this.currentPark = parkId;
     if (parkId !== "0") {
-      this.loadFactories({ parkId });
+      // this.loadFactories({ parkId });
       this.loadParkData();
     }
   }
@@ -131,7 +131,7 @@ export class MapMonitorStore {
   selectFactory(factoryId) {
     this.currentFactory = factoryId;
     if (factoryId !== "0") {
-      this.loadPmCodes({ factoryId });
+      // this.loadPmCodes({ factoryId });
     }
   }
 
@@ -159,7 +159,7 @@ export class MapMonitorStore {
   }
   @action.bound
   async loadSitePmValueList() {
-    const result = await api.MapMonitor.getSitePmValueList({ pmCode: this.currentPmCode });
+    const result = await api.MapMonitor.getSitePmValueList({ pmCode: this.currentPmCode, parkId: Number(this.currentPark), factoryId: Number(this.currentFactory) });
     this.pmValues = result.data;
   }
 
