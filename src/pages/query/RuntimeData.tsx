@@ -4,6 +4,7 @@ import { useStore } from "../../stores/index";
 import { Link } from "react-router-dom";
 
 import { Checkbox, Breadcrumb, Spin, Card, Row, Col, Form, Select, Divider, Button, Table } from "antd";
+import { toJS } from "mobx";
 const { Option } = Select;
 
 interface Props { }
@@ -81,7 +82,7 @@ export const RuntimeDataPage = Form.create()(observer(({ form }: any) => {
   }, []);
 
   const {
-    loading, parkTree, ptList,
+    loading, parkTree, ptList, columns, dataList,
   } = runTimeData;
 
   const { getFieldDecorator, setFieldsValue, resetFields, getFieldsValue, getFieldValue, validateFields } = form;
@@ -141,7 +142,6 @@ export const RuntimeDataPage = Form.create()(observer(({ form }: any) => {
                 {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: true }] })(
                   <Select onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
                     {parkTree.map(item => <Option key={item.parkId} value={item.parkId}>{item.parkName}</Option>)}
-                    <Option value="">不限</Option>
                   </Select>
                 )}
               </Form.Item>
@@ -149,7 +149,6 @@ export const RuntimeDataPage = Form.create()(observer(({ form }: any) => {
                 {getFieldDecorator("factoryId", { initialValue: '', rules: [{ required: true }] })(
                   <Select placeholder="请选择" size="small">
                     {factoryList.map(item => <Option key={item.factoryId} value={item.factoryId}>{item.factoryName}</Option>)}
-                    <Option value="">不限</Option>
                   </Select>
                 )}
               </Form.Item>
@@ -186,7 +185,7 @@ export const RuntimeDataPage = Form.create()(observer(({ form }: any) => {
         </Col>
         <Col span={18}>
           <Card size="small" title="数据列表">
-            <Table size="small" bordered columns={columns} dataSource={data} scroll={{ x: 1300 }} />
+            <Table size="small" bordered columns={toJS(columns)} dataSource={toJS(dataList)} />
           </Card>
         </Col>
       </Row>

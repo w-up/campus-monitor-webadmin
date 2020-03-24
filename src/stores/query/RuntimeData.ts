@@ -10,7 +10,8 @@ export class RuntimeData {
   };
   @observable parkTree: any = [];
   @observable ptList: any = [];
-
+  @observable columns: any = [];
+  @observable dataList: any = [];
 
   @action.bound
   async getAllSitesTree() {
@@ -39,6 +40,8 @@ export class RuntimeData {
         pageSize: this.query.pageSize,
         size: this.query.pageSize,
       });
+      this.columns = data.titles.map(item => ({ ...item, key: item.titleKey, dataIndex: item.titleKey }));
+      this.dataList = data.dataList;
     } catch {
 
     }
