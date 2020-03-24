@@ -10,7 +10,6 @@ import { Sewage24HourChart } from "./right/Sewage24HourChart";
 import { SewageDailyChart } from "./right/SewageDailyChart";
 import { ScreenTop } from "./top/ScreenTop";
 import { useEffect } from "react";
-import api from "services";
 import { useStore } from "../../../stores/index";
 
 export const EnterpriseScreenPage = () => {
@@ -30,7 +29,7 @@ export const EnterpriseScreenPage = () => {
       </div>
       <div ref={fullScreenRef} className="flex flex-col w-full h-full pb-4" style={{ backgroundColor: "#061630", height: "calc(100vh)" }}>
         <ScreenTop />
-        <div className="pb-4 flex-1" style={{ backgroundColor: "#061630"}}>
+        <div className="pb-4 flex-1" style={{ backgroundColor: "#061630" }}>
           <div className="flex mt-4 justify-between">
             <div className="w-1/4 pl-4">
               <GasTable />

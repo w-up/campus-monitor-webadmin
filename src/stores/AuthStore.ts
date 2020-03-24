@@ -1,7 +1,10 @@
 import { action, observable } from "mobx";
 import api from "services";
+import { POST, GET } from "../utils/request";
 
 const user = window.localStorage.getItem("user");
+const codes = window.localStorage.getItem("codes");
+
 export interface User {
   id: string;
   type: number;
@@ -17,7 +20,7 @@ export interface User {
 export class AuthStore {
   @observable token = window.localStorage.getItem("token");
   @observable user: User | null = user ? JSON.parse(user) : null;
-  @observable codes: string[] = [];
+  @observable codes: string[] = codes ? JSON.parse(codes) : [];
 
   @action.bound
   SetData(data: Partial<AuthStore>) {
@@ -30,6 +33,7 @@ export class AuthStore {
     const { token, user, codes } = result.data;
     window.localStorage.setItem("token", token);
     window.localStorage.setItem("user", JSON.stringify(user));
+    window.localStorage.setItem("codes", JSON.stringify(codes));
 
     Object.assign(this, {
       token,
@@ -41,9 +45,16 @@ export class AuthStore {
   @action.bound
   async getAuthUser() {
     if (!this.token) return;
-    // const result = await api.AuthService.getAuthUser();
-    // window.localStorage.setItem("user", JSON.stringify(user));
-    // console.log(result);
+    const result = await GET("/getUserInfo");
+    const { token, user, codes } = result.data;
+    window.localStorage.setItem("user", JSON.stringify(user));
+    window.localStorage.setItem("codes", JSON.stringify(codes));
+
+    Object.assign(this, {
+      token,
+      user,
+      codes
+    });
   }
 
   @action.bound

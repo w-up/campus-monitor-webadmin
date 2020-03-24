@@ -9,6 +9,7 @@ import { store } from "../index";
 import style from "../../common/mapStyle";
 import ExampleMap from "../../assets/img/ps23ab282a19d8effb-a4e4-48b5-98dd-2e7d611be405.png";
 import { utils } from "../../utils/index";
+import { POST } from "../../utils/request";
 
 //@ts-ignore
 const BMapGL = window.BMapGL;
@@ -269,10 +270,10 @@ export class EnterpriseScreenMapStore {
 
   @action.bound
   updateMap(data: Partial<EnterpriseScreenMapStore> = {}) {
+    if (!this.map) return;
     if (data) {
       Object.assign(this, data);
     }
-    console.log(this);
 
     this.map.centerAndZoom(this.center, this.zoom); // 初始化地图,设置中心点坐标和地图级别
     this.map.setHeading(this.heading); //俯视角度
@@ -312,6 +313,7 @@ export class EnterpriseScreenMapStore {
   play() {
     clearInterval(this.playTimer);
     this.playTimer = setInterval(async () => {
+      if (!this.map) clearInterval(this.playTimer);
       this.addpoints(this.curSiteIndex >= this.SiteRuntimePmDateForMap.length - 1 ? 0 : this.curSiteIndex + 1);
     }, 5000);
   }

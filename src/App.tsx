@@ -19,7 +19,7 @@ const App = props => {
   console.log(props);
   useEffect(() => {
     auth.getAuthUser();
-    config.loadPmCode();
+    config.init();
   }, []);
 
   const renderRoute = (data: any[]) => {
