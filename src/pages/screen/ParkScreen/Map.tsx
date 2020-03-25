@@ -32,7 +32,7 @@ export const ParkScreenMap = () => {
               <Label
                 offset={parkScreenMap.offset}
                 content={item.factoryName}
-                key={item.factoryName}
+                key={index}
                 position={item.factoryPoints[0]}
                 //@ts-ignore
                 style={{ color: "white", fontSize: "12px", backgroundColor: "#0072FF", borderColor: "#0EFCFF" }}

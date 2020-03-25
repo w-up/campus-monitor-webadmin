@@ -44,6 +44,7 @@ export class DynamicSourceStore {
     this.parks = parkRes.data;
     this.factories = factoryRes.data;
     this.pmcodes = pmCodesRes.data;
+    this.currentPmCode = this.pmcodes[0].pmCode;
   }
   @action.bound
   async loadParkData({ parkId, pmCode }: { parkId?: string; pmCode?: string } = { parkId: this.currentPark, pmCode: this.currentPmCode }) {
@@ -68,10 +69,73 @@ export class DynamicSourceStore {
   }
 
   // 计算数据
-  DynamicSourceContribution: Array<DynamicSourceData> = [];
-  DynamicSourceWindRose: Array<DynamicSourceData> = [];
-  DynamicSourceTraceSource: Array<DynamicSourceData> = [];
+  @observable DynamicSourceContribution: {
+    index: number;
+    data: Array<DynamicSourceData>;
+    timer: any;
+  } = {
+    index: 0,
+    data: [],
+    timer: 0
+  };
+  @observable DynamicSourceWindRose: {
+    index: number;
+    data: Array<DynamicSourceData>;
+    timer: any;
+  } = {
+    index: 0,
+    data: [],
+    timer: 0
+  };
+  @observable DynamicSourceTraceSource: {
+    index: number;
+    data: Array<DynamicSourceData>;
+    timer: any;
+  } = {
+    index: 0,
+    data: [],
+    timer: 0
+  };
 
+  @computed
+  get curDynamicSourceContribution() {
+    return this.DynamicSourceContribution.data[this.DynamicSourceContribution.index];
+  }
+  @computed
+  get curDynamicSourceWindRose() {
+    return this.DynamicSourceWindRose.data[this.DynamicSourceTraceSource.index];
+  }
+  @computed
+  get curDynamicSourceTraceSource() {
+    return this.DynamicSourceTraceSource.data[this.DynamicSourceTraceSource.index];
+  }
+
+  @observable playPollutionTimer = 0 as any;
+  @action.bound
+  toggleTimer(opt: { target: { data: Array<any>; index: number; timer: any }; val?: boolean }) {
+    if (opt.target.timer || opt.val == false) {
+      clearInterval(opt.target.timer);
+      return (opt.target.timer = 0);
+    }
+
+    opt.target.timer = setInterval(() => {
+      this.setCurrentTime({ ...opt, val: opt.target.index + 1 });
+    }, 1000);
+  }
+
+  @action.bound
+  setCurrentTime(opt: { stop?: boolean; val: number; target: { data: Array<any>; index: number; timer: any } }) {
+    if (opt.val >= opt.target.data.length) {
+      opt.target.index = 0;
+    } else {
+      opt.target.index = opt.val;
+    }
+    if (opt.stop) {
+      this.toggleTimer({ ...opt, val: false });
+    }
+  }
+
+  // 绘制相关
   @observable arrows = [] as any;
   @observable arrowLine = [] as any;
 

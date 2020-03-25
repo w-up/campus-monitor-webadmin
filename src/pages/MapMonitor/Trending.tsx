@@ -41,6 +41,12 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
     get dateType() {
       return this.dateTypes[this.type];
     },
+    get submitAble() {
+      if (mapMonitor.currentFactory == "0") {
+        return false;
+      }
+      return true;
+    },
     statisticalTime: moment() as any,
     dateOpen: false,
     siteData: null as TrendDataType | null,
@@ -394,7 +400,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 22, offset: 1 }}>
-          <Button type="primary" htmlType="submit" className="w-full">
+          <Button type="primary" htmlType="submit" className="w-full" disabled={!store.submitAble}>
             开始计算
           </Button>
         </Form.Item>

@@ -48,6 +48,9 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
     togglePlay() {
       this.isPlaying = !this.isPlaying;
     },
+    get submitAble() {
+      return mapMonitor.currentPmCode !== "0" && mapMonitor.currentPark !== "0";
+    },
     handleSubmit: e => {
       e.preventDefault();
       form.validateFieldsAndScroll((err, values) => {
@@ -99,7 +102,7 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 22, offset: 1 }}>
-          <Button type="primary" htmlType="submit" className="w-full">
+          <Button type="primary" htmlType="submit" className="w-full" disabled={!store.submitAble}>
             调取回顾
           </Button>
         </Form.Item>
@@ -132,8 +135,8 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
             <div className="mx-2 w-9/12">
               <Progress
                 strokeColor={{
-                  '0%': '#0AE612',
-                  '100%': '#F80901',
+                  "0%": "#0AE612",
+                  "100%": "#F80901"
                 }}
                 percent={100}
                 showInfo={false}

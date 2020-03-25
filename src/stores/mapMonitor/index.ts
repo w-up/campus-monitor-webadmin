@@ -156,6 +156,7 @@ export class MapMonitorStore {
     this.parks = parkRes.data;
     this.factories = factoryRes.data;
     this.pmcodes = pmCodesRes.data;
+    this.currentPmCode = this.pmcodes[0].pmCode;
   }
   @action.bound
   async loadSitePmValueList() {

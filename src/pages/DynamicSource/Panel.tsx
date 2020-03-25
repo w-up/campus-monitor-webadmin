@@ -39,19 +39,19 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
           if (dynamicSource.computeType == "1") {
             const res = await api.MapMonitor.getDynamicSourceContribution({ parkId, lat, lng, pmCode, startTime, endTime });
             if (res) {
-              dynamicSource.DynamicSourceContribution = res.data;
+              dynamicSource.DynamicSourceContribution.data = res.data;
             }
           }
           if (dynamicSource.computeType == "2") {
             const res = await api.MapMonitor.getDynamicSourceWindRose({ endTime, parkId, pmCode, startTime });
             if (res) {
-              dynamicSource.DynamicSourceWindRose = res.data;
+              dynamicSource.DynamicSourceWindRose.data = res.data;
             }
           }
           if (dynamicSource.computeType == "3") {
             const res = await api.MapMonitor.getDynamicSourceTraceSource({ endTime, parkId, pmCode, startTime });
             if (res) {
-              dynamicSource.DynamicSourceTraceSource = res.data;
+              dynamicSource.DynamicSourceTraceSource.data = res.data;
             }
           }
         }
@@ -71,27 +71,24 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
         { name: "位置02", position: 29.1121, concentration: "121.1ppm" },
         { name: "位置03", position: 29.1121, concentration: "121.1ppm" }
       ],
-      table: {
-        dataSource: [
-          { name: "A化工", precent: "62.5" },
-          { name: "B化工", precent: "12.5" },
-          { name: "C化工", precent: "12.5" },
-          { name: "其他", precent: "8.2" }
-        ],
-        columns: [
-          {
-            title: "站点名称",
-            dataIndex: "name",
-            align: "center"
-          },
-          {
-            title: "贡献率",
-            dataIndex: "precent",
-            align: "center",
-            render: text => <div className="primary-text-color">{text}%</div>
-          }
-        ]
-      } as TableProps<any>
+      get table(): any {
+        return {
+          dataSource: dynamicSource.curDynamicSourceContribution.valueList,
+          columns: [
+            {
+              title: "站点名称",
+              dataIndex: "siteName",
+              align: "center"
+            },
+            {
+              title: "贡献率",
+              dataIndex: "rat",
+              align: "center",
+              render: text => <div className="primary-text-color">{text}</div>
+            }
+          ]
+        };
+      }
     }
   }));
 
@@ -152,24 +149,28 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
           <span className="ml-2 text-sm">2020-01-03 15:00:00</span>
         </div>
         <div className="stat-panel p-2 text-white flex items-center mt-2">
-          <div onClick={store.togglePlay}>
-            <Icon type={store.isPlaying ? "pause-circle" : "play-circle"} theme="twoTone" className="text-white text-xl" />
+          <div onClick={e => dynamicSource.toggleTimer({ target: dynamicSource.DynamicSourceContribution })}>
+            <Icon type={dynamicSource.DynamicSourceContribution.timer ? "pause-circle" : "play-circle"} theme="twoTone" className="text-white text-xl" />
           </div>
           <div className="flex-1 ml-4">
-            <Slider></Slider>
+            <Slider
+              value={dynamicSource.DynamicSourceContribution.index}
+              max={dynamicSource.DynamicSourceContribution.data.length}
+              onChange={e => dynamicSource.setCurrentTime({ target: dynamicSource.DynamicSourceContribution, val: Number(e), stop: true })}
+            ></Slider>
           </div>
         </div>
       </div>
 
-      {dynamicSource.computeType == "1" && (
+      {dynamicSource.computeType == "1" && dynamicSource.curDynamicSourceContribution && (
         <div className="monitor-row-panel p-4 ">
           <div className="primary-button-text-dark text-lg">计算结果</div>
-          <div className="primary-button-text-dark text-sm mt-2"> 时间: 2020-01-02 14:00:00</div>
+          <div className="primary-button-text-dark text-sm mt-2"> 时间: {dynamicSource.curDynamicSourceContribution.datetime}</div>
 
           <Table className="monitor-table mt-10" {...store.monitorPanel.table} pagination={false} />
           <div>
             <div className="primary-text-color mt-10 text-center">园区TVOCs排放贡献率</div>
-            <PieChart showLegend={false} pieRadius="80%" center={["50%", "50%"]} />
+            <PieChart showLegend={false} pieRadius="80%" data={dynamicSource.curDynamicSourceContribution.valueList.map(i => ({ key: i.siteName, value: i.value }))} />
           </div>
         </div>
       )}
@@ -178,7 +179,7 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
           <div className="primary-button-text-dark text-lg">计算结果</div>
           <div className="primary-button-text-dark text-sm mt-2"> 时间: 2020-01-02 14:00:00</div>
           {store.monitorPanel.points.map((item, index) => (
-            <div className="stat-panel text-white mt-8 p-4 flex">
+            <div className="stat-panel text-white mt-8 p-4 flex" key={index}>
               <div className="text-md">
                 <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "red", display: "inline-block" }}></span>
                 <span className="ml-2">{item.name}</span>

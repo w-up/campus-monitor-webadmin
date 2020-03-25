@@ -25,6 +25,9 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
         span: 15
       }
     },
+    get submitAble() {
+      return mapMonitor.currentPmCode !== "0";
+    },
     handleSubmit: e => {
       e.preventDefault();
       form.validateFieldsAndScroll((err, values) => {
@@ -250,7 +253,7 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
           )}
         </Form.Item>
         <Form.Item wrapperCol={{ span: 5, offset: 17 }}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" disabled={!store.submitAble}>
             确定
           </Button>
         </Form.Item>
