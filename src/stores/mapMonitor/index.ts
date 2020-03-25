@@ -256,9 +256,9 @@ export class MapMonitorStore {
       data.push({
         geometry: {
           type: "Point",
-          coordinates: [Number(i.longitude) - 0.0005 + Math.random() * 0.001, Number(i.latitude) - 0.0005 + Math.random() * 0.001]
+          coordinates: [Number(i.longitude), Number(i.latitude)]
         },
-        count: Math.random() * 1000
+        count: Number(pmValue.specificValue)
       });
       // });
 
@@ -276,7 +276,7 @@ export class MapMonitorStore {
     this.mapvLayer = new mapv.baiduMapLayer(this.map, new mapv.DataSet(data), {
       size: 40,
       gradient: { 0.25: "rgb(0,0,255)", 0.55: "rgb(0,255,0)", 0.85: "yellow", 1.0: "rgb(255,0,0)" },
-      max: 1000,
+      max: 1,
       // range: [0, 100], // 过滤显示数据范围
       // minOpacity: 0.2, // 热力图透明度
       // maxOpacity: 0.8,
