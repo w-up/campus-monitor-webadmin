@@ -220,3 +220,18 @@ export type PollutionData = {
     statisticalTime: string;
   }>;
 };
+
+export type DynamicSourceData = {
+  datetime: string;
+  valueList: Array<{
+    lng: string;
+    lat: string;
+    value: number;
+    rat: string;
+    distance: number;
+    angle: number;
+    siteCode: string;
+    siteName: string;
+    monitoringType: string;
+  }>;
+};

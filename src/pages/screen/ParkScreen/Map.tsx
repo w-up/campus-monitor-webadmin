@@ -23,34 +23,35 @@ export const ParkScreenMap = () => {
       <APILoader akay={config.baiduMapApiKey}>
         <Map onTilesLoaded={parkScreenMap.onMapUpdate} enableScrollWheelZoom onZoomEnd={e => (parkScreenMap.zoom = e.target.getZoom())}>
           <Polygon path={utils.array.formatToLatLngShort(parkScreenMap.allParkMapData.parkPoints)} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor=""></Polygon>
-          {parkScreenMap.compamys.map((item, index) => (
-            <Polygon path={item} key={index} strokeStyle="dashed" fillColor="#FFD800" strokeColor="#FFD800" strokeWeight={2}></Polygon>
+          {parkScreenMap.allParkMapData?.factoryDatas.map((item, index) => (
+            <Polygon path={utils.array.formatToLatLngShort(item.factoryPoints)} key={index} strokeStyle="dashed" fillColor="#FFD800" strokeColor="#FFD800" strokeWeight={2}></Polygon>
           ))}
-          {parkScreenMap.compname.map((item, index) => (
-            <Label
-              offset={parkScreenMap.offset}
-              content={item.name}
-              key={item.name}
-              position={item.position}
-              //@ts-ignore
-              style={{ color: "white", fontSize: "12px", backgroundColor: "#0072FF", borderColor: "#0EFCFF" }}
-              item={item.name}
-            ></Label>
-          ))}
-          {parkScreenMap.zoom > 17 && (
-            <CustomOverlay paneName="floatPane">
-              {parkScreenMap.pointsc.map((item, index) => (
-                <div key={index} style={{ position: "absolute", left: item.mapPos.left, top: item.mapPos.top }}>
-                  {item.number < 15 ? (
-                    <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../../assets/green.png")} />
-                  ) : (
-                    <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../../assets/red.png")} />
-                  )}
-                  <div className="number">{item.number}</div>
-                </div>
-              ))}
+          {parkScreenMap.allParkMapData?.factoryDatas.map((item, index) => {
+            if (!item.factoryPoints) return;
+            return (
+              <Label
+                offset={parkScreenMap.offset}
+                content={item.factoryName}
+                key={item.factoryName}
+                position={item.factoryPoints[0]}
+                //@ts-ignore
+                style={{ color: "white", fontSize: "12px", backgroundColor: "#0072FF", borderColor: "#0EFCFF" }}
+                item={item.factoryName}
+              ></Label>
+            );
+          })}
+          {parkScreenMap.allParkMapData?.siteDatas?.map((item, index) => (
+            <CustomOverlay position={{ lng: Number(item.gpsX), lat: Number(item.gpsY) }} key={index}>
+              <div>
+                {Number(item.collectValue) > Number(item.limit) ? (
+                  <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../../assets/red.png")} />
+                ) : (
+                  <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../../assets/green.png")} />
+                )}
+                <div className="number">{item.collectValue || 0}</div>
+              </div>
             </CustomOverlay>
-          )}
+          ))}
         </Map>
       </APILoader>
     </div>

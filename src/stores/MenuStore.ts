@@ -33,12 +33,14 @@ export class MenuStore {
     {
       icon: "appstore",
       title: "基础信息",
+      code: "base:manage",
       path: "/base",
       component: "",
       children: [
         {
           title: "园区管理",
           path: "/base/park",
+          code: "base:manage:page",
           component: Basic,
           children: []
         },
@@ -60,17 +62,20 @@ export class MenuStore {
       icon: "user",
       title: "用户权限",
       path: "/user",
+      code: "system:urp",
       component: "",
       children: [
         {
           title: "用户管理",
           path: "/user/userlist",
           component: User,
+          code: "urp:user",
           children: []
         },
         {
           title: "角色管理",
           path: "/user/rolelist",
+          code: "urp:role",
           component: User,
           children: []
         }
@@ -79,10 +84,12 @@ export class MenuStore {
     {
       icon: "setting",
       title: "系统管理",
+      code: "system:manage",
       path: "/system",
       children: [
         {
           title: "参数配置",
+          code: "manage:param",
           path: "/system/configration",
           children: []
         }
@@ -92,6 +99,7 @@ export class MenuStore {
       icon: "dashboard",
       title: "驾驶舱",
       path: "/screen",
+      code: "system:jsc",
       component: "",
       children: [
         {
@@ -126,6 +134,7 @@ export class MenuStore {
       icon: "search",
       title: "数据查询",
       path: "/query",
+      code: "system:dataQuery",
       component: "",
       children: [
         {
@@ -166,15 +175,18 @@ export class MenuStore {
       icon: "info-circle",
       title: "告警处理",
       path: "/alert",
+      code: "system:warn",
       component: "",
       children: [
         {
           title: "告警管理",
+          code: "warn:manage",
           path: "/alert/manage",
           component: AlertManagePage
         },
         {
           title: "告警设置",
+          code: "warn:config",
           path: "/alert/setting",
           component: AlertSettingPage,
           children: []
@@ -185,6 +197,7 @@ export class MenuStore {
       icon: "fund",
       title: "数据质量",
       path: "/data",
+      code: "dataAdd:manage",
       component: "",
       children: [
         {

@@ -31,8 +31,8 @@ export default {
   getPmCodeList(data: { factoryId: number }) {
     return GET("/mapMonitor/getPmCodeList", data);
   },
-  getSitePmValueList(data: { pmCode: string }) {
-    return GET("/mapMonitor/getSitePmValueList", data);
+  getSitePmValueList(data: { pmCode: string; parkId: number; factoryId: number }) {
+    return POST("/mapMonitor/getSitePmValueList", data);
   },
   getSiteMonitorDataById(data: { siteId: string }) {
     return GET("/mapMonitor/getSiteMonitorDataById", data);
@@ -50,5 +50,14 @@ export default {
   },
   getMapInfoByPmCodeAndParkId(data: { parkId: number; pmCode: string }) {
     return POST("/mapMonitor/getMapInfoByPmCodeAndParkId", data);
+  },
+  getDynamicSourceContribution(data: { endTime: string; lng: string; lat: string; parkId: number; pmCode: string; startTime: string }) {
+    return POST("/mapMonitor/getDynamicSourceContribution", data);
+  },
+  getDynamicSourceWindRose(data: { endTime: string; parkId: number; pmCode: string; startTime: string }) {
+    return POST("/mapMonitor/getDynamicSourceWindRose", data);
+  },
+  getDynamicSourceTraceSource(data: { endTime: string; parkId: number; pmCode: string; startTime: string }) {
+    return POST("/mapMonitor/getDynamicSourceTraceSource", data);
   }
 };
