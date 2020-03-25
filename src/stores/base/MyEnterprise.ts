@@ -2,6 +2,7 @@ import { action, observable } from "mobx";
 import moment from 'moment';
 import { message } from "antd";
 import { GET, POST } from "../../utils/request";
+import { store } from "../index";
 
 export class MyEnterprise {
   @observable query: any = {
@@ -312,6 +313,17 @@ export class MyEnterprise {
   @action.bound
   latitudeInput(value, index) {
     this.factoryInfo.scope[index].latitude = value;
+  }
+
+  @action.bound
+  updateMapPoints() {
+    console.log(store.map.drawMap.polygon.paths);
+    this.factoryInfo.scope = store.map.drawMap.polygon.paths[0].map((item, index) => ({
+      key: index,
+      scopeName: `点${index + 1}`,
+      latitude: item.lat,
+      longitude: item.lng
+    }));
   }
 
 }

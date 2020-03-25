@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useObserver, useLocalStore, observer } from "mobx-react-lite";
-import { message, Cascader, Radio, Select, DatePicker, Input, Form, Icon, Spin, Card, Row, Col, Tree, Descriptions, Button, Table, Divider, InputNumber, Modal } from "antd";
+import { Tag, message, Cascader, Radio, Select, DatePicker, Input, Form, Icon, Spin, Card, Row, Col, Tree, Descriptions, Button, Table, Divider, InputNumber, Modal } from "antd";
 import Search from "antd/lib/input/Search";
 import { toJS } from 'mobx';
 import moment from 'moment';
@@ -10,10 +10,52 @@ import { DrawBaiduMap } from "../../components/DrawBaiduMap";
 const { Option } = Select;
 const { Column } = Table;
 
+const deviceListColumns = [
+  {
+    title: '厂区名称',
+    dataIndex: 'factoryName',
+    width: 200,
+  },
+  {
+    title: '站点名称',
+    dataIndex: 'siteName',
+    width: 300,
+  },
+  {
+    title: '设备名称',
+    dataIndex: 'deviceName',
+    width: 300,
+    
+  },
+  {
+    title: '设备类型',
+    dataIndex: 'deviceModelName',
+    width: 300,
+  },
+  {
+    title: '负责人',
+    dataIndex: 'chargerName',
+    width: 200,
+  },
+  {
+    title: '负责人电话',
+    dataIndex: 'phone',
+    width: 300,
+  },
+  {
+    title: '负责人邮箱',
+    dataIndex: 'email',
+    width: 400,
+  },
+];
+
+
 export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
 
   const {
-    base: { myEnterprise }
+    base: { myEnterprise },
+    map: { drawMap },
+    config
   } = useStore();
 
   const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields, resetFields } = form;
@@ -26,13 +68,12 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
     dataSource, query, selectedRowKeys, total, onSelectChange, paginationChange, deleteEnterprise, 
     handleSearchSubmit, handleSearchChange, handleSearchReset, resetSelectedRowKeys,
     addScope,
-    setScope,
+    setScope, updateMapPoints,
     scopeNameInput,
     longitudeInput,
     latitudeInput,
   } = myEnterprise;
 
-  console.log(toJS(industryType))
 
   const {
     businessPeriodEnd, businessPeriodStart, businessScope, companyAddress, companyName, companyNature, companyNatureId,
@@ -141,8 +182,6 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
 
     setFieldsValue({ enterpriseInfoEditable: false });
     
-    console.log(toJS(deviceListInfo));
-    console.log(toJS(selectedKeys));
     await getDeviceInfo(selectedKeys[0]);
     setEditFactoryModalVisible(false);
     setDeviceListModalVisible(false);
@@ -229,44 +268,6 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
     });
   }
 
-  const deviceListColumns = [
-    {
-      title: '厂区名称',
-      dataIndex: 'factoryName',
-      width: 200,
-    },
-    {
-      title: '站点名称',
-      dataIndex: 'siteName',
-      width: 300,
-    },
-    {
-      title: '设备名称',
-      dataIndex: 'deviceName',
-      width: 300,
-      
-    },
-    {
-      title: '设备类型',
-      dataIndex: 'deviceModelName',
-      width: 300,
-    },
-    {
-      title: '负责人',
-      dataIndex: 'chargerName',
-      width: 200,
-    },
-    {
-      title: '负责人电话',
-      dataIndex: 'phone',
-      width: 300,
-    },
-    {
-      title: '负责人邮箱',
-      dataIndex: 'email',
-      width: 400,
-    },
-  ];
 
   const deviceSiteListcolumns = [
     {
@@ -373,6 +374,25 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
     }
   ];
 
+  const [ treeExpandedKeys, setTreeExpandedKeys ] = useState([]);
+
+  const onTreeSearch = value => {
+    const expandedKeys: any = [];
+    if (value) {
+      const filterAdd = list => list.forEach(item => {
+        if (item.title.indexOf(value) > -1) {
+          
+          expandedKeys.push(item.key);
+        }
+        item.children && filterAdd(item.children);
+      });
+  
+      filterAdd(toJS(treeData))
+    }
+    
+    setTreeExpandedKeys(expandedKeys);
+  }
+
 
   return (
     <Spin spinning={loading}>
@@ -382,8 +402,9 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
             <div>
               <Search
                 placeholder="请输入关键词"
-                onSearch={value => console.log(value)}
+                onSearch={onTreeSearch}
                 style={{ width: 200 }}
+                allowClear
               />
             </div>
             <div>
@@ -391,8 +412,16 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                 showLine={true}
                 showIcon={false}
                 onSelect={handleTreeItemSelect}
-                onExpand={(keys, e) => handleTreeItemSelect(keys.slice(-1), e)}
+                onExpand={(keys, e) => {
+                  setTreeExpandedKeys(keys as any);
+                  handleTreeItemSelect(keys.slice(-1), e);
+                }}
+                filterTreeNode={node => {
+                  return (treeExpandedKeys as any).includes(node.props.eventKey);
+                }}
+                expandedKeys={treeExpandedKeys}
                 treeData={toJS(treeData)}
+                autoExpandParent={true}
               />
             </div>
           </Card>
@@ -574,31 +603,44 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                   </Radio.Group>
                 )}
                 <Divider />
-                {getFieldValue('scopeType') === 'map' ? 
-                  <Row style={{ width: '100%', height: '400px' }}>
+
+                <Modal
+                  title="地图绘制"
+                  visible={getFieldValue('scopeType') === 'map'}
+                  onOk={() => {
+                    setFieldsValue({ scopeType: 'location' });
+                    updateMapPoints();
+                  }}
+                  onCancel={() => setFieldsValue({ scopeType: "location" })}
+                  okText="确认"
+                  cancelText="取消"
+                  width={800}
+                >
+                  <div style={{ width: "100%", height: "400px" }}>
                     <DrawBaiduMap />
-                  </Row> :
-                  <Table pagination={false} size="small" bordered dataSource={toJS(scope)} footer={_ => <Button onClick={addScope} size="small" shape="circle" icon="plus" />}>
-                    <Column
-                      title="名称"
-                      dataIndex="scopeName"
-                      key="scopeName"
-                      render={(scopeName, _, index) => <Input disabled={!factoryInfoEditable} size="small" onChange={(e) => scopeNameInput(e.target.value, index)} value={scopeName} />}
-                    />
-                    <Column
-                      title="经度"
-                      dataIndex="longitude"
-                      key="longitude"
-                      render={(longitude, _, index) => <Input disabled={!factoryInfoEditable} size="small" onChange={(e) => longitudeInput(e.target.value, index)} value={longitude} />}
-                    />
-                    <Column
-                      title="纬度"
-                      dataIndex="latitude"
-                      key="latitude"
-                      render={(latitude, _, index) => <Input disabled={!factoryInfoEditable} size="small" onChange={(e) => latitudeInput(e.target.value, index)} value={latitude} />}
-                    />
-                  </Table>
-                }
+                  </div>
+                </Modal>
+
+                <Table pagination={false} size="small" bordered dataSource={toJS(scope)} footer={_ => <Button onClick={addScope} size="small" shape="circle" icon="plus" />}>
+                  <Column
+                    title="名称"
+                    dataIndex="scopeName"
+                    key="scopeName"
+                    render={(scopeName, _, index) => <Input disabled={!factoryInfoEditable} size="small" onChange={(e) => scopeNameInput(e.target.value, index)} value={scopeName} />}
+                  />
+                  <Column
+                    title="经度"
+                    dataIndex="longitude"
+                    key="longitude"
+                    render={(longitude, _, index) => <Input disabled={!factoryInfoEditable} size="small" onChange={(e) => longitudeInput(e.target.value, index)} value={longitude} />}
+                  />
+                  <Column
+                    title="纬度"
+                    dataIndex="latitude"
+                    key="latitude"
+                    render={(latitude, _, index) => <Input disabled={!factoryInfoEditable} size="small" onChange={(e) => latitudeInput(e.target.value, index)} value={latitude} />}
+                  />
+                </Table>
               </Card>
               <Divider />
 
@@ -727,17 +769,20 @@ export const MyEnterprisePage = Form.create()(observer(({ form }: any) => {
                 <Descriptions.Item label="设备名称" span={1.5}>
                   {deviceInfo.deviceName}
                 </Descriptions.Item>
-                <Descriptions.Item label="设备用途" span={1.5}>
-                  {deviceInfo.features}
-                </Descriptions.Item>
                 <Descriptions.Item label="出厂日期" span={1.5}>
                   {deviceInfo.productionDate}
                 </Descriptions.Item>
                 <Descriptions.Item label="设备特点" span={1.5}>
+                  {deviceInfo.features}
+                </Descriptions.Item>
+                <Descriptions.Item label="设备厂商" span={1.5}>
                   {deviceInfo.manufacturerName}
                 </Descriptions.Item>
                 <Descriptions.Item label="设备型号" span={1.5}>
                   {deviceInfo.modelName}
+                </Descriptions.Item>
+                <Descriptions.Item label="监测因子" span={1.5}>
+                  {deviceInfo.pmList && deviceInfo.pmList.map(item => <Tag key={item.pmId}>{item.pmName}</Tag>)}
                 </Descriptions.Item>
               </Descriptions>
             </Card>

@@ -1,7 +1,10 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 import ReactEcharts from "echarts-for-react";
-import { Card, Row, Col, Form, Button, Select, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal } from 'antd';
+import { useStore } from "../../stores/index";
+import { Link } from "react-router-dom";
+
+import { Spin, Card, Row, Col, Form, Button, Select, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal } from 'antd';
 const { Option } = Select;
 
 const option1 = {
@@ -198,15 +201,31 @@ const option3 = {
   ]
 };
 
-export const ComparisonAnalysisPage = observer(() => {
+export const ComparisonAnalysisPage = Form.create()(observer(({ form }: any) => {
 
   const chart1 = React.useRef<any>();
   const chart2 = React.useRef<any>();
   const chart3 = React.useRef<any>();
 
+  const {
+    analysis: { comparison }
+  } = useStore();
+
+  const {
+    loading, parkTree, ptList,
+  } = comparison;
+
   return (
-    <div style={{ minHeight: '100%', background: '#fff' }}>
-      <Row>
+    <Spin spinning={loading}>
+      <div style={{ background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px" }}>
+        <Breadcrumb>
+          <Breadcrumb.Item>统计分析</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to="/analysis/comparison">对比分析</Link>
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
+      <Row gutter={10}>
         <Col span={6}>
           <Card title="检测数据统计排名">
             <Form>
@@ -228,24 +247,24 @@ export const ComparisonAnalysisPage = observer(() => {
                   <Option value="usa">苯乙烯</Option>
                 </Select>
               </Form.Item>
+              <Divider orientation="left">时间</Divider>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="统计周期" hasFeedback>
+                <Radio.Group defaultValue="c" size="small" buttonStyle="solid">
+                  <Radio.Button value="a">日</Radio.Button>
+                  <Radio.Button value="c">月</Radio.Button>
+                  <Radio.Button value="d">年</Radio.Button>
+                </Radio.Group>
+              </Form.Item>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="统计时间" hasFeedback>
+                <DatePicker size="small" />
+              </Form.Item>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }}>
+                <Button type="primary" style={{ width: '100%' }} htmlType="submit">开始统计</Button>
+              </Form.Item>
             </Form>
-            <Divider orientation="left">时间</Divider>
-            <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="统计周期" hasFeedback>
-              <Radio.Group defaultValue="c" size="small" buttonStyle="solid">
-                <Radio.Button value="a">日</Radio.Button>
-                <Radio.Button value="c">月</Radio.Button>
-                <Radio.Button value="d">年</Radio.Button>
-              </Radio.Group>
-            </Form.Item>
-            <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="统计时间" hasFeedback>
-              <DatePicker size="small" />
-            </Form.Item>
-            <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }}>
-              <Button type="primary" style={{ width: '100%' }} htmlType="submit">开始统计</Button>
-            </Form.Item>
           </Card>
         </Col>
-        <Col span={18} style={{ padding: '10px' }}>
+        <Col span={18} >
           <Row gutter={6}>
             <Col span={12} style={{ marginBottom: '10px' }}>
               <Card bordered size="small" title="各行业TVOCs排放贡献率" extra="2019-10-24">
@@ -281,6 +300,6 @@ export const ComparisonAnalysisPage = observer(() => {
         </Col>
       </Row>
 
-    </div>
+    </Spin>
   );
-})
+}));

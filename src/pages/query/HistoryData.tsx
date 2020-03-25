@@ -1,11 +1,13 @@
-import React from "react";
-import { Card, Row, Col, Form, Select, Divider, Button, Table, DatePicker } from "antd";
-const { Option } = Select;
+import React, { useEffect } from "react";
+import { observer } from "mobx-react-lite";
+import { useStore } from "../../stores/index";
+import { Link } from "react-router-dom";
 
-interface Props{}
-interface State{
-  monitoringFactors: []
-}
+import { DatePicker, Checkbox, Breadcrumb, Spin, Card, Row, Col, Form, Select, Divider, Button, Table } from "antd";
+import { toJS } from "mobx";
+const { Option } = Select;
+const { RangePicker } = DatePicker;
+
 
 const formItemLayout = {
   labelCol: {
@@ -18,123 +20,155 @@ const formItemLayout = {
   },
 };
 
-type FixedDir = "right" | "left"
 
-const fixedDirection:FixedDir = 'right'
+export const HistoryDataPage = Form.create()(observer(({ form }: any) => {
 
-const columns = [
-  {
-    title: '监测区域',
-    dataIndex: 'area',
-    key: 'area',
-  },
-  {
-    title: '站点名称',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  { title: '测量值  1', dataIndex: 'value', key: '1' },
-  { title: '测量值 2', dataIndex: 'value', key: '2' },
-  { title: '测量值 3', dataIndex: 'value', key: '3' },
-  { title: '测量值 4', dataIndex: 'value', key: '4' },
-  { title: '测量值 5', dataIndex: 'value', key: '5' },
-  { title: '测量值 6', dataIndex: 'value', key: '6' },
-  { title: '测量值 7', dataIndex: 'value', key: '7' },
-  { title: '测量值 8', dataIndex: 'value', key: '8' },
-  {
-    title: '数据更新时间',
-    key: 'updateTime',
-    dataIndex: 'updateTime',
-    fixed: fixedDirection,
-  },
-];
+  const {
+    query: { historyData }
+  } = useStore();
 
-const data = [
-  {
-    key: '1',
-    area: '234.89, 235345.09',
-    name: '站点1',
-    value: 32,
-    updateTime: '2020-02-29'
-  },
-  {
-    key: '2',
-    area: '234.89, 235345.09',
-    name: '站点2',
-    value: 40,
-    updateTime: '2020-02-29'
-  },
-];
-export class HistoryDataPage extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      monitoringFactors: []
+  useEffect(() => {
+    historyData.getAllSitesTree();
+  }, []);
+
+  const {
+    loading, parkTree, ptList, columns, dataList,
+    query, total, paginationChange,
+  } = historyData;
+
+  const { getFieldDecorator, setFieldsValue, resetFields, getFieldsValue, getFieldValue, validateFields } = form;
+
+  let factoryList: any = [];
+  if (parkTree.length) {
+    if (getFieldValue('parkId')) {
+      factoryList = parkTree.find(item => item.parkId === getFieldValue('parkId')).factorys || [];
+    } else {
+      factoryList = parkTree[0].factories || [];
     }
   }
 
-  
-  queryConditionsModule = () => {
-    return (
-      <Card title="历史数据查询">
-        <Form {...formItemLayout}>
-          <Form.Item label="选择园区">
-            <Select placeholder="请选择" size="small">
-              <Option value="china">China</Option>
-              <Option value="usa">U.S.A</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="监测区域" hasFeedback>
-            <Select placeholder="请选择" size="small">
-              <Option value="china">China</Option>
-              <Option value="usa">U.S.A</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="站点名称" hasFeedback>
-            <Select placeholder="请选择" size="small">
-              <Option value="china">China</Option>
-              <Option value="usa">U.S.A</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="监测类型" hasFeedback>
-            <Select placeholder="请选择" size="small">
-              <Option value="china">China</Option>
-              <Option value="usa">U.S.A</Option>
-            </Select>
-          </Form.Item>
-        </Form>
-        <Divider orientation="left">监测因子</Divider>
-        <div style={{marginTop: 10, marginBottom: 10}}>
-          <Button size="small">全部</Button>
-        </div>
-        <Divider orientation="left">时间</Divider>
-        <div style={{marginTop: 10, marginBottom: 10}}>
-          起始时间： <DatePicker />
-        </div>
-        <div style={{marginTop: 10, marginBottom: 10}}>
-          终止时间： <DatePicker />
-        </div>
-        <Button style={{marginRight: 10}}>重制</Button>
-        <Button type="primary">导出</Button>
-      </Card>
-    )
+  let siteList: any = [];
+  if (factoryList.length) {
+    if (getFieldValue('factoryId')) {
+      siteList = factoryList.find(item => item.factoryId === getFieldValue('factoryId')).sites || [];
+    } else {
+      siteList = factoryList[0].sites || [];
+    }
   }
 
-  render () {
-    return (
-      <div style={{minHeight: '100%', background: '#fff'}}>
-        <Row>
-          <Col span={6}>{this.queryConditionsModule()}</Col>
-          <Col span={18} style={{padding: "10px 20px"}}>
-            <Table bordered columns={columns} dataSource={data} scroll={{ x: 1300 }} />
-            <div style={{textAlign: 'center',marginTop: 20}}>
-              <div>历史排放量和浓度趋势图</div>
-              <div>统计周期 2019-10-24 至 2019-10-24</div>
-            </div>
-          </Col>
-        </Row>
+  let pmCodeList: any = [];
+  if (ptList.length) {
+    if (getFieldValue('ptId')) {
+      pmCodeList = ptList.find(item => item.id === getFieldValue('ptId')).pms || [];
+    } else {
+      pmCodeList = ptList[0].pms || [];
+    }
+  }
 
+  const doSubmit = e => {
+    e.preventDefault();
+    validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      historyData.queryDatas(values);
+    });
+  }
+
+  const doExport = () => {
+    validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      historyData.exportDatas(values);
+    });
+  }
+
+  const pagination = {
+    current: query.current,
+    pageSize: query.pageSize,
+    total,
+    showSizeChanger: true,
+    showQuickJumper: true,
+    showTotal: total => {
+      return "共 " + total + " 条记录";
+    },
+    onChange: paginationChange,
+    onShowSizeChange: paginationChange
+  };
+
+  return (
+    <Spin spinning={loading}>
+      <div style={{ background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px" }}>
+        <Breadcrumb>
+          <Breadcrumb.Item>数据查询</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to="/query/history">历史数据查询</Link>
+          </Breadcrumb.Item>
+        </Breadcrumb>
       </div>
-    )
-  }
-}
+      <Row gutter={10}>
+        <Col span={6}>
+          <Form {...formItemLayout} onSubmit={doSubmit}>
+            <Card size="small" title="历史数据查询" extra={<Button size="small" onClick={() => resetFields()}>重置</Button>}>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="选择园区" >
+                {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: true }] })(
+                  <Select onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
+                    {parkTree.map(item => <Option key={item.parkId} value={item.parkId}>{item.parkName}</Option>)}
+                  </Select>
+                )}
+              </Form.Item>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测区域" >
+                {getFieldDecorator("factoryId", { initialValue: '', rules: [{ required: true }] })(
+                  <Select placeholder="请选择" size="small">
+                    {factoryList.map(item => <Option key={item.factoryId} value={item.factoryId}>{item.factoryName}</Option>)}
+                  </Select>
+                )}
+              </Form.Item>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="站点名称" >
+                {getFieldDecorator("siteId", { initialValue: '', rules: [{ required: true }] })(
+                  <Select placeholder="请选择" size="small">
+                    {siteList.map(item => <Option key={item.siteId} value={item.siteId}>{item.siteName}</Option>)}
+                  </Select>
+                )}
+              </Form.Item>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测类型" >
+                {getFieldDecorator("ptId", { initialValue: '', rules: [{ required: true }] })(
+                  <Select placeholder="请选择" size="small">
+                    {ptList.map(item => <Option key={item.id} value={item.id}>{item.label}</Option>)}
+                  </Select>
+                )}
+              </Form.Item>
+              <Divider orientation="left">监测因子</Divider>
+              {!!getFieldValue('ptId') && 
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
+                {getFieldDecorator("pmCodeList", { initialValue: [], rules: [{ required: true }] })(
+                  <Checkbox.Group style={{ width: '100%' }}>
+                    <Row>
+                      {pmCodeList.map(item => <Col span={8} key={item.pmCode}><Checkbox style={{ fontSize: '10px' }} value={item.pmCode}>{item.pmName}</Checkbox></Col>)}
+                    </Row>
+                  </Checkbox.Group>
+                )}
+              </Form.Item>
+              }
+              <Divider orientation="left">起止时间</Divider>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
+                {getFieldDecorator("timeRange", { initialValue: '', rules: [{ required: true }] })(
+                  <RangePicker />
+                )}
+              </Form.Item>
+              
+              <Button type="primary" htmlType="submit" block>查询</Button>
+            </Card>
+          </Form>
+        </Col>
+        <Col span={18}>
+          <Card size="small" title="数据列表" extra={<Button onClick={doExport} size="small">导出</Button>}>
+            <Table size="small" bordered scroll={{ x: 1300 }} pagination={pagination} columns={toJS(columns)} dataSource={toJS(dataList)} />
+          </Card>
+        </Col>
+      </Row>
+
+    </Spin>
+  )
+}));

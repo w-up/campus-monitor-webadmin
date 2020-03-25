@@ -90,6 +90,7 @@ export class UserManagement {
         current: this.query.current,
         pageNo: this.query.current,
         size: this.query.pageSize,
+        status: this.query.status,
         username: this.query.userName,
       });
   

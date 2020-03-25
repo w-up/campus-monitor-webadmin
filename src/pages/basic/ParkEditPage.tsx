@@ -36,7 +36,6 @@ const tailFormItemLayout = {
 export const ParkEditPage = Form.create()(
   observer(({ form }: any) => {
     const { state = {} }: any = useLocation();
-    console.log("state", state);
 
     const { id, parkName, parkNo, remark, scope: initialScope, parkStatus } = state.park || {};
 
@@ -79,9 +78,6 @@ export const ParkEditPage = Form.create()(
         drawMap.setPathsByScope(initialScope);
       }
     }, []);
-
-    console.log(toJS(scope));
-    console.log(toJS(drawMap));
 
   return(
     <Spin spinning={loading}>

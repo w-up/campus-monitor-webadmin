@@ -70,24 +70,29 @@ export const Roles = Form.create()(observer((props: any) => {
       title: '操作',
       dataIndex: 'action',
       width: 100,
-      render: (text: any, perm: any) => (
-        <span>
-          <a onClick={() => {
-            Modal.confirm({
-              title: "删除确认",
-              content: `确定删除这条记录吗？`,
-              async onOk() {
-                  await role.deleteRole([perm.id]);
-                  resetSelectedRowKeys();
-              }
-            });
-          }}>删除</a>
-          <Divider type="vertical" />
-          <Link to={{ pathname: `/user/role-edit/${perm.id}`, state: { perm } }}>修改</Link>
-          {/* <Divider type="vertical" /> */}
-          {/* <a onClick={() => openModal()}>权限配置</a> */}
-        </span>
-      ),
+      render: (text: any, perm: any) =>{
+        if (perm.status !== 0) {
+          return null;
+        }
+        return (
+          <span>
+            <a onClick={() => {
+              Modal.confirm({
+                title: "删除确认",
+                content: `确定删除这条记录吗？`,
+                async onOk() {
+                    await role.deleteRole([perm.id]);
+                    resetSelectedRowKeys();
+                }
+              });
+            }}>删除</a>
+            <Divider type="vertical" />
+            <Link to={{ pathname: `/user/role-edit/${perm.id}`, state: { perm } }}>修改</Link>
+            {/* <Divider type="vertical" /> */}
+            {/* <a onClick={() => openModal()}>权限配置</a> */}
+          </span>
+        );
+      },
     }
   ];
 
@@ -122,7 +127,7 @@ export const Roles = Form.create()(observer((props: any) => {
                 <Input placeholder="请输入" value={query.name} onChange={handleSearchNameChange} />
               </Form.Item>
               <Form.Item label="状态">
-                <Select style={{ width: 150 }} value={query.status} onChange={handleSearchStatusChange}>
+                <Select allowClear style={{ width: 150 }} value={query.status} onChange={handleSearchStatusChange}>
                   <Option value={0}>正常</Option>
                   <Option value={1}>作废</Option>
                 </Select>

@@ -1,8 +1,9 @@
 import { action, observable } from "mobx";
 import { GET, POST } from "../../utils/request";
 import { store } from "../index";
+import moment from 'moment';
 
-export class RuntimeData {
+export class HistoryData {
   @observable loading: boolean = false;
   @observable query: any = {
     current: 1,
@@ -41,10 +42,13 @@ export class RuntimeData {
 
   @action.bound
   async queryDatas(param) {
+    param.startTime = moment(param.timeRange[0]).format('YYYY-MM-DD HH:mm:ss');
+    param.endTime = moment(param.timeRange[1]).format('YYYY-MM-DD HH:mm:ss');
+
     this.loading = true;
     this.param = { ...param };
     try {
-      const { data }: any = await POST('/device-data/getAllPMDataBySitesAndPMs', {
+      const { data }: any = await POST('/device-data-history/queryHistoryDatas', {
         ...param,
         current: this.query.current,
         pageNo: this.query.current,
@@ -55,9 +59,6 @@ export class RuntimeData {
         const config = { ...item, width: 80, key: item.titleKey, dataIndex: item.titleKey };
         if (index === 0) {
           config.fixed = 'left';
-          config.width = 150;
-        } else if (index === (data.titles.length - 1)) {
-          config.fixed = 'right';
           config.width = 150;
         }
         return config;
@@ -70,7 +71,26 @@ export class RuntimeData {
     } catch {
 
     }
-    
+
+    this.loading = false;
+  }
+
+  @action.bound
+  async exportDatas(param) {
+    param.startTime = moment(param.timeRange[0]).format('YYYY-MM-DD HH:mm:ss');
+    param.endTime = moment(param.timeRange[1]).format('YYYY-MM-DD HH:mm:ss');
+
+    this.loading = true;
+    this.param = { ...param };
+    try {
+      await POST('/device-data-history/exportHistoryDatas', {
+        ...param,
+      });
+      
+    } catch {
+
+    }
+
     this.loading = false;
   }
 }

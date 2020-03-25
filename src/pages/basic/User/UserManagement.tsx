@@ -36,9 +36,9 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
     {
       title: '用户类型',
       dataIndex: 'type',
-      width: 100,
+      width: 150,
       render: val => {
-        return ['园区用户', '企业用户', '其他'][val];
+        return ['园区用户', '企业用户', '超级管理员', '其他'][val];
       },
     },
     {
@@ -164,7 +164,7 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
                 <Input value={query.userName} onChange={handleSearchUsernameChange} placeholder="请输入" />
               </Form.Item>
               <Form.Item label="状态">
-                <Select style={{ width: 150 }} value={query.status} onChange={handleSearchStatusChange}>
+                <Select allowClear style={{ width: 150 }} value={query.status} onChange={handleSearchStatusChange}>
                   <Option value={0}>正常</Option>
                   <Option value={1}>作废</Option>
                 </Select>

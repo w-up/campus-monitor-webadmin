@@ -7,11 +7,6 @@ import { Checkbox, Breadcrumb, Spin, Card, Row, Col, Form, Select, Divider, Butt
 import { toJS } from "mobx";
 const { Option } = Select;
 
-interface Props { }
-interface State {
-  monitoringFactors: []
-}
-
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -23,53 +18,6 @@ const formItemLayout = {
   },
 };
 
-type FixedDir = "right" | "left"
-
-const fixedDirection: FixedDir = 'right'
-
-const columns = [
-  {
-    title: '监测区域',
-    dataIndex: 'area',
-    key: 'area',
-  },
-  {
-    title: '站点名称',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  { title: '测量值  1', dataIndex: 'value', key: '1' },
-  { title: '测量值 2', dataIndex: 'value', key: '2' },
-  { title: '测量值 3', dataIndex: 'value', key: '3' },
-  { title: '测量值 4', dataIndex: 'value', key: '4' },
-  { title: '测量值 5', dataIndex: 'value', key: '5' },
-  { title: '测量值 6', dataIndex: 'value', key: '6' },
-  { title: '测量值 7', dataIndex: 'value', key: '7' },
-  { title: '测量值 8', dataIndex: 'value', key: '8' },
-  {
-    title: '数据更新时间',
-    key: 'updateTime',
-    dataIndex: 'updateTime',
-    fixed: fixedDirection,
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    area: '234.89, 235345.09',
-    name: '站点1',
-    value: 32,
-    updateTime: '2020-02-29'
-  },
-  {
-    key: '2',
-    area: '234.89, 235345.09',
-    name: '站点2',
-    value: 40,
-    updateTime: '2020-02-29'
-  },
-];
 
 export const RuntimeDataPage = Form.create()(observer(({ form }: any) => {
 
@@ -83,6 +31,7 @@ export const RuntimeDataPage = Form.create()(observer(({ form }: any) => {
 
   const {
     loading, parkTree, ptList, columns, dataList,
+    query, total, paginationChange,
   } = runTimeData;
 
   const { getFieldDecorator, setFieldsValue, resetFields, getFieldsValue, getFieldValue, validateFields } = form;
@@ -123,6 +72,19 @@ export const RuntimeDataPage = Form.create()(observer(({ form }: any) => {
       runTimeData.queryDatas(values);
     });
   }
+
+  const pagination = {
+    current: query.current,
+    pageSize: query.pageSize,
+    total,
+    showSizeChanger: true,
+    showQuickJumper: true,
+    showTotal: total => {
+      return "共 " + total + " 条记录";
+    },
+    onChange: paginationChange,
+    onShowSizeChange: paginationChange
+  };
 
   return (
     <Spin spinning={loading}>
@@ -185,7 +147,7 @@ export const RuntimeDataPage = Form.create()(observer(({ form }: any) => {
         </Col>
         <Col span={18}>
           <Card size="small" title="数据列表">
-            <Table size="small" bordered columns={toJS(columns)} dataSource={toJS(dataList)} />
+            <Table size="small" bordered scroll={{ x: 1300 }} pagination={pagination} columns={toJS(columns)} dataSource={toJS(dataList)} />
           </Card>
         </Col>
       </Row>

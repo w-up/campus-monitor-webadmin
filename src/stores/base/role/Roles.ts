@@ -91,6 +91,7 @@ export class Roles {
         pageNo: this.query.current,
         size: this.query.pageSize,
         name: this.query.name,
+        status: this.query.status,
       });
   
       this.query.total = data.total;

@@ -22,6 +22,9 @@ import { SystemConfig } from "./SystemConfig";
 import { DataManage } from "./data/DataManage";
 import { Replenish } from "./data/Replenish";
 import { RuntimeData } from "./query/RuntimeData";
+import { HistoryData } from "./query/HistoryData";
+import { Rank } from "./analysis/Rank";
+import { Comparison } from "./analysis/Comparison";
 
 export const store = {
   menu: new MenuStore(),
@@ -56,6 +59,11 @@ export const store = {
   },
   query: {
     runTimeData: new RuntimeData(),
+    historyData: new HistoryData(),
+  },
+  analysis: {
+    rank: new Rank(),
+    comparison: new Comparison(),
   }
 
 };
