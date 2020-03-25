@@ -274,7 +274,7 @@ export class MapMonitorStore {
       // });
     });
     this.mapvLayer = new mapv.baiduMapLayer(this.map, new mapv.DataSet(data), {
-      size: 40,
+      size: 25,
       gradient: { 0.25: "rgb(0,0,255)", 0.55: "rgb(0,255,0)", 0.85: "yellow", 1.0: "rgb(255,0,0)" },
       max: 1,
       // range: [0, 100], // 过滤显示数据范围
