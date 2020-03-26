@@ -1,137 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import ReactEcharts from "echarts-for-react";
 import { useStore } from "../../stores/index";
 import { Link } from "react-router-dom";
 
 import { Spin, Card, Row, Col, Form, Button, Select, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal } from 'antd';
+import { toJS } from "mobx";
 const { Option } = Select;
 
-const option1 = {
-  legend: {
-    orient: 'horizontal',
-    x: 'center',
-    y: 'bottom',
-    data: ['行业1', '行业2', '行业3']
-  },
-  backgroundColor: '#f0f0f0',
-  toolbox: {
-    show: true,
-    feature: {
-      mark: { show: true },
-      dataView: { show: true, readOnly: false },
-      magicType: {
-        show: true,
-        type: ['pie', 'funnel']
-      },
-      restore: { show: true },
-      saveAsImage: { show: true }
-    }
-  },
-  calculable: false,
-  series: [
-    {
-      name: '访问来源',
-      type: 'pie',
-      selectedMode: 'single',
-      radius: [0, 80],
 
-      funnelAlign: 'right',
-      max: 1548,
 
-      itemStyle: {
-        normal: {
-          label: {
-            position: 'inner'
-          },
-          labelLine: {
-            show: false
-          }
-        }
-      },
-      data: [
-        { value: 335, name: '行业1' },
-        { value: 679, name: '行业2' },
-        { value: 1548, name: '行业3' }
-      ]
-    },
-    {
-      name: '访问来源',
-      type: 'pie',
-      radius: [100, 140],
-
-      funnelAlign: 'left',
-      max: 1048,
-
-      itemStyle: {
-        normal: {
-          label: {
-            position: 'inner'
-          },
-          labelLine: {
-            show: false
-          }
-        }
-      },
-
-      data: [
-        { value: 335, name: '已选行业' },
-        { value: 310, name: '其他行业' },
-      ]
-    }
-  ]
-};
-
-const option2 = {
-  legend: {
-    orient: 'horizontal',
-    x: 'center',
-    y: 'bottom',
-    data: ['行业1', '行业2', '行业3']
-  },
-  backgroundColor: '#f0f0f0',
-  toolbox: {
-    show: true,
-    feature: {
-      mark: { show: true },
-      dataView: { show: true, readOnly: false },
-      magicType: {
-        show: true,
-        type: ['pie', 'funnel']
-      },
-      restore: { show: true },
-      saveAsImage: { show: true }
-    }
-  },
-  calculable: false,
-  series: [
-    {
-      name: '访问来源',
-      type: 'pie',
-      selectedMode: 'single',
-      radius: [0, 140],
-
-      funnelAlign: 'right',
-      max: 1548,
-
-      itemStyle: {
-        normal: {
-          label: {
-            position: 'inner'
-          },
-          labelLine: {
-            show: false
-          }
-        }
-      },
-      data: [
-        { value: 335, name: '行业1' },
-        { value: 679, name: '行业2' },
-        { value: 1548, name: '行业3' }
-      ]
-    }
-  ]
-};
 
 const option3 = {
   tooltip: {
@@ -207,13 +85,47 @@ export const ComparisonAnalysisPage = Form.create()(observer(({ form }: any) => 
   const chart2 = React.useRef<any>();
   const chart3 = React.useRef<any>();
 
+  const { getFieldDecorator, setFieldsValue, resetFields, getFieldsValue, getFieldValue, validateFields } = form;
+
   const {
     analysis: { comparison }
   } = useStore();
 
   const {
-    loading, parkTree, ptList,
+    loading, parkTree, ptList, option1, option2,
   } = comparison;
+
+  const doSubmit = e => {
+    e.preventDefault();
+    validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      comparison.getStatisAnalisis(values);
+    });
+  }
+
+  useEffect(() => {
+    comparison.getAllSitesTree();
+  }, []);
+
+  let factoryList: any = [];
+  if (parkTree.length) {
+    if (getFieldValue('parkId')) {
+      factoryList = parkTree.find(item => item.parkId === getFieldValue('parkId')).factorys || [];
+    } else {
+      factoryList = parkTree[0].factories || [];
+    }
+  }
+
+  let pmCodeList: any = [];
+  if (ptList.length) {
+    if (getFieldValue('ptId')) {
+      pmCodeList = ptList.find(item => item.id === getFieldValue('ptId')).pms || [];
+    } else {
+      pmCodeList = ptList[0].pms || [];
+    }
+  }
 
   return (
     <Spin spinning={loading}>
@@ -228,36 +140,77 @@ export const ComparisonAnalysisPage = Form.create()(observer(({ form }: any) => 
       <Row gutter={10}>
         <Col span={6}>
           <Card title="检测数据统计排名">
-            <Form>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="统计区域" hasFeedback>
-                <Select placeholder="请选择" size="small">
-                  <Option value="china">园区1</Option>
-                  <Option value="usa">园区1</Option>
-                </Select>
+            <Form onSubmit={doSubmit}>
+              
+              {getFieldDecorator("detectType", { initialValue: 2, rules: [{ required: true }] })(
+                <Input hidden />
+              )}
+              
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="统计区域" >
+                {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: true }] })(
+                  <Select onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
+                    {parkTree.map(item => <Option key={item.parkId} value={item.parkId}>{item.parkName}</Option>)}
+                  </Select>
+                )}
               </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测区域" hasFeedback>
-                <Select placeholder="请选择" size="small">
-                  <Option value="china">A化工</Option>
-                  <Option value="usa">B化工</Option>
-                </Select>
+
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测区域" >
+                {getFieldDecorator("factoryIds", { initialValue: [], rules: [{ required: true }] })(
+                  <Select mode="multiple" placeholder="请选择" size="small">
+                    {factoryList.map(item => <Option key={item.factoryId} value={item.factoryId}>{item.factoryName}</Option>)}
+                  </Select>
+                )}
               </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测因子" hasFeedback>
-                <Select placeholder="请选择" size="small">
-                  <Option value="china">TVOCs</Option>
-                  <Option value="usa">苯乙烯</Option>
-                </Select>
+
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测类型" >
+                {getFieldDecorator("ptId", { initialValue: '', rules: [{ required: true }] })(
+                  <Select placeholder="请选择" size="small">
+                    {ptList.map(item => <Option key={item.id} value={item.id}>{item.label}</Option>)}
+                  </Select>
+                )}
               </Form.Item>
+
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测因子" >
+                {getFieldDecorator("pmCode", { initialValue: '', rules: [{ required: true }] })(
+                  <Select placeholder="请选择" size="small">
+                    {pmCodeList.map(item => <Option key={item.pmCode} value={item.pmCode}>{item.pmName}</Option>)}
+                  </Select>
+                )}
+              </Form.Item>
+
               <Divider orientation="left">时间</Divider>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="统计周期" hasFeedback>
-                <Radio.Group defaultValue="c" size="small" buttonStyle="solid">
-                  <Radio.Button value="a">日</Radio.Button>
-                  <Radio.Button value="c">月</Radio.Button>
-                  <Radio.Button value="d">年</Radio.Button>
+
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="统计周期" >
+                {getFieldDecorator("timeCycle", { initialValue: 1, rules: [{ required: true }] })(
+                  <Radio.Group size="small" buttonStyle="solid">
+                  <Radio.Button value={1}>日</Radio.Button>
+                  <Radio.Button value={2}>月</Radio.Button>
+                  <Radio.Button value={3}>年</Radio.Button>
+                  <Radio.Button value={4}>周</Radio.Button>
+                  <Radio.Button value={5}>季</Radio.Button>
                 </Radio.Group>
+                )}
               </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="统计时间" hasFeedback>
-                <DatePicker size="small" />
+
+
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="统计时间" >
+                {getFieldDecorator("collectDate", { initialValue: '', rules: [{ required: true }] })(
+                  <DatePicker size="small" />
+                )}
               </Form.Item>
+
+              {/* <Divider orientation="left"></Divider> */}
+
+              {/* <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="排名方式" >
+                {getFieldDecorator("rankType", { initialValue: 1, rules: [{ required: true }] })(
+                  <Radio.Group size="small" buttonStyle="solid">
+                    <Radio.Button value={1}>前十</Radio.Button>
+                    <Radio.Button value={2}>后十</Radio.Button>
+                    <Radio.Button value={3}>全部</Radio.Button>
+                  </Radio.Group>
+                )}
+              </Form.Item> */}
+
               <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }}>
                 <Button type="primary" style={{ width: '100%' }} htmlType="submit">开始统计</Button>
               </Form.Item>
@@ -267,27 +220,27 @@ export const ComparisonAnalysisPage = Form.create()(observer(({ form }: any) => 
         <Col span={18} >
           <Row gutter={6}>
             <Col span={12} style={{ marginBottom: '10px' }}>
-              <Card bordered size="small" title="各行业TVOCs排放贡献率" extra="2019-10-24">
+              <Card bordered size="small" title="各行业排放贡献率" extra="2019-10-24">
                 <ReactEcharts
                   //@ts-ignore
-                  option={option1}
+                  option={toJS(option1)}
                   ref={chart1}
                   style={{ height: '360px' }}
                 />
               </Card>
             </Col>
             <Col span={12} style={{ marginBottom: '10px' }}>
-              <Card bordered size="small" title="区域TVOCs排放贡献率" extra="2019-10-24">
+              <Card bordered size="small" title="区域排放贡献率" extra="2019-10-24">
                 <ReactEcharts
                   //@ts-ignore
-                  option={option2}
+                  option={toJS(option2)}
                   ref={chart2}
                   style={{ height: '360px' }}
                 />
               </Card>
             </Col>
             <Col span={24} style={{ marginBottom: '10px' }}>
-              <Card bordered size="small" title="区域TVOCs排放贡献率" extra="2019-10-24">
+              <Card bordered size="small" title="区域排放趋势对比" extra="2019-10-24">
                 <ReactEcharts
                   //@ts-ignore
                   option={option3}

@@ -5,143 +5,34 @@ import { Link } from "react-router-dom";
 import { useStore } from "../../stores/index";
 
 import { Checkbox, Spin, Card, Row, Col, Form, Button, Select, Tabs, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal } from 'antd';
+import { toJS } from "mobx";
 const { Option } = Select;
 const { TabPane } = Tabs;
 
-const option1 = {
-  tooltip: {
-    trigger: 'axis'
-  },
-  backgroundColor: '#f0f0f0',
-  toolbox: {
-    show: true,
-    feature: {
-      mark: { show: true },
-      dataView: { show: true, readOnly: false },
-      magicType: { show: true, type: ['line', 'bar'] },
-      restore: { show: true },
-      saveAsImage: { show: true }
-    }
-  },
-  calculable: true,
-  xAxis: [
-    {
-      type: 'value',
-      boundaryGap: [0, 0.01]
-    }
-  ],
-  yAxis: [
-    {
-      type: 'category',
-      data: ['A化工', 'B化工', 'C化工', 'D化工', 'E化工', 'F化工']
-    }
-  ],
-  series: [
-    {
-      name: '2011年',
-      type: 'bar',
-      data: [18203, 23489, 29034, 104970, 131744, 630230]
-    },
-  ]
-};
-
-const option2 = {
-  legend: {
-    orient: 'horizontal',
-    x: 'center',
-    y: 'bottom',
-    data: ['行业1', '行业2', '行业3']
-  },
-  backgroundColor: '#f0f0f0',
-  toolbox: {
-    show: true,
-    feature: {
-      mark: { show: true },
-      dataView: { show: true, readOnly: false },
-      magicType: {
-        show: true,
-        type: ['pie', 'funnel']
-      },
-      restore: { show: true },
-      saveAsImage: { show: true }
-    }
-  },
-  calculable: false,
-  series: [
-    {
-      name: '访问来源',
-      type: 'pie',
-      selectedMode: 'single',
-      radius: [0, 140],
-
-      funnelAlign: 'right',
-      max: 1548,
-
-      itemStyle: {
-        normal: {
-          label: {
-            position: 'inner'
-          },
-          labelLine: {
-            show: false
-          }
-        }
-      },
-      data: [
-        { value: 335, name: '行业1' },
-        { value: 679, name: '行业2' },
-        { value: 1548, name: '行业3' }
-      ]
-    }
-  ]
-};
 
 const columns = [
   {
     title: '排名',
-    dataIndex: 'key',
-    key: 'key',
+    dataIndex: 'rankNum',
+    key: 'rankNum',
   },
   {
     title: '区域',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'areaName',
+    key: 'areaName',
   },
   {
     title: '排放率',
-    dataIndex: 'age',
-    key: 'age',
+    dataIndex: 'sumValue',
+    key: 'sumValue',
   },
   {
     title: '贡献率',
-    key: 'tags',
-    dataIndex: 'tags',
+    key: 'rateNum',
+    dataIndex: 'rateNum',
   },
 ];
 
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
 
 export const RankAnalysisPage = Form.create()(observer(({ form }: any) => {
 
@@ -156,7 +47,7 @@ export const RankAnalysisPage = Form.create()(observer(({ form }: any) => {
   const { getFieldDecorator, setFieldsValue, resetFields, getFieldsValue, getFieldValue, validateFields } = form;
 
   const {
-    loading, parkTree, ptList,
+    loading, parkTree, ptList, option1, option2, dataSource,
   } = rank;
 
   useEffect(() => {
@@ -181,6 +72,9 @@ export const RankAnalysisPage = Form.create()(observer(({ form }: any) => {
       rank.getStatisRank(values);
     });
   }
+
+  console.log('option1', toJS(option1));
+  console.log('option2', toJS(option2));
 
   return (
     <Spin spinning={loading}>
@@ -267,12 +161,12 @@ export const RankAnalysisPage = Form.create()(observer(({ form }: any) => {
         <Col span={18}>
           <Row gutter={6}>
             <Col span={12} style={{ marginBottom: '10px' }}>
-              <Card bordered size="small" title="区域TVOCs等效排放量" extra="2019-10-24">
+              <Card bordered size="small" title="排放量" >
                 <Tabs defaultActiveKey="1" size="small">
                   <TabPane tab="企业排名" key="1">
                     <ReactEcharts
                       //@ts-ignore
-                      option={option1}
+                      option={toJS(option1)}
                       ref={chart1}
                       style={{ height: '360px' }}
                     />
@@ -280,7 +174,7 @@ export const RankAnalysisPage = Form.create()(observer(({ form }: any) => {
                   <TabPane tab="站点排名" key="2">
                     <ReactEcharts
                       //@ts-ignore
-                      option={option1}
+                      option={toJS(option1)}
                       ref={chart1}
                       style={{ height: '360px' }}
                     />
@@ -289,18 +183,18 @@ export const RankAnalysisPage = Form.create()(observer(({ form }: any) => {
               </Card>
             </Col>
             <Col span={12} style={{ marginBottom: '10px' }}>
-              <Card bordered size="small" title="区域TVOCs等效排放量贡献率" extra="2019-10-24">
+              <Card bordered size="small" title="贡献率" >
                 <ReactEcharts
                   //@ts-ignore
-                  option={option2}
+                  option={toJS(option2)}
                   ref={chart2}
                   style={{ height: '360px' }}
                 />
               </Card>
             </Col>
             <Col span={24} style={{ marginBottom: '10px' }}>
-              <Card bordered size="small" title="区域TVOCs等效排放量贡献率" extra="2019-10-24">
-                <Table bordered size="small" pagination={false} columns={columns} dataSource={data} />
+              <Card bordered size="small" title="区域TVOCs等效排放量贡献率" >
+                <Table bordered size="small" pagination={false} columns={columns} dataSource={toJS(dataSource)} />
               </Card>
             </Col>
           </Row>
