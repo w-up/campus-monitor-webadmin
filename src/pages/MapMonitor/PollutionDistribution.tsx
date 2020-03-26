@@ -25,14 +25,14 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
     currentPark: "0",
     currentPmCode: "",
     pmcodes: [] as Array<PMCode>,
-    async selectPark(parkId) {
-      this.currentPark = parkId;
-      const result = await api.MapMonitor.getPmCodeListByParkId({ parkId });
-      this.pmcodes = result.data;
-      if (this.currentPmCode) {
-        mapMonitor.loadParkData({ parkId: this.currentPark, pmCode: this.currentPmCode });
-      }
-    },
+    // async selectPark(parkId) {
+    //   this.currentPark = parkId;
+    //   const result = await api.MapMonitor.getPmCodeListByParkId({ parkId });
+    //   this.pmcodes = result.data;
+    //   if (this.currentPmCode) {
+    //     mapMonitor.loadParkData({ parkId: this.currentPark, pmCode: this.currentPmCode });
+    //   }
+    // },
     async selectPmCode(pmCode) {
       this.currentPmCode = pmCode;
       mapMonitor.loadParkData({ parkId: this.currentPark, pmCode: this.currentPmCode });
@@ -49,6 +49,7 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
       this.isPlaying = !this.isPlaying;
     },
     get submitAble() {
+      console.log(mapMonitor.currentPark, mapMonitor.currentPmCode);
       return mapMonitor.currentPmCode !== "0" && mapMonitor.currentPark !== "0";
     },
     handleSubmit: e => {
@@ -72,7 +73,7 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
       <Form {...store.formItemLayout} onSubmit={store.handleSubmit} key="PollutionDistribution">
         <Form.Item label="选择园区">
           {getFieldDecorator("parkId", { initialValue: "0", rules: [{ required: true }] })(
-            <Select onChange={store.selectPark}>
+            <Select onChange={mapMonitor.selectPark}>
               <Select.Option value="0">全部</Select.Option>
               {mapMonitor.parks.map((item, index) => (
                 <Select.Option value={item.id} key={index}>
@@ -84,7 +85,7 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
         </Form.Item>
         <Form.Item label="监测因子">
           {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
-            <Select onChange={store.selectPmCode}>
+            <Select onChange={mapMonitor.selectPmcode}>
               <Select.Option value="0">全部</Select.Option>
               {mapMonitor.pmcodes.map((item, index) => (
                 <Select.Option value={item.pmCode} key={index}>

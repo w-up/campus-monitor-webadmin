@@ -11,7 +11,7 @@ export const PolarRadialChart = () => {
     options: {
       angleAxis: {
         type: "category",
-        data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+        data: ["NE", "E", "SE", "S", "SW", "W", "NW", "N"]
       },
       radiusAxis: {},
       polar: {},

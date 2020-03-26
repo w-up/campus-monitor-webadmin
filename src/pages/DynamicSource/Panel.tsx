@@ -142,25 +142,69 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
         </Form.Item>
       </Form>
 
-      <div className="mt-4">
-        <div className="text-white mt-8">站点贡献率状况</div>
-        <div className="primary-text-color justify-end flex items-center ">
-          <Icon type="clock-circle" theme="filled" />
-          <span className="ml-2 text-sm">2020-01-03 15:00:00</span>
-        </div>
-        <div className="stat-panel p-2 text-white flex items-center mt-2">
-          <div onClick={e => dynamicSource.toggleTimer({ target: dynamicSource.DynamicSourceContribution })}>
-            <Icon type={dynamicSource.DynamicSourceContribution.timer ? "pause-circle" : "play-circle"} theme="twoTone" className="text-white text-xl" />
+      <div className="text-white mt-8">站点贡献率状况</div>
+      {dynamicSource.computeType == "1" && (
+        <div>
+          <div className="primary-text-color justify-end flex items-center ">
+            <Icon type="clock-circle" theme="filled" />
+            <span className="ml-2 text-sm">{dynamicSource.curDynamicSourceContribution?.datetime}</span>
           </div>
-          <div className="flex-1 ml-4">
-            <Slider
-              value={dynamicSource.DynamicSourceContribution.index}
-              max={dynamicSource.DynamicSourceContribution.data.length}
-              onChange={e => dynamicSource.setCurrentTime({ target: dynamicSource.DynamicSourceContribution, val: Number(e), stop: true })}
-            ></Slider>
+          <div className="stat-panel p-2 text-white flex items-center mt-2">
+            <div onClick={e => dynamicSource.toggleTimer({ target: dynamicSource.DynamicSourceContribution })}>
+              <Icon type={dynamicSource.DynamicSourceContribution.timer ? "pause-circle" : "play-circle"} theme="twoTone" className="text-white text-xl" />
+            </div>
+            <div className="flex-1 ml-4">
+              <Slider
+                value={dynamicSource.DynamicSourceContribution.index}
+                max={dynamicSource.DynamicSourceContribution.data.length}
+                onChange={e => dynamicSource.setCurrentTime({ target: dynamicSource.DynamicSourceContribution, val: Number(e), stop: true })}
+              ></Slider>
+            </div>
           </div>
         </div>
-      </div>
+      )}
+
+      {dynamicSource.computeType == "2" && (
+        <div>
+          <div className="primary-text-color justify-end flex items-center ">
+            <Icon type="clock-circle" theme="filled" />
+            <span className="ml-2 text-sm">{dynamicSource.curDynamicSourceWindRose?.datetime}</span>
+          </div>
+          <div className="stat-panel p-2 text-white flex items-center mt-2">
+            <div onClick={e => dynamicSource.toggleTimer({ target: dynamicSource.DynamicSourceWindRose })}>
+              <Icon type={dynamicSource.DynamicSourceWindRose.timer ? "pause-circle" : "play-circle"} theme="twoTone" className="text-white text-xl" />
+            </div>
+            <div className="flex-1 ml-4">
+              <Slider
+                value={dynamicSource.DynamicSourceWindRose.index}
+                max={dynamicSource.DynamicSourceWindRose.data.length}
+                onChange={e => dynamicSource.setCurrentTime({ target: dynamicSource.DynamicSourceWindRose, val: Number(e), stop: true })}
+              ></Slider>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {dynamicSource.computeType == "3" && (
+        <div>
+          <div className="primary-text-color justify-end flex items-center ">
+            <Icon type="clock-circle" theme="filled" />
+            <span className="ml-2 text-sm">{dynamicSource.curDynamicSourceTraceSource?.datetime}</span>
+          </div>
+          <div className="stat-panel p-2 text-white flex items-center mt-2">
+            <div onClick={e => dynamicSource.toggleTimer({ target: dynamicSource.DynamicSourceTraceSource })}>
+              <Icon type={dynamicSource.DynamicSourceTraceSource.timer ? "pause-circle" : "play-circle"} theme="twoTone" className="text-white text-xl" />
+            </div>
+            <div className="flex-1 ml-4">
+              <Slider
+                value={dynamicSource.DynamicSourceTraceSource.index}
+                max={dynamicSource.DynamicSourceTraceSource.data.length}
+                onChange={e => dynamicSource.setCurrentTime({ target: dynamicSource.DynamicSourceTraceSource, val: Number(e), stop: true })}
+              ></Slider>
+            </div>
+          </div>
+        </div>
+      )}
 
       {dynamicSource.computeType == "1" && dynamicSource.curDynamicSourceContribution && (
         <div className="monitor-row-panel p-4 ">
@@ -174,19 +218,21 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
           </div>
         </div>
       )}
-      {dynamicSource.computeType == "3" && (
+      {dynamicSource.computeType == "3" && dynamicSource.curDynamicSourceTraceSource && (
         <div className="monitor-row-panel p-4 ">
           <div className="primary-button-text-dark text-lg">计算结果</div>
-          <div className="primary-button-text-dark text-sm mt-2"> 时间: 2020-01-02 14:00:00</div>
-          {store.monitorPanel.points.map((item, index) => (
+          <div className="primary-button-text-dark text-sm mt-2"> 时间: {dynamicSource.curDynamicSourceTraceSource.datetime}</div>
+          {dynamicSource.curDynamicSourceTraceSource?.valueList.map((item, index) => (
             <div className="stat-panel text-white mt-8 p-4 flex" key={index}>
               <div className="text-md">
                 <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: "red", display: "inline-block" }}></span>
-                <span className="ml-2">{item.name}</span>
+                <span className="ml-2">{item.siteName}</span>
               </div>
               <div className="ml-4">
-                <div>位置: {item.position}</div>
-                <div>浓度: {item.concentration}</div>
+                <div>
+                  位置: {item.lng} {item.lat}
+                </div>
+                <div>浓度: {item.value}</div>
               </div>
             </div>
           ))}

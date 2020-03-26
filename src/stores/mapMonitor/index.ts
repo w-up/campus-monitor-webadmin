@@ -143,6 +143,7 @@ export class MapMonitorStore {
 
   @action.bound
   async loadParkData({ parkId, pmCode }: { parkId?: string; pmCode?: string } = { parkId: this.currentPark, pmCode: this.currentPmCode }) {
+    // if (this.map) { this.map.clearOverlays() }
     const result = await api.MapMonitor.getMapInfoByPmCodeAndParkId({ parkId: Number(parkId), pmCode: this.currentPmCode });
     if (result.data) {
       this.curParkData = result.data;
@@ -199,7 +200,10 @@ export class MapMonitorStore {
       timeStart: moment(timeStart).format("YYYY-MM-DD HH"),
       timeEnd: moment(timeEnd).format("YYYY-MM-DD HH")
     });
-    this.polltionDatas = res.data;
+    if (res.data) {
+      this.polltionDatas = res.data;
+      this.setCurrentTime(0);
+    }
   }
 
   @observable playPollutionTimer = 0 as any;
@@ -275,12 +279,12 @@ export class MapMonitorStore {
       // });
     });
     this.mapvLayer = new mapv.baiduMapLayer(this.map, new mapv.DataSet(data), {
-      size: 25,
-      gradient: { 0.25: "rgb(0,0,255)", 0.55: "rgb(0,255,0)", 0.85: "yellow", 1.0: "rgb(255,0,0)" },
+      size: 22,
+      gradient: { 0.16: "rgb(0,255,0)", 0.33: "yellow", 0.5: "#ef8432", 0.666: "rgb(255,0,0)", 1: "#8b1b4a" },
       max: 1,
       // range: [0, 100], // 过滤显示数据范围
-      // minOpacity: 0.2, // 热力图透明度
-      // maxOpacity: 0.8,
+      minOpacity: 1, // 热力图透明度
+      maxOpacity: 1,
       draw: "heatmap"
       // animation: {
       //   type: "time", // 按时间展示动画

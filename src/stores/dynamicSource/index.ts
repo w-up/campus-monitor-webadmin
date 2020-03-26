@@ -143,14 +143,6 @@ export class DynamicSourceStore {
   fillArrow() {
     this.arrows.forEach(i => this.map.removeOverlay(i));
     this.arrowLine.forEach(i => this.map.removeOverlay(i));
-
-    // this.pointsc.forEach(i => {
-    //   var polyline = new BMap.Polyline([new BMap.Point(i.position.lng, i.position.lat), new BMap.Point(120.985022, 31.3687)], { strokeColor: "blue", strokeWeight: 4, strokeOpacity: 1 });
-    //   console.log(polyline);
-    //   this.map.addOverlay(polyline);
-    //   this.addArrow(polyline, 40, Math.PI / 7);
-    //   this.arrowLine.push(polyline);
-    // });
   }
 
   @action.bound
@@ -222,7 +214,7 @@ export class DynamicSourceStore {
       //@ts-ignore
       this.map.setMapStyle({ features: [], style: "midnight" });
     } else {
-      this.fillArrow();
+      // this.fillArrow();
     }
   }
 }
