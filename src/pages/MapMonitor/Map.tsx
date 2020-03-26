@@ -18,11 +18,19 @@ export const MapMonitorMap = () => {
     <APILoader akay={config.baiduMapApiKey}>
       <Map onTilesLoaded={mapMonitor.onMapUpdate} zoom={mapMonitor.zoom} center={mapMonitor.center} enableScrollWheelZoom onZoomEnd={e => (mapMonitor.zoom = e.target.getZoom())}>
         {mapMonitor.curParkData?.map((park, index) => (
-          <Polygon path={utils.array.formatToLatLngShort(park.parkPoints)} key={index} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor={""}></Polygon>
+          <Polygon path={utils.array.formatToLatLngShort(park.parkPoints)} key={park.parkName} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor={""}></Polygon>
         ))}
         {mapMonitor.curParkData?.map(park =>
           park.factoryDatas?.map((item, index) => (
-            <Polygon path={utils.array.formatToLatLngShort(item.factoryPoints)} key={index} strokeStyle="dashed" fillColor="#FFD800" strokeColor="#FFD800" strokeWeight={2}></Polygon>
+            <Polygon
+              visiable={mapMonitor.currentTabKey != "2"}
+              path={utils.array.formatToLatLngShort(item.factoryPoints)}
+              key={index}
+              strokeStyle="dashed"
+              fillColor="#FFD800"
+              strokeColor="#FFD800"
+              strokeWeight={2}
+            ></Polygon>
           ))
         )}
         {mapMonitor.curParkData?.map(park =>
