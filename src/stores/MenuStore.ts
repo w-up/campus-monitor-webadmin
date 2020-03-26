@@ -215,7 +215,7 @@ export class MenuStore {
         },
         {
           title: "审核不通过查看",
-          path: "/data/manage/reject",
+          path: "/data/manage/reject/:id",
           isHide: true,
           component: DataRejectView,
           children: []

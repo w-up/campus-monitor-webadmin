@@ -1,6 +1,7 @@
 import { action, observable } from "mobx";
 import { GET, POST } from "../../utils/request";
 import { store } from "../index";
+import moment from 'moment';
 
 export class DataAudit {
   @observable loading: boolean = false;
@@ -9,49 +10,71 @@ export class DataAudit {
     current: 1,
     pageSize: 10
   };
+  @observable parkTree: any = [];
+  @observable ptList: any = [];
   @observable dataSource: any = [];
-  @observable parksAndFactories: any = [];
   @observable total: number = 0;
 
-  @action.bound
-  async getCheckDataList() {
-    this.loading = true;
-
-    try {
-      const { data }: any = await POST('/dataAdd/getDataAddByPageBySelf', {
-        current: this.query.current,
-        pageNo: this.query.current,
-        pageSize: this.query.pageSize,
-        size: this.query.pageSize,
-      });
-  
-      this.total = data.total;
-      this.query.pageSize = data.size;
-      this.query.current = data.current;
-      this.dataSource = data.records;
-    } catch {
-
-    }
-    
-    this.loading = false;
-  }
-
-  @action.bound
-  async getAllParksAndFactories() {
-    this.loading = true;
-    try {
-      const { data }: any = await GET('/park/getAllParksAndFactories', {});
-      this.parksAndFactories = data.parks;
-    } catch {
-
-    }
-    
-    this.loading = false;
-  }
 
   @action.bound
   async getSitesList(factoryId) {
     const { data }: any = await POST('/device-site/getSiteListPage', { factoryId, current: 0, size: 9999 });
     debugger
   }
+
+  @action.bound
+  async getAllSitesTree() {
+    this.loading = true;
+    try {
+      const { data }: any = await GET('/device-site/getAllSitesTreeAndPMTypeLogin', {});
+      this.parkTree = data.pfsList;
+      this.ptList = data.ptList;
+    } catch {
+
+    }
+    this.loading = false;
+  }
+
+  @action.bound
+  paginationChange(page, pageSize) {
+    this.query = {
+      ...this.query,
+      current: page,
+      pageSize,
+    };
+    this.getCheckData(this.query);
+  }
+
+  @action.bound
+  async getCheckData(param) {
+    param.start = moment(param.timeRange[0]).format('YYYY-MM-DD HH:mm:ss');
+    param.end = moment(param.timeRange[1]).format('YYYY-MM-DD HH:mm:ss');
+
+    this.loading = true;
+    this.query = {
+      ...this.query,
+      ...param,
+    }
+
+    try {
+      const { data }: any = await POST('/dataAdd/getCheckData', {
+        ...this.query,
+        current: this.query.current,
+        pageNo: this.query.current,
+        pageSize: this.query.pageSize,
+        size: this.query.pageSize,
+      });
+      
+      this.total = data.total;
+      this.query.pageSize = data.size;
+      this.query.current = data.current;
+      this.dataSource = data.records;
+
+    } catch {
+
+    }
+
+    this.loading = false;
+  }
+
 }

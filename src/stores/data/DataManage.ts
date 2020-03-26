@@ -9,16 +9,24 @@ export class DataManage {
     current: 1,
     pageSize: 10
   };
+  @observable parkTree: any = [];
+  @observable ptList: any = [];
   @observable dataSource: any = [];
-  @observable parksAndFactories: any = [];
+  @observable deviceList: any = [];
+  
   @observable total: number = 0;
 
   @action.bound
-  async getCheckDataList() {
+  async getCheckDataList(param) {
+    this.query = {
+      ...this.query,
+      ...param,
+    }
     this.loading = true;
 
     try {
       const { data }: any = await POST('/dataAdd/getDataAddByPageBySelf', {
+        ...this.query,
         current: this.query.current,
         pageNo: this.query.current,
         pageSize: this.query.pageSize,
@@ -29,6 +37,7 @@ export class DataManage {
       this.query.pageSize = data.size;
       this.query.current = data.current;
       this.dataSource = data.records;
+      
     } catch {
 
     }
@@ -37,21 +46,40 @@ export class DataManage {
   }
 
   @action.bound
-  async getAllParksAndFactories() {
+  async getAllSitesTree() {
     this.loading = true;
     try {
-      const { data }: any = await GET('/park/getAllParksAndFactories', {});
-      this.parksAndFactories = data.parks;
+      const { data }: any = await GET('/device-site/getAllSitesTreeAndPMTypeLogin', {});
+      this.parkTree = data.pfsList;
+      this.ptList = data.ptList;
     } catch {
 
     }
-    
     this.loading = false;
   }
 
   @action.bound
-  async getSitesList(factoryId) {
-    const { data }: any = await POST('/device-site/getSiteListPage', { factoryId, current: 0, size: 9999 });
-    debugger
+  async getDevice(siteId) {
+    try {
+      const { data }: any = await GET('/dataAdd/getDevice', { siteId });
+      this.deviceList = data;
+    } catch {
+
+    }
+    
   }
+
+  @action.bound
+  async deleteById(id) {
+    this.loading = true;
+    try {
+      await POST('/dataAdd/deleteById', { id });
+    } catch {
+
+    }
+
+    this.loading = false;
+  }
+
+
 }

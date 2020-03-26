@@ -7,6 +7,7 @@ import { toJS } from "mobx";
 import { Spin, Card, Row, Col, Form, Button, Select, Tabs, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal } from 'antd';
 const { Option } = Select;
 const { TabPane } = Tabs;
+const { RangePicker } = DatePicker;
 
 const columns = [
   {
@@ -50,107 +51,6 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    time: '2019-10-24 17:00',
-    key: '1',
-    name: 'John Brown',
-    parkname: '园区2',
-    area: 'A化工',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-    status: '审核不通过',
-  },
-  {
-    time: '2019-10-24 17:00',
-    key: '2',
-    name: 'Jim Green',
-    parkname: '园区2',
-    area: 'A化工',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-    status: '审核通过',
-  },
-  {
-    time: '2019-10-24 17:00',
-    key: '3',
-    name: 'Joe Black',
-    parkname: '园区2',
-    area: 'A化工',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-    status: '待审核',
-  },
-  {
-    time: '2019-10-24 17:00',
-    key: '1',
-    name: 'John Brown',
-    parkname: '园区2',
-    area: 'A化工',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-    status: '待审核',
-  },
-  {
-    time: '2019-10-24 17:00',
-    key: '2',
-    name: 'Jim Green',
-    parkname: '园区2',
-    area: 'A化工',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-    status: '待审核',
-  },
-  {
-    time: '2019-10-24 17:00',
-    key: '3',
-    name: 'Joe Black',
-    parkname: '园区2',
-    area: 'A化工',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-    status: '待审核',
-  },
-  {
-    time: '2019-10-24 17:00',
-    key: '1',
-    name: 'John Brown',
-    parkname: '园区2',
-    area: 'A化工',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-    status: '待审核',
-  },
-  {
-    time: '2019-10-24 17:00',
-    key: '2',
-    name: 'Jim Green',
-    parkname: '园区2',
-    area: 'A化工',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-    status: '待审核',
-  },
-  {
-    time: '2019-10-24 17:00',
-    key: '3',
-    name: 'Joe Black',
-    parkname: '园区2',
-    area: 'A化工',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-    status: '待审核',
-  },
-];
 
 export const DataAuditPage = Form.create()(observer(({ form }: any) => {
 
@@ -161,31 +61,62 @@ export const DataAuditPage = Form.create()(observer(({ form }: any) => {
     data: { audit }
   } = useStore();
 
-  const { loading, dataSource, parksAndFactories, getSitesList } = audit;
-
+  const { loading, dataSource, ptList, getSitesList, parkTree, query, total, } = audit;
 
   useEffect(() => {
-    audit.getCheckDataList();
-    audit.getAllParksAndFactories();
+    audit.getAllSitesTree();
   }, []);
   
-
   let factoryList: any = [];
-  if (parksAndFactories.length) {
+  if (parkTree.length) {
     if (getFieldValue('parkId')) {
-      factoryList = parksAndFactories.find(item => item.parkId === getFieldValue('parkId')).factories;
+      factoryList = parkTree.find(item => item.parkId === getFieldValue('parkId')).factorys || [];
     } else {
-      factoryList = parksAndFactories[0].factories;
+      factoryList = parkTree[0].factories || [];
+    }
+  }
+
+  let siteList: any = [];
+  if (factoryList.length) {
+    if (getFieldValue('factoryId')) {
+      siteList = factoryList.find(item => item.factoryId === getFieldValue('factoryId')).sites || [];
+    } else {
+      siteList = factoryList[0].sites || [];
+    }
+  }
+
+  let pmCodeList: any = [];
+  if (ptList.length) {
+    if (getFieldValue('ptId')) {
+      pmCodeList = ptList.find(item => item.id === getFieldValue('ptId')).pms || [];
+    } else {
+      pmCodeList = ptList[0].pms || [];
     }
   }
 
   const pagination = {
+    current: query.current,
+    pageSize: query.pageSize,
+    total,
     showSizeChanger: true,
     showQuickJumper: true,
-    showTotal: (total) => {
-      return '共 ' + total + ' 条记录'
+    showTotal: total => {
+      return "共 " + total + " 条记录";
     },
+    onChange: audit.paginationChange,
+    onShowSizeChange: audit.paginationChange
   };
+
+
+  const doSubmit = e => {
+    e.preventDefault();
+    validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      audit.getCheckData(values);
+    });
+  }
 
   return (
     <Spin spinning={loading}>
@@ -197,53 +128,64 @@ export const DataAuditPage = Form.create()(observer(({ form }: any) => {
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <Row>
+      <Row gutter={10}>
         <Col span={6}>
-          <Card size="small" title="数据审核" extra={<Button type="primary">查询</Button>}>
-            <Form>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="选择园区" >
-                {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: false }] })(
+          <Card size="small" title="数据审核" >
+            <Form onSubmit={doSubmit}>
+
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="统计区域" >
+                {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: true }] })(
                   <Select onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
-                    {parksAndFactories.map(item => <Option key={item.parkId} value={item.parkId}>{item.parkName}</Option>)}
-                    <Option value="">不限</Option>
+                    {parkTree.map(item => <Option key={item.parkId} value={item.parkId}>{item.parkName}</Option>)}
                   </Select>
                 )}
               </Form.Item>
+
               <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测区域" >
                 {getFieldDecorator("factoryId", { initialValue: '', rules: [{ required: false }] })(
-                  <Select onChange={getSitesList} placeholder="请选择" size="small">
+                  <Select placeholder="请选择" size="small">
                     {factoryList.map(item => <Option key={item.factoryId} value={item.factoryId}>{item.factoryName}</Option>)}
                     <Option value="">不限</Option>
                   </Select>
                 )}
               </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="站点名称" >
-                <Select placeholder="请选择" size="small">
-                  <Option value="china">TVOCs</Option>
-                  <Option value="usa">苯乙烯</Option>
-                </Select>
+              
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测站点" >
+                {getFieldDecorator("siteId", { initialValue: '', rules: [{ required: false }] })(
+                  <Select placeholder="请选择" size="small">
+                    {siteList.map(item => <Option key={item.siteId} value={item.siteId}>{item.siteName}</Option>)}
+                    <Option value="">不限</Option>
+                  </Select>
+                )}
               </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测设备" >
-                <Select placeholder="请选择" size="small">
-                  <Option value="china">TVOCs</Option>
-                  <Option value="usa">苯乙烯</Option>
-                </Select>
+
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="审核状态" >
+                {getFieldDecorator("status", { initialValue: '', rules: [{ required: false }] })(
+                  <Select placeholder="请选择" size="small">
+                    <Option value={0}>待审核</Option>
+                    <Option value={1}>审核通过</Option>
+                    <Option value={2}>审核不通过</Option>
+                    <Option value="">不限</Option>
+                  </Select>
+                )}
               </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="补传原因" >
-                <Input.TextArea placeholder="请填写补传原因" />
+
+              <Divider orientation="left">起止时间</Divider>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
+                {getFieldDecorator("timeRange", { initialValue: '', rules: [{ required: false }] })(
+                  <RangePicker size="small" />
+                )}
               </Form.Item>
+
+              <Button type="primary" htmlType="submit" block>查询</Button>
+
             </Form>
           </Card>
         </Col>
-        <Col span={18} style={{ padding: '10px' }}>
-        <Tabs>
-          <TabPane tab="待审核" key="1">
-            <Table bordered size="small" pagination={pagination} columns={columns} dataSource={data} />
-          </TabPane>
-          <TabPane tab="历史记录" key="2">
-            <Table bordered size="small" pagination={pagination} columns={columns} dataSource={data} />
-          </TabPane>
-        </Tabs>
+        <Col span={18} >
+          <Card size="small" title="数据列表" >
+            <Table bordered size="small" pagination={pagination} columns={columns} dataSource={toJS(dataSource)} />
+          </Card>
         </Col>
       </Row>
 
