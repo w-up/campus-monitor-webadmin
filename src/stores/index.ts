@@ -21,6 +21,7 @@ import { DynamicSourceStore } from "./dynamicSource/index";
 import { SystemConfig } from "./SystemConfig";
 import { DataManage } from "./data/DataManage";
 import { Replenish } from "./data/Replenish";
+import { DataAudit } from "./data/DataAudit";
 import { RuntimeData } from "./query/RuntimeData";
 import { HistoryData } from "./query/HistoryData";
 import { Rank } from "./analysis/Rank";
@@ -56,6 +57,7 @@ export const store = {
   data: {
     manage: new DataManage(),
     replenish: new Replenish(),
+    audit: new DataAudit(),
   },
   query: {
     runTimeData: new RuntimeData(),

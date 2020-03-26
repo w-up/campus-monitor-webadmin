@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
-import { Card, Row, Col, Form, Button, Select, Tabs, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal } from 'antd';
+import { useStore } from "../../stores/index";
+import { toJS } from "mobx";
+
+import { Spin, Card, Row, Col, Form, Button, Select, Tabs, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal } from 'antd';
 const { Option } = Select;
 const { TabPane } = Tabs;
 
@@ -149,7 +152,32 @@ const data = [
   },
 ];
 
-export const DataAuditPage = observer(() => {
+export const DataAuditPage = Form.create()(observer(({ form }: any) => {
+
+
+  const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields } = form;
+
+  const {
+    data: { audit }
+  } = useStore();
+
+  const { loading, dataSource, parksAndFactories, getSitesList } = audit;
+
+
+  useEffect(() => {
+    audit.getCheckDataList();
+    audit.getAllParksAndFactories();
+  }, []);
+  
+
+  let factoryList: any = [];
+  if (parksAndFactories.length) {
+    if (getFieldValue('parkId')) {
+      factoryList = parksAndFactories.find(item => item.parkId === getFieldValue('parkId')).factories;
+    } else {
+      factoryList = parksAndFactories[0].factories;
+    }
+  }
 
   const pagination = {
     showSizeChanger: true,
@@ -160,42 +188,51 @@ export const DataAuditPage = observer(() => {
   };
 
   return (
-    <div style={{ minHeight: '100%', background: '#fff' }}>
+    <Spin spinning={loading}>
+      <div style={{ background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px"}}>
+        <Breadcrumb>
+          <Breadcrumb.Item>数据质量</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to="/data/audit">数据审核</Link>
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
       <Row>
         <Col span={6}>
-          <Card title="数据审核">
+          <Card size="small" title="数据审核" extra={<Button type="primary">查询</Button>}>
             <Form>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="选择园区" hasFeedback>
-                <Select placeholder="请选择" size="small">
-                  <Option value="china">园区1</Option>
-                  <Option value="usa">园区1</Option>
-                </Select>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="选择园区" >
+                {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: false }] })(
+                  <Select onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
+                    {parksAndFactories.map(item => <Option key={item.parkId} value={item.parkId}>{item.parkName}</Option>)}
+                    <Option value="">不限</Option>
+                  </Select>
+                )}
               </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测区域" hasFeedback>
-                <Select placeholder="请选择" size="small">
-                  <Option value="china">气态污染物</Option>
-                  <Option value="usa">液态污染物</Option>
-                </Select>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测区域" >
+                {getFieldDecorator("factoryId", { initialValue: '', rules: [{ required: false }] })(
+                  <Select onChange={getSitesList} placeholder="请选择" size="small">
+                    {factoryList.map(item => <Option key={item.factoryId} value={item.factoryId}>{item.factoryName}</Option>)}
+                    <Option value="">不限</Option>
+                  </Select>
+                )}
               </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="站点名称" hasFeedback>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="站点名称" >
                 <Select placeholder="请选择" size="small">
                   <Option value="china">TVOCs</Option>
                   <Option value="usa">苯乙烯</Option>
                 </Select>
               </Form.Item>
-
-              <Divider orientation="left">时间</Divider>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="起始时间" hasFeedback>
-                <DatePicker style={{ width: '100%' }} size="small" />
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测设备" >
+                <Select placeholder="请选择" size="small">
+                  <Option value="china">TVOCs</Option>
+                  <Option value="usa">苯乙烯</Option>
+                </Select>
               </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="终止时间" hasFeedback>
-                <DatePicker style={{ width: '100%' }} size="small" />
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="补传原因" >
+                <Input.TextArea placeholder="请填写补传原因" />
               </Form.Item>
             </Form>
-
-            <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }}>
-              <Button type="primary" style={{ width: '100%' }} htmlType="submit">查询</Button>
-            </Form.Item>
           </Card>
         </Col>
         <Col span={18} style={{ padding: '10px' }}>
@@ -210,6 +247,6 @@ export const DataAuditPage = observer(() => {
         </Col>
       </Row>
 
-    </div>
+    </Spin>
   );
-})
+}));
