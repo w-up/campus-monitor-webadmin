@@ -5,6 +5,7 @@ import * as mapv from "mapv";
 import { _ } from "utils/lodash";
 import { utils } from "../../utils/index";
 import moment from "moment";
+import { store } from "../index";
 //@ts-ignore
 const kriging = window.kriging;
 
@@ -261,9 +262,9 @@ export class MapMonitorStore {
       data.push({
         geometry: {
           type: "Point",
-          coordinates: [Number(i.longitude), Number(i.latitude)]
+          coordinates: [i.longitude, i.latitude]
         },
-        count: Number(pmValue.specificValue)
+        count: Number(pmValue.specificValue) * 100
       });
       // });
 
@@ -279,13 +280,23 @@ export class MapMonitorStore {
       // });
     });
     this.mapvLayer = new mapv.baiduMapLayer(this.map, new mapv.DataSet(data), {
-      size: 22,
+      size: store.config.sysParams.point_size.paramValue,
+      // gradient: { 0.25: "rgb(0,0,255)", 0.55: "rgb(0,255,0)", 0.85: "yellow", 1.0: "rgb(255,0,0)" },
       gradient: { 0.16: "rgb(0,255,0)", 0.33: "yellow", 0.5: "#ef8432", 0.666: "rgb(255,0,0)", 1: "#8b1b4a" },
-      max: 1,
+      unit: "m",
+      lineWidth: 0,
+      // max: 1,
       // range: [0, 100], // 过滤显示数据范围
-      minOpacity: 1, // 热力图透明度
-      maxOpacity: 1,
-      draw: "heatmap"
+      // minOpacity: 1, // 热力图透明度
+      // maxOpacity: 1,
+      // label: {
+      //   show: true,
+      //   fillStyle: "white"
+      //   // shadowColor: 'yellow',
+      //   // font: '20px Arial',
+      //   // shadowBlur: 10,
+      // },
+      draw: "grid"
       // animation: {
       //   type: "time", // 按时间展示动画
       //   stepsRange: {
