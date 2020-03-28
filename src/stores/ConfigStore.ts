@@ -46,6 +46,10 @@ export class ConfigStore {
     lxwr_period: {
       paramIntro: "判断连续污染的时间间隔（单位/分钟）",
       paramValue: "3"
+    },
+    point_size: {
+      paramIntro: "污染分布方块大小（20~40）",
+      paramValue: "20"
     }
   };
 
