@@ -183,12 +183,12 @@ export const ComparisonAnalysisPage = Form.create()(observer(({ form }: any) => 
               <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="统计周期" >
                 {getFieldDecorator("timeCycle", { initialValue: 1, rules: [{ required: true }] })(
                   <Radio.Group size="small" buttonStyle="solid">
-                  <Radio.Button value={1}>日</Radio.Button>
-                  <Radio.Button value={2}>月</Radio.Button>
-                  <Radio.Button value={3}>年</Radio.Button>
-                  <Radio.Button value={4}>周</Radio.Button>
-                  <Radio.Button value={5}>季</Radio.Button>
-                </Radio.Group>
+                    <Radio.Button value={1}>日</Radio.Button>
+                    <Radio.Button value={2}>月</Radio.Button>
+                    <Radio.Button value={3}>年</Radio.Button>
+                    <Radio.Button value={4}>周</Radio.Button>
+                    <Radio.Button value={5}>季</Radio.Button>
+                  </Radio.Group>
                 )}
               </Form.Item>
 

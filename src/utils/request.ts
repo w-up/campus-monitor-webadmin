@@ -26,18 +26,28 @@ http.interceptors.request.use(async config => {
 
 http.interceptors.response.use(
   response => {
-    const res = response.data;
-    if (res.msg == "未登录") {
-      store.auth.logout();
+    try {
+      const res = response.data;
+      if (typeof res !== 'object') {
+        return response;
+      }
+
+      if (res.msg == "未登录") {
+        store.auth.logout();
+      }
+      if (res.msg !== "success") {
+        message.error(res.msg);
+        return Promise.reject(response);
+      } else {
+        return res;
+      }
+    } catch {
+      return response;
     }
-    if (res.msg !== "success") {
-      message.error(res.msg);
-      return Promise.reject(response);
-    } else {
-      return res;
-    }
+    
   },
   error => {
+    debugger
     if (error && error.response) {
       message.error(error.response.msg);
     }

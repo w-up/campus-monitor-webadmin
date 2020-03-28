@@ -26,6 +26,7 @@ import { RuntimeData } from "./query/RuntimeData";
 import { HistoryData } from "./query/HistoryData";
 import { Rank } from "./analysis/Rank";
 import { Comparison } from "./analysis/Comparison";
+import { Report } from "./Report";
 
 export const store = {
   menu: new MenuStore(),
@@ -66,8 +67,8 @@ export const store = {
   analysis: {
     rank: new Rank(),
     comparison: new Comparison(),
-  }
-
+  },
+  report: new Report(),
 };
 //@ts-ignore
 global._store = store;
