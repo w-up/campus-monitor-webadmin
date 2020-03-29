@@ -171,6 +171,20 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
     });
   }
 
+  const onSelectAll = (e) => {
+    const { checked } = e.target;
+    if (checked) {
+      setFieldsValue({
+        pmCodes: pmCodeList.map(item => item.pmCode),
+      });
+    } else {
+      setFieldsValue({
+        pmCodes: [],
+      });
+    }
+  }
+
+  const allChecked = getFieldValue('pmCodes') && (getFieldValue('pmCodes').length === pmCodeList.length);
 
   return (
     <Spin spinning={loading}>
@@ -179,11 +193,11 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
           <Breadcrumb.Item>统计报表</Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <Row>
+      <Row gutter={10}>
         <Col span={6}>
           <Card size="small" title="统计报表">
-            <Form onSubmit={doSubmit}>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="统计方式">
+            <Form onSubmit={doSubmit} >
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计方式">
                 {getFieldDecorator("statisType", { initialValue: 1, rules: [{ required: true }] })(
                   <Select placeholder="请选择" size="small">
                     <Option value={2}>按企业</Option>
@@ -193,7 +207,7 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
               </Form.Item>
               
               {getFieldValue('statisType') === 1 &&
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="选择园区" >
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="选择园区" >
                 {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: true }] })(
                   <Select placeholder="请选择" size="small">
                     {parkList.map(item => <Option key={item.id} value={item.id}>{item.parkName}</Option>)}
@@ -203,7 +217,7 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
               }
 
               {getFieldValue('statisType') === 2 &&
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="选择企业" >
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="选择企业" >
                 {getFieldDecorator("companyId", { initialValue: '', rules: [{ required: true }] })(
                   <Select placeholder="请选择" size="small">
                     {companyList.map(item => <Option key={item.id} value={item.id}>{item.companyName}</Option>)}
@@ -212,41 +226,44 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
               </Form.Item>
               }
               
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测对象">
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测对象">
                 {getFieldDecorator("pmType", { initialValue: '', rules: [{ required: true }] })(
-                  <Select placeholder="请选择" size="small">
+                  <Select onChange={() => setFieldsValue({ pmCodes: [] })} placeholder="请选择" size="small">
                     {pmList.map(item => <Option key={item.id} value={item.id}>{item.label}</Option>)}
                   </Select>
                 )}
               </Form.Item>
 
               {!!getFieldValue('pmType') && 
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
-                {getFieldDecorator("pmCodes", { initialValue: [], rules: [{ required: true }] })(
-                  <Checkbox.Group style={{ width: '100%' }}>
-                    <Row>
-                      {pmCodeList.map(item => <Col span={8} key={item.pmCode}><Checkbox style={{ fontSize: '10px' }} value={item.pmCode}>{item.pmName}</Checkbox></Col>)}
-                    </Row>
-                  </Checkbox.Group>
-                )}
-              </Form.Item>
+              <Row>
+                 <Checkbox style={{ fontSize: '10px' }} checked={allChecked} onChange={onSelectAll}>全选</Checkbox>
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
+                  {getFieldDecorator("pmCodes", { initialValue: [], rules: [{ required: true }] })(
+                    <Checkbox.Group style={{ width: '100%' }}>
+                      <Row>
+                        {pmCodeList.map(item => <Col span={8} key={item.pmCode}><Checkbox style={{ fontSize: '10px' }} value={item.pmCode}>{item.pmName}</Checkbox></Col>)}
+                      </Row>
+                    </Checkbox.Group>
+                  )}
+                </Form.Item>
+              </Row>
               }
 
             <Divider orientation="left">报表类型</Divider>
-            <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="统计周期">
+            <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计周期">
               {getFieldDecorator("timeCycle", { initialValue: 1, rules: [{ required: true }] })(
                 <Radio.Group style={{ width: '100%' }} size="small" buttonStyle="solid">
-                  <Radio.Button value={1}>日</Radio.Button>
-                  <Radio.Button value={2}>月</Radio.Button>
-                  <Radio.Button value={3}>年</Radio.Button>
-                  <Radio.Button value={4}>周</Radio.Button>
-                  <Radio.Button value={5}>季</Radio.Button>
+                  <Radio.Button style={{ width: '20%', textAlign: 'center' }} value={1}>日</Radio.Button>
+                  <Radio.Button style={{ width: '20%', textAlign: 'center' }} value={2}>月</Radio.Button>
+                  <Radio.Button style={{ width: '20%', textAlign: 'center' }} value={3}>年</Radio.Button>
+                  <Radio.Button style={{ width: '20%', textAlign: 'center' }} value={4}>周</Radio.Button>
+                  <Radio.Button style={{ width: '20%', textAlign: 'center' }} value={5}>季</Radio.Button>
                 </Radio.Group>
               )}
             </Form.Item>
-            <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="统计时间">
+            <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
               {getFieldDecorator("collectDate", { initialValue: '', rules: [{ required: true }] })(
-                <DatePicker size="small" />
+                <DatePicker style={{ width:  '100%' }} size="small" />
               )}
             </Form.Item>
             <Row gutter={20}>
