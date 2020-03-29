@@ -276,8 +276,8 @@ export class EnterpriseScreenMapStore {
     }
 
     this.map.centerAndZoom(this.center, this.zoom); // 初始化地图,设置中心点坐标和地图级别
-    this.map.setHeading(this.heading); //俯视角度
-    this.map.setTilt(this.tilt); //旋转角度
+    this.map.setHeading(this.tilt); //俯视角度
+    this.map.setTilt(this.heading); //旋转角度
 
     setTimeout(() => {
       if (!this.map) return;

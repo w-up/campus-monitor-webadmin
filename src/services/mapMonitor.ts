@@ -51,7 +51,7 @@ export default {
   getMapInfoByPmCodeAndParkId(data: { parkId: number; pmCode: string }) {
     return POST("/mapMonitor/getMapInfoByPmCodeAndParkId", data);
   },
-  getDynamicSourceContribution(data: { endTime: string; lng: string; lat: string; parkId: number; pmCode: string; startTime: string }) {
+  getDynamicSourceContribution(data: { endTime: string; lng: number; lat: number; parkId: number; pmCode: string; startTime: string }) {
     return POST("/mapMonitor/getDynamicSourceContribution", data);
   },
   getDynamicSourceWindRose(data: { endTime: string; parkId: number; pmCode: string; startTime: string }) {

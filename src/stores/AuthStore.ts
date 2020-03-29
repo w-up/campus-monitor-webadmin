@@ -1,6 +1,6 @@
-import { action, observable } from "mobx";
+import {action, observable} from "mobx";
 import api from "services";
-import { POST, GET } from "../utils/request";
+import {GET} from "../utils/request";
 
 const user = window.localStorage.getItem("user");
 const codes = window.localStorage.getItem("codes");
@@ -61,5 +61,10 @@ export class AuthStore {
   async logout() {
     this.token = null;
     window.localStorage.clear();
+  }
+
+  @action.bound
+  async editPassword(data: { newPassword: string; password: string }) {
+    return api.AuthService.editPassword(data);
   }
 }

@@ -18,7 +18,14 @@ export const DynamicSourceMap = () => {
   }, []);
   return useObserver(() => (
     <APILoader akay={config.baiduMapApiKey}>
-      <Map onTilesLoaded={dynamicSource.onMapUpdate} zoom={dynamicSource.zoom} center={dynamicSource.center} enableScrollWheelZoom onZoomEnd={e => (dynamicSource.zoom = e.target.getZoom())}>
+      <Map
+        onTilesLoaded={dynamicSource.onMapUpdate}
+        onClick={dynamicSource.onMapClick}
+        zoom={dynamicSource.zoom}
+        center={dynamicSource.center}
+        enableScrollWheelZoom
+        onZoomEnd={e => (dynamicSource.zoom = e.target.getZoom())}
+      >
         {dynamicSource.curParkData?.map((park, index) => (
           <Polygon path={utils.array.formatToLatLngShort(park.parkPoints)} key={index} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor={""}></Polygon>
         ))}
@@ -58,29 +65,36 @@ export const DynamicSourceMap = () => {
           ))
         )}
 
-        {dynamicSource.computeType == "2" &&
-          dynamicSource.DynamicSourceWindRose.data.map(park =>
-            park.valueList?.map((item, index) => (
+        {dynamicSource.computeType == "1" &&
+          dynamicSource.curDynamicSourceContribution?.valueList?.map(
+            (item, index) => (
               <CustomOverlay position={{ lng: Number(item.lng), lat: Number(item.lat) }} key={index}>
-                <PolarRadialChart />
+                {console.log(item)}
+                <img src={require("../../assets/img/arrow-blue.png")} style={{ transform: `rotate(${item.angle}deg)`, maxWidth: "15px", height: "88px" }}></img>
               </CustomOverlay>
-            ))
+            )
+            // <Marker position={{ lng: Number(item.lng), lat: Number(item.lat) }} key={index} rotation={90} icon={new BMap.Icon(require("../../assets/img/arrow-blue.png"), new BMap.Size(31, 176))} />
           )}
 
+        {dynamicSource.computeType == "2" &&
+          dynamicSource.curDynamicSourceWindRose?.valueList?.map((item, index) => (
+            <CustomOverlay position={{ lng: Number(item.lng), lat: Number(item.lat) }} key={index}>
+              <PolarRadialChart />
+            </CustomOverlay>
+          ))}
+
         {dynamicSource.computeType == "3" &&
-          dynamicSource.DynamicSourceTraceSource?.data.map(park =>
-            park.valueList?.map((item, index) => (
-              <CustomOverlay position={{ lng: Number(item.lng), lat: Number(item.lat) }} key={index}>
-                <div className="flex items-center">
-                  <img style={{ maxWidth: "60px", height: "60px" }} src={require("../../assets/img/point-red.png")} />
-                  <div style={{ color: "red", fontSize: "12px", width: "100px" }}>
-                    <div>位置{index}</div>
-                    <div>{item.value}ppm</div>
-                  </div>
+          dynamicSource.curDynamicSourceTraceSource?.valueList?.map((item, index) => (
+            <CustomOverlay position={{ lng: Number(item.lng), lat: Number(item.lat) }} key={index}>
+              <div className="flex items-center">
+                <img style={{ maxWidth: "60px", height: "60px" }} src={require("../../assets/img/point-red.png")} />
+                <div style={{ color: "red", fontSize: "12px", width: "100px" }}>
+                  <div>位置{index}</div>
+                  <div>{item.value}ppm</div>
                 </div>
-              </CustomOverlay>
-            ))
-          )}
+              </div>
+            </CustomOverlay>
+          ))}
       </Map>
     </APILoader>
   ));

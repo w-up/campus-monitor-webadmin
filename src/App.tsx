@@ -13,6 +13,8 @@ import { User } from "./pages/basic/User/User";
 import { System } from "./pages/basic/System/System";
 import zhCN from "antd/es/locale/zh_CN";
 import { useEffect } from "react";
+import {UserInfoEdit} from "./pages/basic/UserProfile/UserInfoEdit";
+import {UserPasswordEdit} from "./pages/basic/UserProfile/UserPasswordEdit";
 
 const App = props => {
   const { menu, auth, config } = useStore();
@@ -38,7 +40,7 @@ const App = props => {
     return auth.token ? (
       <Router>
         <Layout style={{ minHeight: "100vh" }}>
-          <NavHead></NavHead>
+          <NavHead/>
           {/* <Layout.Sider collapsible collapsed={menu.collapsed} onCollapse={menu.toggleCollapsed} style={{ borderTop: "1px solid #00B1FF" }}>
           <NavMenu></NavMenu>
         </Layout.Sider> */}
@@ -54,13 +56,15 @@ const App = props => {
               collapsible
               collapsed={menu.collapsed}
             >
-              <NavMenu></NavMenu>
+              <NavMenu/>
             </Layout.Sider>
             <Layout.Content style={{ marginLeft: menu.collapsed ? 80 : 200 }}>
               <Switch>
-                <Route path="/base" component={Basic}></Route>
-                <Route path="/user" component={User}></Route>
-                <Route path="/system" component={System}></Route>
+                <Route path="/base" component={Basic}/>
+                <Route path="/user" component={User}/>
+                <Route path="/system" component={System}/>
+                <Route path="/profile" component={UserInfoEdit}/>
+                <Route path="/edit-password" component={UserPasswordEdit}/>
                 {renderRoute(menu.menus)}
               </Switch>
             </Layout.Content>

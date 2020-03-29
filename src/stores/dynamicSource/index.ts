@@ -28,6 +28,11 @@ export class DynamicSourceStore {
     await Promise.all([this.loadPark(), this.loadParkData()]);
   }
 
+  @observable curPoint = {
+    lng: 0,
+    lat: 0
+  };
+
   @observable currentPark = "0";
   @observable currentTabKey = "";
   @observable currentFactory = "0";
@@ -205,6 +210,12 @@ export class DynamicSourceStore {
       this.map.addOverlay(Arrow);
       this.arrows.push(Arrow);
     }
+  }
+
+  @action.bound
+  onMapClick(e) {
+    const point = e.point;
+    this.curPoint = point;
   }
 
   @action.bound

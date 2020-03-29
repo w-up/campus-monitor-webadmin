@@ -32,7 +32,8 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
       form.validateFieldsAndScroll(async (err, values) => {
         if (!err) {
           console.log("Received values of form: ", values);
-          const { parkId: _parkId, endTime: _endTime, lat, lng, pmCode, startTime: _startTime } = values;
+          const { parkId: _parkId, endTime: _endTime, pmCode, startTime: _startTime } = values;
+          const { lat, lng } = dynamicSource.curPoint;
           const parkId = Number(_parkId);
           const startTime = moment(_startTime).format("YYYY-MM-DD HH");
           const endTime = moment(_endTime).format("YYYY-MM-DD HH");
@@ -129,8 +130,12 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
         </Form.Item>
         {dynamicSource.computeType == "1" && (
           <div>
-            <Form.Item label="敏感点经度">{getFieldDecorator("lat", { initialValue: "" })(<Input />)}</Form.Item>
-            <Form.Item label="敏感点维度">{getFieldDecorator("lng", { initialValue: "" })(<Input />)}</Form.Item>
+            <Form.Item label="敏感点经度">
+              <Input value={dynamicSource.curPoint.lng} onChange={e => (dynamicSource.curPoint.lng = Number(e.target.value))} />
+            </Form.Item>
+            <Form.Item label="敏感点维度">
+              <Input value={dynamicSource.curPoint.lat} onChange={e => (dynamicSource.curPoint.lat = Number(e.target.value))} />
+            </Form.Item>
           </div>
         )}
         <Form.Item label="起始时间">{getFieldDecorator("startTime", { initialValue: moment() })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}</Form.Item>
