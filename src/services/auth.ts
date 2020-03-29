@@ -13,5 +13,9 @@ export default {
   },
   getAuthUser() {
     return GET("/get");
+  },
+
+  editPassword(data: {newPassword: string; password: string}) {
+    return POST("/user/updatePassword", data);
   }
 };
