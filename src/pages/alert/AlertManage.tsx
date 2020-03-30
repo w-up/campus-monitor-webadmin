@@ -1,28 +1,10 @@
-import React from "react";
-import { Card, Row, Col, Form, Select, Divider, Button, Table, Radio, DatePicker } from "antd";
+import React, { useEffect } from "react";
+import { InputNumber, Tabs, Breadcrumb, Spin, Card, Row, Col, Form, Select, Divider, Button, Table, Radio, DatePicker, Input } from "antd";
 import { Link } from "react-router-dom";
-import { booleanLiteral } from "@babel/types";
+import { observer } from "mobx-react-lite";
+import { useStore } from "../../stores/index";
+
 const { Option } = Select;
-
-interface Props{}
-interface State{
-  monitoringFactors: []
-}
-
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 },
-  },
-  wrapperCol: {
-    xs: { span: 12 },
-    sm: { span: 12 },
-  },
-};
-
-type FixedDir = "right" | "left"
-
-const fixedDirection:FixedDir = 'right'
 
 const columns = [
   {
@@ -50,84 +32,138 @@ const columns = [
   }
 ];
 
-const data = [
-  {
-    key: '1',
-    origin: '站点01',
-    project: '监测因子01',
-    times: 132,
-  },
-  {
-    key: '2',
-    origin: '站点02',
-    project: '监测因子02',
-    times: 132,
-  },
-];
-export class AlertManagePage extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      monitoringFactors: []
-    }
+
+export const AlertManagePage = Form.create()(observer(({ form }: any) => {
+
+  const {
+    alert: { alertManage }
+  } = useStore();
+
+  const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields } = form;
+
+  const { loading, parkTree, ptList, tableData } = alertManage;
+
+  useEffect(() => {
+    alertManage.getAllSitesTree();
+  }, []);
+
+  const factoryList: any = [];
+  parkTree.forEach(item => {
+    item.factorys.forEach(record => {
+      factoryList.push({
+        factoryName: `${item.parkName}-${record.factoryName}`,
+        factoryId: record.factoryId,
+      });
+    });
+  });
+
+  let pmCodeList: any = [];
+  if (ptList.length) {
+    const index = getFieldValue('warnType') - 1;
+    pmCodeList = ptList[index] ? ptList[index].pms : [];
   }
 
-  
-  queryConditionsModule = () => {
-    return (
-      <Card title="告警管理">
-        <Form {...formItemLayout}>
-          <Form.Item label="统计方式">
-            <Select placeholder="请选择" size="small">
-              <Option value="china">China</Option>
-              <Option value="usa">U.S.A</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="监测对象" hasFeedback>
-            <Select placeholder="请选择" size="small">
-              <Option value="china">China</Option>
-              <Option value="usa">U.S.A</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="监测因子" hasFeedback>
-            <Select placeholder="请选择" size="small">
-              <Option value="china">China</Option>
-              <Option value="usa">U.S.A</Option>
-            </Select>
-          </Form.Item>
-        </Form>
-        <Divider orientation="left">时间</Divider>
-        <div>
-          统计周期：
-          <Radio.Group>
-            <Radio.Button value="large">日</Radio.Button>
-            <Radio.Button value="default">月</Radio.Button>
-            <Radio.Button value="small">年</Radio.Button>
-          </Radio.Group>
-        </div>
-        <div style={{marginTop: 10, marginBottom: 10}}>
-          起始时间： <DatePicker />
-        </div>
-        <div style={{marginTop: 10, marginBottom: 10}}>
-          终止时间： <DatePicker />
-        </div>
-        <Button type="primary" block>开始统计</Button>
-      </Card>
-    )
+  const changeTab = index => {
+    setFieldsValue({
+      warnType: index,
+    });
   }
 
-  render () {
-    return (
-      <div style={{minHeight: '100%', background: '#fff'}}>
-        <Row>
-          <Col span={6}>{this.queryConditionsModule()}</Col>
-          <Col span={18} style={{padding: "10px 20px"}}>
-            <div style={{fontSize: 18, fontWeight: "bold", lineHeight: "36px"}}>气体超标报警</div>
-            <Table bordered columns={columns} dataSource={data} />
-          </Col>
-        </Row>
+  const doSubmit = e => {
+    e.preventDefault();
+    validateFields((err, values) => {
+      if (err) {
+        return;
+      }
 
+      alertManage.getList(values);
+    });
+  }
+
+  return (
+    <Spin spinning={loading}>
+      <div style={{ background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px" }}>
+        <Breadcrumb>
+          <Breadcrumb.Item>告警处理</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to="/alert/manage">告警管理</Link>
+          </Breadcrumb.Item>
+        </Breadcrumb>
       </div>
-    )
-  }
-}
+      <Row gutter={10}>
+        <Col span={6}>
+          <Card size="small" title="告警管理">
+            <Form onSubmit={doSubmit}>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测对象" >
+                {getFieldDecorator("factoryIds", { initialValue: [], rules: [{ required: true }] })(
+                  <Select mode="multiple" style={{ fontSize: '10px' }} onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
+                    {factoryList.map(item => <Option style={{ fontSize: '10px' }} key={item.factoryId} value={item.factoryId}>{item.factoryName}</Option>)}
+                  </Select>
+                )}
+              </Form.Item>
+
+              {getFieldDecorator("warnType", { initialValue: 1, rules: [{ required: true }] })(
+                <Select style={{ display: 'none' }} size="small">
+                  <Option value={1}>废气</Option>
+                  <Option value={2}>污水</Option>
+                </Select>
+              )}
+
+              {!!pmCodeList.length &&
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测因子" >
+                {getFieldDecorator("pmList", { initialValue: [], rules: [{ required: true }] })(
+                  <Select mode="multiple" placeholder="请选择" size="small">
+                    {pmCodeList.map(item => <Option key={item.pmCode} value={item.pmCode}>{item.pmName}</Option>)}
+                  </Select>
+                )}
+              </Form.Item>
+              }
+              
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="累计时长超过" >
+                {getFieldDecorator("mins", { initialValue: "", rules: [{ required: true }] })(
+                  <InputNumber placeholder="单位分钟" style={{ width: '100%' }} size="small" />
+                )}
+              </Form.Item>
+
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="状态" >
+                {getFieldDecorator("status", { initialValue: 0, rules: [{ required: true }] })(
+                  <Select placeholder="请选择" size="small">
+                    <Option value={0}>未处理</Option>
+                    <Option value={1}>已处理</Option>
+                    <Option value={2}>全部</Option>
+                  </Select>
+                )}
+              </Form.Item>
+
+
+              <Divider orientation="left">起止时间</Divider>
+
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
+                {getFieldDecorator("timeRange", { initialValue: '', rules: [{ required: false }] })(
+                  <DatePicker.RangePicker size="small" />
+                )}
+              </Form.Item>
+
+              <Button type="primary" htmlType="submit" block>查询</Button>
+            </Form>
+          </Card>  
+        </Col>
+        <Col span={18}>
+          <Card size="small" title="数据列表">
+            <Tabs animated size="small" type="card" defaultActiveKey="1" onChange={changeTab}>
+              <Tabs.TabPane tab="废气超标告警" key="1">
+                <Table size="small" bordered columns={columns} dataSource={tableData[0].dataSource} />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="污水超标告警" key="2">
+                <Table size="small" bordered columns={columns} dataSource={tableData[1].dataSource} />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="设备离线告警" key="3">
+                <Table size="small" bordered columns={columns} dataSource={tableData[2].dataSource} />
+              </Tabs.TabPane>
+            </Tabs>
+          </Card>
+        </Col>
+      </Row>
+    </Spin>
+  );
+}))

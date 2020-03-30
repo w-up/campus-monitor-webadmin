@@ -1,130 +1,154 @@
-import React from "react";
-import { Card, Row, Col, Form, Select, Divider, Button, Table } from "antd";
+import React, { useEffect } from "react";
+import { InputNumber, Tabs, Breadcrumb, Spin, Card, Row, Col, Form, Select, Divider, Button, Table, Radio, DatePicker, Input } from "antd";
+import { Link } from "react-router-dom";
+import { observer } from "mobx-react-lite";
+import { useStore } from "../../stores/index";
+
 const { Option } = Select;
-
-interface Props{}
-interface State{
-  monitoringFactors: []
-}
-
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 },
-  },
-  wrapperCol: {
-    xs: { span: 12 },
-    sm: { span: 12 },
-  },
-};
-
-type FixedDir = "right" | "left"
-
-const fixedDirection:FixedDir = 'right'
 
 const columns = [
   {
-    title: '监测区域',
-    dataIndex: 'area',
-    key: 'area',
+    title: '报警来源',
+    dataIndex: 'origin',
+    key: 'origin',
   },
   {
-    title: '站点名称',
-    dataIndex: 'name',
-    key: 'name',
+    title: '报警项目',
+    dataIndex: 'project',
+    key: 'project',
   },
-  { title: '测量值  1', dataIndex: 'value', key: '1' },
-  { title: '测量值 2', dataIndex: 'value', key: '2' },
-  { title: '测量值 3', dataIndex: 'value', key: '3' },
-  { title: '测量值 4', dataIndex: 'value', key: '4' },
-  { title: '测量值 5', dataIndex: 'value', key: '5' },
-  { title: '测量值 6', dataIndex: 'value', key: '6' },
-  { title: '测量值 7', dataIndex: 'value', key: '7' },
-  { title: '测量值 8', dataIndex: 'value', key: '8' },
   {
-    title: '数据更新时间',
-    key: 'updateTime',
-    dataIndex: 'updateTime',
-    fixed: fixedDirection,
+    title: '报警次数',
+    dataIndex: 'times',
+    key: 'times',
   },
+  {
+    title: '详情',
+    dataIndex: 'action',
+    key: 'action',
+    render: (text:any, record:any) => (
+      <Link to="/">查看详情</Link>
+    ),
+  }
 ];
 
-const data = [
-  {
-    key: '1',
-    area: '234.89, 235345.09',
-    name: '站点1',
-    value: 32,
-    updateTime: '2020-02-29'
-  },
-  {
-    key: '2',
-    area: '234.89, 235345.09',
-    name: '站点2',
-    value: 40,
-    updateTime: '2020-02-29'
-  },
-];
-export class AlertSettingPage extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      monitoringFactors: []
-    }
+
+export const AlertSettingPage = Form.create()(observer(({ form }: any) => {
+
+  const {
+    alert: { alertSetting }
+  } = useStore();
+
+  const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields } = form;
+
+  const { loading, parkTree, ptList, tableData, typeList } = alertSetting;
+
+  useEffect(() => {
+    alertSetting.getAllSitesTree();
+    alertSetting.getTypes();
+  }, []);
+
+  const factoryList: any = [];
+  parkTree.forEach(item => {
+    item.factorys.forEach(record => {
+      factoryList.push({
+        factoryName: `${item.parkName}-${record.factoryName}`,
+        factoryId: record.factoryId,
+      });
+    });
+  });
+
+  let pmCodeList: any = [];
+  if (ptList.length) {
+    const index = getFieldValue('warnType') - 1;
+    pmCodeList = ptList[index] ? ptList[index].pms : [];
   }
 
-  
-  queryConditionsModule = () => {
-    return (
-      <Card title="实时数据查询">
-        <Form {...formItemLayout}>
-          <Form.Item label="选择园区">
-            <Select placeholder="请选择" size="small">
-              <Option value="china">China</Option>
-              <Option value="usa">U.S.A</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="监测区域" hasFeedback>
-            <Select placeholder="请选择" size="small">
-              <Option value="china">China</Option>
-              <Option value="usa">U.S.A</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="站点名称" hasFeedback>
-            <Select placeholder="请选择" size="small">
-              <Option value="china">China</Option>
-              <Option value="usa">U.S.A</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="监测类型" hasFeedback>
-            <Select placeholder="请选择" size="small">
-              <Option value="china">China</Option>
-              <Option value="usa">U.S.A</Option>
-            </Select>
-          </Form.Item>
-        </Form>
-        <Divider orientation="left">监测因子</Divider>
-        <div style={{marginTop: 10, marginBottom: 10}}>
-          <Button size="small">全部</Button>
-        </div>
-        <Button type="primary" block>重制</Button>
-      </Card>
-    )
+  const changeTab = index => {
+    setFieldsValue({
+      warnType: index,
+    });
   }
 
-  render () {
-    return (
-      <div style={{minHeight: '100%', background: '#fff'}}>
-        <Row>
-          <Col span={6}>{this.queryConditionsModule()}</Col>
-          <Col span={18} style={{padding: "10px 20px"}}>
-            <Table bordered columns={columns} dataSource={data} scroll={{ x: 1300 }} />
-          </Col>
-        </Row>
+  const doSubmit = e => {
+    e.preventDefault();
+    validateFields((err, values) => {
+      if (err) {
+        return;
+      }
 
+      alertSetting.getList(values);
+    });
+  }
+
+  return (
+    <Spin spinning={loading}>
+      <div style={{ background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px" }}>
+        <Breadcrumb>
+          <Breadcrumb.Item>告警处理</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to="/alert/setting">告警设置</Link>
+          </Breadcrumb.Item>
+        </Breadcrumb>
       </div>
-    )
-  }
-}
+      <Row gutter={10}>
+        <Col span={6}>
+          <Card size="small" title="告警设置">
+            <Form onSubmit={doSubmit}>
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测类型" >
+                {getFieldDecorator("jcTypes", { initialValue: [], rules: [{ required: true }] })(
+                  <Select mode="multiple" style={{ fontSize: '10px' }} placeholder="请选择" size="small">
+                    {typeList.map(item => <Option style={{ fontSize: '10px' }} key={item.dictCode} value={item.dictCode}>{item.dictName}</Option>)}
+                  </Select>
+                )}
+              </Form.Item>
 
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="因子名称" >
+                {getFieldDecorator("pmName", { initialValue: "", rules: [{ required: true }] })(
+                  <Input size="small" />
+                )}
+              </Form.Item>
 
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="是否发送邮件" >
+                {getFieldDecorator("emails", { initialValue: 0, rules: [{ required: true }] })(
+                  <Select placeholder="请选择" size="small">
+                    <Option value={1}>是</Option>
+                    <Option value={0}>否</Option>
+                  </Select>
+                )}
+              </Form.Item>
+
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="告警等级" >
+                {getFieldDecorator("warnLevelList", { initialValue: [], rules: [{ required: true }] })(
+                  <Select mode="multiple" placeholder="请选择" size="small">
+                    <Option value={1}>中度</Option>
+                    <Option value={2}>重度</Option>
+                    <Option value={3}>严重</Option>
+                  </Select>
+                )}
+              </Form.Item>
+
+              <Button type="primary" htmlType="submit" block>查询</Button>
+
+            </Form>
+          </Card>  
+        </Col>
+        <Col span={18}>
+          <Card size="small" title="数据列表">
+            <Tabs animated size="small" type="card" defaultActiveKey="1" onChange={changeTab}>
+              <Tabs.TabPane tab="废气超标告警" key="1">
+                <Table size="small" bordered columns={columns} dataSource={tableData[0].dataSource} />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="污水超标告警" key="2">
+                <Table size="small" bordered columns={columns} dataSource={tableData[1].dataSource} />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="设备离线告警" key="3">
+                <Table size="small" bordered columns={columns} dataSource={tableData[2].dataSource} />
+              </Tabs.TabPane>
+            </Tabs>
+          </Card>
+        </Col>
+      </Row>
+    </Spin>
+  );
+}))

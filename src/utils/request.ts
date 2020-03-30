@@ -47,7 +47,6 @@ http.interceptors.response.use(
     
   },
   error => {
-    debugger
     if (error && error.response) {
       message.error(error.response.msg);
     }

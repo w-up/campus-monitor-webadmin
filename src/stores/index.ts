@@ -24,6 +24,8 @@ import { Replenish } from "./data/Replenish";
 import { DataAudit } from "./data/DataAudit";
 import { RuntimeData } from "./query/RuntimeData";
 import { HistoryData } from "./query/HistoryData";
+import { AlertManage } from "./alert/AlertManage";
+import { AlertSetting } from "./alert/AlertSetting";
 import { Rank } from "./analysis/Rank";
 import { Comparison } from "./analysis/Comparison";
 import { Report } from "./Report";
@@ -67,6 +69,10 @@ export const store = {
   analysis: {
     rank: new Rank(),
     comparison: new Comparison(),
+  },
+  alert: {
+    alertManage: new AlertManage(),
+    alertSetting: new AlertSetting(),
   },
   report: new Report(),
 };
