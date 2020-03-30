@@ -86,72 +86,93 @@ export const RuntimeDataPage = Form.create()(observer(({ form }: any) => {
     onShowSizeChange: paginationChange
   };
 
-  return (
-    <Spin spinning={loading}>
-      <div style={{ background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px" }}>
-        <Breadcrumb>
-          <Breadcrumb.Item>数据查询</Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <Link to="/query/runtime">实时数据查询</Link>
-          </Breadcrumb.Item>
-        </Breadcrumb>
-      </div>
-      <Row gutter={10}>
-        <Col span={6}>
-          <Form {...formItemLayout} onSubmit={doSubmit}>
-            <Card size="small" title="实时数据查询" extra={<Button size="small" onClick={() => resetFields()}>重置</Button>}>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="选择园区" >
-                {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: true }] })(
-                  <Select onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
-                    {parkTree.map(item => <Option key={item.parkId} value={item.parkId}>{item.parkName}</Option>)}
-                  </Select>
-                )}
-              </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测区域" >
-                {getFieldDecorator("factoryId", { initialValue: '', rules: [{ required: true }] })(
-                  <Select placeholder="请选择" size="small">
-                    {factoryList.map(item => <Option key={item.factoryId} value={item.factoryId}>{item.factoryName}</Option>)}
-                  </Select>
-                )}
-              </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="站点名称" >
-                {getFieldDecorator("siteIdList", { initialValue: [], rules: [{ required: true }] })(
-                  <Select mode="multiple" placeholder="请选择" size="small">
-                    {siteList.map(item => <Option key={item.siteId} value={item.siteId}>{item.siteName}</Option>)}
-                  </Select>
-                )}
-              </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测类型" >
-                {getFieldDecorator("ptId", { initialValue: '', rules: [{ required: true }] })(
-                  <Select placeholder="请选择" size="small">
-                    {ptList.map(item => <Option key={item.id} value={item.id}>{item.label}</Option>)}
-                  </Select>
-                )}
-              </Form.Item>
-              <Divider orientation="left">监测因子</Divider>
-              {!!getFieldValue('ptId') && 
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
-                {getFieldDecorator("pmCodeList", { initialValue: [], rules: [{ required: true }] })(
-                  <Checkbox.Group style={{ width: '100%' }}>
-                    <Row>
-                      {pmCodeList.map(item => <Col span={8} key={item.pmCode}><Checkbox style={{ fontSize: '10px' }} value={item.pmCode}>{item.pmName}</Checkbox></Col>)}
-                    </Row>
-                  </Checkbox.Group>
-                )}
-              </Form.Item>
-              }
-              
-              <Button type="primary" htmlType="submit" block>查询</Button>
-            </Card>
-          </Form>
-        </Col>
-        <Col span={18}>
-          <Card size="small" title="数据列表">
-            <Table size="small" bordered scroll={{ x: 1300 }} pagination={pagination} columns={toJS(columns)} dataSource={toJS(dataList)} />
-          </Card>
-        </Col>
-      </Row>
+  const onSelectAll = (e) => {
+    const { checked } = e.target;
+    if (checked) {
+      setFieldsValue({
+        pmCodeList: pmCodeList.map(item => item.pmCode),
+      });
+    } else {
+      setFieldsValue({
+        pmCodeList: [],
+      });
+    }
+  }
 
-    </Spin>
+  const allChecked = getFieldValue('pmCodeList') && (getFieldValue('pmCodeList').length === pmCodeList.length);
+
+  return (
+    <div className="queryPage" >
+      <Spin spinning={loading}>
+        <div style={{ background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px" }}>
+          <Breadcrumb>
+            <Breadcrumb.Item>数据查询</Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="/query/runtime">实时数据查询</Link>
+            </Breadcrumb.Item>
+          </Breadcrumb>
+        </div>
+        <Row gutter={10}>
+          <Col span={6}>
+            <Form {...formItemLayout} onSubmit={doSubmit}>
+              <Card size="small" title="实时数据查询" extra={<Button size="small" onClick={() => resetFields()}>重置</Button>}>
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="选择园区" >
+                  {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: true }] })(
+                    <Select onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
+                      {parkTree.map(item => <Option key={item.parkId} value={item.parkId}>{item.parkName}</Option>)}
+                    </Select>
+                  )}
+                </Form.Item>
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测区域" >
+                  {getFieldDecorator("factoryId", { initialValue: '', rules: [{ required: true }] })(
+                    <Select placeholder="请选择" size="small">
+                      {factoryList.map(item => <Option key={item.factoryId} value={item.factoryId}>{item.factoryName}</Option>)}
+                    </Select>
+                  )}
+                </Form.Item>
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="站点名称" >
+                  {getFieldDecorator("siteIdList", { initialValue: [], rules: [{ required: true }] })(
+                    <Select mode="multiple" placeholder="请选择" size="small">
+                      {siteList.map(item => <Option key={item.siteId} value={item.siteId}>{item.siteName}</Option>)}
+                    </Select>
+                  )}
+                </Form.Item>
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测类型" >
+                  {getFieldDecorator("ptId", { initialValue: '', rules: [{ required: true }] })(
+                    <Select placeholder="请选择" size="small">
+                      {ptList.map(item => <Option key={item.id} value={item.id}>{item.label}</Option>)}
+                    </Select>
+                  )}
+                </Form.Item>
+                <Divider orientation="left">监测因子</Divider>
+                {!!getFieldValue('ptId') && 
+                <Row>
+                 <Checkbox style={{ fontSize: '10px' }} checked={allChecked} onChange={onSelectAll}>全选</Checkbox>
+                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
+                    {getFieldDecorator("pmCodeList", { initialValue: [], rules: [{ required: true }] })(
+                      <Checkbox.Group style={{ width: '100%' }}>
+                        <Row>
+                          {pmCodeList.map(item => <Col span={8} key={item.pmCode}><Checkbox style={{ fontSize: '10px' }} value={item.pmCode}>{item.pmName}</Checkbox></Col>)}
+                        </Row>
+                      </Checkbox.Group>
+                    )}
+                  </Form.Item>
+                </Row>
+                
+                }
+                
+                <Button type="primary" htmlType="submit" block>查询</Button>
+              </Card>
+            </Form>
+          </Col>
+          <Col span={18}>
+            <Card size="small" title="数据列表">
+              <Table size="small" bordered scroll={{ x: 1300 }} pagination={pagination} columns={toJS(columns)} dataSource={toJS(dataList)} />
+            </Card>
+          </Col>
+        </Row>
+      </Spin>
+    </div>
+    
   )
 }));

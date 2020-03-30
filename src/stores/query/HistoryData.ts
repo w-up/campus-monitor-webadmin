@@ -83,9 +83,16 @@ export class HistoryData {
     this.loading = true;
     this.param = { ...param };
     try {
-      await POST('/device-data-history/exportHistoryDatas', {
-        ...param,
-      });
+      const { headers, data }: any = await POST('/device-data-history/exportHistoryDatas', param);
+      const type = headers['content-type']
+      const file = new Blob([data], { type });
+      const url = window.URL.createObjectURL(file);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'file.xls');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
       
     } catch {
 

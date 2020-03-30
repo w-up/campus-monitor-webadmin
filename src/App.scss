@@ -756,6 +756,32 @@ svg {
   }
 }
 
+/* 数据查询样式 */
+.queryPage,
+.reportPage,
+.alertPage {
+  .ant-table * {
+    font-size: 12px !important;
+  }
+  .ant-form-item * {
+    font-size: 12px !important;
+  }
+  .ant-divider {
+    font-size: 12px !important;
+  }
+  .ant-pagination * {
+    font-size: 12px !important;
+  }
+  .ant-tabs * {
+    font-size: 12px !important;
+  }
+  
+}
+
+.ant-select-dropdown-menu-item {
+  font-size: 12px !important;
+}
+
 .tableFloat {
   line-height: 20px;
 

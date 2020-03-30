@@ -58,7 +58,7 @@ export class RuntimeData {
           config.width = 150;
         } else if (index === (data.titles.length - 1)) {
           config.fixed = 'right';
-          config.width = 150;
+          config.width = 200;
         }
         return config;
       });

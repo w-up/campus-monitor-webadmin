@@ -81,89 +81,91 @@ export const AlertManagePage = Form.create()(observer(({ form }: any) => {
   }
 
   return (
-    <Spin spinning={loading}>
-      <div style={{ background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px" }}>
-        <Breadcrumb>
-          <Breadcrumb.Item>告警处理</Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <Link to="/alert/manage">告警管理</Link>
-          </Breadcrumb.Item>
-        </Breadcrumb>
-      </div>
-      <Row gutter={10}>
-        <Col span={6}>
-          <Card size="small" title="告警管理">
-            <Form onSubmit={doSubmit}>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测对象" >
-                {getFieldDecorator("factoryIds", { initialValue: [], rules: [{ required: true }] })(
-                  <Select mode="multiple" style={{ fontSize: '10px' }} onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
-                    {factoryList.map(item => <Option style={{ fontSize: '10px' }} key={item.factoryId} value={item.factoryId}>{item.factoryName}</Option>)}
+    <div className="alertPage">
+      <Spin spinning={loading}>
+        <div style={{ background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px" }}>
+          <Breadcrumb>
+            <Breadcrumb.Item>告警处理</Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="/alert/manage">告警管理</Link>
+            </Breadcrumb.Item>
+          </Breadcrumb>
+        </div>
+        <Row gutter={10}>
+          <Col span={6}>
+            <Card size="small" title="告警管理">
+              <Form onSubmit={doSubmit}>
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测对象" >
+                  {getFieldDecorator("factoryIds", { initialValue: [], rules: [{ required: true }] })(
+                    <Select mode="multiple" style={{ fontSize: '10px' }} onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
+                      {factoryList.map(item => <Option style={{ fontSize: '10px' }} key={item.factoryId} value={item.factoryId}>{item.factoryName}</Option>)}
+                    </Select>
+                  )}
+                </Form.Item>
+
+                {getFieldDecorator("warnType", { initialValue: 1, rules: [{ required: true }] })(
+                  <Select style={{ display: 'none' }} size="small">
+                    <Option value={1}>废气</Option>
+                    <Option value={2}>污水</Option>
                   </Select>
                 )}
-              </Form.Item>
 
-              {getFieldDecorator("warnType", { initialValue: 1, rules: [{ required: true }] })(
-                <Select style={{ display: 'none' }} size="small">
-                  <Option value={1}>废气</Option>
-                  <Option value={2}>污水</Option>
-                </Select>
-              )}
+                {!!pmCodeList.length &&
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测因子" >
+                  {getFieldDecorator("pmList", { initialValue: [], rules: [{ required: true }] })(
+                    <Select mode="multiple" placeholder="请选择" size="small">
+                      {pmCodeList.map(item => <Option key={item.pmCode} value={item.pmCode}>{item.pmName}</Option>)}
+                    </Select>
+                  )}
+                </Form.Item>
+                }
+                
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="累计时长超过" >
+                  {getFieldDecorator("mins", { initialValue: "", rules: [{ required: true }] })(
+                    <InputNumber placeholder="单位分钟" style={{ width: '100%' }} size="small" />
+                  )}
+                </Form.Item>
 
-              {!!pmCodeList.length &&
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测因子" >
-                {getFieldDecorator("pmList", { initialValue: [], rules: [{ required: true }] })(
-                  <Select mode="multiple" placeholder="请选择" size="small">
-                    {pmCodeList.map(item => <Option key={item.pmCode} value={item.pmCode}>{item.pmName}</Option>)}
-                  </Select>
-                )}
-              </Form.Item>
-              }
-              
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="累计时长超过" >
-                {getFieldDecorator("mins", { initialValue: "", rules: [{ required: true }] })(
-                  <InputNumber placeholder="单位分钟" style={{ width: '100%' }} size="small" />
-                )}
-              </Form.Item>
-
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="状态" >
-                {getFieldDecorator("status", { initialValue: 0, rules: [{ required: true }] })(
-                  <Select placeholder="请选择" size="small">
-                    <Option value={0}>未处理</Option>
-                    <Option value={1}>已处理</Option>
-                    <Option value={2}>全部</Option>
-                  </Select>
-                )}
-              </Form.Item>
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="状态" >
+                  {getFieldDecorator("status", { initialValue: 0, rules: [{ required: true }] })(
+                    <Select placeholder="请选择" size="small">
+                      <Option value={0}>未处理</Option>
+                      <Option value={1}>已处理</Option>
+                      <Option value={2}>全部</Option>
+                    </Select>
+                  )}
+                </Form.Item>
 
 
-              <Divider orientation="left">起止时间</Divider>
+                <Divider orientation="left">起止时间</Divider>
 
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
-                {getFieldDecorator("timeRange", { initialValue: '', rules: [{ required: false }] })(
-                  <DatePicker.RangePicker size="small" />
-                )}
-              </Form.Item>
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
+                  {getFieldDecorator("timeRange", { initialValue: '', rules: [{ required: false }] })(
+                    <DatePicker.RangePicker size="small" />
+                  )}
+                </Form.Item>
 
-              <Button type="primary" htmlType="submit" block>查询</Button>
-            </Form>
-          </Card>  
-        </Col>
-        <Col span={18}>
-          <Card size="small" title="数据列表">
-            <Tabs animated size="small" type="card" defaultActiveKey="1" onChange={changeTab}>
-              <Tabs.TabPane tab="废气超标告警" key="1">
-                <Table size="small" bordered columns={columns} dataSource={tableData[0].dataSource} />
-              </Tabs.TabPane>
-              <Tabs.TabPane tab="污水超标告警" key="2">
-                <Table size="small" bordered columns={columns} dataSource={tableData[1].dataSource} />
-              </Tabs.TabPane>
-              <Tabs.TabPane tab="设备离线告警" key="3">
-                <Table size="small" bordered columns={columns} dataSource={tableData[2].dataSource} />
-              </Tabs.TabPane>
-            </Tabs>
-          </Card>
-        </Col>
-      </Row>
-    </Spin>
+                <Button type="primary" htmlType="submit" block>查询</Button>
+              </Form>
+            </Card>  
+          </Col>
+          <Col span={18}>
+            <Card size="small" title="数据列表">
+              <Tabs animated size="small" type="card" defaultActiveKey="1" onChange={changeTab}>
+                <Tabs.TabPane tab="废气超标告警" key="1">
+                  <Table size="small" bordered columns={columns} dataSource={tableData[0].dataSource} />
+                </Tabs.TabPane>
+                <Tabs.TabPane tab="污水超标告警" key="2">
+                  <Table size="small" bordered columns={columns} dataSource={tableData[1].dataSource} />
+                </Tabs.TabPane>
+                <Tabs.TabPane tab="设备离线告警" key="3">
+                  <Table size="small" bordered columns={columns} dataSource={tableData[2].dataSource} />
+                </Tabs.TabPane>
+              </Tabs>
+            </Card>
+          </Col>
+        </Row>
+      </Spin>
+    </div>
   );
 }))
