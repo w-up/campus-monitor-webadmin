@@ -251,14 +251,18 @@ export class MapMonitorStore {
     return this.polltionDatas[0]?.pmValues.length;
   }
 
+  @computed
+  get curPollutionData() {
+    return this.polltionDatas[this.currentTime];
+  }
+
   @action.bound
   fillPollution() {
     this.clearOverlay();
+    if (!this.curPollutionData) return;
     let data = [] as any;
 
-    this.polltionDatas?.forEach(i => {
-      // _.range(this.currentTime, this.currentTime + 3).forEach(num => {
-      const pmValue = i.pmValues[this.currentTime];
+    this.curPollutionData.pmValues.forEach(pmValue => {
       data.push({
         geometry: {
           type: "Point",
