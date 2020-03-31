@@ -207,17 +207,11 @@ export type AlarmInfo = {
 };
 
 export type PollutionData = {
-  siteId: string;
-  siteName: string;
-  longitude: string;
-  latitude: string;
+  statisticalTime: string;
   pmValues: Array<{
-    pmCode: string;
-    avgValue: string;
-    avgLimit: string;
+    longitude: string;
+    latitude: string;
     specificValue: string;
-    unit: string;
-    statisticalTime: string;
   }>;
 };
 

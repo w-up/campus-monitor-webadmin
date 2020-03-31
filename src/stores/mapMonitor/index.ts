@@ -262,7 +262,7 @@ export class MapMonitorStore {
       data.push({
         geometry: {
           type: "Point",
-          coordinates: [i.longitude, i.latitude]
+          coordinates: [pmValue.longitude, pmValue.latitude]
         },
         count: Number(pmValue.specificValue) * 100
       });

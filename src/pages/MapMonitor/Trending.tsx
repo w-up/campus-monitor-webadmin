@@ -414,7 +414,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
               <div>检测因子: {mapMonitor.currentPmCodeData?.pmName}</div>
               <div>统计类型: {store.dateType.label}</div>
             </div>
-            <div className="primary-button-text-dark mt-3">时间段： 2020-01-02</div>
+            <div className="primary-button-text-dark mt-3">时间段： {moment(store.statisticalTime).format("YYYY-MM-DD")}</div>
           </div>
           <div className="text-white mt-8">
             <div className="flex justify-between pb-4 px-4" style={{ borderBottom: "1px solid #1bb8a1" }}>
