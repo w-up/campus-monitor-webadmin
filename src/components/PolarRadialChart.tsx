@@ -10,10 +10,33 @@ export const PolarRadialChart = () => {
     dataIndexMax: 6,
     options: {
       angleAxis: {
+        axisLine: {
+          lineStyle: {
+            color: "white"
+          }
+        },
+        axisLabel: {
+          textStyle: {
+            fontSize: 16,
+            color: "#54b468"
+          }
+        },
         type: "category",
         data: ["NE", "E", "SE", "S", "SW", "W", "NW", "N"]
       },
-      radiusAxis: {},
+      radiusAxis: {
+        axisLine: {
+          lineStyle: {
+            color: "white"
+          }
+        },
+        axisLabel: {
+          textStyle: {
+            fontSize: 10,
+            color: "white"
+          }
+        }
+      },
       polar: {},
       series: [
         {
@@ -37,16 +60,12 @@ export const PolarRadialChart = () => {
           name: "C",
           stack: "a"
         }
-      ],
-      legend: {
-        show: true,
-        data: ["A", "B", "C"]
-      }
+      ]
     }
   }));
   return useObserver(() => (
     <div>
-      <ReactEcharts ref={mapRef} option={store.options} style={{ width: "100%", height: "200px", margin: "-100% 0 " }} />
+      <ReactEcharts ref={mapRef} option={store.options} style={{ width: "200px", height: "200px" }} />
     </div>
   ));
 };

@@ -251,14 +251,18 @@ export class MapMonitorStore {
     return this.polltionDatas[0]?.pmValues.length;
   }
 
+  @computed
+  get curPollutionData() {
+    return this.polltionDatas[this.currentTime];
+  }
+
   @action.bound
   fillPollution() {
     this.clearOverlay();
+    if (!this.curPollutionData) return;
     let data = [] as any;
 
-    this.polltionDatas?.forEach(i => {
-      // _.range(this.currentTime, this.currentTime + 3).forEach(num => {
-      const pmValue = i.pmValues[this.currentTime];
+    this.curPollutionData.pmValues.forEach(pmValue => {
       data.push({
         geometry: {
           type: "Point",
@@ -285,6 +289,7 @@ export class MapMonitorStore {
       gradient: { 0.16: "rgb(0,255,0)", 0.33: "yellow", 0.5: "#ef8432", 0.666: "rgb(255,0,0)", 1: "#8b1b4a" },
       unit: "m",
       lineWidth: 0,
+      globalCompositeOperation: "lighter",
       // max: 1,
       // range: [0, 100], // 过滤显示数据范围
       // minOpacity: 1, // 热力图透明度
