@@ -8,7 +8,10 @@ import moment from 'moment';
 
 import { Checkbox, Card, Row, Col, Form, Button, Select, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal, Spin } from 'antd';
 const { Option } = Select;
+const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
+
+const timeCycleArr = ['日', '月', '年', '周', '季'];
 
 export const ReportPage = Form.create()(observer(({ form }: any) => {
 
@@ -88,6 +91,7 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
     pmCardTitle = pmList.find(item => item.id === getFieldValue('pmType')).label;
   }
 
+
   return (
     <div className="reportPage">
       <Spin spinning={loading}>
@@ -156,11 +160,7 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
               <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计周期">
                 {getFieldDecorator("timeCycle", { initialValue: 1, rules: [{ required: true }] })(
                   <Radio.Group style={{ width: '100%' }} size="small" buttonStyle="solid">
-                    <Radio.Button style={{ width: '20%', textAlign: 'center' }} value={1}>日</Radio.Button>
-                    <Radio.Button style={{ width: '20%', textAlign: 'center' }} value={2}>月</Radio.Button>
-                    <Radio.Button style={{ width: '20%', textAlign: 'center' }} value={3}>年</Radio.Button>
-                    <Radio.Button style={{ width: '20%', textAlign: 'center' }} value={4}>周</Radio.Button>
-                    <Radio.Button style={{ width: '20%', textAlign: 'center' }} value={5}>季</Radio.Button>
+                    {timeCycleArr.map((val, index) => <Radio.Button style={{ width: '20%', textAlign: 'center' }} key={index + 1} value={index + 1}>{val}</Radio.Button>)}
                   </Radio.Group>
                 )}
               </Form.Item>
@@ -191,8 +191,9 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
                   <Table bordered size="small" scroll={{ x: 1300, y: 600 }} pagination={false} columns={toJS(tableColumn)} dataSource={toJS(tableData)} />
                 </Card>
               </Col>
+              {getFieldValue('timeCycle') === 1 &&
               <Col span={24} style={{ marginBottom: '10px' }}>
-                <Card bordered size="small" title={`${pmCardTitle}污染物排放浓度24小时趋势图`} extra={cardExtra}>
+                <Card bordered size="small" title={`${pmCardTitle}污染物排放浓度${timeCycleArr[getFieldValue('timeCycle') - 1]}趋势图`} extra={cardExtra}>
                   <ReactEcharts
                     //@ts-ignore
                     option={toJS(chartOption)}
@@ -201,6 +202,21 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
                   />
                 </Card>
               </Col>
+              }
+
+              {getFieldValue('timeCycle') === 2 &&
+              <Col span={24} style={{ marginBottom: '10px' }}>
+                <Card bordered size="small" title={`${pmCardTitle}污染物排放浓度${timeCycleArr[getFieldValue('timeCycle') - 1]}趋势图`} extra={cardExtra}>
+                  <ReactEcharts
+                    //@ts-ignore
+                    option={toJS(chartOption)}
+                    ref={chart3}
+                    style={{ height: '360px' }}
+                  />
+                </Card>
+              </Col>
+              }
+              
             </Row>
           </Col>
         </Row>
