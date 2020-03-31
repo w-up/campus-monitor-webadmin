@@ -289,6 +289,7 @@ export class MapMonitorStore {
       gradient: { 0.16: "rgb(0,255,0)", 0.33: "yellow", 0.5: "#ef8432", 0.666: "rgb(255,0,0)", 1: "#8b1b4a" },
       unit: "m",
       lineWidth: 0,
+      globalCompositeOperation: "lighter",
       // max: 1,
       // range: [0, 100], // 过滤显示数据范围
       // minOpacity: 1, // 热力图透明度
