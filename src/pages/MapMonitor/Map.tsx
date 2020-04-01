@@ -24,6 +24,7 @@ export const MapMonitorMap = () => {
             strokeColor="#00FF66"
             strokeStyle="dashed"
             strokeWeight={2}
+            fillOpacity={1}
             fillColor={mapMonitor.currentTabKey == "2" ? "rgb(0,255,0)" : ""}
           ></Polygon>
         ))}
