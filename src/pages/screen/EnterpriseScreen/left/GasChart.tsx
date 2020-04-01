@@ -53,7 +53,7 @@ export const EnterpriseScreenGasChart = () => {
                   //@ts-ignore
                   ref={elementsRef.current[index]}
                   option={makeOption(item)}
-                  style={{ marginTop: "20px", padding: "10px", height: "260px", width: "100%" }}
+                  style={{ marginTop: "10px", padding: "20px",  width: "100%" }}
                   className="react_for_echarts"
                 />
               </Slide>
@@ -76,15 +76,14 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
       text: site.pmName,
       textStyle: {
         color: "rgba(4,248,204,0.8)",
-        fontSize: "14",
-        width: 20,
-        height: 20
+        fontSize: "14"
       },
-      padding: [10, 20],
+      padding: [20, 20, 5, 20],
+      margin:[20, 0],
       backgroundColor: "rgba(8,46,66,0.5)",
       borderColor: "rgba(8,46,66,0.5)",
       borderWidth: 1,
-      top: -5
+      top: -15
     },
     tooltip: {
       trigger: "axis",
@@ -179,13 +178,15 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
         color: "rgba(136,168,197,0.5)",
         align: "center",
         verticalAlign: "middle",
-        padding: [5, 0, 5, 50]
+        padding: [10, 0, 20, 0]
       },
+      nameGap: 15,
       axisLabel: {
         textStyle: {
           color: "rgba(136,168,197,0.5)",
           fontSize: "10"
-        }
+        },
+        margin: 8
       },
       //   分割线
       splitLine: {

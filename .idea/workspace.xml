@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b5aa787-9ba3-4839-bcb1-9b38c1c54b5a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/pages/basic/UserProfile/UserInfoEdit.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/basic/UserProfile/UserPasswordEdit.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/NavHead.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavHead.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/AuthStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/AuthStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/center/Map.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/center/Map.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasChart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasChart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/TimeDisplay.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/TimeDisplay.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,45 +20,6 @@
         <option value="TypeScript JSX File" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>ell</find>
-      <find>text</find>
-      <find>text-</find>
-      <find>list</find>
-      <find>0F172A</find>
-      <find>061630</find>
-      <find>0DACF2</find>
-      <find>04F9CC</find>
-      <find>$primary-text-dark</find>
-      <find>F90421</find>
-      <find>allmap</find>
-      <find>currentPmType</find>
-      <find>uploadButton</find>
-      <find>mapmonitor-page</find>
-      <find>dynamicsource-page</find>
-      <find>计算方法</find>
-      <find>计算结果</find>
-      <find>.t-b-con.active</find>
-      <find>picUrl</find>
-      <find>head-right</find>
-      <find>screenCenterTable</find>
-      <find>head-left</find>
-      <find>mini</find>
-      <find>screenc</find>
-      <find>.title</find>
-      <find>option</find>
-      <find>mo</find>
-      <find>pmValue</find>
-      <find>SiteRuntimePmDate</find>
-      <find>getMapConfigLogin</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>$screen-text-color-2</replace>
-      <replace>maxNum</replace>
-      <replace>$primary-text-color-gray</replace>
-    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -89,7 +48,7 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
-    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -141,7 +100,8 @@
       <workItem from="1584160800289" duration="28380000" />
       <workItem from="1584531510387" duration="7397000" />
       <workItem from="1584878165442" duration="3034000" />
-      <workItem from="1585449188193" duration="9163000" />
+      <workItem from="1585449188193" duration="9924000" />
+      <workItem from="1585736107268" duration="7082000" />
     </task>
     <servers />
   </component>
@@ -153,5 +113,9 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="327" y="239" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1440.877@0.23.1440.877" timestamp="1585456078997" />
+    <state x="271" y="89" key="SettingsEditor" timestamp="1585736320388">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="271" y="89" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1585736320388" />
   </component>
 </project>
