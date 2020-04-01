@@ -25,7 +25,7 @@ export const MapMonitorMap = () => {
             strokeStyle="dashed"
             strokeWeight={2}
             fillOpacity={1}
-            fillColor={mapMonitor.currentTabKey == "2" ? "rgb(0,255,0)" : ""}
+            fillColor={mapMonitor.currentTabKey == "2" ? config.sysParams.bottom_color.paramValue : ""}
           ></Polygon>
         ))}
         {mapMonitor.curParkData?.map(park =>
@@ -49,7 +49,7 @@ export const MapMonitorMap = () => {
                 offset={mapMonitor.offset}
                 content={item.factoryName}
                 key={item.factoryName}
-                position={item.factoryPoints[0]}
+                position={utils.obj.formatLatLngShort(item.factoryPoints[0])}
                 //@ts-ignore
                 style={{ color: "white", fontSize: "12px", backgroundColor: "#0072FF", borderColor: "#0EFCFF" }}
                 item={item.factoryName}

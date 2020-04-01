@@ -268,8 +268,8 @@ export class ParkScreenMapStore {
 
   @action.bound
   updateMap() {
-    if (!this.map) return;
-    let mapViewObj = this.map.getViewport(utils.array.formatToLatLngShort(this.allParkMapData.parkPoints), {});
+    if (!this.map || !this.allParkMapData.parkPoints) return;
+    let mapViewObj = this.map.getViewport(utils.array.formatToLatLngShort(this.allParkMapData.parkPoints) || [], {});
     this.map.centerAndZoom(mapViewObj.center, mapViewObj.zoom);
   }
 }

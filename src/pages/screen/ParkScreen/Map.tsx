@@ -22,18 +22,28 @@ export const ParkScreenMap = () => {
     <div style={{ width: "100%", height: "50vh" }}>
       <APILoader akay={config.baiduMapApiKey}>
         <Map onTilesLoaded={parkScreenMap.onMapUpdate} enableScrollWheelZoom onZoomEnd={e => (parkScreenMap.zoom = e.target.getZoom())}>
-          <Polygon path={utils.array.formatToLatLngShort(parkScreenMap.allParkMapData.parkPoints)} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor=""></Polygon>
-          {parkScreenMap.allParkMapData?.factoryDatas.map((item, index) => (
-            <Polygon path={utils.array.formatToLatLngShort(item.factoryPoints)} key={index} strokeStyle="dashed" fillColor="#FFD800" strokeColor="#FFD800" strokeWeight={2}></Polygon>
-          ))}
-          {parkScreenMap.allParkMapData?.factoryDatas.map((item, index) => {
+          <Polygon
+            path={utils.array.formatToLatLngShort(parkScreenMap.allParkMapData.parkPoints)}
+            visiable={parkScreenMap.allParkMapData?.parkPoints?.length > 0}
+            strokeColor="#00FF66"
+            strokeStyle="dashed"
+            strokeWeight={2}
+            fillColor=""
+          ></Polygon>
+          {parkScreenMap.allParkMapData?.factoryDatas?.map((item, index) => {
+            if (!item.factoryPoints) return;
+            return (
+              <Polygon path={utils.array.formatToLatLngShort(item.factoryPoints)} key={`polygon-${index}`} strokeStyle="dashed" fillColor="#FFD800" strokeColor="#FFD800" strokeWeight={2}></Polygon>
+            );
+          })}
+          {parkScreenMap.allParkMapData?.factoryDatas?.map((item, index) => {
             if (!item.factoryPoints) return;
             return (
               <Label
                 offset={parkScreenMap.offset}
                 content={item.factoryName}
                 key={index}
-                position={item.factoryPoints[0]}
+                position={utils.obj.formatLatLngShort(item.factoryPoints[0])}
                 //@ts-ignore
                 style={{ color: "white", fontSize: "12px", backgroundColor: "#0072FF", borderColor: "#0EFCFF" }}
                 item={item.factoryName}

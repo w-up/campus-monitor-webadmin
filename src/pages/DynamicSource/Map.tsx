@@ -42,7 +42,7 @@ export const DynamicSourceMap = () => {
                 offset={dynamicSource.offset}
                 content={item.factoryName}
                 key={item.factoryName}
-                position={item.factoryPoints[0]}
+                position={utils.obj.formatLatLngShort(item.factoryPoints[0])}
                 //@ts-ignore
                 style={{ color: "white", fontSize: "12px", backgroundColor: "#0072FF", borderColor: "#0EFCFF" }}
                 item={item.factoryName}

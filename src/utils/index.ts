@@ -10,6 +10,12 @@ export const utils = {
   },
   obj: {
     formatLatLngShort(i) {
+      if (!i) {
+        return {
+          lat: 0,
+          lng: 0
+        };
+      }
       return {
         lat: i.latitude,
         lng: i.longitude
