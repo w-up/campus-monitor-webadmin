@@ -43,7 +43,7 @@ export const ScreenTopSetting = () => {
   return useObserver(() => (
     <div className="head-center">
       <div className="text-center primary-text-color text-2xl font-bold relative">
-        <span className="screenTitleGradient">鼎龙工业园污染源实时监测</span>
+        <span className="screenTitleGradient">{parkScreenMap.allParkMapData.parkName}污染源实时监测</span>
         <Icon onClick={() => parkScreenMap.toggleBox()} className="text-lg absolute ml-6 cursor-pointer z-50" style={{ top: "10px" }} type="setting" theme="filled" />
         <div className="absolute screenSetting z-50" style={{ width: 300, display: parkScreenMap.boxDisplay ? "block" : "none" }}>
           <div className="setting-box-header text-center">
