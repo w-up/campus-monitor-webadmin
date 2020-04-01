@@ -29,8 +29,10 @@ import { AlertSetting } from "./alert/AlertSetting";
 import { Rank } from "./analysis/Rank";
 import { Comparison } from "./analysis/Comparison";
 import { Report } from "./Report";
+import { RootStore } from "./RootStore";
 
 export const store = {
+  root: new RootStore(),
   menu: new MenuStore(),
   auth: new AuthStore(),
   config: new ConfigStore(),
@@ -54,27 +56,27 @@ export const store = {
     user: new UserManagement(),
     userEdit: new UserEdit(),
     role: new Roles(),
-    roleEdit: new RoleEdit(),
+    roleEdit: new RoleEdit()
   },
   systemConfig: new SystemConfig(),
   data: {
     manage: new DataManage(),
     replenish: new Replenish(),
-    audit: new DataAudit(),
+    audit: new DataAudit()
   },
   query: {
     runTimeData: new RuntimeData(),
-    historyData: new HistoryData(),
+    historyData: new HistoryData()
   },
   analysis: {
     rank: new Rank(),
-    comparison: new Comparison(),
+    comparison: new Comparison()
   },
   alert: {
     alertManage: new AlertManage(),
-    alertSetting: new AlertSetting(),
+    alertSetting: new AlertSetting()
   },
-  report: new Report(),
+  report: new Report()
 };
 //@ts-ignore
 global._store = store;

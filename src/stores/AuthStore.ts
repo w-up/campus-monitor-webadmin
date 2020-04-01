@@ -1,6 +1,6 @@
-import {action, observable} from "mobx";
+import { action, observable } from "mobx";
 import api from "services";
-import {GET} from "../utils/request";
+import { GET } from "../utils/request";
 
 const user = window.localStorage.getItem("user");
 const codes = window.localStorage.getItem("codes");

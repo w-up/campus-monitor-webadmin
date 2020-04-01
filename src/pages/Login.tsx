@@ -11,7 +11,7 @@ import { useEffect } from "react";
 
 export const LoginPage = Form.create()(({ form }: { form: WrappedFormUtils }) => {
   const { getFieldDecorator, getFieldValue } = form;
-  const { auth } = useStore();
+  const { auth, root } = useStore();
   const history = useHistory();
 
   useEffect(() => {
@@ -28,6 +28,7 @@ export const LoginPage = Form.create()(({ form }: { form: WrappedFormUtils }) =>
           console.log("Received values of form: ", values);
           const { username, password } = values;
           await auth.login({ username, password });
+          await root.init();
           history.replace("/");
         }
       });

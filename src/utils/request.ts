@@ -28,12 +28,12 @@ http.interceptors.response.use(
   response => {
     try {
       const res = response.data;
-      if (typeof res !== 'object') {
+      if (typeof res !== "object") {
         return response;
       }
 
       if (res.msg == "未登录") {
-        store.auth.logout();
+        return store.auth.logout();
       }
       if (res.msg !== "success") {
         message.error(res.msg);
@@ -44,7 +44,6 @@ http.interceptors.response.use(
     } catch {
       return response;
     }
-    
   },
   error => {
     if (error && error.response) {
