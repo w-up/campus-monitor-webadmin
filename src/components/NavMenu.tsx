@@ -1,5 +1,5 @@
 import React from "react";
-import { useObserver } from "mobx-react-lite";
+import { useObserver, useLocalStore } from "mobx-react-lite";
 import { Menu, Icon } from "antd";
 import SubMenu from "antd/lib/menu/SubMenu";
 import { useStore } from "../stores";
@@ -7,6 +7,13 @@ import { Link, useLocation } from "react-router-dom";
 
 export const NavMenu = () => {
   const { menu, auth } = useStore();
+  const store = useLocalStore(() => ({
+    openKeys: [] as any,
+    onOpenChange(openKeys) {
+      const latestOpenKey = openKeys.find(key => this.openKeys.indexOf(key) === -1);
+      this.openKeys = [latestOpenKey];
+    }
+  }));
 
   const renderMenu = (data: any[]) => {
     return data
@@ -41,7 +48,7 @@ export const NavMenu = () => {
   const { pathname } = useLocation();
   const dir = pathname.substring(0, pathname.lastIndexOf("/"));
   return useObserver(() => (
-    <Menu defaultSelectedKeys={[pathname]} defaultOpenKeys={[dir]} mode="inline" theme="dark">
+    <Menu defaultSelectedKeys={[pathname]} openKeys={store.openKeys} onOpenChange={store.onOpenChange} defaultOpenKeys={[dir]} mode="inline" theme="dark">
       <Menu.Item title="MENU" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         {!menu.collapsed && <span>MENU</span>}
         <Icon className="trigger" type={menu.collapsed ? "menu-unfold" : "menu-fold"} style={{ fontSize: "20px" }} onClick={menu.toggleCollapsed} />
