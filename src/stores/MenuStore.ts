@@ -47,12 +47,14 @@ export class MenuStore {
         {
           title: "企业管理",
           path: "/base/enterprise",
+          code: "base:company:page",
           component: Basic,
           children: []
         },
         {
           title: "我的企业",
           path: "/base/my-enterprise",
+          code: "base:myCompany:page",
           component: MyEnterprisePage,
           children: []
         }
@@ -104,6 +106,7 @@ export class MenuStore {
       children: [
         {
           title: "企业驾驶舱",
+          code: "jsc:enterpriseJsc",
           path: "/screen/enterprise",
           component: EnterpriseScreenPage,
           children: []
@@ -111,6 +114,7 @@ export class MenuStore {
         {
           title: "园区驾驶舱",
           path: "/screen/park",
+          code: "jsc:parkJsc",
           component: ParkScreenPage,
           children: []
         }
@@ -120,6 +124,7 @@ export class MenuStore {
       icon: "environment",
       title: "地图监控",
       path: "/map",
+      code: "mapMonitor:manage",
       component: MapMonitorPage,
       children: []
     },
@@ -127,6 +132,7 @@ export class MenuStore {
       icon: "dashboard",
       title: "动态溯源",
       path: "/dynamic",
+      code: "dynamic:manage",
       component: DynamicSourcePage,
       children: []
     },
@@ -140,12 +146,14 @@ export class MenuStore {
         {
           title: "实时数据查询",
           path: "/query/runtime",
+          code: "dataQuery:liveData",
           component: RuntimeDataPage,
           children: []
         },
         {
           title: "历史数据查询",
           path: "/query/history",
+          code: "dataQuery:historyData",
           component: HistoryDataPage,
           children: []
         }
@@ -155,17 +163,20 @@ export class MenuStore {
       icon: "bar-chart",
       title: "统计分析",
       path: "/analysis",
+      code: "datahistory:statis",
       component: "",
       children: [
         {
           title: "统计排名",
           path: "/analysis/rank",
+          code: "datahistory:statis:rank",
           component: RankAnalysisPage,
           children: []
         },
         {
           title: "对比分析",
           path: "/analysis/comparison",
+          code: "datahistory:statis:analisis",
           component: ComparisonAnalysisPage,
           children: []
         }
@@ -203,6 +214,7 @@ export class MenuStore {
         {
           title: "数据管理",
           path: "/data/manage",
+          code: "dataAdd:manage:page",
           component: DataManagePage,
           children: []
         },
@@ -230,6 +242,7 @@ export class MenuStore {
         {
           title: "数据审核",
           path: "/data/audit",
+          code: "dataAdd:check:page",
           component: DataAuditPage,
           children: []
         }
@@ -240,12 +253,14 @@ export class MenuStore {
       title: "统计报表",
       path: "/report",
       component: ReportPage,
+      code: "datahistory:statisreport",
       children: []
     },
     {
       icon: "dashboard",
       title: "示例",
       path: "/exmaple",
+      isHide: true,
       component: "",
       children: [
         {

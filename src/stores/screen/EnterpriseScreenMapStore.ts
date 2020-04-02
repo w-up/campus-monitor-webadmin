@@ -244,17 +244,14 @@ export class EnterpriseScreenMapStore {
   @action.bound
   async saveMapConfig() {
     const { highAngle, latitude, longitude, rotationAngle, zoom, pic } = this.curMapConfig;
-    const result = await api.MapConfig.updateMapConfig(
-      //@ts-ignore
-      _.pickBy({
-        highAngle,
-        latitude,
-        longitude,
-        rotationAngle,
-        zoom,
-        pic
-      })
-    );
+    const result = await api.MapConfig.updateMapConfig({
+      highAngle,
+      latitude,
+      longitude,
+      rotationAngle,
+      zoom,
+      pic
+    });
     this.reload();
   }
 
