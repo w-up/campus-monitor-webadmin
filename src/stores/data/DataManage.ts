@@ -18,6 +18,11 @@ export class DataManage {
 
   @action.bound
   async getCheckDataList(param) {
+    Object.keys(param).forEach(key => {
+      if (!param[key]) {
+        delete param[key];
+      }
+    });
     this.query = {
       ...this.query,
       ...param,

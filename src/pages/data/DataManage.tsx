@@ -59,6 +59,7 @@ export const DataManagePage = Form.create()(observer(({ form, history }: any) =>
       title: '数据类型',
       dataIndex: '',
       key: '',
+      render: () => '补录数据',
     },
     {
       title: '附件',
@@ -98,7 +99,7 @@ export const DataManagePage = Form.create()(observer(({ form, history }: any) =>
           );
         } else {
           return (
-            <Link to={{ pathname: `/data/manage/reject/${data.id}`, state: { data } }}>查看</Link>
+            <Link to={{ pathname: `/data/manage/view/${data.id}`, state: { data } }}>查看</Link>
           );
         }
       }
@@ -174,7 +175,7 @@ export const DataManagePage = Form.create()(observer(({ form, history }: any) =>
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="监测区域" >
                   {getFieldDecorator("factoryId", { initialValue: '', rules: [{ required: false }] })(
-                    <Select placeholder="请选择" size="small">
+                    <Select onChange={() => setFieldsValue({ siteId: '' })} placeholder="请选择" size="small">
                       {factoryList.map(item => <Option key={item.factoryId} value={item.factoryId}>{item.factoryName}</Option>)}
                       <Option value="">不限</Option>
                     </Select>
@@ -183,7 +184,10 @@ export const DataManagePage = Form.create()(observer(({ form, history }: any) =>
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="监测站点" >
                   {getFieldDecorator("siteId", { initialValue: '', rules: [{ required: false }] })(
-                    <Select onChange={manage.getDevice} placeholder="请选择" size="small">
+                    <Select onChange={(val) => {
+                      manage.getDevice(val);
+                      setFieldsValue({ deviceCode: '' });
+                    }} placeholder="请选择" size="small">
                       {siteList.map(item => <Option key={item.siteId} value={item.siteId}>{item.siteName}</Option>)}
                       <Option value="">不限</Option>
                     </Select>

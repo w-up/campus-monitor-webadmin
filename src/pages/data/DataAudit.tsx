@@ -12,40 +12,67 @@ const { RangePicker } = DatePicker;
 const columns = [
   {
     title: '提交时间',
-    dataIndex: 'time',
-    key: 'time',
+    dataIndex: 'collectDate',
+    key: 'collectDate',
+    width: 150,
   },
   {
     title: '提交人',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'createUserName',
+    key: 'createUserName',
+    width: 100,
   },
   {
     title: '园区名称',
-    dataIndex: 'parkname',
-    key: 'parkname',
+    dataIndex: 'parkName',
+    key: 'parkName',
+    width: 120,
   },
   {
     title: '监测区域',
-    dataIndex: 'area',
-    key: 'area',
+    dataIndex: 'areaName',
+    key: 'areaName',
+    width: 80,
   },
   {
-    title: '排放率',
-    dataIndex: 'age',
-    key: 'age',
+    title: '站点名称',
+    dataIndex: 'siteName',
+    key: 'siteName',
+    width: 80,
+  },
+  {
+    title: '数据类型',
+    dataIndex: '',
+    key: '',
+    width: 60,
+    render: () => '补录数据',
+  },
+  {
+    title: '附件',
+    dataIndex: 'pic',
+    key: 'pic',
+    width: 50,
+    render: val => <a href={val} target="_blank">下载</a>,
   },
   {
     title: '状态',
     key: 'status',
     dataIndex: 'status',
-    render: (item) => {
-      if (item === '审核不通过') {
-        return <Link to="/data/manage/view" >{item}</Link>
-      } else if (item === '审核通过') {
-        return <Link to="/data/manage/view" >{item}</Link>
+    width: 80,
+    render: (item, data) => {
+      return item;
+    }
+  },
+  {
+    title: '操作',
+    key: 'status',
+    dataIndex: 'status',
+    width: 50,
+    render: (item, data) => {
+      if (item === '待审核') {
+        return <Link to={{ pathname: `/data/manage/view/${data.id}`, state: { data } }}>审核</Link>
       } else {
-        return item;
+        return <Link to={{ pathname: `/data/manage/view/${data.id}`, state: { data } }}>查看</Link>
       }
     }
   },
@@ -53,7 +80,6 @@ const columns = [
 
 
 export const DataAuditPage = Form.create()(observer(({ form }: any) => {
-
 
   const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields } = form;
 
@@ -119,76 +145,78 @@ export const DataAuditPage = Form.create()(observer(({ form }: any) => {
   }
 
   return (
-    <Spin spinning={loading}>
-      <div style={{ background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px"}}>
-        <Breadcrumb>
-          <Breadcrumb.Item>数据质量</Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <Link to="/data/audit">数据审核</Link>
-          </Breadcrumb.Item>
-        </Breadcrumb>
-      </div>
-      <Row gutter={10}>
-        <Col span={6}>
-          <Card size="small" title="数据审核" >
-            <Form onSubmit={doSubmit}>
+    <div className="auditPage">
+      <Spin spinning={loading}>
+        <div style={{ background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px"}}>
+          <Breadcrumb>
+            <Breadcrumb.Item>数据质量</Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="/data/audit">数据审核</Link>
+            </Breadcrumb.Item>
+          </Breadcrumb>
+        </div>
+        <Row gutter={10}>
+          <Col span={6}>
+            <Card size="small" title="数据审核" >
+              <Form onSubmit={doSubmit}>
 
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="统计区域" >
-                {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: true }] })(
-                  <Select onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
-                    {parkTree.map(item => <Option key={item.parkId} value={item.parkId}>{item.parkName}</Option>)}
-                  </Select>
-                )}
-              </Form.Item>
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计区域" >
+                  {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: true }] })(
+                    <Select onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
+                      {parkTree.map(item => <Option key={item.parkId} value={item.parkId}>{item.parkName}</Option>)}
+                    </Select>
+                  )}
+                </Form.Item>
 
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测区域" >
-                {getFieldDecorator("factoryId", { initialValue: '', rules: [{ required: false }] })(
-                  <Select placeholder="请选择" size="small">
-                    {factoryList.map(item => <Option key={item.factoryId} value={item.factoryId}>{item.factoryName}</Option>)}
-                    <Option value="">不限</Option>
-                  </Select>
-                )}
-              </Form.Item>
-              
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测站点" >
-                {getFieldDecorator("siteId", { initialValue: '', rules: [{ required: false }] })(
-                  <Select placeholder="请选择" size="small">
-                    {siteList.map(item => <Option key={item.siteId} value={item.siteId}>{item.siteName}</Option>)}
-                    <Option value="">不限</Option>
-                  </Select>
-                )}
-              </Form.Item>
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测区域" >
+                  {getFieldDecorator("factoryId", { initialValue: '', rules: [{ required: false }] })(
+                    <Select placeholder="请选择" size="small">
+                      {factoryList.map(item => <Option key={item.factoryId} value={item.factoryId}>{item.factoryName}</Option>)}
+                      <Option value="">不限</Option>
+                    </Select>
+                  )}
+                </Form.Item>
+                
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测站点" >
+                  {getFieldDecorator("siteId", { initialValue: '', rules: [{ required: false }] })(
+                    <Select placeholder="请选择" size="small">
+                      {siteList.map(item => <Option key={item.siteId} value={item.siteId}>{item.siteName}</Option>)}
+                      <Option value="">不限</Option>
+                    </Select>
+                  )}
+                </Form.Item>
 
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="审核状态" >
-                {getFieldDecorator("status", { initialValue: '', rules: [{ required: false }] })(
-                  <Select placeholder="请选择" size="small">
-                    <Option value={0}>待审核</Option>
-                    <Option value={1}>审核通过</Option>
-                    <Option value={2}>审核不通过</Option>
-                    <Option value="">不限</Option>
-                  </Select>
-                )}
-              </Form.Item>
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="审核状态" >
+                  {getFieldDecorator("status", { initialValue: '', rules: [{ required: false }] })(
+                    <Select placeholder="请选择" size="small">
+                      <Option value={0}>待审核</Option>
+                      <Option value={1}>审核通过</Option>
+                      <Option value={2}>审核不通过</Option>
+                      <Option value="">不限</Option>
+                    </Select>
+                  )}
+                </Form.Item>
 
-              <Divider orientation="left">起止时间</Divider>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
-                {getFieldDecorator("timeRange", { initialValue: '', rules: [{ required: false }] })(
-                  <RangePicker size="small" />
-                )}
-              </Form.Item>
+                <Divider orientation="left">起止时间</Divider>
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
+                  {getFieldDecorator("timeRange", { initialValue: '', rules: [{ required: false }] })(
+                    <RangePicker size="small" />
+                  )}
+                </Form.Item>
 
-              <Button type="primary" htmlType="submit" block>查询</Button>
+                <Button type="primary" htmlType="submit" block>查询</Button>
 
-            </Form>
-          </Card>
-        </Col>
-        <Col span={18} >
-          <Card size="small" title="数据列表" >
-            <Table bordered size="small" pagination={pagination} columns={columns} dataSource={toJS(dataSource)} />
-          </Card>
-        </Col>
-      </Row>
+              </Form>
+            </Card>
+          </Col>
+          <Col span={18} >
+            <Card size="small" title="数据列表" >
+              <Table bordered size="small" pagination={pagination} columns={columns} dataSource={toJS(dataSource)} />
+            </Card>
+          </Col>
+        </Row>
 
-    </Spin>
+      </Spin>
+    </div>
   );
 }));

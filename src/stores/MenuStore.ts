@@ -12,7 +12,7 @@ import { AlertManagePage } from "../pages/alert/AlertManage";
 import { AlertSettingPage } from "../pages/alert/AlertSetting";
 import { DataAuditPage } from "../pages/data/DataAudit";
 import { DataManagePage } from "../pages/data/DataManage";
-import { DataResolveView } from "../pages/data/DataResolveView";
+import { DataView } from "../pages/data/DataView";
 import { DataRejectView } from "../pages/data/DataRejectView";
 import { DataReplenish } from "../pages/data/DataReplenish";
 
@@ -214,17 +214,10 @@ export class MenuStore {
           children: []
         },
         {
-          title: "审核不通过查看",
-          path: "/data/manage/reject/:id",
+          title: "审核页面",
+          path: "/data/manage/view/:id",
           isHide: true,
-          component: DataRejectView,
-          children: []
-        },
-        {
-          title: "审核通过查看",
-          isHide: true,
-          path: "/data/manage/resolve",
-          component: DataResolveView,
+          component: DataView,
           children: []
         },
         {

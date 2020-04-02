@@ -22,6 +22,7 @@ import { SystemConfig } from "./SystemConfig";
 import { DataManage } from "./data/DataManage";
 import { Replenish } from "./data/Replenish";
 import { DataAudit } from "./data/DataAudit";
+import { DataView } from "./data/DataView";
 import { RuntimeData } from "./query/RuntimeData";
 import { HistoryData } from "./query/HistoryData";
 import { AlertManage } from "./alert/AlertManage";
@@ -62,7 +63,8 @@ export const store = {
   data: {
     manage: new DataManage(),
     replenish: new Replenish(),
-    audit: new DataAudit()
+    audit: new DataAudit(),
+    view: new DataView()
   },
   query: {
     runTimeData: new RuntimeData(),

@@ -45,7 +45,7 @@ export const NavHead = () => {
         width: "100%"
       }}
     >
-      <h1 style={{ color: "#fff", fontSize: "20px" }}>工业园区在线监测告警平台</h1>
+      {/* <h1 style={{ color: "#fff", fontSize: "20px" }}>工业园区在线监测告警平台</h1> */}
       <Dropdown overlay={userMenu}>
         <a
           style={{

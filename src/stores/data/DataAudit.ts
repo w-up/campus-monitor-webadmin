@@ -15,7 +15,6 @@ export class DataAudit {
   @observable dataSource: any = [];
   @observable total: number = 0;
 
-
   @action.bound
   async getSitesList(factoryId) {
     const { data }: any = await POST('/device-site/getSiteListPage', { factoryId, current: 0, size: 9999 });
@@ -47,8 +46,18 @@ export class DataAudit {
 
   @action.bound
   async getCheckData(param) {
-    param.start = moment(param.timeRange[0]).format('YYYY-MM-DD HH:mm:ss');
-    param.end = moment(param.timeRange[1]).format('YYYY-MM-DD HH:mm:ss');
+    Object.keys(param).forEach(key => {
+      if (!param[key]) {
+        delete param[key];
+      }
+    });
+
+    if (param.timeRange) {
+      param.start = moment(param.timeRange[0]).format('YYYY-MM-DD HH:mm:ss');
+      param.end = moment(param.timeRange[1]).format('YYYY-MM-DD HH:mm:ss');
+    }
+
+    delete param.timeRange;
 
     this.loading = true;
     this.query = {

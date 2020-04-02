@@ -1,5 +1,5 @@
 import { action, observable } from "mobx";
-import { GET, POST } from "../../utils/request";
+import { GET, POST, FORM_POST } from "../../utils/request";
 import { store } from "../index";
 import moment from 'moment';
 
@@ -74,12 +74,37 @@ export class Replenish {
 
   @action.bound
   async insertData(param) {
+    this.loading = true;
     param.collectDate = moment(param.collectDate).format('YYYY-MM-DD HH:mm:ss');
-    // param.list = Object.keys(param.pmList).map(key => ({ collectValue: param.pmList[key], pmCode: key }));
-    param.list = Object.keys(param.pmList).map(key => ({ [key]: param.pmList[key] }));
 
-    const { data }: any = await POST('/dataAdd/insert', param);
-    
+    try {
+      param.list = Object.keys(param.pmList).filter(key => param.pmList[key]).map(key => ({
+        pmCode: key,
+        pmUnit: this.pmList.find(v => v.pmCode === key).pmUnit,
+        collectValue: param.pmList[key],
+      }));
+      param.list = JSON.stringify(param.list);
+      delete param.pmList;
+
+      const imagefile: any = document.querySelector('#file');
+      if (imagefile.files.length > 0) {
+        param.pic = imagefile.files[0];
+      }
+
+      let formData = new FormData();
+
+      Object.keys(param).forEach(key => {
+        formData.append(key, param[key]);
+      });
+
+      await FORM_POST('/dataAdd/insert', formData);
+
+    } catch {
+
+    }
+
+    this.loading = false;
+
   }
 
 }

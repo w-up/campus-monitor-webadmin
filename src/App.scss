@@ -763,7 +763,9 @@ svg {
 .comparisonPage,
 .rankPage,
 .replenishPage,
-.managePage {
+.managePage,
+.auditPage,
+.dataViewPage {
   .ant-table * {
     font-size: 12px !important;
   }
@@ -777,6 +779,9 @@ svg {
     font-size: 12px !important;
   }
   .ant-tabs * {
+    font-size: 12px !important;
+  }
+  .ant-descriptions * {
     font-size: 12px !important;
   }
   

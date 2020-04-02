@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useStore } from "../../stores/index";
 import { toJS } from "mobx";
 
+
 import { Spin, Upload, Card, Row, Col, Form, Button, Select, Tabs, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal } from 'antd';
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -54,11 +55,13 @@ export const DataReplenish = Form.create()(observer(({ form, history }: any) => 
 
   const doSubmit = e => {
     e.preventDefault();
-    validateFields((err, values) => {
+    validateFields(async (err, values) => {
       if (err) {
         return;
       }
-      replenish.insertData(values);
+      await replenish.insertData(values);
+      history.goBack();
+
     });
   }
 
@@ -81,7 +84,7 @@ export const DataReplenish = Form.create()(observer(({ form, history }: any) => 
             <Card size="small" title="补录数据">
             <Form onSubmit={doSubmit}>
               <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="统计区域" >
-                {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: true }] })(
+                {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: false }] })(
                   <Select onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
                     {parkTree.map(item => <Option key={item.parkId} value={item.parkId}>{item.parkName}</Option>)}
                   </Select>
@@ -108,7 +111,7 @@ export const DataReplenish = Form.create()(observer(({ form, history }: any) => 
 
 
               <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测设备" >
-                {getFieldDecorator("deviceCode", { initialValue: '', rules: [{ required: false }] })(
+                {getFieldDecorator("deviceCode", { initialValue: '', rules: [{ required: true }] })(
                   <Select onChange={replenish.getPm} placeholder="请选择" size="small">
                     {deviceList.map(item => <Option key={item.deviceCode} value={item.deviceCode}>{item.deviceName}</Option>)}
                     {/* <Option value="">不限</Option> */}
@@ -117,7 +120,7 @@ export const DataReplenish = Form.create()(observer(({ form, history }: any) => 
               </Form.Item>
 
               <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="补传原因" >
-                {getFieldDecorator("reason", { initialValue: '', rules: [{ required: false }] })(
+                {getFieldDecorator("reason", { initialValue: '', rules: [{ required: true }] })(
                   <Input.TextArea placeholder="请填写补传原因" />
                 )}
               </Form.Item>
@@ -136,15 +139,16 @@ export const DataReplenish = Form.create()(observer(({ form, history }: any) => 
                     <Divider orientation="left">测量数据</Divider>
 
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="补测设备" >
-                      {getFieldDecorator("addDeviceName", { initialValue: '', rules: [{ required: false }] })(
-                        <Select placeholder="请选择" size="small">
-                          {addDeviceList.map(item => <Option key={item.siteId} value={item.siteId}>{item.siteName}</Option>)}
-                        </Select>
+                      {getFieldDecorator("addDeviceName", { initialValue: '', rules: [{ required: true }] })(
+                        // <Select placeholder="请选择" size="small">
+                        //   {addDeviceList.map(item => <Option key={item.siteId} value={item.siteId}>{item.siteName}</Option>)}
+                        // </Select>
+                        <Input size="small" />
                       )}
                     </Form.Item>
 
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="补测时间" >
-                      {getFieldDecorator("collectDate", { initialValue: '', rules: [{ required: false }] })(
+                      {getFieldDecorator("collectDate", { initialValue: '', rules: [{ required: true }] })(
                         <DatePicker size="small" />
                       )}
                     </Form.Item>
@@ -153,7 +157,7 @@ export const DataReplenish = Form.create()(observer(({ form, history }: any) => 
                     {pmList.map(item => {
                       return (
                         <Form.Item colon={false} key={item.pmCode} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label={item.pmCode} >
-                          {getFieldDecorator(`pmList[${item.pmCode}]`, { initialValue: '', rules: [{ required: true }] })(
+                          {getFieldDecorator(`pmList[${item.pmCode}]`, { initialValue: '', rules: [{ required: false }] })(
                             <Input size="small" suffix={item.pmUnit} />
                           )}
                         </Form.Item>
@@ -169,12 +173,18 @@ export const DataReplenish = Form.create()(observer(({ form, history }: any) => 
                     </Form.Item>
                     
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="上传附件" >
-                      {getFieldDecorator("pic", { initialValue: '', rules: [{ required: false }] })(
+                      {/* {getFieldDecorator("pic", { initialValue: '', rules: [{ required: false }] })(
                         <Upload name="logo" action="/upload.do" listType="picture">
                           <Button>点击上传</Button>
                         </Upload>
-                      )}
+                      )} */}
+
+                      <form id="formElem">
+                        <input style={{ width: '100%', height: '25px', lineHeight: '25px', background: 'white', border: '1px solid #ccc' }} type="file" name="pic" id="file" />
+                      </form>
+
                     </Form.Item>
+                    
 
                     <Row gutter={20}>
                       <Col span={12}>

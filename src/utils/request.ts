@@ -61,4 +61,9 @@ export function POST(url, paramsOrData?) {
   return http({ method: "POST", url, data: paramsOrData });
 }
 
+export function FORM_POST(url, paramsOrData?) {
+  return http({ method: "POST", headers: { 'Content-Type': 'multipart/form-data' }, url, data: paramsOrData });
+}
+
+
 export default http;
