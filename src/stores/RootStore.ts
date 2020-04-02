@@ -6,7 +6,7 @@ export class RootStore {
   init() {
     if (store.auth.token) {
       store.auth.getAuthUser();
-      store.config.loadSysConfig();
+      store.config.init();
     }
   }
 }

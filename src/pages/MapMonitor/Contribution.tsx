@@ -123,7 +123,7 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
   }));
 
   return useObserver(() => (
-    <div className="pollution-distribution px-4">
+    <div className="pollution-distribution px-4 overflow-y-auto">
       <div className="text-lg text-white mb-4 flex items-center">
         <Icon type="caret-right" theme="filled" className="primary-text-color" />
         <span className="ml-2">贡献情况</span>
