@@ -26,7 +26,7 @@ export const DataManagePage = Form.create()(observer(({ form, history }: any) =>
   const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields } = form;
 
 
-  const { loading, dataSource, parkTree, ptList, deviceList, deleteById } = manage;
+  const { loading, dataSource, parkTree, ptList, deviceList, deleteById, query } = manage;
 
 
   const columns = [
@@ -110,6 +110,7 @@ export const DataManagePage = Form.create()(observer(({ form, history }: any) =>
   useEffect(() => {
     // manage.getCheckDataList();
     manage.getAllSitesTree();
+    manage.getCheckDataList(query);
   }, []);
 
   let factoryList: any = [];
@@ -166,7 +167,7 @@ export const DataManagePage = Form.create()(observer(({ form, history }: any) =>
               <Form onSubmit={doSubmit}>
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计区域" >
-                  {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: true }] })(
+                  {getFieldDecorator("parkId", { initialValue: query.parkId, rules: [{ required: true }] })(
                     <Select onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
                       {parkTree.map(item => <Option key={item.parkId} value={item.parkId}>{item.parkName}</Option>)}
                     </Select>
@@ -174,7 +175,7 @@ export const DataManagePage = Form.create()(observer(({ form, history }: any) =>
                 </Form.Item>
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="监测区域" >
-                  {getFieldDecorator("factoryId", { initialValue: '', rules: [{ required: false }] })(
+                  {getFieldDecorator("factoryId", { initialValue: query.factoryId, rules: [{ required: false }] })(
                     <Select onChange={() => setFieldsValue({ siteId: '' })} placeholder="请选择" size="small">
                       {factoryList.map(item => <Option key={item.factoryId} value={item.factoryId}>{item.factoryName}</Option>)}
                       <Option value="">不限</Option>
@@ -183,7 +184,7 @@ export const DataManagePage = Form.create()(observer(({ form, history }: any) =>
                 </Form.Item>
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="监测站点" >
-                  {getFieldDecorator("siteId", { initialValue: '', rules: [{ required: false }] })(
+                  {getFieldDecorator("siteId", { initialValue: query.siteId, rules: [{ required: false }] })(
                     <Select onChange={(val) => {
                       manage.getDevice(val);
                       setFieldsValue({ deviceCode: '' });
@@ -196,7 +197,7 @@ export const DataManagePage = Form.create()(observer(({ form, history }: any) =>
 
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="监测设备" >
-                  {getFieldDecorator("deviceCode", { initialValue: '', rules: [{ required: false }] })(
+                  {getFieldDecorator("deviceCode", { initialValue: query.deviceCode, rules: [{ required: false }] })(
                     <Select placeholder="请选择" size="small">
                       {deviceList.map(item => <Option key={item.deviceCode} value={item.deviceCode}>{item.deviceName}</Option>)}
                       <Option value="">不限</Option>
@@ -205,7 +206,7 @@ export const DataManagePage = Form.create()(observer(({ form, history }: any) =>
                 </Form.Item>
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="补传原因" >
-                  {getFieldDecorator("reason", { initialValue: '', rules: [{ required: false }] })(
+                  {getFieldDecorator("reason", { initialValue: query.reason, rules: [{ required: false }] })(
                     <Input.TextArea placeholder="请填写补传原因" />
                   )}
                 </Form.Item>

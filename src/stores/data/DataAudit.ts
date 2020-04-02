@@ -57,7 +57,6 @@ export class DataAudit {
       param.end = moment(param.timeRange[1]).format('YYYY-MM-DD HH:mm:ss');
     }
 
-    delete param.timeRange;
 
     this.loading = true;
     this.query = {
@@ -65,20 +64,25 @@ export class DataAudit {
       ...param,
     }
 
-    try {
-      const { data }: any = await POST('/dataAdd/getCheckData', {
-        ...this.query,
-        current: this.query.current,
-        pageNo: this.query.current,
-        pageSize: this.query.pageSize,
-        size: this.query.pageSize,
-      });
-      
-      this.total = data.total;
-      this.query.pageSize = data.size;
-      this.query.current = data.current;
-      this.dataSource = data.records;
+    const newParam = {
+      ...this.query,
+      current: this.query.current,
+      pageNo: this.query.current,
+      pageSize: this.query.pageSize,
+      size: this.query.pageSize,
+    };
 
+    delete newParam.timeRange;
+
+    try {
+      if (newParam.parkId) {
+        const { data }: any = await POST('/dataAdd/getCheckData', newParam);
+      
+        this.total = data.total;
+        this.query.pageSize = data.size;
+        this.query.current = data.current;
+        this.dataSource = data.records;
+      }
     } catch {
 
     }

@@ -91,6 +91,7 @@ export const DataAuditPage = Form.create()(observer(({ form }: any) => {
 
   useEffect(() => {
     audit.getAllSitesTree();
+    audit.getCheckData(query);
   }, []);
   
   let factoryList: any = [];
@@ -161,7 +162,7 @@ export const DataAuditPage = Form.create()(observer(({ form }: any) => {
               <Form onSubmit={doSubmit}>
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计区域" >
-                  {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: true }] })(
+                  {getFieldDecorator("parkId", { initialValue: query.parkId, rules: [{ required: true }] })(
                     <Select onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
                       {parkTree.map(item => <Option key={item.parkId} value={item.parkId}>{item.parkName}</Option>)}
                     </Select>
@@ -169,7 +170,7 @@ export const DataAuditPage = Form.create()(observer(({ form }: any) => {
                 </Form.Item>
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测区域" >
-                  {getFieldDecorator("factoryId", { initialValue: '', rules: [{ required: false }] })(
+                  {getFieldDecorator("factoryId", { initialValue: query.factoryId, rules: [{ required: false }] })(
                     <Select placeholder="请选择" size="small">
                       {factoryList.map(item => <Option key={item.factoryId} value={item.factoryId}>{item.factoryName}</Option>)}
                       <Option value="">不限</Option>
@@ -178,7 +179,7 @@ export const DataAuditPage = Form.create()(observer(({ form }: any) => {
                 </Form.Item>
                 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测站点" >
-                  {getFieldDecorator("siteId", { initialValue: '', rules: [{ required: false }] })(
+                  {getFieldDecorator("siteId", { initialValue: query.siteId, rules: [{ required: false }] })(
                     <Select placeholder="请选择" size="small">
                       {siteList.map(item => <Option key={item.siteId} value={item.siteId}>{item.siteName}</Option>)}
                       <Option value="">不限</Option>
@@ -187,7 +188,7 @@ export const DataAuditPage = Form.create()(observer(({ form }: any) => {
                 </Form.Item>
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="审核状态" >
-                  {getFieldDecorator("status", { initialValue: '', rules: [{ required: false }] })(
+                  {getFieldDecorator("status", { initialValue: query.status, rules: [{ required: false }] })(
                     <Select placeholder="请选择" size="small">
                       <Option value={0}>待审核</Option>
                       <Option value={1}>审核通过</Option>
@@ -199,7 +200,7 @@ export const DataAuditPage = Form.create()(observer(({ form }: any) => {
 
                 <Divider orientation="left">起止时间</Divider>
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
-                  {getFieldDecorator("timeRange", { initialValue: '', rules: [{ required: false }] })(
+                  {getFieldDecorator("timeRange", { initialValue: query.timeRange, rules: [{ required: false }] })(
                     <RangePicker size="small" />
                   )}
                 </Form.Item>

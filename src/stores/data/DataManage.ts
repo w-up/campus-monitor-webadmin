@@ -29,14 +29,16 @@ export class DataManage {
     }
     this.loading = true;
 
+    const newParam = {
+      ...this.query,
+      current: this.query.current,
+      pageNo: this.query.current,
+      pageSize: this.query.pageSize,
+      size: this.query.pageSize,
+    };
+
     try {
-      const { data }: any = await POST('/dataAdd/getDataAddByPageBySelf', {
-        ...this.query,
-        current: this.query.current,
-        pageNo: this.query.current,
-        pageSize: this.query.pageSize,
-        size: this.query.pageSize,
-      });
+      const { data }: any = await POST('/dataAdd/getDataAddByPageBySelf', newParam);
   
       this.total = data.total;
       this.query.pageSize = data.size;
