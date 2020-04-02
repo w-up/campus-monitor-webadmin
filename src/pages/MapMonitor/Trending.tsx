@@ -1,6 +1,6 @@
 import React from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
-import { Form, Select, Button, Table, Icon, DatePicker, Radio, Divider } from "antd";
+import { Form, Select, Button, Table, Icon, DatePicker, Radio, Divider, Spin } from "antd";
 import { WrappedFormUtils } from "antd/lib/form/Form";
 import { TableProps } from "antd/lib/table";
 import { ColumnLineChart } from "../../components/ColumnLineChart";
@@ -12,6 +12,7 @@ import { TrendDataType } from "../../type";
 import ReactEcharts from "echarts-for-react";
 import echarts from "echarts";
 import { constant } from "../../common/constants";
+import { utils } from "utils";
 
 //@ts-ignore
 export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => {
@@ -19,6 +20,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
   const { mapMonitor } = useStore();
 
   const store = useLocalStore(() => ({
+    loading: false,
     formItemLayout: {
       labelCol: {
         span: 7
@@ -75,15 +77,21 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
       e.preventDefault();
       form.validateFieldsAndScroll(async (err, values) => {
         if (!err) {
+          this.loading = true;
           console.log("Received values of form: ", values);
           const { factoryId, pmCode, type } = values;
-          const result = await api.MapMonitor.getFactoryEmissionsTrendByPmCode({
+          api.MapMonitor.getFactoryEmissionsTrendByPmCode({
             factoryId,
             pmCode,
             statisticalTime: moment(this.statisticalTime).format(this.dateType.format),
             type: this.dateType.type
-          });
-          this.siteData = result.data;
+          })
+            .then(result => {
+              this.siteData = result.data;
+            })
+            .finally(() => {
+              this.loading = false;
+            });
         }
       });
     },
@@ -249,7 +257,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
             <div style="display:flex;align-items: center;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? value + "*10¹mg/L" : ""}</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? utils.number.toPrecision(value) : ""}</div>
           </div>
           `;
             }
@@ -340,71 +348,73 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
         <Icon type="caret-right" theme="filled" className="primary-text-color" />
         <span className="ml-2">排放趋势</span>
       </div>
-      <Form {...store.formItemLayout} onSubmit={store.handleSubmit} key="Trending">
-        <Form.Item label="选择园区">
-          {getFieldDecorator("parkId", { initialValue: mapMonitor.currentPark, rules: [{ required: true }] })(
-            <Select onChange={mapMonitor.selectPark}>
-              <Select.Option value="0">全部</Select.Option>
-              {mapMonitor.parks.map((item, index) => (
-                <Select.Option value={item.id} key={index}>
-                  {item.parkName}
-                </Select.Option>
-              ))}
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item label="监测区域">
-          {getFieldDecorator("factoryId", { initialValue: mapMonitor.currentFactory, rules: [{ required: true }] })(
-            <Select onChange={mapMonitor.selectFactory}>
-              <Select.Option value="0">全部</Select.Option>
-              {mapMonitor.factories.map((item, index) => (
-                <Select.Option value={item.id} key={index}>
-                  {item.factoryName}
-                </Select.Option>
-              ))}
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item label="监测因子">
-          {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
-            <Select onChange={mapMonitor.selectPmcode}>
-              <Select.Option value="0">全部</Select.Option>
-              {mapMonitor.pmcodes.map((item, index) => (
-                <Select.Option value={item.pmCode} key={index}>
-                  {item.pmName}
-                </Select.Option>
-              ))}
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item label="统计类型">
-          {getFieldDecorator("type", { initialValue: store.type })(
-            <Radio.Group onChange={e => (store.type = e.target.value)}>
-              <Radio.Button value="date">日</Radio.Button>
-              <Radio.Button value="month">月</Radio.Button>
-              <Radio.Button value="year">年</Radio.Button>
-            </Radio.Group>
-          )}
-        </Form.Item>
-        <Form.Item label="统计时间">
-          <DatePicker
-            className="w-full"
-            format={store.dateType.format}
-            mode={store.type}
-            onChange={store.setDate}
-            open={store.dateOpen}
-            value={store.statisticalTime}
-            onOpenChange={store.setDateOpen}
-            onPanelChange={store.setDate}
-          />
-        </Form.Item>
+      <Spin spinning={store.loading}>
+        <Form {...store.formItemLayout} onSubmit={store.handleSubmit} key="Trending">
+          <Form.Item label="选择园区">
+            {getFieldDecorator("parkId", { initialValue: mapMonitor.currentPark, rules: [{ required: true }] })(
+              <Select onChange={mapMonitor.selectPark}>
+                <Select.Option value="0">全部</Select.Option>
+                {mapMonitor.parks.map((item, index) => (
+                  <Select.Option value={item.id} key={index}>
+                    {item.parkName}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item label="监测区域">
+            {getFieldDecorator("factoryId", { initialValue: mapMonitor.currentFactory, rules: [{ required: true }] })(
+              <Select onChange={mapMonitor.selectFactory}>
+                <Select.Option value="0">全部</Select.Option>
+                {mapMonitor.factories.map((item, index) => (
+                  <Select.Option value={item.id} key={index}>
+                    {item.factoryName}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item label="监测因子">
+            {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
+              <Select onChange={mapMonitor.selectPmcode}>
+                <Select.Option value="0">全部</Select.Option>
+                {mapMonitor.pmcodes.map((item, index) => (
+                  <Select.Option value={item.pmCode} key={index}>
+                    {item.pmName}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item label="统计类型">
+            {getFieldDecorator("type", { initialValue: store.type })(
+              <Radio.Group onChange={e => (store.type = e.target.value)}>
+                <Radio.Button value="date">日</Radio.Button>
+                <Radio.Button value="month">月</Radio.Button>
+                <Radio.Button value="year">年</Radio.Button>
+              </Radio.Group>
+            )}
+          </Form.Item>
+          <Form.Item label="统计时间">
+            <DatePicker
+              className="w-full"
+              format={store.dateType.format}
+              mode={store.type}
+              onChange={store.setDate}
+              open={store.dateOpen}
+              value={store.statisticalTime}
+              onOpenChange={store.setDateOpen}
+              onPanelChange={store.setDate}
+            />
+          </Form.Item>
 
-        <Form.Item wrapperCol={{ span: 22, offset: 1 }}>
-          <Button type="primary" htmlType="submit" className="w-full" disabled={!store.submitAble}>
-            开始计算
-          </Button>
-        </Form.Item>
-      </Form>
+          <Form.Item wrapperCol={{ span: 22, offset: 1 }}>
+            <Button type="primary" htmlType="submit" className="w-full" disabled={!store.submitAble}>
+              开始计算
+            </Button>
+          </Form.Item>
+        </Form>
+      </Spin>
       {store.siteData && (
         <div className="monitor-row-panel p-4 .overflow-y-scroll">
           <div className="primary-button-text-dark text-xl mt-8">{mapMonitor.curentFactorData?.factoryName}</div>

@@ -63,7 +63,8 @@ export class EnterpriseScreenMapStore {
       position: new BMapGL.Point(v.longitude, v.latitude),
       children: v.pmInfos?.map(pmInfo => ({
         name: pmInfo.pmName,
-        value: pmInfo.collectValue + pmInfo.unit,
+        value: pmInfo.collectValue,
+        unit: pmInfo.unit,
         limit: pmInfo.limit
       }))
     }));

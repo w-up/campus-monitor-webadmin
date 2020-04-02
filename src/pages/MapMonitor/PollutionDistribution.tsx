@@ -1,6 +1,6 @@
 import React from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
-import { Form, Select, Button, DatePicker, Icon, Slider } from "antd";
+import { Form, Select, Button, DatePicker, Icon, Slider, Spin } from "antd";
 import { WrappedFormUtils } from "antd/lib/form/Form";
 import { useStore } from "stores";
 import api from "services";
@@ -13,6 +13,7 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
   const { mapMonitor } = useStore();
 
   const store = useLocalStore(() => ({
+    loading: false,
     isPlaying: false,
     formItemLayout: {
       labelCol: {
@@ -52,13 +53,16 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
       console.log(mapMonitor.currentPark, mapMonitor.currentPmCode);
       return mapMonitor.currentPmCode !== "0" && mapMonitor.currentPark !== "0";
     },
-    handleSubmit: e => {
+    handleSubmit(e) {
       e.preventDefault();
-      form.validateFieldsAndScroll((err, values) => {
+      form.validateFieldsAndScroll(async (err, values) => {
         if (!err) {
           console.log("Received values of form: ", values);
           // const { parkId, pmCode, timeStart, timeEnd } = values;
-          mapMonitor.loadPollition(values);
+          this.loading = true;
+          mapMonitor.loadPollition(values).finally(() => {
+            this.loading = false;
+          });
         }
       });
     }
@@ -70,44 +74,46 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
         <Icon type="caret-right" theme="filled" className="primary-text-color" />
         <span className="ml-2">污染分布情况</span>
       </div>
-      <Form {...store.formItemLayout} onSubmit={store.handleSubmit} key="PollutionDistribution">
-        <Form.Item label="选择园区">
-          {getFieldDecorator("parkId", { initialValue: "0", rules: [{ required: true }] })(
-            <Select onChange={mapMonitor.selectPark}>
-              <Select.Option value="0">全部</Select.Option>
-              {mapMonitor.parks.map((item, index) => (
-                <Select.Option value={item.id} key={index}>
-                  {item.parkName}
-                </Select.Option>
-              ))}
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item label="监测因子">
-          {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
-            <Select onChange={mapMonitor.selectPmcode}>
-              <Select.Option value="0">全部</Select.Option>
-              {mapMonitor.pmcodes.map((item, index) => (
-                <Select.Option value={item.pmCode} key={index}>
-                  {item.pmName}
-                </Select.Option>
-              ))}
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item label="起始时间">
-          {getFieldDecorator("timeStart", { initialValue: moment().subtract(1, "day"), rules: [{ required: true }] })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}
-        </Form.Item>
-        <Form.Item label="终止时间">
-          {getFieldDecorator("timeEnd", { initialValue: moment(), rules: [{ required: true }] })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}
-        </Form.Item>
+      <Spin spinning={store.loading}>
+        <Form {...store.formItemLayout} onSubmit={store.handleSubmit} key="PollutionDistribution">
+          <Form.Item label="选择园区">
+            {getFieldDecorator("parkId", { initialValue: "0", rules: [{ required: true }] })(
+              <Select onChange={mapMonitor.selectPark}>
+                <Select.Option value="0">全部</Select.Option>
+                {mapMonitor.parks.map((item, index) => (
+                  <Select.Option value={item.id} key={index}>
+                    {item.parkName}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item label="监测因子">
+            {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
+              <Select onChange={mapMonitor.selectPmcode}>
+                <Select.Option value="0">全部</Select.Option>
+                {mapMonitor.pmcodes.map((item, index) => (
+                  <Select.Option value={item.pmCode} key={index}>
+                    {item.pmName}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item label="起始时间">
+            {getFieldDecorator("timeStart", { initialValue: moment().subtract(1, "day"), rules: [{ required: true }] })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}
+          </Form.Item>
+          <Form.Item label="终止时间">
+            {getFieldDecorator("timeEnd", { initialValue: moment(), rules: [{ required: true }] })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}
+          </Form.Item>
 
-        <Form.Item wrapperCol={{ span: 22, offset: 1 }}>
-          <Button type="primary" htmlType="submit" className="w-full" disabled={!store.submitAble}>
-            调取回顾
-          </Button>
-        </Form.Item>
-      </Form>
+          <Form.Item wrapperCol={{ span: 22, offset: 1 }}>
+            <Button type="primary" htmlType="submit" className="w-full" disabled={!store.submitAble}>
+              调取回顾
+            </Button>
+          </Form.Item>
+        </Form>
+      </Spin>
 
       <div className="mt-4">
         <div className="text-white">播放污染情况变化</div>

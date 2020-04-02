@@ -4,6 +4,7 @@ import { useStore } from "../../../../stores";
 import { CarouselProvider, Dot, DotGroup, Slide, Slider } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { _ } from "../../../../utils/lodash";
+import { utils } from "../../../../utils/index";
 
 export const GasTable = () => {
   const {
@@ -47,7 +48,9 @@ export const GasTable = () => {
                       <div className="listItem tabTitle">
                         <div>{item.siteName}</div>
                         <div>{item.pmName}</div>
-                        <div>{item.collectValue + item.unit}</div>
+                        <div>
+                          {utils.number.toPrecision(item.collectValue)} {item.unit}
+                        </div>
                         <div>{item.limit}</div>
                         <div>{item.overRate}</div>
                       </div>

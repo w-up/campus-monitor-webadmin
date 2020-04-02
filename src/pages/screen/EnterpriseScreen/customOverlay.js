@@ -1,5 +1,6 @@
 import icon from "../../../assets/img/ps9584563327b54298-eddd-40c8-a935-e5af0eec008d.png";
 import iconActive from "../../../assets/img/psfe3cfd750f8cc8dc-7879-4416-9832-a398f85a77b1.png";
+import { utils } from "utils";
 
 const BMapGL = window.BMapGL;
 
@@ -28,16 +29,15 @@ ComplexCustomOverlay.prototype.initialize = function(map) {
   <div style='display:inline-block;border:1px solid rgba(4,108,249,1);border-radius:4px;' >
       <div style='font-size:12px;display:flex;background-color:${isActive ? "rgba(4,108,249,1)" : "#2C5081"};color:white;'>
           <div style='padding:5px 0px;margin-left:15px;width:70px;'>更新时间</div>
-          <div style='padding:5px 15px 5px 0px;'>${this._obj.update}</div>
       </div>
   <div style='overflow-y: auto;overflow-x: hidden;height:104px;background-color:${isActive ? "#1D4476" : "#5B666C"};' class='cell-area'>
   `;
-  for (let x in this._obj.children) {
+  for (let x of this._obj.children) {
     cells =
       cells +
       `<div style='font-size:12px;display:flex;opacity:0.9;color:white;'>
-                            <div style='padding:5px 0px;margin-left:15px;width:70px;'>${this._obj.children[x].name}</div>
-                            <div style='padding:5px 0px;'>${this._obj.children[x].value}</div>
+                            <div style='padding:5px 0px;margin-left:15px;width:70px;'>${x.name}</div>
+                            <div style='padding:5px 0px;'>${utils.number.toPrecision(x.value)} ${x.unit}</div>
                         </div>`;
   }
   cells = cells + `</div></div></div>`;

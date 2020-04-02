@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
 import ReactEcharts from "echarts-for-react";
 import { useStore } from "stores";
+import { utils } from "utils";
 
 export const ParkScreen24HourChart = () => {
   const chartRef = useRef<any>();
@@ -52,7 +53,7 @@ export const ParkScreen24HourChart = () => {
               var value = params[i].data;
               showHtml += `
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? value.toFixed(1) : ""}</div>`;
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? utils.number.toPrecision(value) : ""}</div>`;
             }
             return `<div style="color: #04F9CC;text-align:left;line-height:20px">${text}</div>
             <div style="color:#88A8C5;text-align:left;font-size:10px;padding:5px;margin-top:5px;">
