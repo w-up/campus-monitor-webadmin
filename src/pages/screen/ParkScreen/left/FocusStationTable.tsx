@@ -3,6 +3,7 @@ import { useLocalStore, useObserver } from "mobx-react-lite";
 import { CarouselProvider, Dot, DotGroup, Slide, Slider } from "pure-react-carousel";
 import { useStore } from "../../../../stores/index";
 import { _ } from "utils/lodash";
+import { utils } from "../../../../utils/index";
 
 export const FocusStationTable = () => {
   const {
@@ -38,7 +39,10 @@ export const FocusStationTable = () => {
                     return (
                       <div className="listItem tabTitle">
                         <div>{item.siteName}</div>
-                        <div>{item.collectValue}</div>
+                        <div>
+                          <span style={{ color: Number(item.collectValue) > Number(item.limit) ? "red" : "" }}>{utils.number.toPrecision(item.collectValue)}</span>
+                          <span>{item.unit}</span>
+                        </div>
                         <div>{item.limit}</div>
                         <div>{item.overRate}</div>
                       </div>

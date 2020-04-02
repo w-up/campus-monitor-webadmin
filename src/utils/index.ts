@@ -2,6 +2,14 @@ import { _ } from "./lodash";
 import { globalConfig } from "../config";
 
 export const utils = {
+  number: {
+    toPrecision(val: any, precision = 3) {
+      if (!val) return 0;
+      return Number(val)
+        .toPrecision(precision)
+        .replace("e+", "*10^");
+    }
+  },
   img: {
     getImageUrl(path: string) {
       if (path.startsWith("data:image")) return path;

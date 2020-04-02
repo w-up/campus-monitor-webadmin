@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { _ } from "../../../../utils/lodash";
 import { Icon, Tabs } from "antd";
 import { constant } from "common/constants";
+import { utils } from "utils";
 
 export const EnterpriseScreenGroupChart = () => {
   const {
@@ -53,12 +54,14 @@ export const EnterpriseScreenGroupChart = () => {
               //名称
               var text = params[i].axisValue;
               //值
-              var value = params[i].data;
+              var value = params[i].data.value;
+              var limit = params[i].data.limit;
+
               showHtml += `
             <div style="display:flex;align-items: center;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? value + "*10¹mg/L" : ""}</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px; ${value > limit ? "color:red;" : ""}">${value ? utils.number.toPrecision(value) : ""}</div>
           </div>
           `;
             }
@@ -127,7 +130,25 @@ export const EnterpriseScreenGroupChart = () => {
         series: enterpriseScreenMap.curSiteRuntimeData.map((item, index) => ({
           name: item.pmName,
           type: "line",
-          data: item.datas.map(i => i.collectValue),
+          data: item.datas.map(i => ({
+            value: i.collectValue,
+            limit: item.upperLimit
+          })),
+          markLine: {
+            symbol: "none",
+            lineStyle: {
+              normal: {
+                type: "solid",
+                color: "red"
+              }
+            },
+            data: [
+              {
+                name: "预警值",
+                yAxis: item.upperLimit || 0
+              }
+            ]
+          },
           itemStyle: {
             normal: {
               color: constant.seriesColors[index], //改变折线点的颜色

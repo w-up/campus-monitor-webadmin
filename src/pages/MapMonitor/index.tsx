@@ -17,7 +17,7 @@ export const MapMonitorPage = () => {
   }, []);
   return useObserver(() => (
     <div className="mapmonitor-page flex" style={{ width: "100vw", height: "100%", backgroundColor: "#061630" }}>
-      <div style={{ width: "25%" }}>
+      <div style={{ width: "25%", height: "100vh", overflowY: "auto" }}>
         <Tabs type="card" size="large" defaultActiveKey={mapMonitor.currentTabKey} onChange={mapMonitor.selectTab}>
           <Tabs.TabPane key="1" tab={<Icon type="area-chart" />}>
             <RuntimeMonitor />

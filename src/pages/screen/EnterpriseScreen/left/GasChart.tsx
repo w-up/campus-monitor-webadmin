@@ -7,6 +7,7 @@ import { constant } from "../../../../common/constants";
 import { _ } from "../../../../utils/lodash";
 import { useStore } from "../../../../stores/index";
 import { EnterpriseScreenMapStore } from "../../../../stores/screen/EnterpriseScreenMapStore";
+import { utils } from "utils";
 
 export const EnterpriseScreenGasChart = () => {
   const {
@@ -53,7 +54,7 @@ export const EnterpriseScreenGasChart = () => {
                   //@ts-ignore
                   ref={elementsRef.current[index]}
                   option={makeOption(item)}
-                  style={{ marginTop: "20px", padding: "10px", height: "260px", width: "100%" }}
+                  style={{ marginTop: "10px", padding: "20px", width: "100%" }}
                   className="react_for_echarts"
                 />
               </Slide>
@@ -76,15 +77,14 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
       text: site.pmName,
       textStyle: {
         color: "rgba(4,248,204,0.8)",
-        fontSize: "14",
-        width: 20,
-        height: 20
+        fontSize: "14"
       },
-      padding: [10, 20],
+      padding: [20, 20, 5, 20],
+      margin: [20, 0],
       backgroundColor: "rgba(8,46,66,0.5)",
       borderColor: "rgba(8,46,66,0.5)",
       borderWidth: 1,
-      top: -5
+      top: -15
     },
     tooltip: {
       trigger: "axis",
@@ -106,19 +106,20 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
           //名称
           var text = params[i].axisValue;
           //值
-          var value = params[i].data;
+          var value = params[i].data.value;
+          var limit = params[i].data.limit;
           showHtml += `
             <div style="display:flex;align-items: center;z-index: 1000">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? value.toFixed(1) + "*10¹mg/L" : ""}</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px;${value > limit ? "color:red;" : ""}">${value ? utils.number.toPrecision(value) : ""}</div>
           </div>
           `;
         }
         return `<div class="tableFloat text-left primary-text-dark">
                     <div>${text} 日均</div>
                     <div class="primary-text-dark">${option.title.text}</div>
-                    <div class="primary-red">日均值上限：2（mg/m³）</div>
+                    <div class="primary-red">日均值上限：${utils.number.toPrecision(limit)}</div>
                     <div style="color:#88A8C5;font-size:10px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
                     ${showHtml}
             </div></div></div>`;
@@ -138,19 +139,6 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
         itemHeight: 2,
         itemWidth: 20
       }
-      // {
-      //   data: ["西南角", "西北角"],
-      //   x: "right",
-      //   textStyle: {
-      //     color: "#88A8C5",
-      //     fontSize: 12
-      //   },
-      //   icon: "rect",
-      //   y: 20,
-      //   bottom: 10,
-      //   itemHeight: 2,
-      //   itemWidth: 20
-      // }
     ],
     grid: {
       top: "25%",
@@ -179,13 +167,15 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
         color: "rgba(136,168,197,0.5)",
         align: "center",
         verticalAlign: "middle",
-        padding: [5, 0, 5, 50]
+        padding: [10, 0, 20, 0]
       },
+      nameGap: 15,
       axisLabel: {
         textStyle: {
           color: "rgba(136,168,197,0.5)",
           fontSize: "10"
-        }
+        },
+        margin: 8
       },
       //   分割线
       splitLine: {
@@ -200,7 +190,10 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
     },
     series: site.sites.map((item, index) => ({
       name: item.siteName,
-      data: item.datas.map(i => i.collectValue),
+      data: item.datas.map(i => ({
+        value: i.collectValue,
+        limit: site.upperLimit
+      })),
       type: "line",
       itemStyle: {
         normal: {

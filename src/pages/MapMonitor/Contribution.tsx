@@ -1,6 +1,6 @@
 import React from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
-import { Form, Select, Button, DatePicker, Icon, Slider, Radio } from "antd";
+import { Form, Select, Button, DatePicker, Icon, Slider, Radio, Spin } from "antd";
 import { WrappedFormUtils } from "antd/lib/form/Form";
 import { PieChart } from "../../components/PieChart";
 import moment from "moment";
@@ -14,6 +14,7 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
   const { mapMonitor } = useStore();
 
   const store = useLocalStore(() => ({
+    loading: false,
     formItemLayout: {
       labelCol: {
         span: 7
@@ -60,6 +61,7 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
       e.preventDefault();
       form.validateFieldsAndScroll(async (err, values) => {
         if (!err) {
+          this.loading = true;
           const { parkId, pmCode, rankingType, statisticalType } = values;
           console.log("Received values of form: ", values);
           const result = await api.MapMonitor.getEmissionsContributionByPmCodeAndParkId({
@@ -68,8 +70,13 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
             rankingType,
             statisticalTime: moment(this.statisticalTime).format(this.dateType.format),
             statisticalType: this.dateType.type
-          });
-          this.siteData = result.data;
+          })
+            .then(result => {
+              this.siteData = result.data;
+            })
+            .finally(() => {
+              this.loading = false;
+            });
         }
       });
     },
@@ -116,75 +123,77 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
   }));
 
   return useObserver(() => (
-    <div className="pollution-distribution px-4">
+    <div className="pollution-distribution px-4 overflow-y-auto">
       <div className="text-lg text-white mb-4 flex items-center">
         <Icon type="caret-right" theme="filled" className="primary-text-color" />
         <span className="ml-2">贡献情况</span>
       </div>
-      <Form {...store.formItemLayout} onSubmit={store.handleSubmit} key="Contribution">
-        <Form.Item label="选择园区">
-          {getFieldDecorator("parkId", { initialValue: "0", rules: [{ required: true }] })(
-            <Select onChange={store.selectPark}>
-              <Select.Option value="0">全部</Select.Option>
-              {mapMonitor.parks.map((item, index) => (
-                <Select.Option value={item.id} key={index}>
-                  {item.parkName}
-                </Select.Option>
-              ))}
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item label="监测因子">
-          {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
-            <Select>
-              <Select.Option value="0">全部</Select.Option>
-              {store.pmcodes.map((item, index) => (
-                <Select.Option value={item.pmCode} key={index}>
-                  {item.pmName}
-                </Select.Option>
-              ))}
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item label="统计类型">
-          {getFieldDecorator("statisticalType", { initialValue: store.type })(
-            <Radio.Group onChange={e => (store.type = e.target.value)}>
-              <Radio.Button value="date">日</Radio.Button>
-              <Radio.Button value="month">月</Radio.Button>
-              <Radio.Button value="year">年</Radio.Button>
-            </Radio.Group>
-          )}
-        </Form.Item>
+      <Spin spinning={store.loading}>
+        <Form {...store.formItemLayout} onSubmit={store.handleSubmit} key="Contribution">
+          <Form.Item label="选择园区">
+            {getFieldDecorator("parkId", { initialValue: "0", rules: [{ required: true }] })(
+              <Select onChange={store.selectPark}>
+                <Select.Option value="0">全部</Select.Option>
+                {mapMonitor.parks.map((item, index) => (
+                  <Select.Option value={item.id} key={index}>
+                    {item.parkName}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item label="监测因子">
+            {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
+              <Select>
+                <Select.Option value="0">全部</Select.Option>
+                {store.pmcodes.map((item, index) => (
+                  <Select.Option value={item.pmCode} key={index}>
+                    {item.pmName}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item label="统计类型">
+            {getFieldDecorator("statisticalType", { initialValue: store.type })(
+              <Radio.Group onChange={e => (store.type = e.target.value)}>
+                <Radio.Button value="date">日</Radio.Button>
+                <Radio.Button value="month">月</Radio.Button>
+                <Radio.Button value="year">年</Radio.Button>
+              </Radio.Group>
+            )}
+          </Form.Item>
 
-        <Form.Item label="统计时间">
-          <DatePicker
-            className="w-full"
-            format={store.dateType.format}
-            mode={store.type}
-            onChange={store.setDate}
-            open={store.dateOpen}
-            value={store.statisticalTime}
-            onOpenChange={store.setDateOpen}
-            onPanelChange={store.setDate}
-          />
-        </Form.Item>
+          <Form.Item label="统计时间">
+            <DatePicker
+              className="w-full"
+              format={store.dateType.format}
+              mode={store.type}
+              onChange={store.setDate}
+              open={store.dateOpen}
+              value={store.statisticalTime}
+              onOpenChange={store.setDateOpen}
+              onPanelChange={store.setDate}
+            />
+          </Form.Item>
 
-        <Form.Item label="排名方式">
-          {getFieldDecorator("rankingType", { initialValue: "1" })(
-            <Radio.Group>
-              <Radio.Button value="1">前五</Radio.Button>
-              <Radio.Button value="2">前十</Radio.Button>
-              <Radio.Button value="3">全部</Radio.Button>
-            </Radio.Group>
-          )}
-        </Form.Item>
+          <Form.Item label="排名方式">
+            {getFieldDecorator("rankingType", { initialValue: "1" })(
+              <Radio.Group>
+                <Radio.Button value="1">前五</Radio.Button>
+                <Radio.Button value="2">前十</Radio.Button>
+                <Radio.Button value="3">全部</Radio.Button>
+              </Radio.Group>
+            )}
+          </Form.Item>
 
-        <Form.Item wrapperCol={{ span: 22, offset: 1 }}>
-          <Button type="primary" htmlType="submit" className="w-full">
-            开始计算
-          </Button>
-        </Form.Item>
-      </Form>
+          <Form.Item wrapperCol={{ span: 22, offset: 1 }}>
+            <Button type="primary" htmlType="submit" className="w-full">
+              开始计算
+            </Button>
+          </Form.Item>
+        </Form>
+      </Spin>
 
       {store.siteData && (
         <div>

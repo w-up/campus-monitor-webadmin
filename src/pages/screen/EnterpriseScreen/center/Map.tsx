@@ -28,12 +28,12 @@ export const EnterpriseMap = () => {
       <img className="groundImg" style={{ height: "40vh" }} src={utils.img.getImageUrl(enterpriseScreenMap.curMapConfig.picUrl)} />
       <div className="my-4 p-2 px-6 mapExplain flex flex-row">
         <div className="primary-text-dark w-2/3">当前厂区：{enterpriseScreenMap.currentFactoryData?.factoryName}</div>
-        <div className="flex flex-row w-1/3 screen-text-color-2 justify-between">
+        <div className="flex flex-row w-1/3 screen-text-color-2 justify-end">
           <div>
             <div className="blockNormal" />
             正常值
           </div>
-          <div>
+          <div className="ml-4">
             <div className="redOver" />
             超标值
           </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
-import { Form, Select, Button, Table, Icon, DatePicker, Slider, Switch, Input } from "antd";
+import { Form, Select, Button, Table, Icon, DatePicker, Slider, Switch, Input, Spin } from "antd";
 import { WrappedFormUtils } from "antd/lib/form/Form";
 import { TableProps } from "antd/lib/table";
 import RadioGroup from "antd/lib/radio/group";
@@ -15,6 +15,7 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
   const { config, dynamicSource } = useStore();
 
   const store = useLocalStore(() => ({
+    loading: false,
     isPlaying: false,
     formItemLayout: {
       labelCol: {
@@ -31,6 +32,7 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
       e.preventDefault();
       form.validateFieldsAndScroll(async (err, values) => {
         if (!err) {
+          store.loading = true;
           console.log("Received values of form: ", values);
           const { parkId: _parkId, endTime: _endTime, pmCode, startTime: _startTime } = values;
           const { lat, lng } = dynamicSource.curPoint;
@@ -55,6 +57,7 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
               dynamicSource.DynamicSourceTraceSource.data = res.data;
             }
           }
+          store.loading = false;
         }
       });
     },
@@ -99,53 +102,55 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
         <Icon type="caret-right" theme="filled" className="primary-text-color" />
         <span className="ml-2">动态朔源</span>
       </div>
-      <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
-        <div className="mb-4">
-          <div className="primary-text-color mb-4">计算方法</div>
-          {getFieldDecorator("computeType", { initialValue: "1" })(<RadioGroup options={store.form.options} onChange={e => (dynamicSource.computeType = e.target.value)}></RadioGroup>)}
-        </div>
-        <Form.Item label="选择园区">
-          {getFieldDecorator("parkId", { initialValue: dynamicSource.currentPark, rules: [{ required: true }] })(
-            <Select onChange={dynamicSource.selectPark}>
-              <Select.Option value="0">全部</Select.Option>
-              {dynamicSource.parks.map((item, index) => (
-                <Select.Option value={item.id} key={index}>
-                  {item.parkName}
-                </Select.Option>
-              ))}
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item label="监测因子">
-          {getFieldDecorator("pmCode", { initialValue: dynamicSource.currentPmCode, rules: [{ required: true }] })(
-            <Select onChange={dynamicSource.selectPmcode}>
-              <Select.Option value="0">全部</Select.Option>
-              {dynamicSource.pmcodes.map((item, index) => (
-                <Select.Option value={item.pmCode} key={index}>
-                  {item.pmName}
-                </Select.Option>
-              ))}
-            </Select>
-          )}
-        </Form.Item>
-        {dynamicSource.computeType == "1" && (
-          <div>
-            <Form.Item label="敏感点经度">
-              <Input value={dynamicSource.curPoint.lng} onChange={e => (dynamicSource.curPoint.lng = Number(e.target.value))} />
-            </Form.Item>
-            <Form.Item label="敏感点维度">
-              <Input value={dynamicSource.curPoint.lat} onChange={e => (dynamicSource.curPoint.lat = Number(e.target.value))} />
-            </Form.Item>
+      <Spin spinning={store.loading}>
+        <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
+          <div className="mb-4">
+            <div className="primary-text-color mb-4">计算方法</div>
+            {getFieldDecorator("computeType", { initialValue: "1" })(<RadioGroup options={store.form.options} onChange={e => (dynamicSource.computeType = e.target.value)}></RadioGroup>)}
           </div>
-        )}
-        <Form.Item label="起始时间">{getFieldDecorator("startTime", { initialValue: moment() })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}</Form.Item>
-        <Form.Item label="终止时间">{getFieldDecorator("endTime", { initialValue: moment().subtract(1, "day") })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}</Form.Item>
-        <Form.Item wrapperCol={{ span: 22, offset: 1 }}>
-          <Button type="primary" htmlType="submit" className="w-full">
-            开始计算
-          </Button>
-        </Form.Item>
-      </Form>
+          <Form.Item label="选择园区">
+            {getFieldDecorator("parkId", { initialValue: dynamicSource.currentPark, rules: [{ required: true }] })(
+              <Select onChange={dynamicSource.selectPark}>
+                <Select.Option value="0">全部</Select.Option>
+                {dynamicSource.parks.map((item, index) => (
+                  <Select.Option value={item.id} key={index}>
+                    {item.parkName}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item label="监测因子">
+            {getFieldDecorator("pmCode", { initialValue: dynamicSource.currentPmCode, rules: [{ required: true }] })(
+              <Select onChange={dynamicSource.selectPmcode}>
+                <Select.Option value="0">全部</Select.Option>
+                {dynamicSource.pmcodes.map((item, index) => (
+                  <Select.Option value={item.pmCode} key={index}>
+                    {item.pmName}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
+          </Form.Item>
+          {dynamicSource.computeType == "1" && (
+            <div>
+              <Form.Item label="敏感点经度">
+                <Input value={dynamicSource.curPoint.lng} onChange={e => (dynamicSource.curPoint.lng = Number(e.target.value))} />
+              </Form.Item>
+              <Form.Item label="敏感点维度">
+                <Input value={dynamicSource.curPoint.lat} onChange={e => (dynamicSource.curPoint.lat = Number(e.target.value))} />
+              </Form.Item>
+            </div>
+          )}
+          <Form.Item label="起始时间">{getFieldDecorator("startTime", { initialValue: moment() })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}</Form.Item>
+          <Form.Item label="终止时间">{getFieldDecorator("endTime", { initialValue: moment().subtract(1, "day") })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}</Form.Item>
+          <Form.Item wrapperCol={{ span: 22, offset: 1 }}>
+            <Button type="primary" htmlType="submit" className="w-full">
+              开始计算
+            </Button>
+          </Form.Item>
+        </Form>
+      </Spin>
 
       <div className="text-white mt-8">站点贡献率状况</div>
       {dynamicSource.computeType == "1" && (
