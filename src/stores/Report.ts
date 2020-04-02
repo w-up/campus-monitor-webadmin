@@ -121,7 +121,23 @@ export class Report {
     delete param.pmType;
 
     this.loading = true;
-    param.collectDate = moment(param.collectDate).format('YYYY-MM-DD');
+    switch(param.timeCycle) {
+      case 1:
+        param.collectDate = moment(param.collectDate).format('YYYY-MM-DD');
+        break;
+      case 2:
+        param.collectDate = moment(param.collectDate).format('YYYY-MM');
+        break;
+      case 3:
+        param.collectDate = moment(param.collectDate).format('YYYY');
+        break;
+      case 4:
+        param.collectDate = moment(param.collectDate).format('YYYY-MM-DD');
+        break;
+      case 5:
+        param.collectDate = moment(param.collectDate).format('YYYY-MM');
+        break;
+    }
     try {
       let data: any = {};
       if (param.timeCycle !== 3) {
@@ -161,8 +177,9 @@ export class Report {
         series.push(obj);
       });
       this.chartOption.series = series;
-    } catch {
-
+      debugger
+    } catch (err) {
+      console.error(err)
     }
     this.loading = false;
   }

@@ -75,12 +75,12 @@ export const AlertSettingPage = Form.create()(observer(({ form }: any) => {
 
   const doSubmit = e => {
     e.preventDefault();
-    validateFields((err, values) => {
+    validateFields(['setForm'], (err, values) => {
       if (err) {
         return;
       }
 
-      alertSetting.getList(values);
+      alertSetting.getList(values.setForm);
     });
   }
 
@@ -117,7 +117,7 @@ export const AlertSettingPage = Form.create()(observer(({ form }: any) => {
             <Card size="small" title="告警设置">
               <Form onSubmit={doSubmit}>
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测类型" >
-                  {getFieldDecorator("jcTypes", { initialValue: [], rules: [{ required: true }] })(
+                  {getFieldDecorator("setForm.jcTypes", { initialValue: [], rules: [{ required: false }] })(
                     <Select mode="multiple" style={{ fontSize: '10px' }} placeholder="请选择" size="small">
                       {typeList.map(item => <Option style={{ fontSize: '10px' }} key={item.dictCode} value={item.dictCode}>{item.dictName}</Option>)}
                     </Select>
@@ -125,7 +125,7 @@ export const AlertSettingPage = Form.create()(observer(({ form }: any) => {
                 </Form.Item>
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="因子名称" >
-                  {getFieldDecorator("pmName", { initialValue: '', rules: [{ required: true }] })(
+                  {getFieldDecorator("setForm.pmName", { initialValue: '', rules: [{ required: true }] })(
                     <Select placeholder="请选择" size="small">
                       {pollutionPmList.map(item => <Option key={item.pmCode} value={item.pmCode}>{item.pmName}</Option>)}
                     </Select>
@@ -133,8 +133,8 @@ export const AlertSettingPage = Form.create()(observer(({ form }: any) => {
                 </Form.Item>
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="是否发送邮件" >
-                  {getFieldDecorator("emails", { initialValue: 0, rules: [{ required: true }] })(
-                    <Select placeholder="请选择" size="small">
+                  {getFieldDecorator("setForm.emails", { initialValue: [], rules: [{ required: false }] })(
+                    <Select mode="multiple" placeholder="请选择" size="small">
                       <Option value={1}>是</Option>
                       <Option value={0}>否</Option>
                     </Select>
@@ -142,7 +142,7 @@ export const AlertSettingPage = Form.create()(observer(({ form }: any) => {
                 </Form.Item>
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="告警等级" >
-                  {getFieldDecorator("warnLevelList", { initialValue: [], rules: [{ required: true }] })(
+                  {getFieldDecorator("setForm.warnLevelList", { initialValue: [], rules: [{ required: false }] })(
                     <Select mode="multiple" placeholder="请选择" size="small">
                       <Option value={1}>中度</Option>
                       <Option value={2}>重度</Option>
@@ -163,7 +163,8 @@ export const AlertSettingPage = Form.create()(observer(({ form }: any) => {
                   <Table size="small" bordered columns={columns} dataSource={tableData[0].dataSource} />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="设备离线规则" key="2">
-                  <Row type="flex" justify="start">
+                  <Table rowKey="id" bordered size="small" ></Table>
+                  {/* <Row type="flex" justify="start">
                     <Col span={12}>
                       <Form >
                         <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="离线时间>" >
@@ -195,7 +196,7 @@ export const AlertSettingPage = Form.create()(observer(({ form }: any) => {
                         }
                       </Form>
                     </Col>
-                  </Row>
+                  </Row> */}
                 </Tabs.TabPane>
               </Tabs>
             </Card>

@@ -9,6 +9,7 @@ export class Replenish {
   @observable parkTree: any = [];
   @observable ptList: any = [];
   @observable deviceList: any = [];
+  @observable addDeviceList: any = [];
   @observable pmList: any = [];
   
   @action.bound
@@ -50,6 +51,17 @@ export class Replenish {
   }
 
   @action.bound
+  async getAddDevice() {
+    try {
+      const { data }: any = await GET('/dataAdd/getAddDevice', {});
+      this.addDeviceList = data || [];
+    } catch {
+
+    }
+    
+  }
+
+  @action.bound
   async getPm(deviceCode) {
     try {
       const deviceId = this.deviceList.find(item => item.deviceCode === deviceCode).id;
@@ -63,7 +75,8 @@ export class Replenish {
   @action.bound
   async insertData(param) {
     param.collectDate = moment(param.collectDate).format('YYYY-MM-DD HH:mm:ss');
-    param.list = Object.keys(param.pmList).map(key => ({ collectValue: param.pmList[key], pmCode: key }));
+    // param.list = Object.keys(param.pmList).map(key => ({ collectValue: param.pmList[key], pmCode: key }));
+    param.list = Object.keys(param.pmList).map(key => ({ [key]: param.pmList[key] }));
 
     const { data }: any = await POST('/dataAdd/insert', param);
     
