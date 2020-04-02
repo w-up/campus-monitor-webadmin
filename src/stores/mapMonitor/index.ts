@@ -290,10 +290,11 @@ export class MapMonitorStore {
       unit: "m",
       lineWidth: 0,
       globalCompositeOperation: "lighter",
+      globalAlpha: 1,
       // max: 1,
       // range: [0, 100], // 过滤显示数据范围
-      // minOpacity: 1, // 热力图透明度
-      // maxOpacity: 1,
+      minOpacity: 1, // 热力图透明度
+      maxOpacity: 1,
       // label: {
       //   show: true,
       //   fillStyle: "white"

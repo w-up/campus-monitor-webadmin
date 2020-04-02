@@ -121,7 +121,11 @@ export type AllParkData = {
   factoryDatas: Array<{
     factoryId: string;
     factoryName: string;
-    factoryPoints: any;
+    factoryPoints: Array<{
+      longitude: string;
+      latitude: string;
+      pointOrder: null;
+    }>;
     averageValue: string;
     unit: string;
   }>;

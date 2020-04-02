@@ -83,7 +83,23 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
 
   let cardExtra = '';
   if (getFieldValue('collectDate')) {
-    cardExtra = moment(getFieldValue('collectDate')).format('YYYY-MM-DD');
+    switch(getFieldValue('timeCycle')) {
+      case 1:
+        cardExtra = moment(getFieldValue('collectDate')).format('YYYY-MM-DD');
+        break;
+      case 2:
+        cardExtra = moment(getFieldValue('collectDate')).format('YYYY-MM');
+        break;
+      case 3:
+        cardExtra = moment(getFieldValue('collectDate')).format('YYYY');
+        break;
+      case 4:
+        cardExtra = moment(getFieldValue('collectDate')).format('w');
+        break;
+      case 4:
+        cardExtra = moment(getFieldValue('collectDate')).format('Q');
+        break;
+    }
   }
 
   let pmCardTitle = '';
@@ -164,11 +180,46 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
                   </Radio.Group>
                 )}
               </Form.Item>
+
+              {getFieldValue('timeCycle') === 1 &&
               <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
                 {getFieldDecorator("collectDate", { initialValue: '', rules: [{ required: true }] })(
-                  <DatePicker style={{ width:  '100%' }} size="small" />
+                  <DatePicker format="YYYY-MM-DD" style={{ width:  '100%' }} size="small" />
                 )}
               </Form.Item>
+              }
+              {getFieldValue('timeCycle') === 2 &&
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
+                {getFieldDecorator("collectDate", { initialValue: '', rules: [{ required: true }] })(
+                  <MonthPicker format="YYYY-MM" style={{ width:  '100%' }} size="small" />
+                )}
+              </Form.Item>
+              }
+              {getFieldValue('timeCycle') === 3 &&
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
+                {getFieldDecorator("collectDate", { initialValue: '', rules: [{ required: true }] })(
+                  <DatePicker format="YYYY" style={{ width:  '100%' }} size="small" />
+                )}
+              </Form.Item>
+              }
+              
+              {getFieldValue('timeCycle') === 4 &&
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
+                {getFieldDecorator("collectDate", { initialValue: '', rules: [{ required: true }] })(
+                  <WeekPicker  style={{ width:  '100%' }} size="small" />
+                )}
+              </Form.Item>
+              }
+
+              {getFieldValue('timeCycle') === 5 &&
+              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
+                {getFieldDecorator("collectDate", { initialValue: '', rules: [{ required: true }] })(
+                  <DatePicker format="Q" style={{ width:  '100%' }} size="small" />
+                )}
+              </Form.Item>
+              }
+              
+
               <Row gutter={20}>
                 <Col span={12}>
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }}>
@@ -206,7 +257,46 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
 
               {getFieldValue('timeCycle') === 2 &&
               <Col span={24} style={{ marginBottom: '10px' }}>
-                <Card bordered size="small" title={`${pmCardTitle}污染物排放浓度${timeCycleArr[getFieldValue('timeCycle') - 1]}趋势图`} extra={cardExtra}>
+                <Card bordered size="small" title={`${pmCardTitle}污染物按${timeCycleArr[getFieldValue('timeCycle') - 1]}排放情况`} extra={cardExtra}>
+                  <ReactEcharts
+                    //@ts-ignore
+                    option={toJS(chartOption)}
+                    ref={chart3}
+                    style={{ height: '360px' }}
+                  />
+                </Card>
+              </Col>
+              }
+
+              {getFieldValue('timeCycle') === 3 &&
+              <Col span={12} style={{ marginBottom: '10px' }}>
+                <Card bordered size="small" title={`${pmCardTitle}污染物按${timeCycleArr[getFieldValue('timeCycle') - 1]}排放情况`} extra={cardExtra}>
+                  <ReactEcharts
+                    //@ts-ignore
+                    option={toJS(chartOption)}
+                    ref={chart3}
+                    style={{ height: '360px' }}
+                  />
+                </Card>
+              </Col>
+              }
+
+              {getFieldValue('timeCycle') === 4 &&
+              <Col span={12} style={{ marginBottom: '10px' }}>
+                <Card bordered size="small" title={`${pmCardTitle}污染物按周排放情况`} extra={`第${cardExtra}周`}>
+                  <ReactEcharts
+                    //@ts-ignore
+                    option={toJS(chartOption)}
+                    ref={chart3}
+                    style={{ height: '360px' }}
+                  />
+                </Card>
+              </Col>
+              }
+
+              {getFieldValue('timeCycle') === 5 &&
+              <Col span={12} style={{ marginBottom: '10px' }}>
+                <Card bordered size="small" title={`${pmCardTitle}污染物按周排放情况`} extra={`第${cardExtra}季度`}>
                   <ReactEcharts
                     //@ts-ignore
                     option={toJS(chartOption)}

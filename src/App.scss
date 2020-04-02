@@ -763,7 +763,11 @@ svg {
 /* 数据查询样式 */
 .queryPage,
 .reportPage,
-.alertPage {
+.alertPage,
+.comparisonPage,
+.rankPage,
+.replenishPage,
+.managePage {
   .ant-table * {
     font-size: 12px !important;
   }

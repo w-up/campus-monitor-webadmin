@@ -50,6 +50,10 @@ export class ConfigStore {
     point_size: {
       paramIntro: "污染分布方块大小（20~40）",
       paramValue: "20"
+    },
+    bottom_color: {
+      paramIntro: "污染分布园区填充色（16进制值）",
+      paramValue: "#00FF00"
     }
   };
 

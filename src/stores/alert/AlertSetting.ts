@@ -85,7 +85,7 @@ export class AlertSetting {
   async getDeviceConfig() {
     this.loading = true;
     try {
-      const { data }: any = await GET('/warn-device-config/getWarnDeviceConfig', {});
+      const { data }: any = await GET('/warn-device-config/getWarnDeviceConfig', { current: 1, size: 9999 });
       debugger
     } catch {
 
@@ -109,36 +109,12 @@ export class AlertSetting {
   @action.bound
   async getList(param) {
     this.loading = true;
-    param.startTime = moment(param.timeRange[0]).format('YYYY-MM-DD HH:mm:ss');
-    param.endTime = moment(param.timeRange[1]).format('YYYY-MM-DD HH:mm:ss');
 
     try {
-      if (param.warnType == 1) {
-        this.tableData[0].query = {
-          ...this.tableData[0].query,
-          ...param,
-        }
-        const { data }: any = await POST('/warn-pm/getPmWarnListPage', this.tableData[0].query);
-        debugger
-
-      } else if (param.warnType == 2) {
-        this.tableData[1].query = {
-          ...this.tableData[1].query,
-          ...param,
-        }
-        const { data }: any = await POST('/warn-pm/getPmWarnListPage', this.tableData[1].query);
-        debugger
-        
-      } else if (param.warnType == 3) {
-        this.tableData[2].query = {
-          ...this.tableData[2].query,
-          ...param,
-        }
-        const { data }: any = await POST('/warn-device/getDeviceWarnListPage', this.tableData[2].query);
-        debugger
-
-      }
-
+      
+      const { data }: any = await POST('/warn-pm-config/getPmWarnConfigListPage', param);
+      debugger
+      
     } catch {
 
     }
