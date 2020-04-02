@@ -80,12 +80,14 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
           //名称
           var text = params[i].axisValue;
           //值
-          var value = params[i].data;
+          var value = params[i].data.value;
+          var limit = params[i].data.limit;
+
           showHtml += `
             <div style="display:flex;align-items: center;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? utils.number.toPrecision(value) : ""}</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px; ${value > limit ? "color:red;" : ""}">${value ? utils.number.toPrecision(value) : ""}</div>
           </div>
           `;
         }
@@ -155,7 +157,10 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
     series: data.pms.map((item, index) => ({
       name: item.pmName,
       data: utils.array.sliceArray(
-        item.datas.map(i => i.collectValue),
+        item.datas.map(i => ({
+          value: i.collectValue,
+          limit: item.upperLimit
+        })),
         dataIndex,
         count
       ),

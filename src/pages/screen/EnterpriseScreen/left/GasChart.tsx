@@ -54,7 +54,7 @@ export const EnterpriseScreenGasChart = () => {
                   //@ts-ignore
                   ref={elementsRef.current[index]}
                   option={makeOption(item)}
-                  style={{ marginTop: "10px", padding: "20px",  width: "100%" }}
+                  style={{ marginTop: "10px", padding: "20px", width: "100%" }}
                   className="react_for_echarts"
                 />
               </Slide>
@@ -80,7 +80,7 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
         fontSize: "14"
       },
       padding: [20, 20, 5, 20],
-      margin:[20, 0],
+      margin: [20, 0],
       backgroundColor: "rgba(8,46,66,0.5)",
       borderColor: "rgba(8,46,66,0.5)",
       borderWidth: 1,
@@ -106,19 +106,20 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
           //名称
           var text = params[i].axisValue;
           //值
-          var value = params[i].data;
+          var value = params[i].data.value;
+          var limit = params[i].data.limit;
           showHtml += `
             <div style="display:flex;align-items: center;z-index: 1000">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? utils.number.toPrecision(value) : ""}</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px;${value > limit ? "color:red;" : ""}">${value ? utils.number.toPrecision(value) : ""}</div>
           </div>
           `;
         }
         return `<div class="tableFloat text-left primary-text-dark">
                     <div>${text} 日均</div>
                     <div class="primary-text-dark">${option.title.text}</div>
-                    <div class="primary-red">日均值上限：2（mg/m³）</div>
+                    <div class="primary-red">日均值上限：${utils.number.toPrecision(limit)}</div>
                     <div style="color:#88A8C5;font-size:10px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
                     ${showHtml}
             </div></div></div>`;
@@ -138,19 +139,6 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
         itemHeight: 2,
         itemWidth: 20
       }
-      // {
-      //   data: ["西南角", "西北角"],
-      //   x: "right",
-      //   textStyle: {
-      //     color: "#88A8C5",
-      //     fontSize: 12
-      //   },
-      //   icon: "rect",
-      //   y: 20,
-      //   bottom: 10,
-      //   itemHeight: 2,
-      //   itemWidth: 20
-      // }
     ],
     grid: {
       top: "25%",
@@ -202,7 +190,10 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
     },
     series: site.sites.map((item, index) => ({
       name: item.siteName,
-      data: item.datas.map(i => i.collectValue),
+      data: item.datas.map(i => ({
+        value: i.collectValue,
+        limit: site.upperLimit
+      })),
       type: "line",
       itemStyle: {
         normal: {

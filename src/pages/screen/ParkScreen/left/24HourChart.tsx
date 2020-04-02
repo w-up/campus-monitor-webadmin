@@ -3,6 +3,7 @@ import { useObserver, useLocalStore } from "mobx-react-lite";
 import ReactEcharts from "echarts-for-react";
 import { useStore } from "stores";
 import { utils } from "utils";
+import { ParkScreenMap } from "../Map";
 
 export const ParkScreen24HourChart = () => {
   const chartRef = useRef<any>();
@@ -50,11 +51,14 @@ export const ParkScreen24HourChart = () => {
               //名称
               var text = params[i].axisValue;
               //值
-              var value = params[i].data;
+              var value = params[i].data.value;
+              var limit = params[i].data.limit;
+
               showHtml += `
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? utils.number.toPrecision(value) : ""}</div>`;
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px;${value > limit ? "color:red;" : ""}">${value ? utils.number.toPrecision(value) : ""}</div>`;
             }
+
             return `<div style="color: #04F9CC;text-align:left;line-height:20px">${text}</div>
             <div style="color:#88A8C5;text-align:left;font-size:10px;padding:5px;margin-top:5px;">
               <div style="display:flex;align-items: center;">
@@ -109,7 +113,10 @@ export const ParkScreen24HourChart = () => {
           {
             name: parkScreenMap.curPmValue?.pmName,
             type: "line",
-            data: parkScreenMap.dailyData.points.map(i => i.collectValue),
+            data: parkScreenMap.dailyData.points.map(i => ({
+              value: i.collectValue,
+              limit: parkScreenMap.dailyData.upperLimit
+            })),
             itemStyle: {
               normal: {
                 color: "#00FF1D", //改变折线点的颜色

@@ -35,7 +35,7 @@ export const GasTable = () => {
           <div>检测物质</div>
           <div>监测数值</div>
           <div>限值</div>
-          <div>超标率</div>
+          {false && <div>超标率</div>}
         </div>
         <CarouselProvider naturalSlideWidth={100} naturalSlideHeight={100} totalSlides={store.SiteRuntimePmDate.length}>
           <Slider>
@@ -49,10 +49,11 @@ export const GasTable = () => {
                         <div>{item.siteName}</div>
                         <div>{item.pmName}</div>
                         <div>
-                          {utils.number.toPrecision(item.collectValue)} {item.unit}
+                          <span style={{ color: Number(item.collectValue) > Number(item.limit) ? "red" : "" }}>{utils.number.toPrecision(item.collectValue)}</span>
+                          <span>{item.unit}</span>
                         </div>
                         <div>{item.limit}</div>
-                        <div>{item.overRate}</div>
+                        {false && <div>{item.overRate}</div>}
                       </div>
                     );
                   })}

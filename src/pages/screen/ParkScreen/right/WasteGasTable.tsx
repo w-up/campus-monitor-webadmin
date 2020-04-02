@@ -2,6 +2,7 @@ import React from "react";
 import { useLocalStore, useObserver } from "mobx-react-lite";
 import { Scrollbars } from "react-custom-scrollbars";
 import { useStore } from "../../../../stores/index";
+import { utils } from "../../../../utils/index";
 
 export const WasteGasTable = () => {
   const {
@@ -44,10 +45,9 @@ export const WasteGasTable = () => {
                 <div className="listItem tabTitle">
                   <div>{item.factoryName}</div>
                   <div>{item.pmName}</div>
-                  <div>{item.collectValue}</div>
                   <div>
-                    {item.maxNum}
-                    {item.unit}
+                    <span style={{ color: Number(item.collectValue) > Number(item.limit) ? "red" : "" }}>{utils.number.toPrecision(item.collectValue)}</span>
+                    <span>{item.unit}</span>
                   </div>
                   <div>{item.limit}</div>
                 </div>

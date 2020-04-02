@@ -3,6 +3,7 @@ import { useObserver, useLocalStore } from "mobx-react-lite";
 import { CarouselProvider, Dot, DotGroup, Slide, Slider } from "pure-react-carousel";
 import { useStore } from "../../../../stores";
 import { _ } from "../../../../utils/lodash";
+import { utils } from "../../../../utils/index";
 
 export const SewageTableDynamic = () => {
   const {
@@ -33,7 +34,7 @@ export const SewageTableDynamic = () => {
           <div>检测物质</div>
           <div>监测数值</div>
           <div>限值</div>
-          <div>超标率</div>
+          {false && <div>超标率</div>}
         </div>
         <CarouselProvider naturalSlideWidth={100} naturalSlideHeight={50} totalSlides={enterpriseScreenMap.SiteRuntimePmDate.length}>
           <Slider>
@@ -46,9 +47,12 @@ export const SewageTableDynamic = () => {
                       <div className="listItem tabTitle">
                         <div>{item.siteName}</div>
                         <div>{item.pmName}</div>
-                        <div>{item.collectValue + item.unit}</div>
+                        <div>
+                          <span style={{ color: Number(item.collectValue) > Number(item.limit) ? "red" : "" }}>{utils.number.toPrecision(item.collectValue)}</span>
+                          <span>{item.unit}</span>
+                        </div>
                         <div>{item.limit}</div>
-                        <div>{item.overRate}</div>
+                        {false && <div>{item.overRate}</div>}
                       </div>
                     );
                   })}
