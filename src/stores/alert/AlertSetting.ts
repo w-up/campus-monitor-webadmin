@@ -27,7 +27,28 @@ export class AlertSetting {
   @observable pmTotal: any = 0;
   @observable pmDataSource: any = [];
 
-  
+  @action.bound
+  paginationChange(page, pageSize) {
+    this.query = {
+      ...this.query,
+      current: page,
+      size: pageSize,
+      pageSize,
+    };
+    this.getDeviceConfig(this.query);
+  }
+
+  @action.bound
+  pmPaginationChange(page, pageSize) {
+    this.pmQuery = {
+      ...this.pmQuery,
+      current: page,
+      size: pageSize,
+      pageSize,
+    };
+    this.getList(this.pmQuery);
+  }
+
   @action.bound
   async getAllParks() {
     this.loading = true;
@@ -40,6 +61,29 @@ export class AlertSetting {
 
     this.loading = false;
   }
+
+  @action.bound
+  async deleteWarnDeviceConfig(configId) {
+    this.loading = true;
+    try {
+      await POST('/warn-device-config/deleteWarnDeviceConfig', { configId });
+    } catch {
+
+    }
+    this.loading = false;
+  }
+
+  @action.bound
+  async deletePmWarn(configId) {
+    this.loading = true;
+    try {
+      await POST('/warn-pm-config/deletePmWarnConfig', { configId });
+    } catch {
+
+    }
+    this.loading = false;
+  }
+  
 
   @action.bound
   async getAllCompany() {
@@ -78,7 +122,11 @@ export class AlertSetting {
     });
 
     try {
-      await POST('/warn-pm-config/addPmWarnConfig', param);
+      if (param.id) {
+        await POST('/warn-pm-config/updatePmWarnConfig', param);
+      } else {
+        await POST('/warn-pm-config/addPmWarnConfig', param);
+      }
     } catch {
 
     }
@@ -108,14 +156,22 @@ export class AlertSetting {
   
 
   @action.bound
-  async getDeviceConfig() {
+  async getDeviceConfig(param = {}) {
     this.loading = true;
 
-    const param = { ...this.query };
-    delete param.pageSize;
+    Object.keys(param).forEach(key => {
+      if (param[key] === '') {
+        delete param[key];
+      }
+    });
+
+    this.query = {
+      ...this.query,
+      ...param,
+    }
 
     try {
-      const { data }: any = await POST('/warn-device-config/getWarnDeviceConfig', param);
+      const { data }: any = await POST('/warn-device-config/getWarnDeviceConfig', this.query);
       this.dataSource = data.records;
       this.total = data.total;
       this.query.pageSize = data.size;
@@ -142,10 +198,10 @@ export class AlertSetting {
   @action.bound
   async getList(param = {}) {
     this.loading = true;
-
     Object.keys(param).forEach(key => {
-      if (param[key] === '') {
+      if (param[key] === '' || param[key].length === 0) {
         delete param[key];
+        delete this.pmQuery[key];
       }
     });
 
@@ -157,7 +213,10 @@ export class AlertSetting {
     try {
       
       const { data }: any = await POST('/warn-pm-config/getPmWarnConfigListPage', this.pmQuery);
-      debugger
+      this.pmDataSource = data.records;
+      this.pmTotal = data.total;
+      this.pmQuery.pageSize = data.size;
+      this.pmQuery.current = data.current;
       
     } catch {
 
