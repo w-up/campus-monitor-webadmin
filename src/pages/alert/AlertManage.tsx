@@ -1,36 +1,11 @@
 import React, { useEffect } from "react";
-import { Checkbox, InputNumber, Tabs, Breadcrumb, Spin, Card, Row, Col, Form, Select, Divider, Button, Table, Radio, DatePicker, Input } from "antd";
+import { message, Modal, Checkbox, InputNumber, Tabs, Breadcrumb, Spin, Card, Row, Col, Form, Select, Divider, Button, Table, Radio, DatePicker, Input } from "antd";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/index";
+import { toJS } from "mobx";
 
 const { Option } = Select;
-
-const columns = [
-  {
-    title: '报警来源',
-    dataIndex: 'origin',
-    key: 'origin',
-  },
-  {
-    title: '报警项目',
-    dataIndex: 'project',
-    key: 'project',
-  },
-  {
-    title: '报警次数',
-    dataIndex: 'times',
-    key: 'times',
-  },
-  {
-    title: '详情',
-    dataIndex: 'action',
-    key: 'action',
-    render: (text:any, record:any) => (
-      <Link to="/">查看详情</Link>
-    ),
-  }
-];
 
 
 export const AlertManagePage = Form.create()(observer(({ form }: any) => {
@@ -45,6 +20,9 @@ export const AlertManagePage = Form.create()(observer(({ form }: any) => {
 
   useEffect(() => {
     alertManage.getAllSitesTree();
+    alertManage.getList({ current: 1, size: 10, warnType: 1 });
+    alertManage.getList({ current: 1, size: 10, warnType: 2 });
+    alertManage.getList({ current: 1, size: 10, warnType: 3 });
   }, []);
 
   const factoryList: any = [];
@@ -108,6 +86,330 @@ export const AlertManagePage = Form.create()(observer(({ form }: any) => {
 
   const allPmChecked = getFieldValue('pmList') && (getFieldValue('pmList').length === pmCodeList.length);
   const allFactoryChecked = getFieldValue('factoryIds') && (getFieldValue('factoryIds').length === factoryList.length);
+
+
+
+const columns: any = [
+  [
+    {
+      title: '告警对象',
+      dataIndex: 'warnObj',
+      key: 'warnObj',
+      width: 150,
+      fixed: 'left',
+    },
+    {
+      title: '告警时间',
+      dataIndex: 'warnTime',
+      key: 'warnTime',
+      width: 200,
+    },
+    {
+      title: '监测类型',
+      dataIndex: 'jcType',
+      key: 'jcType',
+      width: 100,
+    },
+    {
+      title: '站点名称',
+      dataIndex: 'siteName',
+      key: 'siteName',
+      width: 100,
+    },
+    {
+      title: '告警项目',
+      dataIndex: 'pmName',
+      key: 'pmName',
+      width: 100,
+    },
+    {
+      title: '告警等级',
+      dataIndex: 'warnLevel',
+      key: 'warnLevel',
+      width: 80,
+      render: val => ['', '中度', '重度', '严重'][val],
+    },
+    {
+      title: '超限值',
+      dataIndex: 'warnLimit',
+      key: 'warnLimit',
+      width: 100,
+    },
+    {
+      title: '平均浓度',
+      dataIndex: 'pmValue',
+      key: 'pmValue',
+      width: 200,
+      render: (val, record) => `${val}${record.pmUnit}`,
+    },
+    {
+      title: '累计时长',
+      dataIndex: 'mins',
+      key: 'mins',
+      width: 100,
+      render: (val) => `${val}分钟`,
+    },
+    {
+      title: '风向',
+      dataIndex: 'windDirection',
+      key: 'windDirection',
+      width: 80,
+    },
+    {
+      title: '风速',
+      dataIndex: 'windSpeed',
+      key: 'windSpeed',
+      width: 100,
+    },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      key: 'status',
+      width: 80,
+      render: val => val === 0 ? '未处理' : '已处理',
+    },
+    {
+      title: '操作',
+      dataIndex: '',
+      key: '',
+      width: 80,
+      render: (val, record) => {
+        if (record.status === 1) {
+          return '';
+        }
+        return <a onClick={() => {
+          Modal.confirm({
+            title: '处理确认',
+            content: `确定处理这条告警吗？`,
+            maskClosable: true,
+            async onOk() {
+              try {
+                await alertManage.handleWarn({ warnType: 1, warnId: record.id });
+                message.success('处理成功');
+                alertManage.getList({ warnType: 1 });
+              } catch {
+                message.error('处理失败');
+              }
+            },
+          });
+        }}>处理</a>
+      },
+    },
+  ],
+  [
+    {
+      title: '告警对象',
+      dataIndex: 'warnObj',
+      key: 'warnObj',
+      width: 150,
+      fixed: 'left',
+    },
+    {
+      title: '告警时间',
+      dataIndex: 'warnTime',
+      key: 'warnTime',
+      width: 200,
+    },
+    {
+      title: '监测类型',
+      dataIndex: 'jcType',
+      key: 'jcType',
+      width: 100,
+    },
+    {
+      title: '站点名称',
+      dataIndex: 'siteName',
+      key: 'siteName',
+      width: 100,
+    },
+    {
+      title: '告警项目',
+      dataIndex: 'pmName',
+      key: 'pmName',
+      width: 100,
+    },
+    {
+      title: '告警等级',
+      dataIndex: 'warnLevel',
+      key: 'warnLevel',
+      width: 80,
+      render: val => ['', '中度', '重度', '严重'][val],
+    },
+    {
+      title: '超限值',
+      dataIndex: 'warnLimit',
+      key: 'warnLimit',
+      width: 100,
+    },
+    {
+      title: '平均浓度',
+      dataIndex: 'pmValue',
+      key: 'pmValue',
+      width: 200,
+      render: (val, record) => `${val}${record.pmUnit}`,
+    },
+    {
+      title: '累计时长',
+      dataIndex: 'mins',
+      key: 'mins',
+      width: 100,
+      render: (val) => `${val}分钟`,
+    },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      key: 'status',
+      width: 80,
+      render: val => val === 0 ? '未处理' : '已处理',
+    },
+    {
+      title: '操作',
+      dataIndex: '',
+      key: '',
+      width: 80,
+      render: (val, record) => {
+        if (record.status === 1) {
+          return '';
+        }
+        return <a onClick={() => {
+          Modal.confirm({
+            title: '处理确认',
+            content: `确定处理这条告警吗？`,
+            maskClosable: true,
+            async onOk() {
+              try {
+                await alertManage.handleWarn({ warnType: 2, warnId: record.id });
+                message.success('处理成功');
+                alertManage.getList({ warnType: 2 });
+              } catch {
+                message.error('处理失败');
+              }
+            },
+          });
+        }}>处理</a>
+      },
+    },
+  ],
+  [
+    {
+      title: '告警对象',
+      dataIndex: 'warnObj',
+      key: 'warnObj',
+      width: 150,
+      fixed: 'left',
+    },
+    {
+      title: '告警时间',
+      dataIndex: 'warnTime',
+      key: 'warnTime',
+      width: 200,
+    },
+    {
+      title: '监测类型',
+      dataIndex: 'jcType',
+      key: 'jcType',
+      width: 100,
+    },
+    {
+      title: '站点名称',
+      dataIndex: 'siteName',
+      key: 'siteName',
+      width: 100,
+    },
+    {
+      title: '告警项目',
+      dataIndex: 'warnItem',
+      key: 'warnItem',
+      width: 100,
+    },
+    {
+      title: '设备名称',
+      dataIndex: 'deviceName',
+      key: 'deviceName',
+      width: 100,
+    },
+    {
+      title: '累计时长',
+      dataIndex: 'mins',
+      key: 'mins',
+      width: 100,
+      render: (val) => `${val}分钟`,
+    },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      key: 'status',
+      width: 80,
+      render: val => val === 0 ? '未处理' : '已处理',
+    },
+    {
+      title: '操作',
+      dataIndex: '',
+      key: '',
+      width: 80,
+      render: (val, record) => {
+        if (record.status === 1) {
+          return '';
+        }
+        return <a onClick={() => {
+          Modal.confirm({
+            title: '处理确认',
+            content: `确定处理这条告警吗？`,
+            maskClosable: true,
+            async onOk() {
+              try {
+                await alertManage.handleWarn({ warnType: 3, warnId: record.id });
+                message.success('处理成功');
+                alertManage.getList({ warnType: 3 });
+              } catch {
+                message.error('处理失败');
+              }
+            },
+          });
+        }}>处理</a>
+      },
+    },
+  ],
+];
+
+  const pagination: any = [
+    {
+      current: tableData[0].query.current,
+      pageSize: tableData[0].query.pageSize,
+      total: tableData[0].total,
+      showSizeChanger: true,
+      showQuickJumper: true,
+      showTotal: total => {
+        return "共 " + total + " 条记录";
+      },
+      onChange: (page, pageSize) => alertManage.paginationChange(0, page, pageSize),
+      onShowSizeChange: (page, pageSize) => alertManage.paginationChange(0, page, pageSize),
+    },
+    {
+      current: tableData[1].query.current,
+      pageSize: tableData[1].query.pageSize,
+      total: tableData[1].total,
+      showSizeChanger: true,
+      showQuickJumper: true,
+      showTotal: total => {
+        return "共 " + total + " 条记录";
+      },
+      onChange: (page, pageSize) => alertManage.paginationChange(1, page, pageSize),
+      onShowSizeChange: (page, pageSize) => alertManage.paginationChange(1, page, pageSize),
+    },
+    {
+      current: tableData[2].query.current,
+      pageSize: tableData[2].query.pageSize,
+      total: tableData[2].total,
+      showSizeChanger: true,
+      showQuickJumper: true,
+      showTotal: total => {
+        return "共 " + total + " 条记录";
+      },
+      onChange: (page, pageSize) => alertManage.paginationChange(2, page, pageSize),
+      onShowSizeChange: (page, pageSize) => alertManage.paginationChange(2, page, pageSize),
+    }
+  ];
 
   return (
     <div className="alertPage">
@@ -191,13 +493,13 @@ export const AlertManagePage = Form.create()(observer(({ form }: any) => {
             <Card size="small" title="数据列表">
               <Tabs animated size="small" type="card" defaultActiveKey="1" onChange={changeTab}>
                 <Tabs.TabPane tab="废气超标告警" key="1">
-                  <Table size="small" bordered columns={columns} dataSource={tableData[0].dataSource} />
+                  <Table size="small" scroll={{ x: 800 }} bordered pagination={pagination[0]} columns={columns[0]} dataSource={toJS(tableData[0].dataSource)} />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="污水超标告警" key="2">
-                  <Table size="small" bordered columns={columns} dataSource={tableData[1].dataSource} />
+                  <Table size="small" scroll={{ x: 800 }} bordered pagination={pagination[1]} columns={columns[1]} dataSource={toJS(tableData[1].dataSource)} />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="设备离线告警" key="3">
-                  <Table size="small" bordered columns={columns} dataSource={tableData[2].dataSource} />
+                  <Table size="small" scroll={{ x: 800 }} bordered pagination={pagination[2]} columns={columns[2]} dataSource={toJS(tableData[2].dataSource)} />
                 </Tabs.TabPane>
               </Tabs>
             </Card>

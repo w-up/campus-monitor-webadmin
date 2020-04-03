@@ -40,6 +40,33 @@ export class AlertManage {
   ];
 
   @action.bound
+  async handleWarn({ warnType, warnId }) {
+    this.loading = true;
+    try {
+      if (warnType === 1 || warnType === 2) {
+        await POST('/warn-pm/handlePmWarn', { warnId });
+      } else {
+        await POST('/warn-device/handleDeviceWarn', { warnId });
+      }
+    } catch {
+
+    }
+
+    this.loading = false;
+  }
+
+  @action.bound
+  paginationChange(index, page, pageSize) {
+    this.tableData[index].query = {
+      ...this.tableData[index].query,
+      current: page,
+      size: pageSize,
+      pageSize,
+    }
+    this.getList(this.tableData[index].query);
+  }
+
+  @action.bound
   async getAllSitesTree() {
     this.loading = true;
     try {
@@ -53,11 +80,11 @@ export class AlertManage {
   }
 
   @action.bound
-  async getList(param) {
+  async getList(param: any = {}) {
     this.loading = true;
 
     Object.keys(param).forEach(key => {
-      if (!param[key]) {
+      if (param[key] === '' || param[key].length == 0) {
         delete param[key];
       }
     });
@@ -74,7 +101,10 @@ export class AlertManage {
           ...param,
         }
         const { data }: any = await POST('/warn-pm/getPmWarnListPage', this.tableData[0].query);
-        debugger
+        this.tableData[0].dataSource = data.records;
+        this.tableData[0].total = data.total;
+        this.tableData[0].query.pageSize = data.size;
+        this.tableData[0].query.current = data.current;
 
       } else if (param.warnType == 2) {
         this.tableData[1].query = {
@@ -82,7 +112,10 @@ export class AlertManage {
           ...param,
         }
         const { data }: any = await POST('/warn-pm/getPmWarnListPage', this.tableData[1].query);
-        debugger
+        this.tableData[1].dataSource = data.records;
+        this.tableData[1].total = data.total;
+        this.tableData[1].query.pageSize = data.size;
+        this.tableData[1].query.current = data.current;
         
       } else if (param.warnType == 3) {
         this.tableData[2].query = {
@@ -90,7 +123,10 @@ export class AlertManage {
           ...param,
         }
         const { data }: any = await POST('/warn-device/getDeviceWarnListPage', this.tableData[2].query);
-        debugger
+        this.tableData[2].dataSource = data.records;
+        this.tableData[2].total = data.total;
+        this.tableData[2].query.pageSize = data.size;
+        this.tableData[2].query.current = data.current;
 
       }
 
