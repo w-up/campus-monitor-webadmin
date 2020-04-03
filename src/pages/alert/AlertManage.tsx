@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { InputNumber, Tabs, Breadcrumb, Spin, Card, Row, Col, Form, Select, Divider, Button, Table, Radio, DatePicker, Input } from "antd";
+import { Checkbox, InputNumber, Tabs, Breadcrumb, Spin, Card, Row, Col, Form, Select, Divider, Button, Table, Radio, DatePicker, Input } from "antd";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/index";
@@ -80,6 +80,35 @@ export const AlertManagePage = Form.create()(observer(({ form }: any) => {
     });
   }
 
+  const onPmSelectAll = (e) => {
+    const { checked } = e.target;
+    if (checked) {
+      setFieldsValue({
+        pmList: pmCodeList.map(item => item.pmCode),
+      });
+    } else {
+      setFieldsValue({
+        pmList: [],
+      });
+    }
+  }
+
+  const onFactorySelectAll = (e) => {
+    const { checked } = e.target;
+    if (checked) {
+      setFieldsValue({
+        factoryIds: factoryList.map(item => item.factoryId),
+      });
+    } else {
+      setFieldsValue({
+        factoryIds: [],
+      });
+    }
+  }
+
+  const allPmChecked = getFieldValue('pmList') && (getFieldValue('pmList').length === pmCodeList.length);
+  const allFactoryChecked = getFieldValue('factoryIds') && (getFieldValue('factoryIds').length === factoryList.length);
+
   return (
     <div className="alertPage">
       <Spin spinning={loading}>
@@ -95,39 +124,49 @@ export const AlertManagePage = Form.create()(observer(({ form }: any) => {
           <Col span={6}>
             <Card size="small" title="告警管理">
               <Form onSubmit={doSubmit}>
-                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测对象" >
-                  {getFieldDecorator("factoryIds", { initialValue: [], rules: [{ required: true }] })(
-                    <Select mode="multiple" style={{ fontSize: '10px' }} onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
-                      {factoryList.map(item => <Option style={{ fontSize: '10px' }} key={item.factoryId} value={item.factoryId}>{item.factoryName}</Option>)}
-                    </Select>
+
+                <Divider orientation="left">监测对象</Divider>
+                <Checkbox style={{ fontSize: '10px' }} checked={allFactoryChecked} onChange={onFactorySelectAll}>全选</Checkbox>
+
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
+                  {getFieldDecorator("factoryIds", { initialValue: [], rules: [{ required: false }] })(
+                    <Checkbox.Group style={{ width: '100%' }}>
+                      <Row>
+                        {factoryList.map(item => <Col span={24} key={item.factoryId}><Checkbox style={{ fontSize: '10px' }} value={item.factoryId}>{item.factoryName}</Checkbox></Col>)}
+                      </Row>
+                    </Checkbox.Group>
                   )}
                 </Form.Item>
 
-                {getFieldDecorator("warnType", { initialValue: 1, rules: [{ required: true }] })(
+                {getFieldDecorator("warnType", { initialValue: 1, rules: [{ required: false }] })(
                   <Select style={{ display: 'none' }} size="small">
                     <Option value={1}>废气</Option>
                     <Option value={2}>污水</Option>
                   </Select>
                 )}
 
+                <Divider orientation="left">监测因子</Divider>
+                <Checkbox style={{ fontSize: '10px' }} checked={allPmChecked} onChange={onPmSelectAll}>全选</Checkbox>
                 {!!pmCodeList.length &&
-                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测因子" >
-                  {getFieldDecorator("pmList", { initialValue: [], rules: [{ required: true }] })(
-                    <Select mode="multiple" placeholder="请选择" size="small">
-                      {pmCodeList.map(item => <Option key={item.pmCode} value={item.pmCode}>{item.pmName}</Option>)}
-                    </Select>
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
+                  {getFieldDecorator("pmList", { initialValue: [], rules: [{ required: false }] })(
+                    <Checkbox.Group style={{ width: '100%' }}>
+                      <Row>
+                        {pmCodeList.map(item => <Col span={8} key={item.pmCode}><Checkbox style={{ fontSize: '10px' }} value={item.pmCode}>{item.pmName}</Checkbox></Col>)}
+                      </Row>
+                    </Checkbox.Group>
                   )}
                 </Form.Item>
                 }
                 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="累计时长超过" >
-                  {getFieldDecorator("mins", { initialValue: "", rules: [{ required: true }] })(
+                  {getFieldDecorator("mins", { initialValue: "", rules: [{ required: false }] })(
                     <InputNumber placeholder="单位分钟" style={{ width: '100%' }} size="small" />
                   )}
                 </Form.Item>
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="状态" >
-                  {getFieldDecorator("status", { initialValue: 0, rules: [{ required: true }] })(
+                  {getFieldDecorator("status", { initialValue: 0, rules: [{ required: false }] })(
                     <Select placeholder="请选择" size="small">
                       <Option value={0}>未处理</Option>
                       <Option value={1}>已处理</Option>
@@ -135,7 +174,6 @@ export const AlertManagePage = Form.create()(observer(({ form }: any) => {
                     </Select>
                   )}
                 </Form.Item>
-
 
                 <Divider orientation="left">起止时间</Divider>
 

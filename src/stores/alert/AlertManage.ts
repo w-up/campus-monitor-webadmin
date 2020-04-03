@@ -55,8 +55,17 @@ export class AlertManage {
   @action.bound
   async getList(param) {
     this.loading = true;
-    param.startTime = moment(param.timeRange[0]).format('YYYY-MM-DD HH:mm:ss');
-    param.endTime = moment(param.timeRange[1]).format('YYYY-MM-DD HH:mm:ss');
+
+    Object.keys(param).forEach(key => {
+      if (!param[key]) {
+        delete param[key];
+      }
+    });
+    
+    if (param.timeRange) {
+      param.startTime = moment(param.timeRange[0]).format('YYYY-MM-DD HH:mm:ss');
+      param.endTime = moment(param.timeRange[1]).format('YYYY-MM-DD HH:mm:ss');
+    }
 
     try {
       if (param.warnType == 1) {

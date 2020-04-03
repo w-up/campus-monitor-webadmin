@@ -126,11 +126,9 @@ export const RankAnalysisPage = Form.create()(observer(({ form }: any) => {
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14}} label="统计周期" >
                   {getFieldDecorator("timeCycle", { initialValue: 1, rules: [{ required: true }] })(
                     <Radio.Group style={{ width: '100%' }} size="small" buttonStyle="solid">
-                    <Radio.Button value={1} style={{ width: '20%', textAlign: 'center' }}>日</Radio.Button>
-                    <Radio.Button value={2} style={{ width: '20%', textAlign: 'center' }}>月</Radio.Button>
-                    <Radio.Button value={3} style={{ width: '20%', textAlign: 'center' }}>年</Radio.Button>
-                    <Radio.Button value={4} style={{ width: '20%', textAlign: 'center' }}>周</Radio.Button>
-                    <Radio.Button value={5} style={{ width: '20%', textAlign: 'center' }}>季</Radio.Button>
+                    <Radio.Button value={1} style={{ width: '33%', textAlign: 'center' }}>日</Radio.Button>
+                    <Radio.Button value={2} style={{ width: '33%', textAlign: 'center' }}>月</Radio.Button>
+                    <Radio.Button value={3} style={{ width: '33%', textAlign: 'center' }}>年</Radio.Button>
                   </Radio.Group>
                   )}
                 </Form.Item>
@@ -177,10 +175,10 @@ export const RankAnalysisPage = Form.create()(observer(({ form }: any) => {
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="排名方式" >
                   {getFieldDecorator("rankType", { initialValue: 1, rules: [{ required: true }] })(
-                    <Radio.Group size="small" buttonStyle="solid">
-                      <Radio.Button value={1}>前十</Radio.Button>
-                      <Radio.Button value={2}>后十</Radio.Button>
-                      <Radio.Button value={3}>全部</Radio.Button>
+                    <Radio.Group style={{ width: '100%' }} size="small" buttonStyle="solid">
+                      <Radio.Button style={{ width: '33%', textAlign: 'center' }} value={1}>前十</Radio.Button>
+                      <Radio.Button style={{ width: '33%', textAlign: 'center' }} value={2}>后十</Radio.Button>
+                      <Radio.Button style={{ width: '33%', textAlign: 'center' }} value={3}>全部</Radio.Button>
                     </Radio.Group>
                   )}
                 </Form.Item>

@@ -6,51 +6,51 @@ import moment from 'moment';
 export class AlertSetting {
   @observable loading: boolean = false;
 
-  @observable parkTree: any = [];
-  @observable ptList: any = [];
   @observable typeList: any = [];
   @observable pollutionPmList: any = [];
+  @observable companyList: any = [];
+  @observable parkList: any = [];
+  
+  @observable query: any = {
+    current: 1,
+    pageSize: 10,
+    size: 10,
+  };
+  @observable total: any = 0;
+  @observable dataSource: any = [];
 
-  @observable tableData: any = [
-    {
-      query: {
-        current: 1,
-        pageSize: 10,
-        size: 10,
-      },
-      total: 0,
-      dataSource: [],
-    },
-    {
-      query: {
-        current: 1,
-        pageSize: 10,
-        size: 10,
-      },
-      total: 0,
-      dataSource: [],
-    },
-    {
-      query: {
-        current: 1,
-        pageSize: 10,
-        size: 10,
-      },
-      total: 0,
-      dataSource: [],
-    },
-  ];
+  @observable pmQuery: any = {
+    current: 1,
+    pageSize: 10,
+    size: 10,
+  };
+  @observable pmTotal: any = 0;
+  @observable pmDataSource: any = [];
 
+  
   @action.bound
-  async getAllSitesTree() {
+  async getAllParks() {
     this.loading = true;
     try {
-      const { data }: any = await GET('/device-site/getAllSitesTreeAndPMTypeLogin', {});
-      this.parkTree = data.pfsList;
-      this.ptList = data.ptList;
+      const { data }: any = await GET('/park/getAllParks', {});
+      this.parkList = data;
     } catch {
 
     }
+
+    this.loading = false;
+  }
+
+  @action.bound
+  async getAllCompany() {
+    this.loading = true;
+    try {
+      const { data }: any = await GET('/company/getAllCompany', {});
+      this.companyList = data;
+    } catch {
+
+    }
+
     this.loading = false;
   }
 
@@ -71,10 +71,14 @@ export class AlertSetting {
     this.loading = true;
     param.email = param.email ? 1 : 0;
 
-    try {
-      const { data }: any = await POST('/warn-pm-config/addPmWarnConfig', param);
-      debugger
+    Object.keys(param).forEach(key => {
+      if (param[key] === '') {
+        delete param[key];
+      }
+    });
 
+    try {
+      await POST('/warn-pm-config/addPmWarnConfig', param);
     } catch {
 
     }
@@ -82,11 +86,40 @@ export class AlertSetting {
   }
 
   @action.bound
+  async editDeviceWarnConfig(param) {
+
+    Object.keys(param).forEach(key => {
+      if (param[key] === '') {
+        delete param[key];
+      }
+    });
+
+    this.loading = true;
+    param.email = param.email ? 1 : 0;
+
+    try {
+      await POST('/warn-device-config/addOrUpdateWarnDeviceConfig', param);
+    } catch {
+
+    }
+
+    this.loading = false;
+  }
+  
+
+  @action.bound
   async getDeviceConfig() {
     this.loading = true;
+
+    const param = { ...this.query };
+    delete param.pageSize;
+
     try {
-      const { data }: any = await GET('/warn-device-config/getWarnDeviceConfig', { current: 1, size: 9999 });
-      debugger
+      const { data }: any = await POST('/warn-device-config/getWarnDeviceConfig', param);
+      this.dataSource = data.records;
+      this.total = data.total;
+      this.query.pageSize = data.size;
+      this.query.current = data.current;
     } catch {
 
     }
@@ -107,12 +140,23 @@ export class AlertSetting {
   }
 
   @action.bound
-  async getList(param) {
+  async getList(param = {}) {
     this.loading = true;
+
+    Object.keys(param).forEach(key => {
+      if (param[key] === '') {
+        delete param[key];
+      }
+    });
+
+    this.pmQuery = {
+      ...this.pmQuery,
+      ...param,
+    }
 
     try {
       
-      const { data }: any = await POST('/warn-pm-config/getPmWarnConfigListPage', param);
+      const { data }: any = await POST('/warn-pm-config/getPmWarnConfigListPage', this.pmQuery);
       debugger
       
     } catch {
