@@ -40,8 +40,7 @@ export const FocusStationTable = () => {
                       <div className="listItem tabTitle">
                         <div>{item.siteName}</div>
                         <div>
-                          <span style={{ color: Number(item.collectValue) > Number(item.limit) ? "red" : "" }}>{utils.number.toPrecision(item.collectValue)}</span>
-                          <span>{item.unit}</span>
+                          <span style={{ color: Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "red" : "" }}>{utils.number.toPrecision(item.collectValue)}</span>
                         </div>
                         <div>{item.limit}</div>
                         <div>{item.overRate}</div>

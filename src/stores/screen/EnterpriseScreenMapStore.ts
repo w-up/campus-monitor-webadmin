@@ -232,13 +232,15 @@ export class EnterpriseScreenMapStore {
   @action.bound
   async loadMapConfig() {
     const result = await api.MapConfig.getMapConfigLogin();
-    this.curMapConfig = result.data;
-    this.updateMap({
-      center: new BMapGL.Point(this.curMapConfig.longitude, this.curMapConfig.latitude),
-      heading: this.curMapConfig.highAngle,
-      zoom: this.curMapConfig.zoom,
-      tilt: this.curMapConfig.rotationAngle
-    });
+    if (result.data) {
+      this.curMapConfig = result.data;
+      this.updateMap({
+        center: new BMapGL.Point(this.curMapConfig.longitude, this.curMapConfig.latitude),
+        heading: this.curMapConfig.highAngle,
+        zoom: this.curMapConfig.zoom,
+        tilt: this.curMapConfig.rotationAngle
+      });
+    }
   }
 
   @action.bound
@@ -279,7 +281,7 @@ export class EnterpriseScreenMapStore {
 
     setTimeout(() => {
       if (!this.map) return;
-      this.addpoints(0); //添加站点覆盖物
+      this.addpoints({ index: 0 }); //添加站点覆盖物
       this.play();
     }, 100);
   }
@@ -287,15 +289,19 @@ export class EnterpriseScreenMapStore {
   @observable curSiteRuntimeData: Array<DailySewage> = [];
 
   @action.bound
-  async addpoints(index: number) {
+  async addpoints({ index, update }: { index: number; update?: boolean }) {
     if (!this.map) return;
-    for (let x in this.overlays) {
-      this.map.removeOverlay(this.overlays[x]);
+    console.log({ index });
+
+    if (update) {
+      const nextSite = this.SiteRuntimePmDate[index];
+      if (nextSite) {
+        const res = await api.DeviceData.getAllPM24HourDatasBySiteId({ siteId: Number(nextSite.siteId) });
+        this.curSiteRuntimeData = res.data.pms || [];
+      }
     }
-    const nextSite = this.SiteRuntimePmDate[index];
-    if (nextSite) {
-      const res = await api.DeviceData.getAllPM24HourDatasBySiteId({ siteId: Number(nextSite.siteId) });
-      this.curSiteRuntimeData = res.data.pms || [];
+    for (let x in this.overlays) {
+      this.map?.removeOverlay(this.overlays[x]);
     }
 
     this.curSiteIndex = index;
@@ -312,7 +318,10 @@ export class EnterpriseScreenMapStore {
     clearInterval(this.playTimer);
     this.playTimer = setInterval(async () => {
       if (!this.map) clearInterval(this.playTimer);
-      this.addpoints(this.curSiteIndex >= this.SiteRuntimePmDateForMap.length - 1 ? 0 : this.curSiteIndex + 1);
+      this.addpoints({
+        index: this.curSiteIndex >= this.SiteRuntimePmDateForMap.length - 1 ? 0 : this.curSiteIndex + 1,
+        update: true
+      });
     }, 5000);
   }
 }

@@ -49,8 +49,7 @@ export const SewageWaterTable = () => {
                   <div>{item.factoryName}</div>
                   <div>{item.pmName}</div>
                   <div>
-                    <span style={{ color: Number(item.collectValue) > Number(item.limit) ? "red" : "" }}>{utils.number.toPrecision(item.collectValue)}</span>
-                    <span>{item.unit}</span>
+                    <span style={{ color: Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "red" : "" }}>{utils.number.toPrecision(item.collectValue)}</span>
                   </div>
                   <div>{item.limit}</div>
                 </div>

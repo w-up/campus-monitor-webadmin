@@ -5,6 +5,7 @@ import { WrappedFormUtils } from "antd/lib/form/Form";
 import { useStore } from "../../../../stores/index";
 import { useLocalStorage } from "react-use";
 import { useEffect } from "react";
+import moment from "moment";
 
 //@ts-ignore
 export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtils }) => {
@@ -22,6 +23,7 @@ export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtil
   }, []);
 
   const store = useLocalStore(() => ({
+    updateTime: null as any,
     formItemLayout: {
       labelCol: {
         span: 6
@@ -30,10 +32,11 @@ export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtil
         span: 18
       }
     },
-    handleSubmit: e => {
+    handleSubmit(e) {
       e.preventDefault();
       form.validateFieldsAndScroll((err, values) => {
         if (!err) {
+          this.updateTime = moment().format("YYYY-MM-DD HH:ss");
           console.log("Received values of form: ", values);
           parkScreenMap.loadConcernSiteData(values.pmCode);
         }
@@ -69,7 +72,7 @@ export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtil
         <div className="flex justify-between">
           <div className="primary-text-color flex items-center text-ellipsis">
             <Icon type="clock-circle" theme="filled" />
-            <span className="ml-2 text-xs ">更新时间: 14:00:00</span>
+            <span className="ml-2 text-xs ">更新时间: {store.updateTime}</span>
           </div>
           <div className="text-right">
             <Button type="primary" htmlType="submit">

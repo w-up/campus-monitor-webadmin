@@ -59,9 +59,9 @@ export const MapMonitorMap = () => {
         )}
         {mapMonitor.curParkData?.map(park =>
           park.siteDatas?.map((item, index) => (
-            <CustomOverlay position={{ lng: Number(item.gpsX), lat: Number(item.gpsY) }} key={index}>
+            <CustomOverlay position={{ lng: Number(item.gpsX), lat: Number(item.gpsY) }} key={index} visiable={mapMonitor.zoom > 17}>
               <div>
-                {Number(item.collectValue) > Number(item.limit) ? (
+                {Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? (
                   <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../assets/red.png")} />
                 ) : (
                   <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../assets/green.png")} />

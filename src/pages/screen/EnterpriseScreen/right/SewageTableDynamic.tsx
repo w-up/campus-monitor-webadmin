@@ -36,7 +36,7 @@ export const SewageTableDynamic = () => {
           <div>限值</div>
           {false && <div>超标率</div>}
         </div>
-        <CarouselProvider naturalSlideWidth={100} naturalSlideHeight={50} totalSlides={enterpriseScreenMap.SiteRuntimePmDate.length}>
+        <CarouselProvider naturalSlideWidth={100} isPlaying naturalSlideHeight={50} totalSlides={enterpriseScreenMap.SiteRuntimePmDate.length}>
           <Slider>
             {store.SiteRuntimePmDate.map((site, index) => {
               return (
@@ -48,8 +48,7 @@ export const SewageTableDynamic = () => {
                         <div>{item.siteName}</div>
                         <div>{item.pmName}</div>
                         <div>
-                          <span style={{ color: Number(item.collectValue) > Number(item.limit) ? "red" : "" }}>{utils.number.toPrecision(item.collectValue)}</span>
-                          <span>{item.unit}</span>
+                          <span style={{ color: Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "red" : "" }}>{utils.number.toPrecision(item.collectValue)}</span>
                         </div>
                         <div>{item.limit}</div>
                         {false && <div>{item.overRate}</div>}

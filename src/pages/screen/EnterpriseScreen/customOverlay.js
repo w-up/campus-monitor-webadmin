@@ -44,9 +44,10 @@ ComplexCustomOverlay.prototype.initialize = function(map) {
   div.innerHTML = cells;
 
   div.onmouseover = () => {
-    this._store.addpoints(_index); //鼠标悬浮是 重新渲染
-    // }
+    if (!this._store.activeFlag) return;
     this._store.activeFlag = false; // 轮播标识 关闭
+    this._store.addpoints({ index: _index }); //鼠标悬浮是 重新渲染
+    // }
   };
   div.onmouseout = () => {
     this._store.activeFlag = true; //鼠标离开 轮播标识 打开

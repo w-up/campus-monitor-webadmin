@@ -41,7 +41,7 @@ export const ColumnLineChart = () => {
       yAxis: [
         {
           type: "value",
-          name: "水量",
+          name: "排水量",
           min: 0,
           max: 250,
           interval: 50,

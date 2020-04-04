@@ -53,10 +53,12 @@ export const ParkScreen24HourChart = () => {
               //值
               var value = params[i].data.value;
               var limit = params[i].data.limit;
-
+              var unit = params[i].data.unit;
               showHtml += `
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px;${value > limit ? "color:red;" : ""}">${value ? utils.number.toPrecision(value) : ""}</div>`;
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px;${limit && value > limit ? "color:red;" : ""}">${
+                value ? utils.number.toPrecision(value) + unit : ""
+              }</div>`;
             }
 
             return `<div style="color: #04F9CC;text-align:left;line-height:20px">${text}</div>
@@ -115,7 +117,8 @@ export const ParkScreen24HourChart = () => {
             type: "line",
             data: parkScreenMap.dailyData.points.map(i => ({
               value: i.collectValue,
-              limit: parkScreenMap.dailyData.upperLimit
+              limit: parkScreenMap.dailyData.upperLimit,
+              unit: i.unit
             })),
             itemStyle: {
               normal: {

@@ -9,6 +9,7 @@ import api from "services";
 import ReactEcharts from "echarts-for-react";
 import { constant } from "../../common/constants";
 import { utils } from "utils";
+import moment from "moment";
 
 //@ts-ignore
 export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils }) => {
@@ -17,6 +18,7 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
 
   const store = useLocalStore(() => ({
     loading: false,
+    updateTime: null as any,
     curSiteId: null as any,
     siteData: null as SiteData | null,
     formItemLayout: {
@@ -36,6 +38,7 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
         if (!err) {
           console.log("Received values of form: ", values);
           this.loading = true;
+          this.updateTime = moment().format("YYYY-MM-DD HH:ss");
           mapMonitor.loadSitePmValueList().finally(() => {
             this.loading = false;
           });
@@ -77,12 +80,14 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
               //名称
               var text = params[i].axisValue;
               //值
-              var value = params[i].data;
+              var value = params[i].data.value;
+              var unit = params[i].data.unit;
+
               showHtml += `
             <div style="display:flex;align-items: center;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? utils.number.toPrecision(value) : ""}</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? utils.number.toPrecision(value) + unit : ""}</div>
           </div>
           `;
             }
@@ -151,7 +156,10 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
         series: this.siteData?.dataTrend.map((item, index) => ({
           name: item.pmName,
           type: "line",
-          data: item.points.map(i => i.collectValue),
+          data: item.points.map(i => ({
+            value: Number(i.collectValue),
+            unit: i.unit
+          })),
           itemStyle: {
             normal: {
               color: constant.seriesColors[index], //改变折线点的颜色
@@ -179,11 +187,11 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
             dataIndex: "pmName"
           },
           {
-            title: "监测浓度(ug/m3)",
+            title: "监测浓度",
             dataIndex: "collectValue"
           },
           {
-            title: "排放限制(ug/m3)",
+            title: "排放限值",
             dataIndex: "pmLimitValue"
           }
         ]
@@ -267,14 +275,14 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
       </Spin>
       <div className="primary-text-color flex items-center">
         <Icon type="clock-circle" theme="filled" />
-        <span className="ml-2">更新时间: 2020-01-02 14:00:00</span>
+        <span className="ml-2">更新时间: {store.updateTime}</span>
       </div>
       <Table className="monitor-table mt-2" {...table} dataSource={mapMonitor.pmValues} pagination={false} />
       {store.siteData && (
-        <div className="monitor-row-panel p-4 ">
+        <div className="monitor-row-panel p-4 overflow-y-scroll">
           <div className="flex justify-between items-center mt-4">
             <div className="primary-button-text-dark text-lg">{store.siteData?.siteName}</div>
-            <div className="primary-button-text-dark text-sm"> 更新时间: 2020-01-02 14:00:00</div>
+            <div className="primary-button-text-dark text-sm"> 更新时间: {store.updateTime}</div>
           </div>
           <div className="stat-panel grid grid-flow-col grid-cols-3 grid-rows-2 gap-4 text-white mt-8 p-4">
             <div>风速: {store.siteData?.environmentData?.windSpeed}</div>

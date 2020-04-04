@@ -131,7 +131,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
         yAxis: [
           {
             type: "value",
-            name: "水量",
+            name: "排水量",
             // min: 0,
             // max: 250,
             interval: 50,
@@ -416,7 +416,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
         </Form>
       </Spin>
       {store.siteData && (
-        <div className="monitor-row-panel p-4 .overflow-y-scroll">
+        <div className="monitor-row-panel p-4 overflow-y-scroll">
           <div className="primary-button-text-dark text-xl mt-8">{mapMonitor.curentFactorData?.factoryName}</div>
 
           <div className="stat-panel text-white mt-8 p-4">
@@ -438,7 +438,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
                   <div className="primary-text-color">{store.siteData.factoryAverageConcentration?.averageConcentration}</div>
                 </div>
                 <div className="flex justify-between my-4">
-                  <div>排放限制</div>
+                  <div>排放限值</div>
                   <div className="primary-text-color">{store.siteData.pmValueUpperLimit}</div>
                 </div>
               </div>
