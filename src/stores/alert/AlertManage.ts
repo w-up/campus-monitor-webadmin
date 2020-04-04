@@ -8,7 +8,8 @@ export class AlertManage {
 
   @observable parkTree: any = [];
   @observable ptList: any = [];
-
+  @observable factoryList: any = [];
+  
   @observable tableData: any = [
     {
       query: {
@@ -71,8 +72,10 @@ export class AlertManage {
     this.loading = true;
     try {
       const { data }: any = await GET('/device-site/getAllSitesTreeAndPMTypeLogin', {});
+      const { data: factory }: any = await GET('/factory/getAllFactoriesLogin', {});
       this.parkTree = data.pfsList;
       this.ptList = data.ptList;
+      this.factoryList = factory;
     } catch {
 
     }
@@ -83,46 +86,44 @@ export class AlertManage {
   async getList(param: any = {}) {
     this.loading = true;
 
-    Object.keys(param).forEach(key => {
-      if (param[key] === '' || param[key].length == 0) {
-        delete param[key];
+    const index = param.warnType - 1;
+
+    if (param.timeRange && param.timeRange.length > 0) {
+      param.startTime = moment(param.timeRange[0]).format('YYYY-MM-DD HH:mm:ss');
+      param.endTime = moment(param.timeRange[1]).format('YYYY-MM-DD HH:mm:ss');
+    } else {
+      param.startTime = '';
+      param.endTime = '';
+    }
+
+    this.tableData[index].query = {
+      ...this.tableData[index].query,
+      ...param,
+    }
+
+    Object.keys(this.tableData[index].query).forEach(key => {
+      if (this.tableData[index].query[key] === '' || (this.tableData[index].query[key] && this.tableData[index].query[key].length == 0)) {
+        delete this.tableData[index].query[key];
       }
     });
     
-    if (param.timeRange) {
-      param.startTime = moment(param.timeRange[0]).format('YYYY-MM-DD HH:mm:ss');
-      param.endTime = moment(param.timeRange[1]).format('YYYY-MM-DD HH:mm:ss');
-    }
-
     try {
       if (param.warnType == 1) {
-        this.tableData[0].query = {
-          ...this.tableData[0].query,
-          ...param,
-        }
-        const { data }: any = await POST('/warn-pm/getPmWarnListPage', this.tableData[0].query);
+        const { data }: any = await POST('/warn-pm/getPmWarnListPage', this.tableData[index].query);
         this.tableData[0].dataSource = data.records;
         this.tableData[0].total = data.total;
         this.tableData[0].query.pageSize = data.size;
         this.tableData[0].query.current = data.current;
 
       } else if (param.warnType == 2) {
-        this.tableData[1].query = {
-          ...this.tableData[1].query,
-          ...param,
-        }
-        const { data }: any = await POST('/warn-pm/getPmWarnListPage', this.tableData[1].query);
+        const { data }: any = await POST('/warn-pm/getPmWarnListPage', this.tableData[index].query);
         this.tableData[1].dataSource = data.records;
         this.tableData[1].total = data.total;
         this.tableData[1].query.pageSize = data.size;
         this.tableData[1].query.current = data.current;
         
       } else if (param.warnType == 3) {
-        this.tableData[2].query = {
-          ...this.tableData[2].query,
-          ...param,
-        }
-        const { data }: any = await POST('/warn-device/getDeviceWarnListPage', this.tableData[2].query);
+        const { data }: any = await POST('/warn-device/getDeviceWarnListPage', this.tableData[index].query);
         this.tableData[2].dataSource = data.records;
         this.tableData[2].total = data.total;
         this.tableData[2].query.pageSize = data.size;

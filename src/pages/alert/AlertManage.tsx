@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/index";
 import { toJS } from "mobx";
+import moment from 'moment';
 
 const { Option } = Select;
 
@@ -16,7 +17,7 @@ export const AlertManagePage = Form.create()(observer(({ form }: any) => {
 
   const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields } = form;
 
-  const { loading, parkTree, ptList, tableData } = alertManage;
+  const { loading, parkTree, ptList, tableData, factoryList } = alertManage;
 
   useEffect(() => {
     alertManage.getAllSitesTree();
@@ -25,15 +26,15 @@ export const AlertManagePage = Form.create()(observer(({ form }: any) => {
     alertManage.getList({ current: 1, size: 10, warnType: 3 });
   }, []);
 
-  const factoryList: any = [];
-  parkTree.forEach(item => {
-    item.factorys.forEach(record => {
-      factoryList.push({
-        factoryName: `${item.parkName}-${record.factoryName}`,
-        factoryId: record.factoryId,
-      });
-    });
-  });
+  // const factoryList: any = [];
+  // parkTree.forEach(item => {
+  //   item.factorys.forEach(record => {
+  //     factoryList.push({
+  //       factoryName: `${item.parkName}-${record.factoryName}`,
+  //       factoryId: record.factoryId,
+  //     });
+  //   });
+  // });
 
   let pmCodeList: any = [];
   if (ptList.length) {
@@ -43,7 +44,7 @@ export const AlertManagePage = Form.create()(observer(({ form }: any) => {
 
   const changeTab = index => {
     setFieldsValue({
-      warnType: index,
+      warnType: Number(index),
     });
   }
 
@@ -75,7 +76,7 @@ export const AlertManagePage = Form.create()(observer(({ form }: any) => {
     const { checked } = e.target;
     if (checked) {
       setFieldsValue({
-        factoryIds: factoryList.map(item => item.factoryId),
+        factoryIds: factoryList.map(item => item.id),
       });
     } else {
       setFieldsValue({
@@ -103,6 +104,7 @@ const columns: any = [
       dataIndex: 'warnTime',
       key: 'warnTime',
       width: 200,
+      render: val => moment(val).format('YYYY-MM-DD HH:MM'),
     },
     {
       title: '监测类型',
@@ -140,7 +142,7 @@ const columns: any = [
       dataIndex: 'pmValue',
       key: 'pmValue',
       width: 200,
-      render: (val, record) => `${val}${record.pmUnit}`,
+      render: (val, record) => `${val} ${record.pmUnit}`,
     },
     {
       title: '累计时长',
@@ -209,6 +211,7 @@ const columns: any = [
       dataIndex: 'warnTime',
       key: 'warnTime',
       width: 200,
+      render: val => moment(val).format('YYYY-MM-DD HH:MM'),
     },
     {
       title: '监测类型',
@@ -246,7 +249,7 @@ const columns: any = [
       dataIndex: 'pmValue',
       key: 'pmValue',
       width: 200,
-      render: (val, record) => `${val}${record.pmUnit}`,
+      render: (val, record) => `${val} ${record.pmUnit}`,
     },
     {
       title: '累计时长',
@@ -303,6 +306,7 @@ const columns: any = [
       dataIndex: 'warnTime',
       key: 'warnTime',
       width: 200,
+      render: val => moment(val).format('YYYY-MM-DD HH:MM'),
     },
     {
       title: '监测类型',
@@ -433,8 +437,8 @@ const columns: any = [
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
                   {getFieldDecorator("factoryIds", { initialValue: [], rules: [{ required: false }] })(
                     <Checkbox.Group style={{ width: '100%' }}>
-                      <Row>
-                        {factoryList.map(item => <Col span={24} key={item.factoryId}><Checkbox style={{ fontSize: '10px' }} value={item.factoryId}>{item.factoryName}</Checkbox></Col>)}
+                      <Row gutter={4}>
+                        {factoryList.map(item => <Col span={12} key={item.id}><Checkbox style={{ fontSize: '10px' }} value={item.id}>{item.factoryName}</Checkbox></Col>)}
                       </Row>
                     </Checkbox.Group>
                   )}
@@ -444,21 +448,25 @@ const columns: any = [
                   <Select style={{ display: 'none' }} size="small">
                     <Option value={1}>废气</Option>
                     <Option value={2}>污水</Option>
+                    <Option value={3}>设备</Option>
                   </Select>
                 )}
 
-                <Divider orientation="left">监测因子</Divider>
-                <Checkbox style={{ fontSize: '10px' }} checked={allPmChecked} onChange={onPmSelectAll}>全选</Checkbox>
+                
                 {!!pmCodeList.length &&
-                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
-                  {getFieldDecorator("pmList", { initialValue: [], rules: [{ required: false }] })(
-                    <Checkbox.Group style={{ width: '100%' }}>
-                      <Row>
-                        {pmCodeList.map(item => <Col span={8} key={item.pmCode}><Checkbox style={{ fontSize: '10px' }} value={item.pmCode}>{item.pmName}</Checkbox></Col>)}
-                      </Row>
-                    </Checkbox.Group>
-                  )}
-                </Form.Item>
+                <Row>
+                  <Divider orientation="left">监测因子</Divider>
+                  <Checkbox style={{ fontSize: '10px' }} checked={allPmChecked} onChange={onPmSelectAll}>全选</Checkbox>
+                  <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
+                    {getFieldDecorator("pmList", { initialValue: [], rules: [{ required: false }] })(
+                      <Checkbox.Group style={{ width: '100%' }}>
+                        <Row>
+                          {pmCodeList.map(item => <Col span={8} key={item.pmCode}><Checkbox style={{ fontSize: '10px' }} value={item.pmCode}>{item.pmName}</Checkbox></Col>)}
+                        </Row>
+                      </Checkbox.Group>
+                    )}
+                  </Form.Item>
+                </Row>
                 }
                 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="累计时长超过" >
@@ -468,11 +476,11 @@ const columns: any = [
                 </Form.Item>
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="状态" >
-                  {getFieldDecorator("status", { initialValue: 0, rules: [{ required: false }] })(
+                  {getFieldDecorator("status", { initialValue: '', rules: [{ required: false }] })(
                     <Select placeholder="请选择" size="small">
+                      <Option value="">全部</Option>
                       <Option value={0}>未处理</Option>
                       <Option value={1}>已处理</Option>
-                      <Option value={2}>全部</Option>
                     </Select>
                   )}
                 </Form.Item>
