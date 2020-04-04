@@ -287,6 +287,11 @@ export const AlertSettingPage = Form.create()(observer(({ form }: any) => {
           <Col span={6}>
             <Card size="small" title="告警设置" style={{ minHeight: '360px' }}>
               <Form onSubmit={doSubmit} style={{ display: currentTab == '2' ? 'none' : 'block' }}>
+
+                {getFieldDecorator("setForm.current", { initialValue: 1, rules: [{ required: false }] })(
+                  <Input hidden />
+                )}
+
                 <Divider orientation="left">监测类型</Divider>
                 <Checkbox style={{ fontSize: '10px' }} checked={allTypeChecked} onChange={onTypeSelectAll}>全选</Checkbox>
 
@@ -441,6 +446,31 @@ export const AlertSettingPage = Form.create()(observer(({ form }: any) => {
                     </Select>
                   )}
                 </Form.Item>
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测类型" >
+                  {getFieldDecorator("editForm.jcTypeIds", { initialValue: [], rules: [{ required: true }] })(
+                    <Checkbox.Group style={{ width: '100%' }}>
+                      <Row>
+                        {typeList.map(item => <Col span={12} key={item.dictCode}><Checkbox style={{ fontSize: '10px' }} value={item.dictCode}>{item.dictName}</Checkbox></Col>)}
+                      </Row>
+                    </Checkbox.Group>
+                  )}
+                </Form.Item>
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="因子名称" >
+                  {getFieldDecorator("editForm.pmCode", { initialValue: '', rules: [{ required: true }] })(
+                    <Select placeholder="请选择" size="small">
+                      {pollutionPmList.map(item => <Option key={item.pmCode} value={item.pmCode}>{item.pmName}</Option>)}
+                    </Select>
+                  )}
+                </Form.Item>
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="告警等级" >
+                  {getFieldDecorator("editForm.warnLevel", { initialValue: 1, rules: [{ required: true }] })(
+                    <Select placeholder="请选择" size="small">
+                      <Option value={1}>中度</Option>
+                      <Option value={2}>重度</Option>
+                      <Option value={3}>严重</Option>
+                    </Select>
+                  )}
+                </Form.Item>
               </Row> :
               <Row>
                 {getFieldDecorator("editForm.parkOrCompanyId", { initialValue: 0, rules: [{ required: true }] })(
@@ -451,32 +481,6 @@ export const AlertSettingPage = Form.create()(observer(({ form }: any) => {
                 )}
               </Row>
               }
-
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测类型" >
-                {getFieldDecorator("editForm.jcTypeIds", { initialValue: [], rules: [{ required: true }] })(
-                  <Checkbox.Group style={{ width: '100%' }}>
-                    <Row>
-                      {typeList.map(item => <Col span={12} key={item.dictCode}><Checkbox style={{ fontSize: '10px' }} value={item.dictCode}>{item.dictName}</Checkbox></Col>)}
-                    </Row>
-                  </Checkbox.Group>
-                )}
-              </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="因子名称" >
-                {getFieldDecorator("editForm.pmCode", { initialValue: '', rules: [{ required: true }] })(
-                  <Select placeholder="请选择" size="small">
-                    {pollutionPmList.map(item => <Option key={item.pmCode} value={item.pmCode}>{item.pmName}</Option>)}
-                  </Select>
-                )}
-              </Form.Item>
-              <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="告警等级" >
-                {getFieldDecorator("editForm.warnLevel", { initialValue: 1, rules: [{ required: true }] })(
-                  <Select placeholder="请选择" size="small">
-                    <Option value={1}>中度</Option>
-                    <Option value={2}>重度</Option>
-                    <Option value={3}>严重</Option>
-                  </Select>
-                )}
-              </Form.Item>
               <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="超限值" >
                 {getFieldDecorator("editForm.warnLimit", { initialValue: 0, rules: [{ required: true }] })(
                   <InputNumber size="small" style={{ width: '100%' }} />

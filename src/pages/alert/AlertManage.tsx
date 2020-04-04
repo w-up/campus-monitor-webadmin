@@ -431,6 +431,9 @@ const columns: any = [
             <Card size="small" title="告警管理">
               <Form onSubmit={doSubmit}>
 
+                {getFieldDecorator("current", { initialValue: 1, rules: [{ required: false }] })(
+                  <Input hidden />
+                )}
                 <Divider orientation="left">监测对象</Divider>
                 <Checkbox style={{ fontSize: '10px' }} checked={allFactoryChecked} onChange={onFactorySelectAll}>全选</Checkbox>
 

@@ -196,8 +196,9 @@ export class AlertSetting {
   }
 
   @action.bound
-  async getList(param = {}) {
+  async getList(param: any = {}) {
     this.loading = true;
+
     Object.keys(param).forEach(key => {
       if (param[key] === '' || param[key].length === 0) {
         delete param[key];
