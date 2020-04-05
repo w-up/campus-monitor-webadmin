@@ -15,37 +15,37 @@ export class ParkScreenMapStore {
   @observable polygonPath = [
     { lng: 120.990022, lat: 31.3717 },
     { lng: 120.970045, lat: 31.3702 },
-    { lng: 120.981034, lat: 31.3616 }
+    { lng: 120.981034, lat: 31.3616 },
   ];
   @observable compamys = [
     [
       { lng: 120.985022, lat: 31.3687 },
       { lng: 120.985022, lat: 31.3681 },
       { lng: 120.985612, lat: 31.3681 },
-      { lng: 120.985612, lat: 31.3687 }
+      { lng: 120.985612, lat: 31.3687 },
     ],
     [
       { lng: 120.983022, lat: 31.3657 },
       { lng: 120.983022, lat: 31.3651 },
       { lng: 120.983612, lat: 31.3651 },
-      { lng: 120.983612, lat: 31.3657 }
+      { lng: 120.983612, lat: 31.3657 },
     ],
     [
       { lng: 120.980022, lat: 31.3657 },
       { lng: 120.980022, lat: 31.3651 },
       { lng: 120.980612, lat: 31.3651 },
-      { lng: 120.980612, lat: 31.3657 }
+      { lng: 120.980612, lat: 31.3657 },
     ],
     [
       { lng: 120.980022, lat: 31.3687 },
       { lng: 120.980022, lat: 31.3681 },
       { lng: 120.980612, lat: 31.3681 },
-      { lng: 120.980612, lat: 31.3687 }
-    ]
+      { lng: 120.980612, lat: 31.3687 },
+    ],
   ];
   @observable offset = {
     width: 0,
-    height: -20
+    height: -20,
   };
   @observable pointsc = [
     { position: { lng: 120.985072, lat: 31.3681 }, mapPos: { left: "376px", top: "157px" }, number: 123 },
@@ -61,12 +61,12 @@ export class ParkScreenMapStore {
     { position: { lng: 120.980642, lat: 31.3654 }, mapPos: { left: "253px", top: "244px" }, number: 23 },
     { position: { lng: 120.980072, lat: 31.36865 }, mapPos: { left: "237px", top: "139px" }, number: 43 },
     { position: { lng: 120.980022, lat: 31.36856 }, mapPos: { left: "236px", top: "142px" }, number: 11 },
-    { position: { lng: 120.980682, lat: 31.36813 }, mapPos: { left: "254px", top: "156px" }, number: 22 }
+    { position: { lng: 120.980682, lat: 31.36813 }, mapPos: { left: "254px", top: "156px" }, number: 22 },
   ];
   @observable compname = [
     { position: { lng: 120.985022, lat: 31.3687 }, name: "化工西北" },
     { position: { lng: 120.983022, lat: 31.3657 }, name: "长润发" },
-    { position: { lng: 120.980022, lat: 31.3657 }, name: "群力化工" }
+    { position: { lng: 120.980022, lat: 31.3657 }, name: "群力化工" },
   ];
   @observable gasData = [] as any;
   @observable waterData = [] as any;
@@ -86,7 +86,7 @@ export class ParkScreenMapStore {
       api.DeviceData.getFactoryPMByParkId({ type: "1" }),
       api.DeviceData.getFactoryPMByParkId({ type: "2" }),
       api.DeviceSite.getAllSitesByParkId(),
-      api.Park.getAllParksSelect()
+      api.Park.getAllParksSelect(),
     ]);
 
     if (this.currentPmCode) {
@@ -94,34 +94,34 @@ export class ParkScreenMapStore {
     }
 
     const _allSite: allSiteRes = allSiteResult.data;
-    const allSites = _allSite.map(i => ({
+    const allSites = _allSite.map((i) => ({
       title: i.companyName,
       key: `company-${i.companyId}`,
       children: i.factorys
-        ? i.factorys.map(factory => ({
+        ? i.factorys.map((factory) => ({
             key: `factory-${factory.factoryId}`,
             title: factory.factoryName,
             children: factory.sites
-              ? factory.sites.map(site => ({
+              ? factory.sites.map((site) => ({
                   key: site.siteId,
                   title: site.siteName,
-                  selected: site.concern
+                  selected: site.concern,
                 }))
-              : []
+              : [],
           }))
-        : []
+        : [],
     }));
 
     Object.assign(this, {
       gasData,
       waterData,
       allSites,
-      allParks
+      allParks,
     });
     let selectedSites: string[] = [];
-    this.allSites.forEach(park => {
-      park.children?.forEach(factory => {
-        factory.children?.forEach(i => {
+    this.allSites.forEach((park) => {
+      park.children?.forEach((factory) => {
+        factory.children?.forEach((i) => {
           if (i.selected) {
             selectedSites.push(i.key);
           }
@@ -129,7 +129,7 @@ export class ParkScreenMapStore {
       });
     });
     this.selectedSites = selectedSites;
-    allParks.forEach(i => {
+    allParks.forEach((i) => {
       if (i.selected) {
         this.currentPark = i.id;
       }
@@ -149,7 +149,7 @@ export class ParkScreenMapStore {
     parkName: "",
     parkPoints: [],
     siteDatas: [],
-    factoryDatas: []
+    factoryDatas: [],
   };
   @observable dailyData: {
     siteId: string;
@@ -164,11 +164,17 @@ export class ParkScreenMapStore {
     siteId: "",
     points: [],
     unit: "",
-    upperLimit: ""
+    upperLimit: "",
   };
   @observable currentSiteId = "";
+  @computed
+  get currentSite() {
+    return this.allParkMapData.siteDatas.find((i) => i.siteId == this.currentSiteId);
+  }
+
+  @computed
   get curPmValue() {
-    return store.config.allPmCodes.find(i => i.pmCode == this.currentPmCode);
+    return store.config.allPmCodes.find((i) => i.pmCode == this.currentPmCode);
   }
 
   @computed
@@ -188,14 +194,18 @@ export class ParkScreenMapStore {
   setCurrentPmType(currentPmType: string) {
     this.currentPmType = currentPmType;
   }
-
+  @action.bound
+  setCurrentSite(site: string) {
+    this.currentSiteId = site;
+    this.loadDadilyData();
+  }
   @action.bound
   async loadConcernSiteData(pmCode: string) {
     this.currentPmCode = pmCode;
     const [convernData, parkMapData] = await Promise.all([api.DeviceData.getConcernSiteData({ pmCode }), api.DeviceData.getParkMapData({ pmCode })]);
     Object.assign(this, {
       allConcernSiteData: convernData.data,
-      allParkMapData: parkMapData.data
+      allParkMapData: parkMapData.data,
     });
     this.updateMap();
     if (this.allParkMapData.siteDatas.length > 0) {

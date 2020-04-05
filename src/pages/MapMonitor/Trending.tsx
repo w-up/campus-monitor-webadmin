@@ -23,21 +23,21 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
     loading: false,
     formItemLayout: {
       labelCol: {
-        span: 7
+        span: 7,
       },
       wrapperCol: {
-        span: 16
-      }
+        span: 16,
+      },
     },
     dateTypes: {
       date: {
         startOf: "day",
         format: "YYYY-MM-DD",
         type: 1,
-        label: "日"
+        label: "日",
       },
       month: { type: 2, startOf: "month", format: "YYYY-MM", label: "月" },
-      year: { type: 3, startOf: "year", format: "YYYY", label: "年" }
+      year: { type: 3, startOf: "year", format: "YYYY", label: "年" },
     },
     type: "date" as any,
     get dateType() {
@@ -66,12 +66,12 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
     monitorPanel: {
       historyData: [
         { name: "平均浓度", value: "1073.20 up/m3" },
-        { name: "平均浓度", value: "2000.20 up/m3" }
+        { name: "平均浓度", value: "2000.20 up/m3" },
       ],
       rateData: [
         { name: "同比", value: "13.94" },
-        { name: "环比", value: "7.98" }
-      ]
+        { name: "环比", value: "7.98" },
+      ],
     },
     handleSubmit(e) {
       e.preventDefault();
@@ -84,9 +84,9 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
             factoryId,
             pmCode,
             statisticalTime: moment(this.statisticalTime).format(this.dateType.format),
-            type: this.dateType.type
+            type: this.dateType.type,
           })
-            .then(result => {
+            .then((result) => {
               this.siteData = result.data;
             })
             .finally(() => {
@@ -102,31 +102,31 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           axisPointer: {
             type: "cross",
             crossStyle: {
-              color: "#999"
-            }
-          }
+              color: "#999",
+            },
+          },
         },
         legend: {
           data: ["排放量", "平均浓度"],
           textStyle: {
             fontSize: 10,
-            color: "#88A8C5" // 图例文字颜色
-          }
+            color: "#88A8C5", // 图例文字颜色
+          },
         },
         xAxis: [
           {
             type: "category",
-            data: this.siteData?.factoryConcentrationMonitoringTrend.map(i => i.statisticalTime),
+            data: this.siteData?.factoryConcentrationMonitoringTrend.map((i) => i.statisticalTime),
             axisPointer: {
-              type: "shadow"
+              type: "shadow",
             },
             axisLabel: {
               textStyle: {
                 color: "rgba(136,168,197,0.5)",
-                fontSize: "10"
-              }
-            }
-          }
+                fontSize: "10",
+              },
+            },
+          },
         ],
         yAxis: [
           {
@@ -134,47 +134,47 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
             name: "排水量",
             // min: 0,
             // max: 250,
-            interval: 50,
+            // interval: 50,
             axisLine: {
               lineStyle: {
-                color: "rgba(136,168,197,0.5)"
-              }
+                color: "rgba(136,168,197,0.5)",
+              },
             },
             axisLabel: {
               textStyle: {
                 color: "rgba(136,168,197,0.5)",
-                fontSize: "10"
-              }
+                fontSize: "10",
+              },
             },
             splitLine: {
               lineStyle: {
-                color: "rgba(101,198,231,0.2)"
-              }
-            }
+                color: "rgba(101,198,231,0.2)",
+              },
+            },
           },
           {
             type: "value",
             name: "温度",
             // min: 0,
             // max: 25,
-            interval: 5,
+            // interval: 5,
             axisLine: {
               lineStyle: {
-                color: "rgba(136,168,197,0.5)"
-              }
+                color: "rgba(136,168,197,0.5)",
+              },
             },
             axisLabel: {
               textStyle: {
                 color: "rgba(136,168,197,0.5)",
-                fontSize: "10"
-              }
+                fontSize: "10",
+              },
             },
             splitLine: {
               lineStyle: {
-                color: "rgba(101,198,231,0.2)"
-              }
-            }
-          }
+                color: "rgba(101,198,231,0.2)",
+              },
+            },
+          },
         ],
         series: [
           {
@@ -185,20 +185,20 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
                     offset: 0,
-                    color: "#459cbd" // 0% 处的颜色
+                    color: "#459cbd", // 0% 处的颜色
                   },
                   {
                     offset: 0.5,
-                    color: "#376ddb" // 0% 处的颜色
+                    color: "#376ddb", // 0% 处的颜色
                   },
                   {
                     offset: 1,
-                    color: "#5929d3" // 100% 处的颜色
-                  }
-                ])
-              }
+                    color: "#5929d3", // 100% 处的颜色
+                  },
+                ]),
+              },
             },
-            data: this.siteData?.factoryConcentrationMonitoringTrend.map(i => i.pmEmissions)
+            data: this.siteData?.factoryConcentrationMonitoringTrend.map((i) => i.pmEmissions || 0),
           },
           {
             name: "平均浓度",
@@ -208,13 +208,13 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
               normal: {
                 color: "#FE7B43", //改变折线点的颜色
                 lineStyle: {
-                  color: "#FE7B43" //改变折线颜色
-                }
-              }
+                  color: "#FE7B43", //改变折线颜色
+                },
+              },
             },
-            data: this.siteData?.factoryConcentrationMonitoringTrend.map(i => i.pmValue)
-          }
-        ]
+            data: this.siteData?.factoryConcentrationMonitoringTrend.map((i) => i.pmValue),
+          },
+        ],
       };
     },
     get options2() {
@@ -225,11 +225,11 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           textStyle: {
             color: "#88A8C5FF",
             fontSize: "14",
-            fontWeight: "normal"
+            fontWeight: "normal",
           },
           x: "center",
           y: "20px",
-          padding: [5, 20]
+          padding: [5, 20],
         },
         // 提示配置
         tooltip: {
@@ -238,10 +238,10 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           padding: 10,
           textStyle: {
             color: "#88A8C5",
-            fontSize: 10
+            fontSize: 10,
           },
           alwaysShowContent: {
-            show: true
+            show: true,
           },
           formatter: (params: any, ticket: any, callback: any) => {
             let showHtml = "";
@@ -266,15 +266,15 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
             ${showHtml}
             </div>
           </div>`;
-          }
+          },
         },
         // 上册图列配置
         legend: {
-          data: this.siteData?.siteConcentrationMonitoringTrend.map(i => i.siteName),
+          data: this.siteData?.siteConcentrationMonitoringTrend.map((i) => i.siteName),
           textStyle: {
             fontSize: 10,
-            color: "#88A8C5" // 图例文字颜色
-          }
+            color: "#88A8C5", // 图例文字颜色
+          },
           // y:"-10px",
         },
         grid: {
@@ -282,17 +282,17 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           left: "4%",
           right: "2%",
           bottom: "0%",
-          containLabel: true
+          containLabel: true,
         },
         xAxis: {
           type: "category",
           axisLabel: {
             textStyle: {
               color: "rgba(136,168,197,0.5)",
-              fontSize: "10"
-            }
+              fontSize: "10",
+            },
           },
-          data: this.siteData?.siteConcentrationMonitoringTrend[0].pmValues.map(i => i.statisticalTime)
+          data: this.siteData?.siteConcentrationMonitoringTrend[0]?.pmValues.map((i) => i.statisticalTime),
         },
         yAxis: {
           name: "（mg/m³）",
@@ -300,7 +300,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
             color: "rgba(136,168,197,0.5)",
             align: "center",
             verticalAlign: "middle",
-            padding: [5, 0, 15, 20]
+            padding: [5, 0, 15, 20],
           },
           type: "value",
           // min: 1,
@@ -309,37 +309,37 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           axisLabel: {
             textStyle: {
               color: "rgba(136,168,197,0.5)",
-              fontSize: "10"
-            }
+              fontSize: "10",
+            },
           },
           //   分割线
           splitLine: {
             lineStyle: {
-              color: "rgba(101,198,231,0.2)"
-            }
+              color: "rgba(101,198,231,0.2)",
+            },
           },
           //   刻度线
           axisLine: {
-            show: false
-          }
+            show: false,
+          },
         },
         series: this.siteData?.siteConcentrationMonitoringTrend.map((item, index) => ({
           name: item.siteId,
           type: "line",
-          data: item.pmValues.map(i => i.avgValue),
+          data: item.pmValues.map((i) => i.avgValue),
           itemStyle: {
             normal: {
               color: constant.seriesColors[index], //改变折线点的颜色
               lineStyle: {
-                color: constant.seriesColors[index] //改变折线颜色
-              }
-            }
+                color: constant.seriesColors[index], //改变折线颜色
+              },
+            },
           },
           symbol: "circle", //设定为实心点
-          symbolSize: 6 //设定实心点的大小
-        }))
+          symbolSize: 6, //设定实心点的大小
+        })),
       };
-    }
+    },
   }));
 
   return useObserver(() => (
@@ -388,7 +388,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           </Form.Item>
           <Form.Item label="统计类型">
             {getFieldDecorator("type", { initialValue: store.type })(
-              <Radio.Group onChange={e => (store.type = e.target.value)}>
+              <Radio.Group onChange={(e) => (store.type = e.target.value)}>
                 <Radio.Button value="date">日</Radio.Button>
                 <Radio.Button value="month">月</Radio.Button>
                 <Radio.Button value="year">年</Radio.Button>

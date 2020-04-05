@@ -7,13 +7,13 @@ import { utils } from "../../../../utils/index";
 
 export const FocusStationTable = () => {
   const {
-    screen: { parkScreenMap }
+    screen: { parkScreenMap },
   } = useStore();
 
   const store = useLocalStore(() => ({
     get allConcernSiteDataPage() {
       return _.chunk(parkScreenMap.allConcernSiteData, 6) || [];
-    }
+    },
   }));
   return useObserver(() => (
     <div className="pr-4 topRight screenTable flex-1">
@@ -35,9 +35,9 @@ export const FocusStationTable = () => {
             {store.allConcernSiteDataPage.map((page, index) => {
               return (
                 <Slide index={index}>
-                  {page.map(item => {
+                  {page.map((item) => {
                     return (
-                      <div className="listItem tabTitle">
+                      <div className="listItem tabTitle" onClick={(e) => parkScreenMap.setCurrentSite(item.siteId)}>
                         <div>{item.siteName}</div>
                         <div>
                           <span style={{ color: Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "red" : "" }}>{utils.number.toPrecision(item.collectValue)}</span>
