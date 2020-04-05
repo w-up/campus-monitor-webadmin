@@ -8,7 +8,7 @@ import { utils } from "../../../utils/index";
 export const ParkScreenMap = () => {
   const {
     config,
-    screen: { parkScreenMap }
+    screen: { parkScreenMap },
   } = useStore();
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export const ParkScreenMap = () => {
   return useObserver(() => (
     <div style={{ width: "100%", height: "50vh" }}>
       <APILoader akay={config.baiduMapApiKey}>
-        <Map onTilesLoaded={parkScreenMap.onMapUpdate} enableScrollWheelZoom onZoomEnd={e => (parkScreenMap.zoom = e.target.getZoom())}>
+        <Map onTilesLoaded={parkScreenMap.onMapUpdate} enableScrollWheelZoom onZoomEnd={(e) => (parkScreenMap.zoom = e.target.getZoom())}>
           <Polygon
             path={utils.array.formatToLatLngShort(parkScreenMap.allParkMapData.parkPoints)}
             visiable={parkScreenMap.allParkMapData?.parkPoints?.length > 0}
@@ -33,7 +33,7 @@ export const ParkScreenMap = () => {
           {parkScreenMap.allParkMapData?.factoryDatas?.map((item, index) => {
             if (!item.factoryPoints) return;
             return (
-              <Polygon path={utils.array.formatToLatLngShort(item.factoryPoints)} key={`polygon-${index}`} strokeStyle="dashed" fillColor="#FFD800" strokeColor="#FFD800" strokeWeight={2}></Polygon>
+              <Polygon path={utils.array.formatToLatLngShort(item.factoryPoints)} key={`polygon-${index}`} strokeStyle="solid" fillColor="#FFD800" strokeColor="#FFD800" strokeWeight={2}></Polygon>
             );
           })}
           {parkScreenMap.allParkMapData?.factoryDatas?.map((item, index) => {

@@ -15,7 +15,7 @@ import { useStore } from "../../../stores/index";
 export const ParkScreenPage = () => {
   const fullScreenRef = useRef<HTMLDivElement>(null);
   const {
-    screen: { parkScreenMap }
+    screen: { parkScreenMap },
   } = useStore();
 
   useEffect(() => {
@@ -62,6 +62,9 @@ export const ParkScreenPage = () => {
                     超标值
                   </div>
                 </div>
+              </div>
+              <div className="text-white">
+                {parkScreenMap.currentSite?.siteName}-{parkScreenMap.currentPmCode}
               </div>
               <ParkScreen24HourChart />
             </div>

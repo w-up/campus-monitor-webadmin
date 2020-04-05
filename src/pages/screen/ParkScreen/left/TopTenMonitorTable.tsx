@@ -7,13 +7,13 @@ import { utils } from "../../../../utils/index";
 
 export const TopTenMonitorTable = () => {
   const {
-    screen: { parkScreenMap }
+    screen: { parkScreenMap },
   } = useStore();
 
   const store = useLocalStore(() => ({
     get topTenMonitorData() {
       return _.chunk(parkScreenMap.allParkMapData.siteDatas, 6);
-    }
+    },
   }));
 
   return useObserver(() => (
@@ -36,9 +36,9 @@ export const TopTenMonitorTable = () => {
             {store.topTenMonitorData.map((page, index) => {
               return (
                 <Slide index={index}>
-                  {page.map(item => {
+                  {page.map((item) => {
                     return (
-                      <div className="listItem tabTitle">
+                      <div className="listItem tabTitle" onClick={(e) => parkScreenMap.setCurrentSite(item.siteId)}>
                         <div>{item.siteName}</div>
                         <div>
                           <span style={{ color: Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "red" : "" }}>{utils.number.toPrecision(item.collectValue)}</span>

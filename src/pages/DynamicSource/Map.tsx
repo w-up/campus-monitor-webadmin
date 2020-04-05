@@ -24,18 +24,18 @@ export const DynamicSourceMap = () => {
         zoom={dynamicSource.zoom}
         center={dynamicSource.center}
         enableScrollWheelZoom
-        onZoomEnd={e => (dynamicSource.zoom = e.target.getZoom())}
+        onZoomEnd={(e) => (dynamicSource.zoom = e.target.getZoom())}
       >
         {dynamicSource.curParkData?.map((park, index) => (
           <Polygon path={utils.array.formatToLatLngShort(park.parkPoints)} key={index} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor={""}></Polygon>
         ))}
-        {dynamicSource.curParkData?.map(park =>
+        {dynamicSource.curParkData?.map((park) =>
           park.factoryDatas?.map((item, index) => (
-            <Polygon path={utils.array.formatToLatLngShort(item.factoryPoints)} key={index} strokeStyle="dashed" fillColor="#FFD800" strokeColor="#FFD800" strokeWeight={2}></Polygon>
+            <Polygon path={utils.array.formatToLatLngShort(item.factoryPoints)} key={index} strokeStyle="solid" fillColor="#FFD800" strokeColor="#FFD800" strokeWeight={2}></Polygon>
           ))
         )}
-        {dynamicSource.curParkData?.map(park =>
-          park.factoryDatas?.map(item => {
+        {dynamicSource.curParkData?.map((park) =>
+          park.factoryDatas?.map((item) => {
             if (!item.factoryPoints) return;
             return (
               <Label
@@ -50,7 +50,7 @@ export const DynamicSourceMap = () => {
             );
           })
         )}
-        {dynamicSource.curParkData?.map(park =>
+        {dynamicSource.curParkData?.map((park) =>
           park.siteDatas?.map((item, index) => (
             <CustomOverlay position={{ lng: Number(item.gpsX), lat: Number(item.gpsY) }} key={index} visiable={dynamicSource.zoom > 17}>
               <div>

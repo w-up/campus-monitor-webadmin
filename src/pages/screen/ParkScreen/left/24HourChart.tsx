@@ -9,7 +9,7 @@ export const ParkScreen24HourChart = () => {
   const chartRef = useRef<any>();
 
   const {
-    screen: { parkScreenMap }
+    screen: { parkScreenMap },
   } = useStore();
   const store = useLocalStore(() => ({
     dataIndex: 0,
@@ -24,11 +24,11 @@ export const ParkScreen24HourChart = () => {
           textStyle: {
             color: "#88A8C5FF",
             fontSize: "16",
-            fontWeight: "normal"
+            fontWeight: "normal",
           },
           x: "center",
           y: "10px",
-          padding: [5, 20]
+          padding: [5, 20],
         },
         // 提示配置
         tooltip: {
@@ -37,10 +37,10 @@ export const ParkScreen24HourChart = () => {
           padding: 10,
           textStyle: {
             color: "#04F9CC",
-            fontSize: 10
+            fontSize: 10,
           },
           alwaysShowContent: {
-            show: true
+            show: true,
           },
           formatter: (params: any, ticket: any, callback: any) => {
             let showHtml = "";
@@ -68,24 +68,24 @@ export const ParkScreen24HourChart = () => {
                 ${showHtml}
               </div>
             </div>`;
-          }
+          },
         },
         grid: {
           top: "25%",
           left: "5%",
           right: "5%",
           bottom: "0%",
-          containLabel: true
+          containLabel: true,
         },
         xAxis: {
           type: "category",
           axisLabel: {
             textStyle: {
               color: "#04f9cc",
-              fontSize: "10"
-            }
+              fontSize: "10",
+            },
           },
-          data: parkScreenMap.dailyData.points.map(i => i.time)
+          data: parkScreenMap.dailyData.points.map((i) => i.time),
         },
         yAxis: {
           name: "(mg/m³)",
@@ -93,62 +93,62 @@ export const ParkScreen24HourChart = () => {
           type: "value",
           // min: 0,
           // max: 3,
-          splitNumber: 3,
+          // splitNumber: 3,
           axisLabel: {
             textStyle: {
               color: "#04f9cc",
-              fontSize: "10"
-            }
+              fontSize: "10",
+            },
           },
           //   分割线
           splitLine: {
             lineStyle: {
-              color: "rgba(101,198,231,0.2)"
-            }
+              color: "rgba(101,198,231,0.2)",
+            },
           },
           //   刻度线
           axisLine: {
-            show: false
-          }
+            show: false,
+          },
         },
         series: [
           {
             name: parkScreenMap.curPmValue?.pmName,
             type: "line",
-            data: parkScreenMap.dailyData.points.map(i => ({
+            data: parkScreenMap.dailyData.points.map((i) => ({
               value: i.collectValue,
               limit: parkScreenMap.dailyData.upperLimit,
-              unit: i.unit
+              unit: i.unit,
             })),
             itemStyle: {
               normal: {
                 color: "#00FF1D", //改变折线点的颜色
                 lineStyle: {
-                  color: "#00FFA6" //改变折线颜色
-                }
-              }
+                  color: "#00FFA6", //改变折线颜色
+                },
+              },
             },
             markLine: {
               symbol: "none",
               lineStyle: {
                 normal: {
                   type: "solid",
-                  color: "#FF9000"
-                }
+                  color: "red",
+                },
               },
               data: [
                 {
                   name: "预警值",
-                  yAxis: parkScreenMap.dailyData.upperLimit || 0
-                }
-              ]
+                  yAxis: parkScreenMap.dailyData.upperLimit || 0,
+                },
+              ],
             },
             symbol: "circle", //设定为实心点
-            symbolSize: 6 //设定实心点的大小
-          }
-        ]
+            symbolSize: 6, //设定实心点的大小
+          },
+        ],
       };
-    }
+    },
   }));
 
   useEffect(() => {
@@ -159,7 +159,7 @@ export const ParkScreen24HourChart = () => {
         chartInst.dispatchAction({
           type: "showTip",
           seriesIndex: 0, // 显示第几个serindexes
-          dataIndex: store.dataIndex // 显示第几个数据
+          dataIndex: store.dataIndex, // 显示第几个数据
           // position: ["45%", "10%"]
         });
       }
