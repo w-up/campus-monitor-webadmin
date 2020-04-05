@@ -362,13 +362,14 @@ svg {
 
 @media screen and (min-width:2265px){
   .screenPage .header-bg {
-    height: 209px;
-    line-height: 180px;
+    height: 150px;
+    line-height: 120px;
+    background-size: cover;
     .text-2xl {
-      font-size: 2rem;
+      font-size: 1.8rem;
     }
     .settingIcon {
-      line-height: 190px;
+      line-height: 130px;
     }
   }
 
