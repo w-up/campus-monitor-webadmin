@@ -4,12 +4,12 @@ import { Moment } from "../../../../utils/moment-util";
 import { ScreenTopSetting } from "./ScreenTopSetting";
 
 export const ScreenTop = () => {
-  const [time, setTime] = useState(Moment().format("h:mm:ss"));
+  const [time, setTime] = useState(Moment().format("HH:mm:ss"));
   const [day, setDay] = useState(Moment().format("LL") + Moment().format("dddd"));
 
   useEffect(() => {
     setInterval(() => {
-      setTime(Moment().format("h:mm:ss"));
+      setTime(Moment().format("HH:mm:ss"));
       setDay(Moment().format("LL") + Moment().format("dddd"));
     }, 1000);
   });

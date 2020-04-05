@@ -26,7 +26,7 @@ export const SewageTableDynamic = () => {
   }));
 
   return useObserver(() => (
-    <div className="topRight screenTable">
+    <div className="topRight screenTable flex-1">
       <div className="tableTitle text-center">污水排放情况（实时）</div>
       <div className="box">
         <div className="tabTitle">
@@ -36,7 +36,7 @@ export const SewageTableDynamic = () => {
           <div>限值</div>
           {false && <div>超标率</div>}
         </div>
-        <CarouselProvider naturalSlideWidth={100} isPlaying naturalSlideHeight={50} totalSlides={enterpriseScreenMap.SiteRuntimePmDate.length}>
+        <CarouselProvider naturalSlideWidth={100} isPlaying naturalSlideHeight={80} totalSlides={enterpriseScreenMap.SiteRuntimePmDate.length}>
           <Slider>
             {store.SiteRuntimePmDate.map((site, index) => {
               return (

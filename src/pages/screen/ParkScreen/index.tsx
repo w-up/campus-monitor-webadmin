@@ -44,6 +44,7 @@ export const ParkScreenPage = () => {
             <div className="w-2/3">
               <ParkScreenMap />
               <div className="my-4 p-2 px-6 mapExplain flex flex-row">
+                <div className="w-1/3"/>
                 <div className="flex flex-row w-2/3 screen-text-color-2 justify-between">
                   <div>
                     <div className="factoryAreaYellow" />
