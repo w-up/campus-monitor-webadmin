@@ -360,6 +360,23 @@ svg {
   }
 }
 
+@media screen and (min-width:2265px){
+  .screenPage .header-bg {
+    height: 209px;
+    line-height: 180px;
+    .text-2xl {
+      font-size: 2rem;
+    }
+    .settingIcon {
+      line-height: 190px;
+    }
+  }
+
+  .parkScreen .parkScreenTop {
+    background-size: cover;
+  }
+}
+
 .screenFormStyle {
   .ant-form {
     .ant-form-item {
