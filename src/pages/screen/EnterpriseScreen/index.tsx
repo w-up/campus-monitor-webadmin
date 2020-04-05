@@ -35,7 +35,7 @@ export const EnterpriseScreenPage = () => {
               <GasTable />
               <EnterpriseScreenGasChart />
             </div>
-            <div className="w-2/4 pl-4 pr-4">
+            <div className="w-2/4 pl-4 pr-4 flex flex-col">
               <EnterpriseMap />
               <EnterpriseScreenGroupChart />
             </div>

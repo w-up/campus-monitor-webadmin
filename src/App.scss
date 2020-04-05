@@ -203,10 +203,13 @@ svg {
 }
 
 .listItem {
-  color: #88a8c5;
+  color: #88a8c5!important;
   font-size: 12px;
   text-align: center;
   line-height: 35px;
+  &.warningColor {
+    color: #F90421!important;
+  }
 
   & > div {
     @extend %text-ellipsis;
@@ -553,17 +556,21 @@ svg {
 .factoryAreaYellow {
   width: 35px;
   height: 11px;
-  border: 2px solid rgba(255, 216, 0, 1);
-  background: #ffd800;
+  border: 2px solid #FAD932;
+  background: #C4B40F;
   display: inline-block;
+  border-radius: 1px;
   margin-right: 8px;
 }
 
 .lineGreen {
-  width: 40px;
-  height: 1px;
-  border: 1px dashed #00ff66;
+  width: 60px;
+  height: 2px;
+  //border: 1px dashed #08B85F;
   display: inline-block;
+  background-image: linear-gradient(to right, #08B85F 0%, #08B85F 50%, transparent 50%);
+  background-size: 12px 2px;
+  background-repeat: repeat-x;
   margin-right: 8px;
   margin-bottom: 4px;
 }
@@ -579,7 +586,7 @@ svg {
 .redOver {
   width: 15px;
   height: 8px;
-  background: #f90421;
+  background: #FB051E;
   display: inline-block;
   margin-right: 8px;
 }

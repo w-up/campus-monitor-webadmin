@@ -45,11 +45,11 @@ export const GasTable = () => {
                   {site.map(item => {
                     if (item.pmType !== 1) return;
                     return (
-                      <div className="listItem tabTitle">
+                      <div className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle" }>
                         <div>{item.siteName}</div>
                         <div>{item.pmName}</div>
                         <div>
-                          <span style={{ color: Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "red" : "" }}>
+                          <span>
                             {utils.number.toPrecision(item.collectValue)}
                           </span>
                         </div>

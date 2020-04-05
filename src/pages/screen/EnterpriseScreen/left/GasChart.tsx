@@ -39,7 +39,7 @@ export const EnterpriseScreenGasChart = () => {
   }, []);
 
   return useObserver(() => (
-    <div className="screenTable mt-4" style={{ height: "350px" }}>
+    <div className="screenTable mt-4" style={{ height: "auto" }}>
       <div className="tableTitle flex justify-between items-center">
         <img src="/images/left.png" className="img" />
         <div>气体日均排放浓度趋势图</div>
@@ -54,7 +54,7 @@ export const EnterpriseScreenGasChart = () => {
                   //@ts-ignore
                   ref={elementsRef.current[index]}
                   option={makeOption(item)}
-                  style={{ marginTop: "10px", padding: "20px", width: "100%" }}
+                  style={{ marginTop: "30px", padding: "20px", width: "100%", position:"absolute", bottom: 0 }}
                   className="react_for_echarts"
                 />
               </Slide>

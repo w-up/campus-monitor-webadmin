@@ -184,7 +184,7 @@ export const EnterpriseScreenGroupChart = () => {
     }, 1000);
   }, []);
   return useObserver(() => (
-    <div className="screenCenterTable mt-4 pb-4">
+    <div className="screenCenterTable mt-4 pb-4 flex-1">
       <Tabs type="card" size="large" activeKey={String(enterpriseScreenMap.curSiteIndex)}>
         {enterpriseScreenMap.SiteRuntimePmDate.map((item, index) => (
           <Tabs.TabPane
