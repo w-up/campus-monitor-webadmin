@@ -16,7 +16,7 @@ export const MapMonitorMap = () => {
 
   return useObserver(() => (
     <APILoader akay={config.baiduMapApiKey}>
-      <Map onTilesLoaded={mapMonitor.onMapUpdate} zoom={mapMonitor.zoom} center={mapMonitor.center} enableScrollWheelZoom onZoomEnd={e => (mapMonitor.zoom = e.target.getZoom())}>
+      <Map onTilesLoaded={mapMonitor.onMapUpdate} zoom={mapMonitor.zoom} center={mapMonitor.center} enableScrollWheelZoom onZoomEnd={(e) => (mapMonitor.zoom = e.target.getZoom())}>
         {mapMonitor.curParkData?.map((park, index) => (
           <Polygon
             path={utils.array.formatToLatLngShort(park.parkPoints)}
@@ -28,21 +28,21 @@ export const MapMonitorMap = () => {
             fillColor={mapMonitor.currentTabKey == "2" ? config.sysParams.bottom_color.paramValue : ""}
           ></Polygon>
         ))}
-        {mapMonitor.curParkData?.map(park =>
+        {mapMonitor.curParkData?.map((park) =>
           park.factoryDatas?.map((item, index) => (
             <Polygon
               visiable={mapMonitor.currentTabKey != "2"}
               path={utils.array.formatToLatLngShort(item.factoryPoints)}
               key={index}
-              strokeStyle="dashed"
+              strokeStyle="solid"
               fillColor="#FFD800"
               strokeColor="#FFD800"
               strokeWeight={2}
             ></Polygon>
           ))
         )}
-        {mapMonitor.curParkData?.map(park =>
-          park.factoryDatas?.map(item => {
+        {mapMonitor.curParkData?.map((park) =>
+          park.factoryDatas?.map((item) => {
             if (!item.factoryPoints) return;
             return (
               <Label
@@ -57,7 +57,7 @@ export const MapMonitorMap = () => {
             );
           })
         )}
-        {mapMonitor.curParkData?.map(park =>
+        {mapMonitor.curParkData?.map((park) =>
           park.siteDatas?.map((item, index) => (
             <CustomOverlay position={{ lng: Number(item.gpsX), lat: Number(item.gpsY) }} key={index} visiable={mapMonitor.zoom > 17}>
               <div>
