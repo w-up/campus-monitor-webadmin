@@ -6,10 +6,10 @@ export class RuntimeData {
   @observable loading: boolean = false;
   @observable query: any = {
     current: 1,
-    pageSize: 10
+    pageSize: 10,
+    size: 10,
   };
   @observable total: number = 0;
-  @observable param: any = {};
 
   @observable parkTree: any = [];
   @observable ptList: any = [];
@@ -36,21 +36,31 @@ export class RuntimeData {
       current: page,
       pageSize,
     };
-    this.queryDatas(this.param);
+    this.queryDatas(this.query);
   }
 
   @action.bound
-  async queryDatas(param) {
+  async queryDatas(param: any = {}) {
     this.loading = true;
-    this.param = { ...param };
+
+    delete param.ptId;
+    delete param.factoryId;
+    delete param.parkId;
+
+    Object.keys(param).forEach(key => {
+      if (param[key] === '' || param[key].length === 0) {
+        delete param[key];
+        delete this.query[key];
+      }
+    });
+    
+    this.query = {
+      ...this.query,
+      ...param,
+    }
+
     try {
-      const { data }: any = await POST('/device-data/getAllPMDataBySitesAndPMs', {
-        ...param,
-        current: this.query.current,
-        pageNo: this.query.current,
-        pageSize: this.query.pageSize,
-        size: this.query.pageSize,
-      });
+      const { data }: any = await POST('/device-data/getAllPMDataBySitesAndPMs', this.query);
       this.columns = data.titles.map((item, index) => {
         const config = { ...item, width: 80, key: item.titleKey, dataIndex: item.titleKey };
         if (index === 0) {
@@ -65,7 +75,7 @@ export class RuntimeData {
       this.dataList = data.dataList.records.map((item, index) => ({ ...item, key: index }));
 
       this.total = data.dataList.total;
-      this.query.pageSize = data.dataList.size;
+      this.query.size = data.dataList.size;
       this.query.current = data.dataList.current;
     } catch {
 

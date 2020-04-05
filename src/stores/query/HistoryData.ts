@@ -2,15 +2,16 @@ import { action, observable } from "mobx";
 import { GET, POST } from "../../utils/request";
 import { store } from "../index";
 import moment from 'moment';
+import { globalConfig } from '../../config';
 
 export class HistoryData {
   @observable loading: boolean = false;
   @observable query: any = {
     current: 1,
-    pageSize: 10
+    pageSize: 10,
+    size: 10,
   };
   @observable total: number = 0;
-  @observable param: any = {};
 
   @observable parkTree: any = [];
   @observable ptList: any = [];
@@ -35,28 +36,29 @@ export class HistoryData {
     this.query = {
       ...this.query,
       current: page,
+      size: pageSize,
       pageSize,
     };
-    this.queryDatas(this.param);
+    this.queryDatas(this.query);
   }
 
   @action.bound
-  async queryDatas(param) {
-    param.startTime = moment(param.timeRange[0]).format('YYYY-MM-DD HH:mm:ss');
-    param.endTime = moment(param.timeRange[1]).format('YYYY-MM-DD HH:mm:ss');
-
+  async queryDatas(param: any = {}) {
     this.loading = true;
-    this.param = { ...param };
+
+    if (param.timeRange && param.timeRange.length > 0) {
+      param.startTime = moment(param.timeRange[0]).format('YYYY-MM-DD HH:mm:ss');
+      param.endTime = moment(param.timeRange[1]).format('YYYY-MM-DD HH:mm:ss');
+    }
+
+    this.query = {
+      ...this.query,
+      ...param,
+  };
     try {
-      const { data }: any = await POST('/device-data-history/queryHistoryDatas', {
-        ...param,
-        current: this.query.current,
-        pageNo: this.query.current,
-        pageSize: this.query.pageSize,
-        size: this.query.pageSize,
-      });
+      const { data }: any = await POST('/device-data-history/queryHistoryDatas', this.query);
       this.columns = data.titles.map((item, index) => {
-        const config = { ...item, width: 80, key: item.titleKey, dataIndex: item.titleKey };
+        const config = { ...item, width: 100, key: item.titleKey, dataIndex: item.titleKey };
         if (index === 0) {
           config.fixed = 'left';
           config.width = 150;
@@ -76,14 +78,49 @@ export class HistoryData {
   }
 
   @action.bound
-  async exportDatas(param) {
-    param.startTime = moment(param.timeRange[0]).format('YYYY-MM-DD HH:mm:ss');
-    param.endTime = moment(param.timeRange[1]).format('YYYY-MM-DD HH:mm:ss');
-
+  async exportDatas() {
     this.loading = true;
-    this.param = { ...param };
     try {
-      const { headers, data }: any = await POST('/device-data-history/exportHistoryDatas', param);
+
+      // let f = document.createElement("form");
+      // f.setAttribute('method',"post");
+      // f.setAttribute('action',`${globalConfig.apiEndpoint}/device-data-history/exportHistoryDatas`);
+
+      // let endTimeInput = document.createElement("input");
+      // endTimeInput.setAttribute('type',"text");
+      // endTimeInput.setAttribute('name',"endTime");
+      // endTimeInput.value = this.query.endTime;
+      // f.appendChild(endTimeInput);
+
+
+      // let startTimeInput = document.createElement("input");
+      // startTimeInput.setAttribute('type',"text");
+      // startTimeInput.setAttribute('name',"startTime");
+      // startTimeInput.value = this.query.startTime;
+      // f.appendChild(startTimeInput);
+
+      // let siteIdInput = document.createElement("input");
+      // siteIdInput.setAttribute('type',"text");
+      // siteIdInput.setAttribute('name',"siteId");
+      // siteIdInput.value = this.query.siteId;
+      // f.appendChild(siteIdInput);
+
+      // this.query.pmCodeList.forEach(val => {
+      //   let pmCodeInput = document.createElement("input");
+      //   pmCodeInput.setAttribute('type',"text");
+      //   pmCodeInput.setAttribute('name',"pmCodeList[]");
+      //   pmCodeInput.value = val;
+      //   f.appendChild(pmCodeInput);
+      // });
+
+      // document.getElementsByTagName('body')[0].appendChild(f);
+
+      // f.submit();
+
+      const { headers, data }: any = await POST('/device-data-history/exportHistoryDatas', {
+        ...this.query,
+      });
+
       const type = headers['content-type']
       const file = new Blob([data], { type });
       const url = window.URL.createObjectURL(file);

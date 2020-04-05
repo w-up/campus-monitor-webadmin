@@ -8,19 +8,6 @@ import { toJS } from "mobx";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
-
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 },
-  },
-  wrapperCol: {
-    xs: { span: 12 },
-    sm: { span: 12 },
-  },
-};
-
-
 export const HistoryDataPage = Form.create()(observer(({ form }: any) => {
 
   const {
@@ -75,15 +62,6 @@ export const HistoryDataPage = Form.create()(observer(({ form }: any) => {
     });
   }
 
-  const doExport = () => {
-    validateFields((err, values) => {
-      if (err) {
-        return;
-      }
-      historyData.exportDatas(values);
-    });
-  }
-
   const pagination = {
     current: query.current,
     pageSize: query.pageSize,
@@ -125,40 +103,40 @@ export const HistoryDataPage = Form.create()(observer(({ form }: any) => {
         </div>
         <Row gutter={10}>
           <Col span={6}>
-            <Form {...formItemLayout} onSubmit={doSubmit}>
+            <Form onSubmit={doSubmit}>
               <Card size="small" title="历史数据查询" extra={<Button size="small" onClick={() => resetFields()}>重置</Button>}>
-                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="选择园区" >
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="选择园区" >
                   {getFieldDecorator("parkId", { initialValue: '', rules: [{ required: true }] })(
                     <Select onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
                       {parkTree.map(item => <Option key={item.parkId} value={item.parkId}>{item.parkName}</Option>)}
                     </Select>
                   )}
                 </Form.Item>
-                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测区域" >
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测区域" >
                   {getFieldDecorator("factoryId", { initialValue: '', rules: [{ required: true }] })(
                     <Select placeholder="请选择" size="small">
                       {factoryList.map(item => <Option key={item.factoryId} value={item.factoryId}>{item.factoryName}</Option>)}
                     </Select>
                   )}
                 </Form.Item>
-                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="站点名称" >
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="站点名称" >
                   {getFieldDecorator("siteId", { initialValue: '', rules: [{ required: true }] })(
                     <Select placeholder="请选择" size="small">
                       {siteList.map(item => <Option key={item.siteId} value={item.siteId}>{item.siteName}</Option>)}
                     </Select>
                   )}
                 </Form.Item>
-                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测类型" >
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测类型" >
                   {getFieldDecorator("ptId", { initialValue: '', rules: [{ required: true }] })(
                     <Select placeholder="请选择" size="small">
                       {ptList.map(item => <Option key={item.id} value={item.id}>{item.label}</Option>)}
                     </Select>
                   )}
                 </Form.Item>
-                <Divider orientation="left">监测因子</Divider>
                 {!!getFieldValue('ptId') && 
                 <Row>
-                  <Checkbox checked={allChecked} onChange={onSelectAll}>全选</Checkbox>
+                  <Divider orientation="left">监测因子</Divider>
+                  <Checkbox style={{ fontSize: '10px' }} checked={allChecked} onChange={onSelectAll}>全选</Checkbox>
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
                     {getFieldDecorator("pmCodeList", { initialValue: [], rules: [{ required: true }] })(
                       <Checkbox.Group style={{ width: '100%' }}>
@@ -182,7 +160,7 @@ export const HistoryDataPage = Form.create()(observer(({ form }: any) => {
             </Form>
           </Col>
           <Col span={18}>
-            <Card size="small" title="数据列表" extra={<Button onClick={doExport} size="small">导出</Button>}>
+            <Card size="small" title="数据列表" extra={dataList.length > 0 && <Button onClick={historyData.exportDatas} size="small">导出</Button>}>
               <Table size="small" bordered scroll={{ x: 1300 }} pagination={pagination} columns={toJS(columns)} dataSource={toJS(dataList)} />
             </Card>
           </Col>
