@@ -147,56 +147,59 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
   };
 
   return (
-    <Spin spinning={loading}>
-      <Row style={{ minHeight: 50, background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px" }}>
-        <Breadcrumb>
-          <Breadcrumb.Item>基础信息</Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <Link to="user/userlist">用户管理</Link>
-          </Breadcrumb.Item>
-        </Breadcrumb>
-      </Row>
-      <Card>
-        <Row>
-          <Col span={16}>
-            <Form layout="inline" onSubmit={handleSearch}>
-              <Form.Item label="登录名">
-                <Input value={query.userName} onChange={handleSearchUsernameChange} placeholder="请输入" />
-              </Form.Item>
-              <Form.Item label="状态">
-                <Select allowClear style={{ width: 150 }} value={query.status} onChange={handleSearchStatusChange}>
-                  <Option value={0}>正常</Option>
-                  <Option value={1}>作废</Option>
-                </Select>
-              </Form.Item>
-              <Form.Item>
-                <Button type="primary" htmlType="submit">查询</Button>
-                <Button onClick={handleSearchReset} style={{ marginLeft: 5 }}>重置</Button>
-              </Form.Item>
-            </Form>
-          </Col>
-
-          <Col span={8} style={{ textAlign: "right" }}>
-            <Button type="primary" onClick={() => props.history.push('/user/user-edit')}>新建</Button>
-            <Divider type="vertical" />
-            {/* <Button style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button> */}
-            <Button>密码重置</Button>
-          </Col>
-
+    <div className="userManagePage">
+      <Spin spinning={loading}>
+        <Row style={{ minHeight: 50, background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px" }}>
+          <Breadcrumb>
+            <Breadcrumb.Item>基础信息</Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="user/userlist">用户管理</Link>
+            </Breadcrumb.Item>
+          </Breadcrumb>
         </Row>
+        <Card>
+          <Row>
+            <Col span={16}>
+              <Form layout="inline" onSubmit={handleSearch}>
+                <Form.Item label="登录名">
+                  <Input value={query.userName} onChange={handleSearchUsernameChange} placeholder="请输入" />
+                </Form.Item>
+                <Form.Item label="状态">
+                  <Select allowClear style={{ width: 150 }} value={query.status} onChange={handleSearchStatusChange}>
+                    <Option value={0}>正常</Option>
+                    <Option value={1}>作废</Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item>
+                  <Button type="primary" htmlType="submit">查询</Button>
+                  <Button onClick={handleSearchReset} style={{ marginLeft: 5 }}>重置</Button>
+                </Form.Item>
+              </Form>
+            </Col>
 
-        {!!selectedRowKeys.length &&
-        <Row style={{ marginTop: 20, marginBottom: 10 }}>
-          <Alert message={selectMsg(selectedRowKeys.length)} type="info" showIcon />
-        </Row>
-        }
+            <Col span={8} style={{ textAlign: "right" }}>
+              <Button type="primary" onClick={() => props.history.push('/user/user-edit')}>新建</Button>
+              <Divider type="vertical" />
+              {/* <Button style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button> */}
+              <Button>密码重置</Button>
+            </Col>
 
-        <Divider />
+          </Row>
 
-        <Row>
-          <Table bordered size="small" rowSelection={rowSelection} columns={columns} dataSource={toJS(userList)} />
-        </Row>
-      </Card>
-    </Spin>
+          {!!selectedRowKeys.length &&
+          <Row style={{ marginTop: 20, marginBottom: 10 }}>
+            <Alert message={selectMsg(selectedRowKeys.length)} type="info" showIcon />
+          </Row>
+          }
+
+          <Divider />
+
+          <Row>
+            <Table bordered size="small" rowSelection={rowSelection} columns={columns} dataSource={toJS(userList)} />
+          </Row>
+        </Card>
+      </Spin>
+    </div>
+    
   )
 }));

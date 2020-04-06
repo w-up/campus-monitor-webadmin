@@ -62,13 +62,10 @@ export class RuntimeData {
     try {
       const { data }: any = await POST('/device-data/getAllPMDataBySitesAndPMs', this.query);
       this.columns = data.titles.map((item, index) => {
-        const config = { ...item, width: 80, key: item.titleKey, dataIndex: item.titleKey };
+        const config = { ...item, width: 100, key: item.titleKey, dataIndex: item.titleKey };
         if (index === 0) {
           config.fixed = 'left';
           config.width = 150;
-        } else if (index === (data.titles.length - 1)) {
-          config.fixed = 'right';
-          config.width = 200;
         }
         return config;
       });

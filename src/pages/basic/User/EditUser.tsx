@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useObserver, useLocalStore, observer } from "mobx-react-lite";
-import { Spin, Card, Form, Input, Button, Breadcrumb, Radio, Select } from "antd";
+import { Divider, Spin, Card, Form, Input, Button, Breadcrumb, Radio, Select } from "antd";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { useStore } from "../../../stores/index";
 
@@ -48,7 +48,7 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
   }, []);
 
   const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields } = form;
-  const { id, username, belongs, porc, name, roles: initialRoles, type, status, contact, } = state.user || {};
+  const { id, username, belongs, porc = {}, name, roles: initialRoles, type, status, contact, } = state.user || {};
 
   const doSubmit = e => {
     e.preventDefault();
@@ -65,7 +65,7 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
 
   return (
     <Spin spinning={loading}>
-      <div style={{height: 100, background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px"}}>
+      <div style={{ minHeight: 50, background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px"}}>
         <Breadcrumb>
           <Breadcrumb.Item>基础信息</Breadcrumb.Item>
           <Breadcrumb.Item>
@@ -75,7 +75,6 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
             <a>{state.user ? '编辑用户' : '新增用户'}</a>
           </Breadcrumb.Item>
         </Breadcrumb>
-      <div style={{margin: 10, marginLeft: 0, fontWeight: "bold", fontSize: 20}}>{state.user ? '编辑用户' : '新增用户'}</div>
       </div>
       <Card>
         <Form {...formItemLayout} onSubmit={doSubmit}>
@@ -90,7 +89,7 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
 
           <Form.Item label="用户类型">
             {getFieldDecorator("type", { initialValue: type, rules: [{ required: true }] })(
-              <Radio.Group>
+              <Radio.Group disabled={!!id}>
                 <Radio value={0}>园区用户</Radio>
                 <Radio value={1}>企业用户</Radio>
                 <Radio value={3}>其他</Radio>
@@ -101,7 +100,7 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
           {getFieldValue('type') === 0 &&
           <Form.Item label="所属园区">
             {getFieldDecorator("parkOrEnterpriseId", { initialValue: porc.id, rules: [{ required: true }] })(
-              <Select placeholder="请选择所属园区">
+              <Select disabled={!!id} placeholder="请选择所属园区">
                 {parkList.map(item => <Option key={item.id} value={item.id}>{item.parkName}</Option>)}
               </Select>
             )}
@@ -111,7 +110,7 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
           {getFieldValue('type') === 1 &&
           <Form.Item label="所属企业">
             {getFieldDecorator("parkOrEnterpriseId", { initialValue: porc.id, rules: [{ required: true }] })(
-              <Select placeholder="请选择所属企业">
+              <Select disabled={!!id} placeholder="请选择所属企业">
                 {companyList.map(item => <Option key={item.id} value={item.id}>{item.companyName}</Option>)}
               </Select>
             )}
@@ -126,13 +125,11 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
             )}
           </Form.Item>
 
-          {!id &&
           <Form.Item label="密码">
             {getFieldDecorator("password", { initialValue: '', rules: [{ required: true }] })(
               <Input.Password placeholder="请输入密码" />
             )}
           </Form.Item>
-          }
 
           <Form.Item label="用户姓名">
             {getFieldDecorator("name", { initialValue: name, rules: [{ required: true }] })(
@@ -147,6 +144,7 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
           
           <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">保存</Button>
+            <Divider type="vertical" />
             <Button style={{marginLeft: 5 }} onClick={() => history.goBack()}>取消</Button>
           </Form.Item>
         </Form>

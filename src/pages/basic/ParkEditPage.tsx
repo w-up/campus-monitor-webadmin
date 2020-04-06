@@ -76,6 +76,8 @@ export const ParkEditPage = Form.create()(
       if (initialScope && initialScope.length > 0) {
         setScope(initialScope);
         drawMap.setPathsByScope(initialScope);
+      } else {
+        setScope([]);
       }
     }, []);
 

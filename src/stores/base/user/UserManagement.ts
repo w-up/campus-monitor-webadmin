@@ -79,7 +79,8 @@ export class UserManagement {
     this.query = {
       ...this.query,
       status: val,
-    }
+    };
+    this.resetSelectedRowKeys();
   }
 
   @action.bound

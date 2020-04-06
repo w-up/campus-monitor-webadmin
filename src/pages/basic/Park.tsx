@@ -74,12 +74,11 @@ export const ParkPage = observer(() => {
   };
 
   const onBatchDeletePark = () => {
-    console.log(toJS(selectedRowKeys));
     const selectedRows = toJS(selectedRowKeys);
     if (selectedRows.length === 0) {
       return;
     }
-    const ids = selectedRows.map(key => toJS(dataSource)[key].id);
+    const ids = selectedRowKeys;
     Modal.confirm({
       title: "删除确认",
       content: `确定删除这${ids.length}条记录吗？`,
@@ -148,55 +147,57 @@ export const ParkPage = observer(() => {
   };
 
   return (
-    <Spin spinning={loading}>
-      <Row style={{ minHeight: 50, background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px" }}>
-        <Breadcrumb>
-          <Breadcrumb.Item>基础信息</Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <Link to="base/park">园区管理</Link>
-          </Breadcrumb.Item>
-        </Breadcrumb>
-      </Row>
-      <Card size="small">
-        <Row>
-          <Col span={16}>
-            <Form layout="inline" onSubmit={handleSearch}>
-              <Form.Item label="园区名称">
-                <Input placeholder="请输入" value={query.parkName} onChange={handleSearchChange} />
-              </Form.Item>
-              <Form.Item>
-                <Button type="primary" htmlType="submit">查询</Button>
-                <Button style={{ marginLeft: 5 }} onClick={handleSearchReset}>重置</Button>
-              </Form.Item>
-            </Form>
-          </Col>
+    <div className="parkPage">
+      <Spin spinning={loading}>
+        <Row style={{ minHeight: 50, background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px" }}>
+          <Breadcrumb>
+            <Breadcrumb.Item>基础信息</Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="base/park">园区管理</Link>
+            </Breadcrumb.Item>
+          </Breadcrumb>
+        </Row>
+        <Card size="small">
+          <Row>
+            <Col span={16}>
+              <Form layout="inline" onSubmit={handleSearch}>
+                <Form.Item label="园区名称">
+                  <Input placeholder="请输入" value={query.parkName} onChange={handleSearchChange} />
+                </Form.Item>
+                <Form.Item>
+                  <Button type="primary" htmlType="submit">查询</Button>
+                  <Button style={{ marginLeft: 5 }} onClick={handleSearchReset}>重置</Button>
+                </Form.Item>
+              </Form>
+            </Col>
 
-          <Col span={8} style={{ textAlign: "right" }}>
-            <Button type="primary">
-              <Link to="/base/park-edit">新建</Link>
-            </Button>
-            <Button onClick={onBatchDeletePark} style={{ marginLeft: 5, marginRight: 5 }}>
-              批量删除
-            </Button>
-          </Col>
-        </Row>
+            <Col span={8} style={{ textAlign: "right" }}>
+              <Button type="primary">
+                <Link to="/base/park-edit">新建</Link>
+              </Button>
+              <Button onClick={onBatchDeletePark} style={{ marginLeft: 5, marginRight: 5 }}>
+                批量删除
+              </Button>
+            </Col>
+          </Row>
 
-        {!!selectedRowKeys.length &&
-        <Row style={{ marginTop: 20, marginBottom: 10 }}>
-          <Alert message={selectMsg(selectedRowKeys.length)} type="info" showIcon />
-        </Row>
-        }
-        
-        <Divider />
-        <Row>
-          <Table rowKey="id" bordered size="small" rowSelection={rowSelection} columns={columns} dataSource={toJS(dataSource)} pagination={pagination} />
-        </Row>
-      </Card>
-      <Modal title="地图绘制" visible={store.showMap} onOk={e => (store.showMap = false)} onCancel={e => (store.showMap = false)} width={800}>
-        <div style={{ width: "100%", height: "400px" }}>
-          <DrawBaiduMap />
-        </div>
-      </Modal>
-    </Spin>
+          {!!selectedRowKeys.length &&
+          <Row style={{ marginTop: 20, marginBottom: 10 }}>
+            <Alert message={selectMsg(selectedRowKeys.length)} type="info" showIcon />
+          </Row>
+          }
+          
+          <Divider />
+          <Row>
+            <Table rowKey="id" bordered size="small" rowSelection={rowSelection} columns={columns} dataSource={toJS(dataSource)} pagination={pagination} />
+          </Row>
+        </Card>
+        <Modal title="地图绘制" visible={store.showMap} onOk={e => (store.showMap = false)} onCancel={e => (store.showMap = false)} width={800}>
+          <div style={{ width: "100%", height: "400px" }}>
+            <DrawBaiduMap />
+          </div>
+        </Modal>
+      </Spin>
+    </div>
   );
 });
