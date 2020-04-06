@@ -1598,10 +1598,10 @@
     semver "^6.3.0"
     tsutils "^3.17.1"
 
-"@uiw/react-baidu-map@^1.15.3":
-  version "1.15.3"
-  resolved "https://registry.npm.taobao.org/@uiw/react-baidu-map/download/@uiw/react-baidu-map-1.15.3.tgz#99a97c4067f5f025c4102fdbb228fd17bdc8fb80"
-  integrity sha1-mal8QGf18CXEEC/bsij9F73I+4A=
+"@uiw/react-baidu-map@^1.17.1":
+  version "1.17.1"
+  resolved "https://registry.yarnpkg.com/@uiw/react-baidu-map/-/react-baidu-map-1.17.1.tgz#558e635e3f5736250191ac51bb33bf6e3859ada0"
+  integrity sha512-0GVQbU5mCbKk7b6jEf+O2qSIJ3NunNK4BKeeaR3SNOaqPPzi3nfJamYlicdWFydzTuj+PhBbX84rzt4IZO+FAQ==
   dependencies:
     "@babel/runtime" "^7.8.4"
 

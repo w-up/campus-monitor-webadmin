@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useObserver } from "mobx-react-lite";
-import { Map, APILoader, Polygon, Label, CustomOverlay, Marker } from "@uiw/react-baidu-map";
+import { Map, APILoader,  Label, CustomOverlay } from "@uiw/react-baidu-map";
 import { useStore } from "../../stores/index";
 import { utils } from "../../utils/index";
+import { IPolygon } from '../../components/Polygon/index';
 
 export const MapMonitorMap = () => {
   const { config, mapMonitor } = useStore();
@@ -18,7 +19,7 @@ export const MapMonitorMap = () => {
     <APILoader akay={config.baiduMapApiKey}>
       <Map onTilesLoaded={mapMonitor.onMapUpdate} zoom={mapMonitor.zoom} center={mapMonitor.center} enableScrollWheelZoom onZoomEnd={(e) => (mapMonitor.zoom = e.target.getZoom())}>
         {mapMonitor.curParkData?.map((park, index) => (
-          <Polygon
+          <IPolygon
             path={utils.array.formatToLatLngShort(park.parkPoints)}
             key={park.parkName}
             strokeColor="#00FF66"
@@ -26,11 +27,11 @@ export const MapMonitorMap = () => {
             strokeWeight={2}
             fillOpacity={1}
             fillColor={mapMonitor.currentTabKey == "2" ? config.sysParams.bottom_color.paramValue : ""}
-          ></Polygon>
+          ></IPolygon>
         ))}
         {mapMonitor.curParkData?.map((park) =>
           park.factoryDatas?.map((item, index) => (
-            <Polygon
+            <IPolygon
               visiable={mapMonitor.currentTabKey != "2"}
               path={utils.array.formatToLatLngShort(item.factoryPoints)}
               key={index}
@@ -38,7 +39,7 @@ export const MapMonitorMap = () => {
               fillColor="#FFD800"
               strokeColor="#FFD800"
               strokeWeight={2}
-            ></Polygon>
+            ></IPolygon>
           ))
         )}
         {mapMonitor.curParkData?.map((park) =>

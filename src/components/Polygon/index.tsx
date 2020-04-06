@@ -7,7 +7,7 @@ export interface PolygonProps extends BMap.PolygonOptions, BMap.PolygonEvents, O
    * 设置折线的点数组
    */
   path: BMap.Point[];
-  updateable: boolean;
+  updateable?: boolean;
 }
 
 export const IPolygon = React.forwardRef<PolygonProps & { polygon?: BMap.Polygon }, PolygonProps>((props, ref) => {

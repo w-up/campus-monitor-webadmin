@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { useObserver } from "mobx-react-lite";
-import { Map, APILoader, Polygon, Label, CustomOverlay, Marker } from "@uiw/react-baidu-map";
+import { Map, APILoader, Label, CustomOverlay, Marker } from "@uiw/react-baidu-map";
 import { useStore } from "../../stores/index";
 import blueArrow from "../../assets/img/arrow-blue.png";
 import { _ } from "utils/lodash";
 import { utils } from "../../utils/index";
 import { PolarRadialChart } from "../../components/PolarRadialChart";
+import { IPolygon } from '../../components/Polygon/index';
 
 export const DynamicSourceMap = () => {
   const { config, dynamicSource } = useStore();
@@ -27,11 +28,11 @@ export const DynamicSourceMap = () => {
         onZoomEnd={(e) => (dynamicSource.zoom = e.target.getZoom())}
       >
         {dynamicSource.curParkData?.map((park, index) => (
-          <Polygon path={utils.array.formatToLatLngShort(park.parkPoints)} key={index} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor={""}></Polygon>
+          <IPolygon updateable path={utils.array.formatToLatLngShort(park.parkPoints)} key={index} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor={""}></IPolygon>
         ))}
         {dynamicSource.curParkData?.map((park) =>
           park.factoryDatas?.map((item, index) => (
-            <Polygon path={utils.array.formatToLatLngShort(item.factoryPoints)} key={index} strokeStyle="solid" fillColor="#FFD800" strokeColor="#FFD800" strokeWeight={2}></Polygon>
+            <IPolygon updateable path={utils.array.formatToLatLngShort(item.factoryPoints)} key={index} strokeStyle="solid" fillColor="#FFD800" strokeColor="#FFD800" strokeWeight={2}></IPolygon>
           ))
         )}
         {dynamicSource.curParkData?.map((park) =>
