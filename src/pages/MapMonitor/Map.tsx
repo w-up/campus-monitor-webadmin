@@ -20,6 +20,7 @@ export const MapMonitorMap = () => {
       <Map onTilesLoaded={mapMonitor.onMapUpdate} zoom={mapMonitor.zoom} center={mapMonitor.center} enableScrollWheelZoom onZoomEnd={(e) => (mapMonitor.zoom = e.target.getZoom())}>
         {mapMonitor.curParkData?.map((park, index) => (
           <IPolygon
+          updateable
             path={utils.array.formatToLatLngShort(park.parkPoints)}
             key={park.parkName}
             strokeColor="#00FF66"
@@ -32,6 +33,7 @@ export const MapMonitorMap = () => {
         {mapMonitor.curParkData?.map((park) =>
           park.factoryDatas?.map((item, index) => (
             <IPolygon
+            updateable
               visiable={mapMonitor.currentTabKey != "2"}
               path={utils.array.formatToLatLngShort(item.factoryPoints)}
               key={index}
