@@ -286,7 +286,7 @@ export class Report {
         param.collectDate = moment(param.collectDate).format('YYYY-MM');
         break;
       case 3:
-        param.collectDate = moment(param.collectDate).format('YYYY-MM-DD');
+        param.collectDate = moment(param.collectDate).format('YYYY');
         break;
       case 4:
         param.collectDate = moment(param.collectDate).format('YYYY-WW');
@@ -306,25 +306,44 @@ export class Report {
       }
 
       const { tableHeaderData, tableData, trendData, heatMap } = data;
-      const comumn = tableHeaderData.map((title, index) => {
-        const col: any = { title, dataIndex: index, key: index, width: 100 };
-        if (index === 0) {
-          col.width = 200;
-          col.fixed = 'left';
-        }
-        return col;
-      });
-      this.tableColumn = comumn;
-      const table: any = [];
-      tableData.forEach((item, key) => {
-        const obj: any = {};
-        obj.key = key;
-        item.forEach((val, index) => {
-          obj[index] = val;
+      if (param.timeCycle === 3) {
+        const [ header, ...innerData ] = tableData;
+        const column = header.map((title, index) => {
+          return { title, dataIndex: index, key: index, width: 100 };
         });
-        table.push(obj);
-      });
-      this.tableData = table;
+        this.tableColumn = column;
+        const table : any = [];
+        innerData.forEach((item, key) => {
+          const obj: any = {};
+          obj.key = key;
+          item.forEach((val, index) => {
+            obj[index] = val;
+          });
+          table.push(obj);
+        });
+        this.tableData = table;
+      } else {
+        const comumn = tableHeaderData.map((title, index) => {
+          const col: any = { title, dataIndex: index, key: index, width: 100 };
+          if (index === 0) {
+            col.width = 200;
+            col.fixed = 'left';
+          }
+          return col;
+        });
+        this.tableColumn = comumn;
+        const table: any = [];
+        tableData.forEach((item, key) => {
+          const obj: any = {};
+          obj.key = key;
+          item.forEach((val, index) => {
+            obj[index] = val;
+          });
+          table.push(obj);
+        });
+        this.tableData = table;
+      }
+      
 
       // 折线图 天
       if (param.timeCycle === 1 && trendData) {
@@ -398,7 +417,6 @@ export class Report {
         });
       }
 
-      debugger
     } catch (err) {
       console.error(err)
     }
