@@ -48,6 +48,7 @@ export interface SitePMValue {
   pmName: string;
   pmCode: string;
   collectValue: string;
+  collectValueUnit: string;
   unit: string;
   pmType: number;
   limit: number;
