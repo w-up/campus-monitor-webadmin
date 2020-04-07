@@ -115,7 +115,7 @@ export class Rank {
   @action.bound
   async getStatisRank(param) {
     this.loading = true;
-    param.endTime = moment(param.endTime).format('YYYY-MM-DD HH:mm:ss');
+    param.collectDate = moment(param.collectDate).format('YYYY-MM-DD');
 
     try {
       const { data }: any = await POST('/device-data-history/getStatisRank', { ...param });
