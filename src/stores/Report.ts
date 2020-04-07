@@ -3,6 +3,35 @@ import { GET, POST } from "../utils/request";
 import Mock, { Random } from 'mockjs';
 import moment from 'moment';
 
+const defaultYearOption: any = {
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow'
+    }
+  },
+  grid: {
+    left: '3%',
+    right: '4%',
+    bottom: '3%',
+    containLabel: true
+  },
+  xAxis: {
+    type: 'value',
+    boundaryGap: [0, 0.01]
+  },
+  yAxis: {
+    type: 'category',
+    // data: ['巴西', '印尼', '美国', '印度', '中国', '世界人口(万)']
+  },
+  series: [
+    {
+      // name: '2011年',
+      type: 'bar',
+      // data: [18203, 23489, 29034, 104970, 131744, 630230]
+    }
+  ]
+};
 
 const defaultQuarterOption: any = {
   tooltip: {
@@ -137,38 +166,9 @@ export class Report {
 
   ];
 
-  @observable yearOptions: any = {
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow'
-      }
-    },
-    legend: {
-      // data: ['2011年']
-    },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      containLabel: true
-    },
-    xAxis: {
-      type: 'value',
-      boundaryGap: [0, 0.01]
-    },
-    yAxis: {
-      type: 'category',
-      // data: ['巴西', '印尼', '美国', '印度', '中国', '世界人口(万)']
-    },
-    series: [
-      {
-        name: '2011年',
-        type: 'bar',
-        // data: [18203, 23489, 29034, 104970, 131744, 630230]
-      }
-    ]
-  };
+  @observable yearOptions: any = [
+
+  ];
 
   @observable chartOption: any = {
     tooltip: {
@@ -305,14 +305,14 @@ export class Report {
         data = res;
       }
 
-      const { tableHeaderData, tableData, trendData, heatMap } = data;
+      const { tableHeaderData, tableData, trendData, heatMap, rankData } = data;
       if (param.timeCycle === 3) {
-        const [ header, ...innerData ] = tableData;
+        const [header, ...innerData] = tableData;
         const column = header.map((title, index) => {
           return { title, dataIndex: index, key: index, width: 100 };
         });
         this.tableColumn = column;
-        const table : any = [];
+        const table: any = [];
         innerData.forEach((item, key) => {
           const obj: any = {};
           obj.key = key;
@@ -343,7 +343,7 @@ export class Report {
         });
         this.tableData = table;
       }
-      
+
 
       // 折线图 天
       if (param.timeCycle === 1 && trendData) {
@@ -359,8 +359,15 @@ export class Report {
       }
 
       // 柱状图 年
-      if (param.timeCycle === 3) {
-
+      if (param.timeCycle === 3 && rankData) {
+        this.yearOptions = [];
+        Object.keys(rankData).forEach((item: any) => {
+          const option: any = { ...defaultYearOption };
+          option.series[0].name = item;
+          option.yAxis.data = Object.keys(rankData[item]);
+          option.series[0].data = Object.values(rankData[item]);
+          this.yearOptions.push(option);
+        });
       }
 
       // 热力图 月

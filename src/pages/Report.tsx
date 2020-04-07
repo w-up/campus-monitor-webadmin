@@ -32,7 +32,7 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
 
   const {
     loading, parkList, companyList, pmList,
-    tableData, tableColumn, chartOption, heatOptions,
+    tableData, tableColumn, chartOption, heatOptions, yearOptions
   } = report;
 
   let pmCodeList: any = [];
@@ -239,7 +239,7 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
             <Row gutter={6}>
               <Col span={24} style={{ marginBottom: '10px' }}>
                 <Card bordered size="small" title={`${cardTitle}监测数据`} extra={cardExtra}>
-                  <Table bordered size="small" scroll={{ x: 1300, y: 600 }} pagination={false} columns={toJS(tableColumn)} dataSource={toJS(tableData)} />
+                  <Table bordered size="small" scroll={{ x: 800, y: 600 }} pagination={false} columns={toJS(tableColumn)} dataSource={toJS(tableData)} />
                 </Card>
               </Col>
               
@@ -276,15 +276,20 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
               }
 
               {getFieldValue('timeCycle') === 3 && // 年
-              <Col span={12} style={{ marginBottom: '10px' }}>
-                <Card bordered size="small" title={`${pmCardTitle}污染物按${timeCycleArr[getFieldValue('timeCycle') - 1]}排放情况`} extra={cardExtra}>
-                  <ReactEcharts
-                    //@ts-ignore
-                    option={toJS(chartOption)}
-                    ref={chart3}
-                    style={{ height: '360px' }}
-                  />
-                </Card>
+              <Col span={24} style={{ marginBottom: '10px' }}>
+                {yearOptions.map(option => {
+                  return (
+                  <Col span={12}>
+                    <Card bordered size="small" title={`${option.series[0].name}各月份报警次数排行榜`} extra={cardExtra}>
+                      <ReactEcharts
+                        //@ts-ignore
+                        option={toJS(option)}
+                        // style={{ height: '360px' }}
+                      />
+                    </Card>
+                  </Col>
+                  );
+                })}
               </Col>
               }
 
