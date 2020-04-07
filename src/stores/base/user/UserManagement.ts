@@ -84,6 +84,13 @@ export class UserManagement {
   }
 
   @action.bound
+  async resetPwds(ids) {
+    this.loading = true;
+    const { data }: any = await POST('/user/resetPwds', { ids });
+    this.loading = false;
+  }
+
+  @action.bound
   async getUsers() {
     this.loading = true;
     try {

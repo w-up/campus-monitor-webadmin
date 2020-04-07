@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useObserver, useLocalStore, observer } from "mobx-react-lite";
-import { Tag, Alert, Row, Col, Spin, Card, Form, Button, Input, Select, Table, Badge, Divider, Breadcrumb, Modal } from 'antd'
+import { message, Tag, Alert, Row, Col, Spin, Card, Form, Button, Input, Select, Table, Badge, Divider, Breadcrumb, Modal } from 'antd'
 import { RouteChildrenProps } from "react-router";
 import { Link, useLocation } from "react-router-dom";
 import { toJS } from 'mobx';
@@ -133,6 +133,27 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
     );
   };
 
+  const handleResetPasswrod = async () => {
+    const ids = toJS(selectedRowKeys);
+    if (ids.length === 0) {
+      return;
+    }
+    Modal.confirm({
+      title: '操作哦确认',
+      content: `确定重置这些用户的密码吗？`,
+      maskClosable: true,
+      async onOk() {
+        try {
+          await user.resetPwds(ids);
+          message.success('处理成功');
+          await user.getUsers();
+        } catch {
+          message.error('处理失败');
+        }
+      },
+    });
+  }
+
   const pagination = {
     current: query.current,
     pageSize: query.pageSize,
@@ -181,7 +202,7 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
               <Button type="primary" onClick={() => props.history.push('/user/user-edit')}>新建</Button>
               <Divider type="vertical" />
               {/* <Button style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button> */}
-              <Button>密码重置</Button>
+              <Button onClick={handleResetPasswrod}>密码重置</Button>
             </Col>
 
           </Row>
@@ -195,7 +216,7 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
           <Divider />
 
           <Row>
-            <Table bordered size="small" rowSelection={rowSelection} columns={columns} dataSource={toJS(userList)} />
+            <Table rowKey="id" bordered size="small" pagination={pagination} rowSelection={rowSelection} columns={columns} dataSource={toJS(userList)} />
           </Row>
         </Card>
       </Spin>

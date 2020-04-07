@@ -67,7 +67,7 @@ export const SystemConfigration = Form.create()(observer((props: any) => {
       <Row>
         <Col span={16}>
           <Form layout="inline" onSubmit={handleSearch}>
-            <Form.Item label="参数代码">
+            <Form.Item label="参数说明">
               <Input placeholder="请输入" value={query.paramName} onChange={handleSearchChange} />
             </Form.Item>
             

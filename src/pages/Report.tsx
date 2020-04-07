@@ -47,6 +47,7 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
         return;
       }
       report.getStatisReport(values);
+      
     });
   }
 

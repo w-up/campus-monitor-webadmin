@@ -71,6 +71,8 @@ export const RankAnalysisPage = Form.create()(observer(({ form }: any) => {
         return;
       }
       rank.getStatisRank(values);
+      rank.getStatisAnalisis(values);
+      
     });
   }
 

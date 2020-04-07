@@ -152,7 +152,7 @@ export class Comparison {
   @action.bound
   async getStatisAnalisis(param) {
     this.loading = true;
-    param.collectDate = moment(param.collectDate).format('YYYY-MM-DD HH:mm:ss');
+    param.collectDate = moment(param.collectDate).format('YYYY-MM-DD');
 
     try {
       const { data }: any = await POST('/device-data-history/getStatisAnalisis', { ...param });
