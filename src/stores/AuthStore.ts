@@ -68,4 +68,9 @@ export class AuthStore {
   async editPassword(data: { newPassword: string; password: string }) {
     return api.AuthService.editPassword(data);
   }
+
+  @action.bound
+  async updateUser(data: { id: number; contact: string }) {
+    return api.AuthService.updateContact(data);
+  }
 }
