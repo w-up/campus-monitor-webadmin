@@ -80,9 +80,9 @@ export const EnterpriseEditPage = Form.create()(observer(({ form }: any) => {
               <Input placeholder="请输入企业ID" />
             )}
           </Form.Item>
-          <Form.Item label="企业代码">
+          <Form.Item label="企业统一社会信用代码">
             {getFieldDecorator("companyCode", { initialValue: companyCode, rules: [{ required: true }] })(
-              <Input placeholder="请输入企业代码" />
+              <Input placeholder="请输入企业统一社会信用代码" />
             )}
           </Form.Item>
           <Form.Item label="企业名称">

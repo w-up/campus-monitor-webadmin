@@ -154,7 +154,7 @@ export const EnterprisePage = observer(() => {
         <Row>
           <Col span={16}>
             <Form layout="inline" onSubmit={handleSearch}>
-            <Form.Item  label="企业代码">
+            <Form.Item  label="企业统一社会信用代码">
               <Input placeholder="请输入" value={query.companyCode} onChange={handleSearchChange} />
             </Form.Item>
             <Form.Item>

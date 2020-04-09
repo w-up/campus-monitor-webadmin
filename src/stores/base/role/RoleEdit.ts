@@ -26,17 +26,11 @@ export class RoleEdit {
 
   @action.bound
   async doSaveRole(param) {
-    this.loading = true;
-    try {
-      if (!param.id) {
-        await POST('/role/addRole', param);
-      } else {
-        await POST('/role/updateRole', param);
-      }
-    } catch {
-
+    if (!param.id) {
+      await POST('/role/addRole', param);
+    } else {
+      await POST('/role/updateRole', param);
     }
-    this.loading = false;
   }
 
 }

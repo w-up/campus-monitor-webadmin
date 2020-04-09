@@ -97,12 +97,12 @@ export const ParkEditPage = Form.create()(
       </div>
       <Card>
         <Form {...formItemLayout} onSubmit={store.doSubmit}>
-          <Form.Item label="园区代码" style={{ display: 'none' }}>
+          <Form.Item label="园区ID" style={{ display: 'none' }}>
             {getFieldDecorator("id", { initialValue: id, rules: [{ required: false }] })(
               <Input placeholder="请输入园区ID" />
             )}
           </Form.Item>
-          <Form.Item label="园区代码">
+          <Form.Item label="园区编号">
             {getFieldDecorator("parkNo", { initialValue: parkNo, rules: [{ required: true }] })(
               <Input placeholder="请输入园区代码" />
             )}

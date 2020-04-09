@@ -30,17 +30,11 @@ export class UserEdit {
 
   @action.bound
   async doSaveUser(param) {
-    this.loading = true;
-    try {
-      if (!param.id) {
-        await POST('/user/addUser', param);
-      } else {
-        await POST('/user/updateUser', param);
-      }
-    } catch {
-
+    if (!param.id) {
+      await POST('/user/addUser', param);
+    } else {
+      await POST('/user/updateUser', param);
     }
-    this.loading = false;
   }
 
 }

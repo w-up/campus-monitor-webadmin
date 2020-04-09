@@ -57,8 +57,13 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
       if (err) {
         return;
       }
-      await userEdit.doSaveUser(values);
-      history.replace("/user/userlist");
+      
+      try {
+        await userEdit.doSaveUser(values);
+        history.replace("/user/userlist");
+      } catch {
+
+      }
     })
 
   }

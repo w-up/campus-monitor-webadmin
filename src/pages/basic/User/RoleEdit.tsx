@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useObserver, useLocalStore, observer } from "mobx-react-lite";
-import { Spin, Card, Form, Input, Button, Breadcrumb, Tree } from "antd";
+import { Spin, Card, Form, Input, Button, Breadcrumb, Tree, message } from "antd";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import TextArea from "antd/lib/input/TextArea";
 import { useStore } from "../../../stores/index";
@@ -55,8 +55,14 @@ export const RoleEdit = Form.create()(observer(({ form }: any) => {
       if (err) {
         return;
       }
-      await roleEdit.doSaveRole(values);
-      history.replace("/user/rolelist");
+
+      try {
+        await roleEdit.doSaveRole(values);
+        message.success('操作成功');
+        history.replace("/user/rolelist");
+      } catch {
+
+      }
     })
 
   }
@@ -85,9 +91,9 @@ export const RoleEdit = Form.create()(observer(({ form }: any) => {
             <Input hidden placeholder="请输入ID" />
           )}
 
-          <Form.Item label="角色代码">
+          <Form.Item label="角色编号">
             {getFieldDecorator("code", { initialValue: code, rules: [{ required: true }] })(
-              <Input placeholder="请输入角色代码" />
+              <Input disabled={!!id} placeholder="请输入角色代码" />
             )}
           </Form.Item>
 
