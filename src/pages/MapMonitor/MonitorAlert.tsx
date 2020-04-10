@@ -23,7 +23,7 @@ export const MonitorAlert = () => {
       </div>
 
       {mapMonitor.alarms.map((item) => {
-        return <AlertItem item={item} onClick={(item) => mapMonitor.doConfirmAlarmInfoById(item.id)}></AlertItem>;
+        return <AlertItem item={item}></AlertItem>;
       })}
     </div>
   ));

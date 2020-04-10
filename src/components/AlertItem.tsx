@@ -2,10 +2,12 @@ import React from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
 import { Card, Row, Col, Button } from "antd";
 import { AlarmInfo } from "../type";
+import { useStore } from "../stores/index";
 
-export const AlertItem = ({ item, onClick }: { item: AlarmInfo; onClick?: Function }) => {
+export const AlertItem = ({ item }: { item: AlarmInfo }) => {
+  const { mapMonitor } = useStore();
   return useObserver(() => (
-    <Card className="w-full text-white" bordered={false} style={{ background: "#23283E", marginTop: 20 }}>
+    <Card className="w-full" bordered={false} style={{ background: "#23283E", marginTop: 20 }}>
       <Row className="alertCardRow">
         <Col span={8}>告警对象:</Col>
         <Col className="text-right" span={12} offset={4}>
@@ -62,7 +64,7 @@ export const AlertItem = ({ item, onClick }: { item: AlarmInfo; onClick?: Functi
       </Row>
       <Row className="mt-4">
         <Col className="text-right" span={8} offset={16}>
-          <Button type="primary" onClick={() => onClick && onClick(item)}>
+          <Button type="primary" onClick={() => mapMonitor.doConfirmAlarmInfoById(item.id)}>
             处理
           </Button>
         </Col>

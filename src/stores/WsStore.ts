@@ -4,17 +4,17 @@ import { globalConfig } from "../config";
 import { store } from "./index";
 
 export class WsStore {
-  ws: WebSocketAsPromised = new WebSocketAsPromised(globalConfig.wsEndpoint + "/10");
+  ws: WebSocketAsPromised | null = null;
   init() {
+    this.ws = new WebSocketAsPromised(globalConfig.wsEndpoint + `/${store.auth.user?.id}`);
     this.ws.open().then(() => {
       console.log("ws connected.");
-      store.alert.modal.showAlert();
-      this.ws.onMessage.addListener((data) => {
-        console.log(data);
+      this.ws?.onMessage.addListener((data) => {
+        store.alert.modal.setAlerts(JSON.parse(data));
       });
     });
   }
   sendMessage(data) {
-    this.ws.send(data);
+    this.ws?.send(data);
   }
 }
