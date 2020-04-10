@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { observer, useObserver } from "mobx-react-lite";
-import { Breadcrumb, Button, Card, Form, Input, Radio, Select, Spin } from "antd";
-import { useHistory, useLocation } from "react-router-dom";
+import { Breadcrumb, Button, Card, Form, Input, Radio, Select, Spin, Avatar } from "antd";
+import { useHistory, useLocation, Link } from "react-router-dom";
 import { useStore } from "../../../stores";
 const { Option } = Select;
 
@@ -59,6 +59,12 @@ export const UserInfoEdit = Form.create()(
           </Breadcrumb>
         </div>
         <Card>
+          <div className="flex justify-center items-center mb-10 flex-col">
+            <Avatar src={auth.user?.pic} size={150} icon="user" />
+            <Link className="mt-4" to="/edit-avatar">
+              更换头像
+            </Link>
+          </div>
           <Form {...formItemLayout} onSubmit={doSubmit}>
             <Form.Item label="员工姓名">
               <Input placeholder="请输入用户姓名" value={auth.user?.name} disabled />

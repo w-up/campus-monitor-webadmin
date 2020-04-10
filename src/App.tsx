@@ -15,8 +15,9 @@ import zhCN from "antd/es/locale/zh_CN";
 import { useEffect } from "react";
 import { UserInfoEdit } from "./pages/basic/UserProfile/UserInfoEdit";
 import { UserPasswordEdit } from "./pages/basic/UserProfile/UserPasswordEdit";
+import { UserAvatarEdit } from "pages/basic/UserProfile/UserAvatarEdit";
 
-const App = props => {
+const App = (props) => {
   const { menu, auth, root } = useStore();
   console.log(props);
   useEffect(() => {
@@ -24,7 +25,7 @@ const App = props => {
   }, []);
 
   const renderRoute = (data: any[]) => {
-    return data.map(item => {
+    return data.map((item) => {
       if (item.children && item.children.length > 0) {
         return (
           <Route path={item.path} key={item.path} component={item.component}>
@@ -49,7 +50,7 @@ const App = props => {
                 overflow: "auto",
                 height: "100vh",
                 position: "fixed",
-                left: 0
+                left: 0,
               }}
               trigger={null}
               collapsible
@@ -64,6 +65,8 @@ const App = props => {
                 <Route path="/system" component={System} />
                 <Route path="/profile" component={UserInfoEdit} />
                 <Route path="/edit-password" component={UserPasswordEdit} />
+                <Route path="/edit-avatar" component={UserAvatarEdit} />
+
                 {renderRoute(menu.menus)}
                 <Redirect path="/" to={{ pathname: "/base/park" }} />
               </Switch>

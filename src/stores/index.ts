@@ -31,8 +31,11 @@ import { Rank } from "./analysis/Rank";
 import { Comparison } from "./analysis/Comparison";
 import { Report } from "./Report";
 import { RootStore } from "./RootStore";
+import { WsStore } from "./WsStore";
+import { AlertModal } from "./alert/AlertModal";
 
 export const store = {
+  ws: new WsStore(),
   root: new RootStore(),
   menu: new MenuStore(),
   auth: new AuthStore(),
@@ -40,13 +43,13 @@ export const store = {
   mapMonitor: new MapMonitorStore(),
   dynamicSource: new DynamicSourceStore(),
   map: {
-    drawMap: new DrawMapStore()
+    drawMap: new DrawMapStore(),
   },
   screen: {
     parkScreenMap: new ParkScreenMapStore(),
     enterpriseScreenMap: new EnterpriseScreenMapStore(),
     gasTable: new GasTableStore(),
-    sewageTable: new SewageTableStore()
+    sewageTable: new SewageTableStore(),
   },
   base: {
     park: new Park(),
@@ -57,28 +60,29 @@ export const store = {
     user: new UserManagement(),
     userEdit: new UserEdit(),
     role: new Roles(),
-    roleEdit: new RoleEdit()
+    roleEdit: new RoleEdit(),
   },
   systemConfig: new SystemConfig(),
   data: {
     manage: new DataManage(),
     replenish: new Replenish(),
     audit: new DataAudit(),
-    view: new DataView()
+    view: new DataView(),
   },
   query: {
     runTimeData: new RuntimeData(),
-    historyData: new HistoryData()
+    historyData: new HistoryData(),
   },
   analysis: {
     rank: new Rank(),
-    comparison: new Comparison()
+    comparison: new Comparison(),
   },
   alert: {
     alertManage: new AlertManage(),
-    alertSetting: new AlertSetting()
+    alertSetting: new AlertSetting(),
+    modal: new AlertModal(),
   },
-  report: new Report()
+  report: new Report(),
 };
 //@ts-ignore
 global._store = store;
