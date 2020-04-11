@@ -19,7 +19,7 @@ export const MonitorAlert = () => {
         <Icon type="caret-right" theme="filled" className="primary-text-color" />
         <span className="ml-2">告警信息</span>
       </div>
-      <Scrollbars style={{ height: "80vh" }}>
+      <Scrollbars style={{ height: "calc(100vh - 120px)" }}>
       {mapMonitor.alarms.map((item) => {
         return <AlertItem item={item}></AlertItem>;
       })}

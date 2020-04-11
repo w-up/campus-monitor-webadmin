@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0b5aa787-9ba3-4839-bcb1-9b38c1c54b5a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AlertItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AlertItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MapMonitor/MonitorAlert.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MapMonitor/MonitorAlert.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MapMonitor/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MapMonitor/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +98,7 @@
       <workItem from="1585736107268" duration="7082000" />
       <workItem from="1586485776330" duration="8116000" />
       <workItem from="1586524708929" duration="2000" />
-      <workItem from="1586581801623" duration="7161000" />
+      <workItem from="1586581801623" duration="7428000" />
     </task>
     <servers />
   </component>

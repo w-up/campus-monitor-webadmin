@@ -62,7 +62,7 @@ const App = (props) => {
               </Scrollbars>
             </Layout.Sider>
             <Layout.Content style={{marginLeft: menu.collapsed ? 80 : 200}}>
-              <Scrollbars style={{height: "100vh"}}>
+              <Scrollbars style={{height: "calc(100vh - 64px)" }}>
                 <Switch>
                   <Route path="/base" component={Basic}/>
                   <Route path="/user" component={User}/>
