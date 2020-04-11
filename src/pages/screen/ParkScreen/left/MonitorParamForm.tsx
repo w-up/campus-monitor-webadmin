@@ -6,6 +6,7 @@ import { useStore } from "../../../../stores/index";
 import { useLocalStorage } from "react-use";
 import { useEffect } from "react";
 import moment from "moment";
+import {Moment} from "../../../../utils/moment-util";
 
 //@ts-ignore
 export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtils }) => {
@@ -36,7 +37,7 @@ export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtil
       e.preventDefault();
       form.validateFieldsAndScroll((err, values) => {
         if (!err) {
-          this.updateTime = moment().format("YYYY-MM-DD HH:ss");
+          this.updateTime = Moment().format("YYYY-MM-DD HH:mm:ss");
           console.log("Received values of form: ", values);
           parkScreenMap.loadConcernSiteData(values.pmCode);
         }
