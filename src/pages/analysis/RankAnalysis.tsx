@@ -103,7 +103,7 @@ export const RankAnalysisPage = Form.create()(
                     )}
                   </Form.Item>
 
-                  <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="监测类型">
+                  <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="因子分类">
                     {getFieldDecorator("ptId", { initialValue: "", rules: [{ required: true }] })(
                       <Select placeholder="请选择" size="small">
                         {ptList.map((item) => (

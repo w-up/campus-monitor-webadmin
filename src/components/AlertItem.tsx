@@ -15,7 +15,7 @@ export const AlertItem = ({ item }: { item: AlarmInfo }) => {
         </Col>
       </Row>
       <Row className="alertCardRow">
-        <Col span={8}>监测类型:</Col>
+        <Col span={8}>因子分类:</Col>
         <Col className="text-right" span={12} offset={4}>
           {item.monitorType}
         </Col>
