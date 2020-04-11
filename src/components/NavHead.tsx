@@ -1,6 +1,6 @@
 import React from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
-import { Icon, Layout, Menu, Dropdown } from "antd";
+import { Icon, Layout, Menu, Dropdown, Avatar } from "antd";
 import { useStore } from "../stores";
 import { Link, Route, useHistory } from "react-router-dom";
 import { Basic } from "../pages/basic/Basic";
@@ -14,7 +14,7 @@ export const NavHead = () => {
     async logout() {
       await auth.logout();
       history.replace("/login");
-    }
+    },
   }));
   const userMenu = (
     <Menu>
@@ -42,22 +42,21 @@ export const NavHead = () => {
         justifyContent: "space-between",
         position: "fixed",
         zIndex: 51,
-        width: "100%"
+        width: "100%",
       }}
     >
       <h1 style={{ color: "#fff", fontSize: "20px" }}>工业园区在线监测告警平台</h1>
       <Dropdown overlay={userMenu}>
         <a
           style={{
-            width: "80px",
             color: "#fff",
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
-          <Icon type="user" style={{ fontSize: "20px" }} />
-          {auth.user?.username}
+          <Avatar src={auth.user?.pic} size={32} icon="user" />
+          <span className="ml-2">{auth.user?.username}</span>
           <Icon type="down" style={{ fontSize: "16px" }} />
         </a>
       </Dropdown>

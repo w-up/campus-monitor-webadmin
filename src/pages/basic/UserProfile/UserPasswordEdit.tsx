@@ -3,6 +3,7 @@ import {observer, useObserver} from "mobx-react-lite";
 import {Breadcrumb, Button, Card, Form, Input, Radio, Select, Spin} from "antd";
 import {useHistory, useLocation} from "react-router-dom";
 import {useStore} from "../../../stores";
+import { WrappedFormUtils } from 'antd/lib/form/Form';
 
 const {Option} = Select;
 
@@ -30,7 +31,7 @@ const tailFormItemLayout = {
   },
 };
 
-export const UserPasswordEdit = Form.create()(observer(({form}: any) => {
+export const UserPasswordEdit = Form.create()(observer(({form}: {form: WrappedFormUtils}) => {
 
   const history = useHistory();
 
@@ -39,7 +40,7 @@ export const UserPasswordEdit = Form.create()(observer(({form}: any) => {
   const {getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields} = form;
 
   const compareToFirstPassword = (rule, value, callback) => {
-    if (value && value !== form.getFieldValue('password')) {
+    if (value && value !== form.getFieldValue('newPassword')) {
       callback("两次输入的密码不一致");
     } else {
       callback();
@@ -79,7 +80,7 @@ export const UserPasswordEdit = Form.create()(observer(({form}: any) => {
       <Card>
         <Form {...formItemLayout} onSubmit={doSubmit}>
 
-          <Form.Item label="原登录">
+          <Form.Item label="原密码">
             {getFieldDecorator("password", {initialValue: null, rules: [{required: true, message: "请输入原密码"}]})(
               <Input.Password placeholder="原登录密码"/>
             )}

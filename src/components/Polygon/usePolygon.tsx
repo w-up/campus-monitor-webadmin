@@ -24,6 +24,13 @@ export default (props = {} as UsePolygon) => {
       polygon.setPath(points);
     }
   };
+  // useEffect(() => {
+  //   return () => {
+  //     if(map && polygon){
+  //       map.removeOverlay(polygon)
+  //     }
+  //   }
+  // }, [])
 
   useVisiable(polygon!, props);
   useEventProperties<BMap.Polygon, UsePolygon>(polygon!, props, ["Click", "DoubleClick", "MouseDown", "MouseUp", "MouseOut", "MouseOver", "Remove", "LineUpdate"]);

@@ -48,6 +48,7 @@ export interface SitePMValue {
   pmName: string;
   pmCode: string;
   collectValue: string;
+  collectValueUnit: string;
   unit: string;
   pmType: number;
   limit: number;
@@ -199,15 +200,16 @@ export type ContributionData = {
 
 export type AlarmInfo = {
   id: string;
+  warnTarget: string;
   monitorType: string;
   siteName: string;
   warnName: string;
   warnLevel: string;
   warnTime: string;
-  totalTime: string;
+  totalTime: number;
   warnPeriod: number;
   pmValue: string;
-  deviceName: string;
+  deviceName: string | null;
 };
 
 export type PollutionData = {

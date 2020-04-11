@@ -7,7 +7,7 @@
     "@types/geolib": "^2.0.23",
     "@types/mockjs": "^1.0.2",
     "@types/moment-timezone": "^0.5.12",
-    "@uiw/react-baidu-map": "^1.15.3",
+    "@uiw/react-baidu-map": "^1.17.1",
     "antd": "^3.26.11",
     "axios": "^0.19.2",
     "axios-hooks": "^1.9.0",
@@ -31,7 +31,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "react-use": "^13.24.0",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "websocket-as-promised": "^1.0.1"
   },
   "scripts": {
     "build:css": "postcss tailwind.css -o src/index.css",

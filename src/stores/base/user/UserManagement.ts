@@ -79,7 +79,15 @@ export class UserManagement {
     this.query = {
       ...this.query,
       status: val,
-    }
+    };
+    this.resetSelectedRowKeys();
+  }
+
+  @action.bound
+  async resetPwds(ids) {
+    this.loading = true;
+    const { data }: any = await POST('/user/resetPwds', { ids });
+    this.loading = false;
   }
 
   @action.bound

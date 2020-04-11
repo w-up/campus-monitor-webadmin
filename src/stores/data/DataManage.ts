@@ -7,18 +7,18 @@ export class DataManage {
 
   @observable query: any = {
     current: 1,
-    pageSize: 10
+    pageSize: 10,
   };
   @observable parkTree: any = [];
   @observable ptList: any = [];
   @observable dataSource: any = [];
   @observable deviceList: any = [];
-  
+
   @observable total: number = 0;
 
   @action.bound
   async getCheckDataList(param) {
-    Object.keys(param).forEach(key => {
+    Object.keys(param).forEach((key) => {
       if (!param[key]) {
         delete param[key];
       }
@@ -26,7 +26,7 @@ export class DataManage {
     this.query = {
       ...this.query,
       ...param,
-    }
+    };
     this.loading = true;
 
     const newParam = {
@@ -38,17 +38,14 @@ export class DataManage {
     };
 
     try {
-      const { data }: any = await POST('/dataAdd/getDataAddByPageBySelf', newParam);
-  
+      const { data }: any = await POST("/dataAdd/getDataAddByPageBySelf", newParam);
+
       this.total = data.total;
       this.query.pageSize = data.size;
       this.query.current = data.current;
       this.dataSource = data.records;
-      
-    } catch {
+    } catch {}
 
-    }
-    
     this.loading = false;
   }
 
@@ -56,37 +53,30 @@ export class DataManage {
   async getAllSitesTree() {
     this.loading = true;
     try {
-      const { data }: any = await GET('/device-site/getAllSitesTreeAndPMTypeLogin', {});
-      this.parkTree = data.pfsList;
-      this.ptList = data.ptList;
-    } catch {
-
-    }
+      const { data }: any = await GET("/device-site/getAllSitesTreeAndPMTypeLogin", {});
+      if (data) {
+        this.parkTree = data.pfsList || [];
+        this.ptList = data.ptList || [];
+      }
+    } catch {}
     this.loading = false;
   }
 
   @action.bound
   async getDevice(siteId) {
     try {
-      const { data }: any = await GET('/dataAdd/getDevice', { siteId });
+      const { data }: any = await GET("/dataAdd/getDevice", { siteId });
       this.deviceList = data;
-    } catch {
-
-    }
-    
+    } catch {}
   }
 
   @action.bound
   async deleteById(id) {
     this.loading = true;
     try {
-      await POST('/dataAdd/deleteById', { id });
-    } catch {
-
-    }
+      await POST("/dataAdd/deleteById", { id });
+    } catch {}
 
     this.loading = false;
   }
-
-
 }

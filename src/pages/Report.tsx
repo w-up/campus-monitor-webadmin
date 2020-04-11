@@ -32,7 +32,7 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
 
   const {
     loading, parkList, companyList, pmList,
-    tableData, tableColumn, chartOption,
+    tableData, tableColumn, chartOption, heatOptions, yearOptions
   } = report;
 
   let pmCodeList: any = [];
@@ -47,6 +47,7 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
         return;
       }
       report.getStatisReport(values);
+      
     });
   }
 
@@ -96,7 +97,7 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
       case 4:
         cardExtra = moment(getFieldValue('collectDate')).format('w');
         break;
-      case 4:
+      case 5:
         cardExtra = moment(getFieldValue('collectDate')).format('Q');
         break;
     }
@@ -214,7 +215,7 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
               {getFieldValue('timeCycle') === 5 &&
               <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
                 {getFieldDecorator("collectDate", { initialValue: '', rules: [{ required: true }] })(
-                  <DatePicker format="Q" style={{ width:  '100%' }} size="small" />
+                  <DatePicker format="YYYY-Q" style={{ width:  '100%' }} size="small" />
                 )}
               </Form.Item>
               }
@@ -239,10 +240,11 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
             <Row gutter={6}>
               <Col span={24} style={{ marginBottom: '10px' }}>
                 <Card bordered size="small" title={`${cardTitle}监测数据`} extra={cardExtra}>
-                  <Table bordered size="small" scroll={{ x: 1300, y: 600 }} pagination={false} columns={toJS(tableColumn)} dataSource={toJS(tableData)} />
+                  <Table bordered size="small" scroll={{ x: 800, y: 600 }} pagination={false} columns={toJS(tableColumn)} dataSource={toJS(tableData)} />
                 </Card>
               </Col>
-              {getFieldValue('timeCycle') === 1 &&
+              
+              {getFieldValue('timeCycle') === 1 && // 日
               <Col span={24} style={{ marginBottom: '10px' }}>
                 <Card bordered size="small" title={`${pmCardTitle}污染物排放浓度${timeCycleArr[getFieldValue('timeCycle') - 1]}趋势图`} extra={cardExtra}>
                   <ReactEcharts
@@ -255,55 +257,73 @@ export const ReportPage = Form.create()(observer(({ form }: any) => {
               </Col>
               }
 
-              {getFieldValue('timeCycle') === 2 &&
+              {getFieldValue('timeCycle') === 2 && // 月
               <Col span={24} style={{ marginBottom: '10px' }}>
-                <Card bordered size="small" title={`${pmCardTitle}污染物按${timeCycleArr[getFieldValue('timeCycle') - 1]}排放情况`} extra={cardExtra}>
-                  <ReactEcharts
-                    //@ts-ignore
-                    option={toJS(chartOption)}
-                    ref={chart3}
-                    style={{ height: '360px' }}
-                  />
-                </Card>
+                {heatOptions.map(option => {
+                  return (
+                  <Col span={12}>
+                    <Card bordered size="small" title={`${option.series[0].name}按月排放浓度趋势图`} extra={cardExtra}>
+                      <ReactEcharts
+                        //@ts-ignore
+                        option={toJS(option)}
+                        // style={{ height: '360px' }}
+                      />
+                    </Card>
+                  </Col>
+                  );
+                })}
+
               </Col>
               }
 
-              {getFieldValue('timeCycle') === 3 &&
-              <Col span={12} style={{ marginBottom: '10px' }}>
-                <Card bordered size="small" title={`${pmCardTitle}污染物按${timeCycleArr[getFieldValue('timeCycle') - 1]}排放情况`} extra={cardExtra}>
-                  <ReactEcharts
-                    //@ts-ignore
-                    option={toJS(chartOption)}
-                    ref={chart3}
-                    style={{ height: '360px' }}
-                  />
-                </Card>
+              {getFieldValue('timeCycle') === 3 && // 年
+              <Col span={24} style={{ marginBottom: '10px' }}>
+                {yearOptions.map(option => {
+                  return (
+                  <Col span={12}>
+                    <Card bordered size="small" title={`${option.series[0].name}各月份报警次数排行榜`} extra={cardExtra}>
+                      <ReactEcharts
+                        //@ts-ignore
+                        option={toJS(option)}
+                        // style={{ height: '360px' }}
+                      />
+                    </Card>
+                  </Col>
+                  );
+                })}
               </Col>
               }
 
-              {getFieldValue('timeCycle') === 4 &&
-              <Col span={12} style={{ marginBottom: '10px' }}>
-                <Card bordered size="small" title={`${pmCardTitle}污染物按周排放情况`} extra={`第${cardExtra}周`}>
-                  <ReactEcharts
-                    //@ts-ignore
-                    option={toJS(chartOption)}
-                    ref={chart3}
-                    style={{ height: '360px' }}
-                  />
-                </Card>
+              {getFieldValue('timeCycle') === 4 && // 周
+              <Col span={24} style={{ marginBottom: '10px' }}>
+                {heatOptions.map(option => {
+                  return (
+                  <Card bordered size="small" title={`${option.series[0].name}污染物按周排放情况`} extra={`第${cardExtra}周`}>
+                    <ReactEcharts
+                      //@ts-ignore
+                      option={toJS(option)}
+                      style={{ height: '360px' }}
+                    />
+                  </Card>
+                  );
+                })}
+                
               </Col>
               }
 
-              {getFieldValue('timeCycle') === 5 &&
-              <Col span={12} style={{ marginBottom: '10px' }}>
-                <Card bordered size="small" title={`${pmCardTitle}污染物按周排放情况`} extra={`第${cardExtra}季度`}>
-                  <ReactEcharts
-                    //@ts-ignore
-                    option={toJS(chartOption)}
-                    ref={chart3}
-                    style={{ height: '360px' }}
-                  />
-                </Card>
+              {getFieldValue('timeCycle') === 5 && // 季
+              <Col span={24} style={{ marginBottom: '10px' }}>
+                {heatOptions.map(option => {
+                  return (
+                  <Card bordered size="small" title={`${option.series[0].name}污染物按季排放情况`} extra={`第${cardExtra}季度`}>
+                    <ReactEcharts
+                      //@ts-ignore
+                      option={toJS(option)}
+                      style={{ height: '360px' }}
+                    />
+                  </Card>
+                  );
+                })}
               </Col>
               }
               

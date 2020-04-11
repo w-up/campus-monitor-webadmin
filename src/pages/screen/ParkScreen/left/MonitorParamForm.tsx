@@ -12,7 +12,7 @@ export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtil
   const { getFieldDecorator } = form;
   const {
     config,
-    screen: { parkScreenMap }
+    screen: { parkScreenMap },
   } = useStore();
 
   // const [currentPmType, setCurrentType] = useLocalStorage("screen.parkScreen.MonitorParamForm.currentPmType", "0");
@@ -26,11 +26,11 @@ export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtil
     updateTime: null as any,
     formItemLayout: {
       labelCol: {
-        span: 6
+        span: 6,
       },
       wrapperCol: {
-        span: 18
-      }
+        span: 18,
+      },
     },
     handleSubmit(e) {
       e.preventDefault();
@@ -41,15 +41,15 @@ export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtil
           parkScreenMap.loadConcernSiteData(values.pmCode);
         }
       });
-    }
+    },
   }));
 
   return useObserver(() => (
     <div className="runtim-monitor screenFormStyle primary-text-color pr-6">
       <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
-        <Form.Item label="监测类型">
+        <Form.Item label="因子分类">
           {getFieldDecorator("type", { initialValue: parkScreenMap.currentPmType })(
-            <Select onChange={parkScreenMap.setCurrentPmType} getPopupContainer={(e:any) => e.parentNode}>
+            <Select onChange={parkScreenMap.setCurrentPmType} getPopupContainer={(e: any) => e.parentNode}>
               <Select.Option value="0">全部</Select.Option>
               {Object.values(config.pmTypes).map((item, index) => (
                 <Select.Option value={item.id}>{item.label}</Select.Option>
@@ -59,7 +59,7 @@ export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtil
         </Form.Item>
         <Form.Item label="监测因子">
           {getFieldDecorator("pmCode", { initialValue: parkScreenMap.currentPmCode, rules: [{ required: true }] })(
-            <Select onChange={parkScreenMap.setCurrentPmCode} getPopupContainer={(e:any) => e.parentNode}>
+            <Select onChange={parkScreenMap.setCurrentPmCode} getPopupContainer={(e: any) => e.parentNode}>
               <Select.Option value="0">全部</Select.Option>
               {parkScreenMap.currentPmcodes.map((item, index) => (
                 <Select.Option value={item.pmCode} key={index}>

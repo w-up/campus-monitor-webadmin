@@ -3,10 +3,11 @@ import { store } from "./index";
 
 export class RootStore {
   @action.bound
-  init() {
+  async init() {
     if (store.auth.token) {
-      store.auth.getAuthUser();
-      store.config.init();
+      await store.auth.getAuthUser();
+      await store.config.init();
+      await store.ws.init();
     }
   }
 }

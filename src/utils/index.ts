@@ -5,37 +5,36 @@ export const utils = {
   number: {
     toPrecision(val: any, precision = 3) {
       if (!val) return 0;
-      return Number(val)
-        .toPrecision(precision)
-        .replace("e+", "*10^");
-    }
+      return Number(val).toPrecision(precision).replace("e+", "*10^");
+    },
   },
   img: {
     getImageUrl(path: string) {
+      if (!path) return;
       if (path.startsWith("data:image")) return path;
       return `${globalConfig.apiEndpoint}/${path}`;
-    }
+    },
   },
   obj: {
     formatLatLngShort(i) {
       if (!i) {
         return {
           lat: 0,
-          lng: 0
+          lng: 0,
         };
       }
       return {
         lat: i.latitude,
-        lng: i.longitude
+        lng: i.longitude,
       };
-    }
+    },
   },
   array: {
     formatToLatLngLong(arr) {
       if (!arr) return [];
-      return arr.map(i => ({
+      return arr.map((i) => ({
         latitude: i.lat,
-        longitude: i.lng
+        longitude: i.lng,
       }));
     },
     formatToLatLngShort(arr) {
@@ -56,6 +55,6 @@ export const utils = {
         return arr.slice(arr.length - count, arr.length);
       }
       return arr.slice(left, left + count);
-    }
-  }
+    },
+  },
 };

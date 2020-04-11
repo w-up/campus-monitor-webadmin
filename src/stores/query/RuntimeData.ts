@@ -20,12 +20,12 @@ export class RuntimeData {
   async getAllSitesTree() {
     this.loading = true;
     try {
-      const { data }: any = await GET('/device-site/getAllSitesTreeAndPMTypeLogin', {});
-      this.parkTree = data.pfsList;
-      this.ptList = data.ptList;
-    } catch {
-
-    }
+      const { data }: any = await GET("/device-site/getAllSitesTreeAndPMTypeLogin", {});
+      if (data) {
+        this.parkTree = data.pfsList || [];
+        this.ptList = data.ptList || [];
+      }
+    } catch {}
     this.loading = false;
   }
 
@@ -47,28 +47,25 @@ export class RuntimeData {
     delete param.factoryId;
     delete param.parkId;
 
-    Object.keys(param).forEach(key => {
-      if (param[key] === '' || param[key].length === 0) {
+    Object.keys(param).forEach((key) => {
+      if (param[key] === "" || param[key].length === 0) {
         delete param[key];
         delete this.query[key];
       }
     });
-    
+
     this.query = {
       ...this.query,
       ...param,
-    }
+    };
 
     try {
-      const { data }: any = await POST('/device-data/getAllPMDataBySitesAndPMs', this.query);
+      const { data }: any = await POST("/device-data/getAllPMDataBySitesAndPMs", this.query);
       this.columns = data.titles.map((item, index) => {
-        const config = { ...item, width: 80, key: item.titleKey, dataIndex: item.titleKey };
+        const config = { ...item, width: 100, key: item.titleKey, dataIndex: item.titleKey };
         if (index === 0) {
-          config.fixed = 'left';
+          config.fixed = "left";
           config.width = 150;
-        } else if (index === (data.titles.length - 1)) {
-          config.fixed = 'right';
-          config.width = 200;
         }
         return config;
       });
@@ -77,10 +74,8 @@ export class RuntimeData {
       this.total = data.dataList.total;
       this.query.size = data.dataList.size;
       this.query.current = data.dataList.current;
-    } catch {
+    } catch {}
 
-    }
-    
     this.loading = false;
   }
 }

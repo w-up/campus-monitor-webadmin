@@ -794,7 +794,10 @@ svg {
 .replenishPage,
 .managePage,
 .auditPage,
-.dataViewPage {
+.dataViewPage,
+.myEnterprisePage,
+.userManagePage,
+.parkPage {
   .ant-table * {
     font-size: 12px !important;
   }

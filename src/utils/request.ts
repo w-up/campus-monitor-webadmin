@@ -14,10 +14,10 @@ Axios.defaults.withCredentials = true;
 
 let http = Axios.create({
   baseURL: globalConfig.apiEndpoint,
-  timeout: 60 * 1000
+  timeout: 60 * 1000,
 });
 
-http.interceptors.request.use(async config => {
+http.interceptors.request.use(async (config) => {
   if (!config.headers["Authorization"]) {
     config.headers["Authorization"] = `Bearer ${store.auth.token}`;
   }
@@ -25,7 +25,7 @@ http.interceptors.request.use(async config => {
 });
 
 http.interceptors.response.use(
-  response => {
+  (response) => {
     try {
       const res = response.data;
       if (typeof res !== "object") {
@@ -45,7 +45,7 @@ http.interceptors.response.use(
       return response;
     }
   },
-  error => {
+  (error) => {
     if (error && error.response) {
       message.error(error.response.msg);
     }
@@ -62,8 +62,7 @@ export function POST(url, paramsOrData?) {
 }
 
 export function FORM_POST(url, paramsOrData?) {
-  return http({ method: "POST", headers: { 'Content-Type': 'multipart/form-data' }, url, data: paramsOrData });
+  return http({ method: "POST", headers: { "Content-Type": "multipart/form-data" }, url, data: paramsOrData });
 }
-
 
 export default http;
