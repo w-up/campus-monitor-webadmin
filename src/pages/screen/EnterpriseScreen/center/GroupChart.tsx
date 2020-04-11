@@ -52,7 +52,7 @@ export const EnterpriseScreenGroupChart = () => {
           ></Tabs.TabPane>
         ))}
       </Tabs>
-      {enterpriseScreenMap.curSiteRuntimeData.length > 0 && <LineChart datas={enterpriseScreenMap.curSiteRuntimeData}></LineChart>}
+      {enterpriseScreenMap.curSiteRuntimeData.length > 0 && <LineChart animate datas={enterpriseScreenMap.curSiteRuntimeData}></LineChart>}
     </div>
   ));
 };

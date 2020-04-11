@@ -6,7 +6,7 @@ import { utils } from "utils";
 import { DailySewage } from "../type";
 import { useEffect, useMemo } from "react";
 
-export const LineChart = (props: { datas: Array<DailySewage> }) => {
+export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean }) => {
   const mapRef = React.useRef<any>();
   const store = useLocalStore(() => ({
     dataIndex: 0,
@@ -163,18 +163,20 @@ export const LineChart = (props: { datas: Array<DailySewage> }) => {
     },
   }));
   useEffect(() => {
-    setInterval(() => {
-      store.dataIndex >= store.maxDataIndex ? (store.dataIndex = 0) : store.dataIndex++;
-      const mapInst = mapRef.current?.getEchartsInstance();
-      if (mapInst) {
-        mapInst.dispatchAction({
-          type: "showTip",
-          seriesIndex: 0, // 显示第几个serindexes
-          dataIndex: store.dataIndex, // 显示第几个数据
-          // position: ["45%", "10%"]
-        });
-      }
-    }, 1000);
+    if (props.animate) {
+      setInterval(() => {
+        store.dataIndex >= store.maxDataIndex ? (store.dataIndex = 0) : store.dataIndex++;
+        const mapInst = mapRef.current?.getEchartsInstance();
+        if (mapInst) {
+          mapInst.dispatchAction({
+            type: "showTip",
+            seriesIndex: 0, // 显示第几个serindexes
+            dataIndex: store.dataIndex, // 显示第几个数据
+            // position: ["45%", "10%"]
+          });
+        }
+      }, 1000);
+    }
   }, []);
   return useObserver(() => (
     <div>
