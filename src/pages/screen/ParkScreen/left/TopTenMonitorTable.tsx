@@ -38,10 +38,10 @@ export const TopTenMonitorTable = () => {
                 <Slide index={index}>
                   {page.map((item) => {
                     return (
-                      <div className="listItem tabTitle" onClick={(e) => parkScreenMap.setCurrentSite(item.siteId)}>
+                      <div className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"} onClick={(e) => parkScreenMap.setCurrentSite(item.siteId)}>
                         <div>{item.siteName}</div>
                         <div>
-                          <span style={{ color: Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "red" : "" }}>{utils.number.toPrecision(item.collectValue)}</span>
+                          <span>{utils.number.toPrecision(item.collectValue)}</span>
                         </div>
                         <div>{item.limit}</div>
                         <div>{item.overRate}</div>

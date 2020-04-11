@@ -45,11 +45,11 @@ export const SewageWaterTable = () => {
           <Scrollbars style={{ height: 250 }}>
             {parkScreenMap.gasData.map(item => {
               return (
-                <div className="listItem tabTitle">
+                <div className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"}>
                   <div>{item.factoryName}</div>
                   <div>{item.pmName}</div>
                   <div>
-                    <span style={{ color: Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "red" : "" }}>{utils.number.toPrecision(item.collectValue)}</span>
+                    <span>{utils.number.toPrecision(item.collectValue)}</span>
                   </div>
                   <div>{item.limit}</div>
                 </div>
