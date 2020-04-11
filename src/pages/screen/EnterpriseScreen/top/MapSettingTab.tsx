@@ -1,18 +1,18 @@
 import React from "react";
-import { useLocalStore, useObserver } from "mobx-react-lite";
-import { Form, Icon, Button } from "antd";
-import { WrappedFormUtils } from "antd/lib/form/Form";
+import {useLocalStore, useObserver} from "mobx-react-lite";
+import {Form, Icon, Button} from "antd";
+import {WrappedFormUtils} from "antd/lib/form/Form";
 import Input from "antd/lib/input";
 import Upload from "antd/lib/upload";
 import Modal from "antd/lib/modal";
-import { useStore } from "stores";
-import { Scrollbars } from "react-custom-scrollbars";
-import { utils } from "../../../../utils/index";
+import {useStore} from "stores";
+import {Scrollbars} from "react-custom-scrollbars";
+import {utils} from "../../../../utils/index";
 
-export const MapSettingTab = Form.create()(({ form }: { form: WrappedFormUtils }) => {
-  const { getFieldDecorator } = form;
+export const MapSettingTab = Form.create()(({form}: { form: WrappedFormUtils }) => {
+  const {getFieldDecorator} = form;
   const {
-    screen: { enterpriseScreenMap }
+    screen: {enterpriseScreenMap}
   } = useStore();
 
   const store = useLocalStore(() => ({
@@ -42,7 +42,7 @@ export const MapSettingTab = Form.create()(({ form }: { form: WrappedFormUtils }
       store.previewVisible = true;
       store.previewImage = file.url || file.preview;
     },
-    handleChange: async ({ file }) => {
+    handleChange: async ({file}) => {
       const formData = new FormData();
       formData.append("pic", file);
       console.log(file);
@@ -65,7 +65,7 @@ export const MapSettingTab = Form.create()(({ form }: { form: WrappedFormUtils }
   }));
   const uploadButton = (
     <div>
-      <Icon type="plus" />
+      <Icon type="plus"/>
       <div className="ant-upload-text">Upload</div>
     </div>
   );
@@ -73,9 +73,11 @@ export const MapSettingTab = Form.create()(({ form }: { form: WrappedFormUtils }
   return useObserver(() => (
     <div className="">
       <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
-        <Scrollbars style={{ height: 320 }}>
+        <Scrollbars style={{height: 320}}>
           <Form.Item label="俯视角度">
-            <Input type="number" value={enterpriseScreenMap.curMapConfig.highAngle} onChange={e => (enterpriseScreenMap.curMapConfig.highAngle = Number(e.target.value))} style={{ width: "80%" }} />
+            <Input type="number" value={enterpriseScreenMap.curMapConfig.highAngle}
+                   onChange={e => (enterpriseScreenMap.curMapConfig.highAngle = Number(e.target.value))}
+                   style={{width: "80%"}}/>
           </Form.Item>
           <div>
             <Form.Item label="中心坐标">
@@ -84,31 +86,40 @@ export const MapSettingTab = Form.create()(({ form }: { form: WrappedFormUtils }
                   type="number"
                   value={enterpriseScreenMap.curMapConfig.longitude}
                   onChange={e => (enterpriseScreenMap.curMapConfig.longitude = Number(e.target.value))}
-                  style={{ width: "45%", marginRight: "5%" }}
+                  style={{width: "45%", marginRight: "5%"}}
                 />
-                <Input type="number" value={enterpriseScreenMap.curMapConfig.latitude} onChange={e => (enterpriseScreenMap.curMapConfig.latitude = Number(e.target.value))} style={{ width: "45%" }} />
+                <Input type="number" value={enterpriseScreenMap.curMapConfig.latitude}
+                       onChange={e => (enterpriseScreenMap.curMapConfig.latitude = Number(e.target.value))}
+                       style={{width: "45%"}}/>
               </span>
             </Form.Item>
           </div>
           <Form.Item label="缩放比例">
-            <Input type="number" value={enterpriseScreenMap.curMapConfig.zoom} onChange={e => (enterpriseScreenMap.curMapConfig.zoom = Number(e.target.value))} style={{ width: "80%" }} />
+            <Input type="number" value={enterpriseScreenMap.curMapConfig.zoom}
+                   onChange={e => (enterpriseScreenMap.curMapConfig.zoom = Number(e.target.value))}
+                   style={{width: "80%"}}/>
           </Form.Item>
           <Form.Item label="旋转角度">
             <Input
               type="number"
               value={enterpriseScreenMap.curMapConfig.rotationAngle}
               onChange={e => (enterpriseScreenMap.curMapConfig.rotationAngle = Number(e.target.value))}
-              style={{ width: "80%" }}
+              style={{width: "80%"}}
             />
           </Form.Item>
           <Form.Item label="3D仿真地图">
-            {getFieldDecorator("type", { initialValue: 1 })(
-              <div className="clearfix">
-                <Upload listType="picture-card" showUploadList={false} beforeUpload={store.beforeUpload} onPreview={store.handlePreview} onChange={store.handleChange}>
-                  {enterpriseScreenMap.curMapConfig.picUrl ? <img src={utils.img.getImageUrl(enterpriseScreenMap.curMapConfig.picUrl)} alt="avatar" style={{ width: "100%" }} /> : uploadButton}
+            {getFieldDecorator("type", {initialValue: 1})(
+              <div className="clearfix relative">
+                <Upload listType="picture-card" showUploadList={false} beforeUpload={store.beforeUpload}
+                        onPreview={store.handlePreview} onChange={store.handleChange}>
+                  {enterpriseScreenMap.curMapConfig.picUrl ?
+                    <img src={utils.img.getImageUrl(enterpriseScreenMap.curMapConfig.picUrl)} alt="avatar"
+                         style={{width: "100%"}}/> : uploadButton}
                 </Upload>
+                {enterpriseScreenMap.curMapConfig.picUrl &&
+                <img className="cursor-pointer" style={{width: 20, position: "absolute", top: -10, left: 70}} src="/images/map_delete@2x.png"/>}
                 <Modal visible={store.previewVisible} footer={null} onCancel={store.handleCancel}>
-                  <img alt="example" style={{ width: "100%" }} src={store.previewImage} />
+                  <img alt="example" style={{width: "100%"}} src={store.previewImage}/>
                 </Modal>
               </div>
             )}
