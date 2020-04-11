@@ -7,16 +7,17 @@ export const PieChart = (props: { showLegend?: boolean; pieRadius?: string; cent
   const store = useLocalStore(() => ({
     get options() {
       return {
+        props,
         tooltip: {
           trigger: "item",
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
+          formatter: "{a} <br/>{b} : {c} ({d}%)",
         },
         legend: {
           show: props.showLegend || true,
           orient: "vertical",
           bottom: "0",
           left: "40%",
-          data: props.data.map(i => i.key)
+          data: props.data.map((i) => i.key),
         },
         series: [
           {
@@ -26,22 +27,22 @@ export const PieChart = (props: { showLegend?: boolean; pieRadius?: string; cent
             center: props.center || ["50%", "50%"],
             labelLine: {
               normal: {
-                show: false
-              }
+                show: false,
+              },
             },
-            data: props.data.map(i => ({ name: i.key, value: i.value })),
+            data: props.data.map((i) => ({ name: i.key, value: i.value })),
             label: {
               normal: {
-                formatter: params => {
+                formatter: (params) => {
                   return params.percent + "%";
                 },
-                position: "inner"
-              }
-            }
-          }
-        ]
+                position: "inner",
+              },
+            },
+          },
+        ],
       };
-    }
+    },
   }));
   return useObserver(() => (
     <div className="mt-4">

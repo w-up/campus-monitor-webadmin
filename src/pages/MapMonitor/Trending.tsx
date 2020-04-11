@@ -2,9 +2,6 @@ import React from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
 import { Form, Select, Button, Table, Icon, DatePicker, Radio, Divider, Spin } from "antd";
 import { WrappedFormUtils } from "antd/lib/form/Form";
-import { TableProps } from "antd/lib/table";
-import { ColumnLineChart } from "../../components/ColumnLineChart";
-import { LineChart } from "../../components/LineChart";
 import { useStore, store } from "../../stores/index";
 import api from "services";
 import moment from "moment";
@@ -253,13 +250,15 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
               var text = params[i].axisValue;
               //值
               var value = params[i].data;
-              showHtml += `
+              if (Number(value) > 0) {
+                showHtml += `
             <div style="display:flex;align-items: center;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
             <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? utils.number.toPrecision(value) : ""}</div>
           </div>
           `;
+              }
             }
             return `<div style="color: #04F9CC;text-align:left;line-height:20px">${text} 日均</div>
             <div style="color:#88A8C5;text-align:left;font-size:10px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">

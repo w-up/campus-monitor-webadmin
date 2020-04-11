@@ -2,14 +2,9 @@ import { action, observable, computed } from "mobx";
 import { ComplexCustomOverlay } from "../../pages/screen/EnterpriseScreen/customOverlay";
 import api from "services";
 import { SitlePMData, DailySewage } from "../../type";
-import keyBy from "lodash/keyBy";
 import { _ } from "utils/lodash";
 import { message, notification } from "antd";
-import { store } from "../index";
 import style from "../../common/mapStyle";
-import ExampleMap from "../../assets/img/ps23ab282a19d8effb-a4e4-48b5-98dd-2e7d611be405.png";
-import { utils } from "../../utils/index";
-import { POST } from "../../utils/request";
 
 //@ts-ignore
 const BMapGL = window.BMapGL;
@@ -61,12 +56,12 @@ export class EnterpriseScreenMapStore {
       text: v.siteName,
       // update: "15:30:30",
       position: new BMapGL.Point(v.longitude, v.latitude),
-      children: v.pmInfos?.map(pmInfo => ({
+      children: v.pmInfos?.map((pmInfo) => ({
         name: pmInfo.pmName,
         value: pmInfo.collectValue,
         unit: pmInfo.unit,
-        limit: pmInfo.limit
-      }))
+        limit: pmInfo.limit,
+      })),
     }));
   }
   @action.bound
@@ -80,17 +75,17 @@ export class EnterpriseScreenMapStore {
     dates: Array<string>;
   } = {
     pms: [],
-    dates: []
+    dates: [],
   };
   @action.bound
   async loadHoursSewage() {
     const result = await api.DeviceData.getAllPM24HourDatasLogin({ pmType: 2 });
     let HoursSewage: EnterpriseScreenMapStore["HoursSewage"] = {
       pms: _.get(result, "data.pms", []) || [],
-      dates: []
+      dates: [],
     };
     if (HoursSewage.pms.length > 0) {
-      HoursSewage.dates = HoursSewage.pms[0].datas.map(i => i.time);
+      HoursSewage.dates = HoursSewage.pms[0].datas.map((i) => i.time);
     }
     this.HoursSewage = HoursSewage;
   }
@@ -100,7 +95,7 @@ export class EnterpriseScreenMapStore {
     dates: Array<string>;
   } = {
     pms: [],
-    dates: []
+    dates: [],
   };
   @action.bound
   async loadDailySewage() {
@@ -108,10 +103,10 @@ export class EnterpriseScreenMapStore {
     const result = await api.DeviceData.getAllPM7DayDatasLogin({ pmType: 2 });
     let dailySewage: EnterpriseScreenMapStore["dailySewage"] = {
       pms: _.get(result, "data.pms", []) || [],
-      dates: []
+      dates: [],
     };
     if (dailySewage.pms.length > 0) {
-      dailySewage.dates = dailySewage.pms[0].datas.map(i => i.time);
+      dailySewage.dates = dailySewage.pms[0].datas.map((i) => i.time);
     }
     this.dailySewage = dailySewage;
   }
@@ -126,6 +121,8 @@ export class EnterpriseScreenMapStore {
       siteName: string;
       datas: Array<{
         collectValue: number;
+        collectValueDe: string;
+        collectValueIn: string;
         unit: string;
         time: string;
       }>;
@@ -146,14 +143,14 @@ export class EnterpriseScreenMapStore {
   @observable currentFactory = "";
 
   get currentFactoryData() {
-    return this.allfactoriy.find(i => i.factoryId == this.currentFactory);
+    return this.allfactoriy.find((i) => i.factoryId == this.currentFactory);
   }
 
   @action.bound
   async loadAllFactory() {
     const result = await api.Factory.getAllFactoryLogin();
     this.allfactoriy = result.data;
-    this.allfactoriy.forEach(i => {
+    this.allfactoriy.forEach((i) => {
       if (i.select) {
         this.currentFactory = i.factoryId;
       }
@@ -187,7 +184,7 @@ export class EnterpriseScreenMapStore {
     }>;
   } = {
     water: [],
-    gas: []
+    gas: [],
   };
 
   @observable selectedPmCodes = [];
@@ -196,8 +193,8 @@ export class EnterpriseScreenMapStore {
     const result = await api.DevicePM.getAllPMsByFactoryId();
     this.allPmCode = result.data || {};
     const selectedPmCodes = [] as any;
-    Object.values(this.allPmCode).forEach(datas => {
-      datas?.forEach(i => {
+    Object.values(this.allPmCode).forEach((datas) => {
+      datas?.forEach((i) => {
         if (i.isSelected) {
           selectedPmCodes.push(i.pmCode);
         }
@@ -227,20 +224,28 @@ export class EnterpriseScreenMapStore {
     rotationAngle: 0,
     picUrl: "",
     pic: undefined as FormData | undefined,
-    zoom: 15
+    zoom: 15,
   };
   @action.bound
   async loadMapConfig() {
     const result = await api.MapConfig.getMapConfigLogin();
-    if (result.data) {
-      this.curMapConfig = result.data;
-      this.updateMap({
-        center: new BMapGL.Point(this.curMapConfig.longitude, this.curMapConfig.latitude),
-        heading: this.curMapConfig.highAngle,
-        zoom: this.curMapConfig.zoom,
-        tilt: this.curMapConfig.rotationAngle
-      });
-    }
+    this.curMapConfig = result.data
+      ? result.data
+      : {
+          highAngle: 0,
+          latitude: 0,
+          longitude: 0,
+          rotationAngle: 0,
+          picUrl: "",
+          pic: undefined as FormData | undefined,
+          zoom: 15,
+        };
+    this.updateMap({
+      center: new BMapGL.Point(this.curMapConfig.longitude, this.curMapConfig.latitude),
+      heading: this.curMapConfig.highAngle,
+      zoom: this.curMapConfig.zoom,
+      tilt: this.curMapConfig.rotationAngle,
+    });
   }
 
   @action.bound
@@ -252,7 +257,7 @@ export class EnterpriseScreenMapStore {
       longitude,
       rotationAngle,
       zoom,
-      pic
+      pic,
     });
     this.reload();
   }
@@ -261,7 +266,7 @@ export class EnterpriseScreenMapStore {
   async delMapConfig() {
     const result = await api.MapConfig.deleteMapConfig();
     const code = _.get(result, "code", "");
-    if(result && code == 20000) {
+    if (result && code == 20000) {
       this.curMapConfig.picUrl = "";
       this.reload();
     }
@@ -271,7 +276,7 @@ export class EnterpriseScreenMapStore {
   @action.bound
   initMap() {
     this.map = new BMapGL.Map("allmap", {
-      style: { styleJson: style }
+      style: { styleJson: style },
     }); // 创建Map实例
     this.map.disableDragging();
     this.map.disableScrollWheelZoom();
@@ -330,7 +335,7 @@ export class EnterpriseScreenMapStore {
       if (!this.map) clearInterval(this.playTimer);
       this.addpoints({
         index: this.curSiteIndex >= this.SiteRuntimePmDateForMap.length - 1 ? 0 : this.curSiteIndex + 1,
-        update: true
+        update: true,
       });
     }, 5000);
   }
