@@ -93,8 +93,8 @@ export class ParkScreenMapStore {
       this.loadConcernSiteData(this.currentPmCode);
     }
 
-    const _allSite: allSiteRes = allSiteResult.data;
-    const allSites = _allSite.map((i) => ({
+    const _allSite: allSiteRes = allSiteResult.data || [];
+    const allSites = _allSite?.map((i) => ({
       title: i.companyName,
       key: `company-${i.companyId}`,
       children: i.factorys
@@ -169,7 +169,7 @@ export class ParkScreenMapStore {
   @observable currentSiteId = "";
   @computed
   get currentSite() {
-    return this.allParkMapData.siteDatas.find((i) => i.siteId == this.currentSiteId);
+    return this.allParkMapData.siteDatas?.find((i) => i.siteId == this.currentSiteId);
   }
 
   @computed
@@ -208,7 +208,7 @@ export class ParkScreenMapStore {
       allParkMapData: parkMapData.data,
     });
     this.updateMap();
-    if (this.allParkMapData.siteDatas.length > 0) {
+    if (this.allParkMapData.siteDatas?.length > 0) {
       this.currentSiteId = this.allParkMapData.siteDatas[0].siteId;
     }
     await this.loadDadilyData();

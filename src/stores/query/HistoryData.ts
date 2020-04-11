@@ -1,8 +1,8 @@
 import { action, observable } from "mobx";
 import { GET, POST } from "../../utils/request";
 import { store } from "../index";
-import moment from 'moment';
-import { globalConfig } from '../../config';
+import moment from "moment";
+import { globalConfig } from "../../config";
 
 export class HistoryData {
   @observable loading: boolean = false;
@@ -22,12 +22,12 @@ export class HistoryData {
   async getAllSitesTree() {
     this.loading = true;
     try {
-      const { data }: any = await GET('/device-site/getAllSitesTreeAndPMTypeLogin', {});
-      this.parkTree = data.pfsList;
-      this.ptList = data.ptList;
-    } catch {
-
-    }
+      const { data }: any = await GET("/device-site/getAllSitesTreeAndPMTypeLogin", {});
+      if (data) {
+        this.parkTree = data.pfsList || [];
+        this.ptList = data.ptList || [];
+      }
+    } catch {}
     this.loading = false;
   }
 
@@ -47,20 +47,20 @@ export class HistoryData {
     this.loading = true;
 
     if (param.timeRange && param.timeRange.length > 0) {
-      param.startTime = moment(param.timeRange[0]).format('YYYY-MM-DD HH:mm:ss');
-      param.endTime = moment(param.timeRange[1]).format('YYYY-MM-DD HH:mm:ss');
+      param.startTime = moment(param.timeRange[0]).format("YYYY-MM-DD HH:mm:ss");
+      param.endTime = moment(param.timeRange[1]).format("YYYY-MM-DD HH:mm:ss");
     }
 
     this.query = {
       ...this.query,
       ...param,
-  };
+    };
     try {
-      const { data }: any = await POST('/device-data-history/queryHistoryDatas', this.query);
+      const { data }: any = await POST("/device-data-history/queryHistoryDatas", this.query);
       this.columns = data.titles.map((item, index) => {
         const config = { ...item, width: 100, key: item.titleKey, dataIndex: item.titleKey };
         if (index === 0) {
-          config.fixed = 'left';
+          config.fixed = "left";
           config.width = 150;
         }
         return config;
@@ -70,9 +70,7 @@ export class HistoryData {
       this.total = data.dataList.total;
       this.query.pageSize = data.dataList.size;
       this.query.current = data.dataList.current;
-    } catch {
-
-    }
+    } catch {}
 
     this.loading = false;
   }
@@ -81,7 +79,6 @@ export class HistoryData {
   async exportDatas() {
     this.loading = true;
     try {
-
       // let f = document.createElement("form");
       // f.setAttribute('method',"post");
       // f.setAttribute('action',`${globalConfig.apiEndpoint}/device-data-history/exportHistoryDatas`);
@@ -91,7 +88,6 @@ export class HistoryData {
       // endTimeInput.setAttribute('name',"endTime");
       // endTimeInput.value = this.query.endTime;
       // f.appendChild(endTimeInput);
-
 
       // let startTimeInput = document.createElement("input");
       // startTimeInput.setAttribute('type',"text");
@@ -117,23 +113,20 @@ export class HistoryData {
 
       // f.submit();
 
-      const { headers, data }: any = await POST('/device-data-history/exportHistoryDatas', {
+      const { headers, data }: any = await POST("/device-data-history/exportHistoryDatas", {
         ...this.query,
       });
 
-      const type = headers['content-type']
+      const type = headers["content-type"];
       const file = new Blob([data], { type });
       const url = window.URL.createObjectURL(file);
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      link.setAttribute('download', 'file.xls');
+      link.setAttribute("download", "file.xls");
       document.body.appendChild(link);
       link.click();
       link.remove();
-      
-    } catch {
-
-    }
+    } catch {}
 
     this.loading = false;
   }

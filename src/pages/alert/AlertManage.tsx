@@ -17,7 +17,7 @@ export const AlertManagePage = Form.create()(observer(({ form }: any) => {
 
   const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields } = form;
 
-  const { loading, parkTree, ptList, tableData, factoryList } = alertManage;
+  const { loading, parkTree, ptList = [], tableData, factoryList } = alertManage;
 
   useEffect(() => {
     alertManage.getAllSitesTree();
