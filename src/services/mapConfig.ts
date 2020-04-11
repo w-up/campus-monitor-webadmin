@@ -14,5 +14,8 @@ export default {
       params: other,
       data: pic
     });
+  },
+  deleteMapConfig() {
+    return POST("/map-config/delMapConfig");
   }
 };

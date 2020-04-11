@@ -117,7 +117,7 @@ export const MapSettingTab = Form.create()(({form}: { form: WrappedFormUtils }) 
                          style={{width: "100%"}}/> : uploadButton}
                 </Upload>
                 {enterpriseScreenMap.curMapConfig.picUrl &&
-                <img className="cursor-pointer" style={{width: 20, position: "absolute", top: -10, left: 70}} src="/images/map_delete@2x.png"/>}
+                <img onClick={enterpriseScreenMap.delMapConfig} className="cursor-pointer" style={{width: 20, position: "absolute", top: -10, left: 70}} src="/images/map_delete@2x.png"/>}
                 <Modal visible={store.previewVisible} footer={null} onCancel={store.handleCancel}>
                   <img alt="example" style={{width: "100%"}} src={store.previewImage}/>
                 </Modal>

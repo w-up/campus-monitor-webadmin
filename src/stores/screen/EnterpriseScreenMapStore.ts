@@ -257,6 +257,16 @@ export class EnterpriseScreenMapStore {
     this.reload();
   }
 
+  @action.bound
+  async delMapConfig() {
+    const result = await api.MapConfig.deleteMapConfig();
+    const code = _.get(result, "code", "");
+    if(result && code == 20000) {
+      this.curMapConfig.picUrl = "";
+      this.reload();
+    }
+  }
+
   // 地图相关
   @action.bound
   initMap() {

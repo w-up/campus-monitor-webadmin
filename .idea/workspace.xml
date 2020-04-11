@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0b5aa787-9ba3-4839-bcb1-9b38c1c54b5a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/SettingBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/SettingBox.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/ParkScreen/left/MonitorParamForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/ParkScreen/left/MonitorParamForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/MapSettingTab.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/MapSettingTab.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/mapConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/mapConfig.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/screen/EnterpriseScreenMapStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/screen/EnterpriseScreenMapStore.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,11 +22,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
-    <option name="width" value="1280" />
-    <option name="height" value="777" />
   </component>
   <component name="ProjectId" id="1ZmfS5C8jSVz69CYY9MXgPjo1j0" />
   <component name="ProjectLevelVcsManager">
@@ -50,15 +45,15 @@
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/pages/basic" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/public/images" />
       <recent name="$PROJECT_DIR$/src/pages/basic" />
       <recent name="$PROJECT_DIR$/src/pages/screen/ParkScreen/left" />
       <recent name="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top" />
       <recent name="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/center" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages/basic" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -101,6 +96,9 @@
       <workItem from="1584878165442" duration="3034000" />
       <workItem from="1585449188193" duration="9924000" />
       <workItem from="1585736107268" duration="7082000" />
+      <workItem from="1586485776330" duration="8116000" />
+      <workItem from="1586524708929" duration="2000" />
+      <workItem from="1586581801623" duration="5345000" />
     </task>
     <servers />
   </component>
@@ -112,9 +110,29 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="327" y="239" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1440.877@0.23.1440.877" timestamp="1585456078997" />
+    <state width="1418" height="216" key="GridCell.Tab.0.bottom" timestamp="1586582888591">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1418" height="216" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1586582888591" />
+    <state width="1418" height="216" key="GridCell.Tab.0.center" timestamp="1586582888590">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1418" height="216" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1586582888590" />
+    <state width="1418" height="216" key="GridCell.Tab.0.left" timestamp="1586582888590">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1418" height="216" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1586582888590" />
+    <state width="1418" height="216" key="GridCell.Tab.0.right" timestamp="1586582888591">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1418" height="216" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1586582888591" />
     <state x="271" y="89" key="SettingsEditor" timestamp="1585736320388">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="271" y="89" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1585736320388" />
+    <state x="383" y="196" width="674" height="676" key="search.everywhere.popup" timestamp="1586494426138">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="383" y="196" width="674" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1586494426138" />
   </component>
 </project>
