@@ -11,7 +11,7 @@ export const AlertItem = ({ item }: { item: AlarmInfo }) => {
       <Row className="alertCardRow">
         <Col span={8}>告警对象:</Col>
         <Col className="text-right" span={12} offset={4}>
-          {item.siteName}
+          {item.warnTarget}
         </Col>
       </Row>
       <Row className="alertCardRow">
