@@ -2,14 +2,9 @@ import { action, observable, computed } from "mobx";
 import { ComplexCustomOverlay } from "../../pages/screen/EnterpriseScreen/customOverlay";
 import api from "services";
 import { SitlePMData, DailySewage } from "../../type";
-import keyBy from "lodash/keyBy";
 import { _ } from "utils/lodash";
 import { message, notification } from "antd";
-import { store } from "../index";
 import style from "../../common/mapStyle";
-import ExampleMap from "../../assets/img/ps23ab282a19d8effb-a4e4-48b5-98dd-2e7d611be405.png";
-import { utils } from "../../utils/index";
-import { POST } from "../../utils/request";
 
 //@ts-ignore
 const BMapGL = window.BMapGL;
@@ -234,15 +229,23 @@ export class EnterpriseScreenMapStore {
   @action.bound
   async loadMapConfig() {
     const result = await api.MapConfig.getMapConfigLogin();
-    if (result.data) {
-      this.curMapConfig = result.data;
-      this.updateMap({
-        center: new BMapGL.Point(this.curMapConfig.longitude, this.curMapConfig.latitude),
-        heading: this.curMapConfig.highAngle,
-        zoom: this.curMapConfig.zoom,
-        tilt: this.curMapConfig.rotationAngle,
-      });
-    }
+    this.curMapConfig = result.data
+      ? result.data
+      : {
+          highAngle: 0,
+          latitude: 0,
+          longitude: 0,
+          rotationAngle: 0,
+          picUrl: "",
+          pic: undefined as FormData | undefined,
+          zoom: 15,
+        };
+    this.updateMap({
+      center: new BMapGL.Point(this.curMapConfig.longitude, this.curMapConfig.latitude),
+      heading: this.curMapConfig.highAngle,
+      zoom: this.curMapConfig.zoom,
+      tilt: this.curMapConfig.rotationAngle,
+    });
   }
 
   @action.bound
@@ -263,7 +266,7 @@ export class EnterpriseScreenMapStore {
   async delMapConfig() {
     const result = await api.MapConfig.deleteMapConfig();
     const code = _.get(result, "code", "");
-    if(result && code == 20000) {
+    if (result && code == 20000) {
       this.curMapConfig.picUrl = "";
       this.reload();
     }
