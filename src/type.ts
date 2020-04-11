@@ -41,6 +41,8 @@ export interface PMValue {
   pmName: string;
   unit: string;
   collectValue: string;
+  collectValueDe: string;
+  collectValueIn: string;
   lastUpdateTime: string;
 }
 
@@ -48,7 +50,8 @@ export interface SitePMValue {
   pmName: string;
   pmCode: string;
   collectValue: string;
-  collectValueUnit: string;
+  collectValueDe: string;
+  collectValueIn: string;
   unit: string;
   pmType: number;
   limit: number;
@@ -71,6 +74,8 @@ export interface DailySewage {
   unit: string;
   datas: Array<{
     collectValue: number;
+    collectValueDe: string;
+    collectValueIn: string;
     unit: string;
     time: string;
   }>;
@@ -105,6 +110,8 @@ export interface ConcernSiteData {
   siteName: string;
   device_code: string;
   collectValue: string;
+  collectValueDe: string;
+  collectValueIn: string;
   unit: string;
   limit: string;
   overRate: string;
@@ -147,6 +154,8 @@ export type SiteData = {
     pmName: string;
     unit: string;
     collectValue: string;
+    collectValueDe: string;
+    collectValueIn: string;
     pmLimitValue: any;
   }>;
   dataTrend: Array<{
@@ -154,6 +163,8 @@ export type SiteData = {
     pmName: string;
     points: Array<{
       collectValue: number;
+      collectValueDe: string;
+      collectValueIn: string;
       time: string;
       unit: string;
     }>;

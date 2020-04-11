@@ -2,7 +2,6 @@ import React from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
 import { Form, Select, Button, DatePicker, Icon, Slider, Radio, Spin } from "antd";
 import { WrappedFormUtils } from "antd/lib/form/Form";
-import { PieChart } from "../../components/PieChart";
 import moment from "moment";
 import { useStore } from "../../stores/index";
 import { PMCode, ContributionData } from "../../type";
@@ -17,20 +16,20 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
     loading: false,
     formItemLayout: {
       labelCol: {
-        span: 7
+        span: 7,
       },
       wrapperCol: {
-        span: 16
-      }
+        span: 16,
+      },
     },
     dateTypes: {
       date: {
         startOf: "day",
         format: "YYYY-MM-DD",
-        type: 1
+        type: 1,
       },
       month: { type: 2, startOf: "month", format: "YYYY-MM" },
-      year: { type: 3, startOf: "year", format: "YYYY" }
+      year: { type: 3, startOf: "year", format: "YYYY" },
     },
     type: "date" as any,
     get dateType() {
@@ -69,9 +68,9 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
             pmCode,
             rankingType,
             statisticalTime: moment(this.statisticalTime).format(this.dateType.format),
-            statisticalType: this.dateType.type
+            statisticalType: this.dateType.type,
           })
-            .then(result => {
+            .then((result) => {
               this.siteData = result.data;
             })
             .finally(() => {
@@ -84,14 +83,14 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
       return {
         tooltip: {
           trigger: "item",
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
+          formatter: "{a} <br/>{b} : {c} ({d}%)",
         },
         legend: {
           show: true,
           orient: "vertical",
           bottom: "0",
           left: "40%",
-          data: this.siteData?.map(i => i.factoryName)
+          data: this.siteData?.map((i) => i.factoryName),
         },
         series: [
           {
@@ -101,25 +100,25 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
             center: ["50%", "30%"],
             labelLine: {
               normal: {
-                show: false
-              }
+                show: false,
+              },
             },
-            data: this.siteData?.map(i => ({
+            data: this.siteData?.map((i) => ({
               name: i.factoryName,
-              value: i.percentValue
+              value: i.percentValue,
             })),
             label: {
               normal: {
-                formatter: params => {
+                formatter: (params) => {
                   return params.percent + "%";
                 },
-                position: "inner"
-              }
-            }
-          }
-        ]
+                position: "inner",
+              },
+            },
+          },
+        ],
       };
-    }
+    },
   }));
 
   return useObserver(() => (
@@ -156,7 +155,7 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
           </Form.Item>
           <Form.Item label="统计类型">
             {getFieldDecorator("statisticalType", { initialValue: store.type })(
-              <Radio.Group onChange={e => (store.type = e.target.value)}>
+              <Radio.Group onChange={(e) => (store.type = e.target.value)}>
                 <Radio.Button value="date">日</Radio.Button>
                 <Radio.Button value="month">月</Radio.Button>
                 <Radio.Button value="year">年</Radio.Button>

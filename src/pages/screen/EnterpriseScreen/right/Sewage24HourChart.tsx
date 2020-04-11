@@ -12,15 +12,15 @@ export const Sewage24HourChart = () => {
   const mapRef = React.useRef<any>();
 
   const {
-    screen: { enterpriseScreenMap }
+    screen: { enterpriseScreenMap },
   } = useStore();
 
   const store = useLocalStore(() => ({
-    dataIndex: 0
+    dataIndex: 0,
   }));
   useEffect(() => {
     setInterval(() => {
-      const dataIndeMax = enterpriseScreenMap.dailySewage.dates.length;
+      const dataIndeMax = enterpriseScreenMap.HoursSewage.dates.length;
       store.dataIndex >= dataIndeMax ? (store.dataIndex = 0) : store.dataIndex++;
 
       const mapInst = mapRef.current?.getEchartsInstance();
@@ -28,7 +28,7 @@ export const Sewage24HourChart = () => {
         mapInst.dispatchAction({
           type: "showTip",
           seriesIndex: 0, // 显示第几个serindexes
-          dataIndex: store.dataIndex >= 6 ? 6 : store.dataIndex // 显示第几个数据
+          dataIndex: store.dataIndex >= 6 ? 6 : store.dataIndex, // 显示第几个数据
           // position: ["45%", "10%"]
         });
       }
@@ -53,11 +53,11 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
       textStyle: {
         color: "#88A8C5FF",
         fontSize: "14",
-        fontWeight: "normal"
+        fontWeight: "normal",
       },
       x: "center",
       y: "20px",
-      padding: [5, 10]
+      padding: [5, 10],
     },
     // 提示配置
     tooltip: {
@@ -66,10 +66,10 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
       padding: 10,
       textStyle: {
         color: "#88A8C5",
-        fontSize: 10
+        fontSize: 10,
       },
       alwaysShowContent: {
-        show: false
+        show: false,
       },
       formatter: (params: any, ticket: any, callback: any) => {
         let showHtml = "";
@@ -81,33 +81,34 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
           var text = params[i].axisValue;
           //值
           var value = params[i].data.value;
-          var limit = params[i].data.limit;
+          var overLimit = params[i].data.overLimit;
           var unit = params[i].data.unit;
+          var valueUnit = params[i].data.valueUnit;
 
-          showHtml += `
+          if (Number(value) > 0) {
+            showHtml += `
             <div style="display:flex;align-items: center;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px; ${limit && value > limit ? "color:red;" : ""}">${
-            value ? utils.number.toPrecision(value) + unit : ""
-          }</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px; ${overLimit ? "color:red;" : ""}">${value ? `${value}*${valueUnit} ${unit}` : ""}</div>
           </div>
           `;
+          }
         }
         return `<div style="color: #04F9CC;text-align:left;line-height:20px">${text} 日均</div>
             <div style="color:#88A8C5;text-align:left;font-size:10px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
             ${showHtml}
             </div>
           </div>`;
-      }
+      },
     },
     // 上册图列配置
     legend: {
-      data: data.pms.map(i => i.pmName),
+      data: data.pms.map((i) => i.pmName),
       textStyle: {
         fontSize: 10,
-        color: "#88A8C5" // 图例文字颜色
-      }
+        color: "#88A8C5", // 图例文字颜色
+      },
       // y:"-10px",
     },
     grid: {
@@ -115,7 +116,7 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
       left: "4%",
       right: "2%",
       bottom: "0%",
-      containLabel: true
+      containLabel: true,
     },
     xAxis: {
       type: "category",
@@ -123,10 +124,10 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
       axisLabel: {
         textStyle: {
           color: "rgba(136,168,197,0.5)",
-          fontSize: "10"
-        }
+          fontSize: "10",
+        },
       },
-      data: utils.array.sliceArray(data.dates, dataIndex, count)
+      data: utils.array.sliceArray(data.dates, dataIndex, count),
     },
     yAxis: {
       name: "（mg/m³）",
@@ -134,36 +135,37 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
         color: "rgba(136,168,197,0.5)",
         align: "center",
         verticalAlign: "middle",
-        padding: [5, 0, 15, 20]
+        padding: [5, 0, 15, 20],
       },
       type: "value",
-      // min: 0,
-      // max: 3,
+      min: 0,
+      max: 10,
       splitNumber: 3,
       axisLabel: {
         textStyle: {
           color: "rgba(136,168,197,0.5)",
-          fontSize: "10"
-        }
+          fontSize: "10",
+        },
       },
       //   分割线
       splitLine: {
         lineStyle: {
-          color: "rgba(101,198,231,0.2)"
-        }
+          color: "rgba(101,198,231,0.2)",
+        },
       },
       //   刻度线
       axisLine: {
-        show: false
-      }
+        show: false,
+      },
     },
     series: data.pms.map((item, index) => ({
       name: item.pmName,
       data: utils.array.sliceArray(
-        item.datas.map(i => ({
-          value: i.collectValue,
-          limit: item.upperLimit,
-          unit: i.unit
+        item.datas.map((i) => ({
+          value: Number(i.collectValueDe),
+          valueUnit: i.collectValueIn,
+          overLimit: i.collectValue >= item.upperLimit,
+          unit: i.unit,
         })),
         dataIndex,
         count
@@ -173,13 +175,13 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
         normal: {
           color: constant.seriesColors[index], //改变折线点的颜色
           lineStyle: {
-            color: constant.seriesColors[index] //改变折线颜色
-          }
-        }
+            color: constant.seriesColors[index], //改变折线颜色
+          },
+        },
       },
 
       symbol: "circle", //设定为实心点
-      symbolSize: 2 //设定实心点的大小,
-    }))
+      symbolSize: 2, //设定实心点的大小,
+    })),
   };
 };

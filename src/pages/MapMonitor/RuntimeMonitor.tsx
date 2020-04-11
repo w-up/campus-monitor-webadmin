@@ -10,6 +10,7 @@ import ReactEcharts from "echarts-for-react";
 import { constant } from "../../common/constants";
 import { utils } from "utils";
 import moment from "moment";
+import { LineChart } from "components/LineChart";
 
 //@ts-ignore
 export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils }) => {
@@ -23,11 +24,11 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
     siteData: null as SiteData | null,
     formItemLayout: {
       labelCol: {
-        span: 7
+        span: 7,
       },
       wrapperCol: {
-        span: 15
-      }
+        span: 15,
+      },
     },
     get submitAble() {
       return mapMonitor.currentPmCode !== "0";
@@ -53,11 +54,11 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
           textStyle: {
             color: "#88A8C5FF",
             fontSize: "14",
-            fontWeight: "normal"
+            fontWeight: "normal",
           },
           x: "center",
           y: "20px",
-          padding: [5, 20]
+          padding: [5, 20],
         },
         // 提示配置
         tooltip: {
@@ -66,10 +67,10 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
           padding: 10,
           textStyle: {
             color: "#88A8C5",
-            fontSize: 10
+            fontSize: 10,
           },
           alwaysShowContent: {
-            show: true
+            show: true,
           },
           formatter: (params: any, ticket: any, callback: any) => {
             let showHtml = "";
@@ -83,28 +84,30 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
               var value = params[i].data.value;
               var unit = params[i].data.unit;
 
-              showHtml += `
+              if (Number(value) > 0) {
+                showHtml += `
             <div style="display:flex;align-items: center;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
             <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? utils.number.toPrecision(value) + unit : ""}</div>
           </div>
           `;
+              }
             }
             return `<div style="color: #04F9CC;text-align:left;line-height:20px">${text} 日均</div>
             <div style="color:#88A8C5;text-align:left;font-size:10px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
             ${showHtml}
             </div>
           </div>`;
-          }
+          },
         },
         // 上册图列配置
         legend: {
-          data: this.siteData?.dataTrend.map(i => i.pmName),
+          data: this.siteData?.dataTrend.map((i) => i.pmName),
           textStyle: {
             fontSize: 10,
-            color: "#88A8C5" // 图例文字颜色
-          }
+            color: "#88A8C5", // 图例文字颜色
+          },
           // y:"-10px",
         },
         grid: {
@@ -112,17 +115,17 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
           left: "4%",
           right: "2%",
           bottom: "0%",
-          containLabel: true
+          containLabel: true,
         },
         xAxis: {
           type: "category",
           axisLabel: {
             textStyle: {
               color: "rgba(136,168,197,0.5)",
-              fontSize: "10"
-            }
+              fontSize: "10",
+            },
           },
-          data: this.siteData?.dataTrend[0].points.map(i => i.time)
+          data: this.siteData?.dataTrend[0].points.map((i) => i.time),
         },
         yAxis: {
           name: "（mg/m³）",
@@ -130,7 +133,7 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
             color: "rgba(136,168,197,0.5)",
             align: "center",
             verticalAlign: "middle",
-            padding: [5, 0, 15, 20]
+            padding: [5, 0, 15, 20],
           },
           type: "value",
           // min: 1,
@@ -139,38 +142,38 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
           axisLabel: {
             textStyle: {
               color: "rgba(136,168,197,0.5)",
-              fontSize: "10"
-            }
+              fontSize: "10",
+            },
           },
           //   分割线
           splitLine: {
             lineStyle: {
-              color: "rgba(101,198,231,0.2)"
-            }
+              color: "rgba(101,198,231,0.2)",
+            },
           },
           //   刻度线
           axisLine: {
-            show: false
-          }
+            show: false,
+          },
         },
         series: this.siteData?.dataTrend.map((item, index) => ({
           name: item.pmName,
           type: "line",
-          data: item.points.map(i => ({
+          data: item.points.map((i) => ({
             value: Number(i.collectValue),
-            unit: i.unit
+            unit: i.unit,
           })),
           itemStyle: {
             normal: {
               color: constant.seriesColors[index], //改变折线点的颜色
               lineStyle: {
-                color: constant.seriesColors[index] //改变折线颜色
-              }
-            }
+                color: constant.seriesColors[index], //改变折线颜色
+              },
+            },
           },
           symbol: "circle", //设定为实心点
-          symbolSize: 6 //设定实心点的大小
-        }))
+          symbolSize: 6, //设定实心点的大小
+        })),
       };
     },
 
@@ -180,23 +183,23 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
         columns: [
           {
             title: "检测物质",
-            dataIndex: "pmCode"
+            dataIndex: "pmCode",
           },
           {
             title: "检测物质中文名",
-            dataIndex: "pmName"
+            dataIndex: "pmName",
           },
           {
             title: "监测浓度",
-            dataIndex: "collectValue"
+            dataIndex: "collectValue",
           },
           {
             title: "排放限值",
-            dataIndex: "pmLimitValue"
-          }
-        ]
+            dataIndex: "pmLimitValue",
+          },
+        ],
       };
-    }
+    },
   }));
 
   const table = {
@@ -208,18 +211,18 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
     columns: [
       {
         title: "排名",
-        dataIndex: "ranking"
+        dataIndex: "ranking",
       },
       {
         title: "站点",
         dataIndex: "siteName",
-        render: (text, record) => <div className={record.siteId == store.curSiteId ? "primary-button-text-dark" : "primary-text-color"}>{text}</div>
+        render: (text, record) => <div className={record.siteId == store.curSiteId ? "primary-button-text-dark" : "primary-text-color"}>{text}</div>,
       },
       {
         title: <span>{mapMonitor.currentPmCode}</span>,
-        dataIndex: "collectValue"
-      }
-    ]
+        dataIndex: "collectValue",
+      },
+    ],
   } as TableProps<PMValue>;
 
   return useObserver(() => (
@@ -296,7 +299,7 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
           <div>
             <div className="primary-text-color mt-10 text-center">24小时监测浓度趋势图</div>
             <div className="mt-4">
-              <ReactEcharts option={store.options} style={{ width: "100%", height: "180px" }} />
+              <LineChart datas={store.siteData?.dataTrend.map((i) => ({ upperLimit: 0, ...i, datas: i.points }))}></LineChart>
             </div>
           </div>
         </div>
