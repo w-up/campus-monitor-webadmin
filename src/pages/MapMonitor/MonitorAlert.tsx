@@ -1,12 +1,10 @@
 import React from "react";
-import { useObserver, useLocalStore } from "mobx-react-lite";
+import { useObserver } from "mobx-react-lite";
 import { useEffect } from "react";
-import api from "services";
-import { Button, Icon } from "antd";
-import Card from "antd/lib/card";
-import { Col, Row } from "antd/lib/grid";
+import { Icon } from "antd";
 import { useStore } from "../../stores";
 import { AlertItem } from "../../components/AlertItem";
+import { Scrollbars } from "react-custom-scrollbars";
 
 export const MonitorAlert = () => {
   const { mapMonitor } = useStore();
@@ -21,10 +19,11 @@ export const MonitorAlert = () => {
         <Icon type="caret-right" theme="filled" className="primary-text-color" />
         <span className="ml-2">告警信息</span>
       </div>
-
+      <Scrollbars style={{ height: "100vh" }}>
       {mapMonitor.alarms.map((item) => {
         return <AlertItem item={item}></AlertItem>;
       })}
+      </Scrollbars>
     </div>
   ));
 };
