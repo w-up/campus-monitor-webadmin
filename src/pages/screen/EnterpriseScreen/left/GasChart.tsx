@@ -39,7 +39,7 @@ export const EnterpriseScreenGasChart = () => {
   }, []);
 
   return useObserver(() => (
-    <div className="screenTable mt-4" style={{ height: "auto" }}>
+    <div className="screenTable mt-4" style={{ minHeight: "280px", height: "auto" }}>
       <div className="tableTitle flex justify-between items-center">
         <img src="/images/left.png" className="img" />
         <div>气体日均排放浓度趋势图</div>

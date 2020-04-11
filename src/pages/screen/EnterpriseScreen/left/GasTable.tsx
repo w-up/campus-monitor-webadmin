@@ -27,7 +27,7 @@ export const GasTable = () => {
   }));
 
   return useObserver(() => (
-    <div className="topLeft screenTable">
+    <div className="topLeft screenTable flex-1">
       <div className="tableTitle text-center">气体排放情况（实时）</div>
       <div className="box">
         <div className="tabTitle">

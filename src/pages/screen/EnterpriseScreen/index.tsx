@@ -31,7 +31,7 @@ export const EnterpriseScreenPage = () => {
         <ScreenTop />
         <div className="pb-4 flex-1" style={{ backgroundColor: "#061630" }}>
           <div className="flex mt-4 justify-between">
-            <div className="w-1/4 pl-4">
+            <div className="w-1/4 pl-4 flex flex-col">
               <GasTable />
               <EnterpriseScreenGasChart />
             </div>
