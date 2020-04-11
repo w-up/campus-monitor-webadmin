@@ -64,7 +64,7 @@ export const ParkScreenPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="text-white">
+              <div className="text-white shape-bg">
                 {parkScreenMap.currentSite?.siteName}-{parkScreenMap.currentPmCode}
               </div>
               <ParkScreen24HourChart />
