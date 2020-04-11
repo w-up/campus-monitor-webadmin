@@ -21,7 +21,7 @@ export const LoginPage = Form.create()(({ form }: { form: WrappedFormUtils }) =>
   }, []);
 
   const store = useLocalStore(() => ({
-    handleSubmit: e => {
+    handleSubmit: (e) => {
       e.preventDefault();
       form.validateFields(async (err, values) => {
         if (!err) {
@@ -32,7 +32,7 @@ export const LoginPage = Form.create()(({ form }: { form: WrappedFormUtils }) =>
           history.replace("/");
         }
       });
-    }
+    },
   }));
 
   return (
@@ -52,24 +52,24 @@ export const LoginPage = Form.create()(({ form }: { form: WrappedFormUtils }) =>
               <Form onSubmit={store.handleSubmit} className="login-form">
                 <Form.Item>
                   {getFieldDecorator("username", {
-                    initialValue: "admin",
-                    rules: [{ required: true, message: "请输入账户名称!" }]
+                    initialValue: "",
+                    rules: [{ required: true, message: "请输入账户名称!" }],
                   })(<Input prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />} placeholder="账户名称" />)}
                 </Form.Item>
                 <Form.Item>
                   {getFieldDecorator("password", {
-                    initialValue: "123456",
-                    rules: [{ required: true, message: "请输入密码!" }]
+                    initialValue: "",
+                    rules: [{ required: true, message: "请输入密码!" }],
                   })(<Input prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />} type="password" placeholder="密码" />)}
                 </Form.Item>
                 <Form.Item>
                   {getFieldDecorator("remember", {
                     valuePropName: "checked",
-                    initialValue: true
+                    initialValue: true,
                   })(<Checkbox>记住密码</Checkbox>)}
                   {getFieldDecorator("forget", {
                     valuePropName: "checked",
-                    initialValue: false
+                    initialValue: false,
                   })(<Checkbox className="login-form-forgot">忘记密码</Checkbox>)}
                   <a className="recontact" style={{ visibility: getFieldValue("forget") ? "visible" : "hidden" }}>
                     <Icon type="exclamation-circle" />

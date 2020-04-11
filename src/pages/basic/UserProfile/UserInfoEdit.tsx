@@ -70,18 +70,22 @@ export const UserInfoEdit = Form.create()(
               <Input placeholder="请输入用户姓名" value={auth.user?.name} disabled />
             </Form.Item>
 
-            {getFieldDecorator("id", { initialValue: auth.user?.id, rules: [{ required: false }] })(<Input hidden placeholder="请输入ID" />)}
+            <Input hidden />
             <Form.Item label="登录账号">
-              <Input placeholder="请输入登录名" disabled />
+              <Input value="" placeholder="请输入登录名" disabled />
             </Form.Item>
 
-            <Form.Item label="所属园区/企业">
-              <Input disabled />
-            </Form.Item>
+            {auth.user?.type !== 2 && auth.user?.type !== 3 && (
+              <Form.Item label="所属园区/企业">
+                <Input disabled value={auth.user?.parkOrEnterpriseId} />
+              </Form.Item>
+            )}
 
-            <Form.Item label="所属角色">
-              <Input disabled />
-            </Form.Item>
+            {auth.user?.type !== 2 && (
+              <Form.Item label="所属角色">
+                <Input disabled value={auth.user?.type} />
+              </Form.Item>
+            )}
 
             <Form.Item label="联系方式">{getFieldDecorator("contact", { initialValue: auth.user?.contact, rules: [{ required: true }] })(<Input placeholder="请输入联系方式" />)}</Form.Item>
 
