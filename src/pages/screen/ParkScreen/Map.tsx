@@ -4,7 +4,7 @@ import { Map, APILoader, Label, CustomOverlay } from "@uiw/react-baidu-map";
 import { useStore } from "../../../stores/index";
 import "./Map.css";
 import { utils } from "../../../utils/index";
-import { IPolygon } from '../../../components/Polygon/index';
+import { IPolygon } from "../../../components/Polygon/index";
 
 export const ParkScreenMap = () => {
   const {
@@ -23,18 +23,19 @@ export const ParkScreenMap = () => {
     <div style={{ width: "100%", height: "50vh" }}>
       <APILoader akay={config.baiduMapApiKey}>
         <Map onTilesLoaded={parkScreenMap.onMapUpdate} enableScrollWheelZoom onZoomEnd={(e) => (parkScreenMap.zoom = e.target.getZoom())}>
-          <IPolygon
-            updateable
-            path={utils.array.formatToLatLngShort(parkScreenMap.allParkMapData.parkPoints)}
-            strokeColor="#00FF66"
-            strokeStyle="dashed"
-            strokeWeight={2}
-            fillColor=""
-          ></IPolygon>
+          <IPolygon updateable path={utils.array.formatToLatLngShort(parkScreenMap.allParkMapData.parkPoints)} strokeColor="#00FF66" strokeStyle="dashed" strokeWeight={2} fillColor=""></IPolygon>
           {parkScreenMap.allParkMapData?.factoryDatas?.map((item, index) => {
             if (!item.factoryPoints) return;
             return (
-              <IPolygon updateable path={utils.array.formatToLatLngShort(item.factoryPoints)} key={`IPolygon-${index}`} strokeStyle="solid" fillColor="#FFD800" strokeColor="#FFD800" strokeWeight={2}></IPolygon>
+              <IPolygon
+                updateable
+                path={utils.array.formatToLatLngShort(item.factoryPoints)}
+                key={`IPolygon-${index}`}
+                strokeStyle="solid"
+                fillColor="#FFD800"
+                strokeColor="#FFD800"
+                strokeWeight={2}
+              ></IPolygon>
             );
           })}
           {parkScreenMap.allParkMapData?.factoryDatas?.map((item, index) => {
@@ -59,7 +60,7 @@ export const ParkScreenMap = () => {
                 ) : (
                   <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../../assets/green.png")} />
                 )}
-                <div className="number">{item.collectValue || 0}</div>
+                {item.collectValue && <div className="number">{item.collectValue}</div>}
               </div>
             </CustomOverlay>
           ))}

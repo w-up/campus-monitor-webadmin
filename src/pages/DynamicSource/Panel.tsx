@@ -19,16 +19,16 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
     isPlaying: false,
     formItemLayout: {
       labelCol: {
-        span: 7
+        span: 7,
       },
       wrapperCol: {
-        span: 15
-      }
+        span: 15,
+      },
     },
     togglePlay() {
       this.isPlaying = !this.isPlaying;
     },
-    handleSubmit: e => {
+    handleSubmit: (e) => {
       e.preventDefault();
       form.validateFieldsAndScroll(async (err, values) => {
         if (!err) {
@@ -66,34 +66,39 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
       options: [
         { label: "贡献率", value: "1" },
         { label: "源方向", value: "2" },
-        { label: "原位置和浓度", value: "3" }
-      ]
+        { label: "原位置和浓度", value: "3" },
+      ],
     },
     monitorPanel: {
       points: [
         { name: "位置01", position: 29.1121, concentration: "121.1ppm" },
         { name: "位置02", position: 29.1121, concentration: "121.1ppm" },
-        { name: "位置03", position: 29.1121, concentration: "121.1ppm" }
+        { name: "位置03", position: 29.1121, concentration: "121.1ppm" },
       ],
       get table(): any {
         return {
           dataSource: dynamicSource.curDynamicSourceContribution.valueList,
           columns: [
             {
+              title: "监测类型",
+              dataIndex: "monitoringType",
+              align: "center",
+            },
+            {
               title: "站点名称",
               dataIndex: "siteName",
-              align: "center"
+              align: "center",
             },
             {
               title: "贡献率",
               dataIndex: "rat",
               align: "center",
-              render: text => <div className="primary-text-color">{text}</div>
-            }
-          ]
+              render: (text) => <div className="primary-text-color">{text}</div>,
+            },
+          ],
         };
-      }
-    }
+      },
+    },
   }));
 
   return useObserver(() => (
@@ -106,7 +111,7 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
         <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
           <div className="mb-4">
             <div className="primary-text-color mb-4">计算方法</div>
-            {getFieldDecorator("computeType", { initialValue: "1" })(<RadioGroup options={store.form.options} onChange={e => (dynamicSource.computeType = e.target.value)}></RadioGroup>)}
+            {getFieldDecorator("computeType", { initialValue: "1" })(<RadioGroup options={store.form.options} onChange={(e) => (dynamicSource.computeType = e.target.value)}></RadioGroup>)}
           </div>
           <Form.Item label="选择园区">
             {getFieldDecorator("parkId", { initialValue: dynamicSource.currentPark, rules: [{ required: true }] })(
@@ -135,10 +140,10 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
           {dynamicSource.computeType == "1" && (
             <div>
               <Form.Item label="敏感点经度">
-                <Input value={dynamicSource.curPoint.lng} onChange={e => (dynamicSource.curPoint.lng = Number(e.target.value))} />
+                <Input value={dynamicSource.curPoint.lng} onChange={(e) => (dynamicSource.curPoint.lng = Number(e.target.value))} />
               </Form.Item>
               <Form.Item label="敏感点维度">
-                <Input value={dynamicSource.curPoint.lat} onChange={e => (dynamicSource.curPoint.lat = Number(e.target.value))} />
+                <Input value={dynamicSource.curPoint.lat} onChange={(e) => (dynamicSource.curPoint.lat = Number(e.target.value))} />
               </Form.Item>
             </div>
           )}
@@ -160,14 +165,14 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
             <span className="ml-2 text-sm">{dynamicSource.curDynamicSourceContribution?.datetime}</span>
           </div>
           <div className="stat-panel p-2 text-white flex items-center mt-2">
-            <div onClick={e => dynamicSource.toggleTimer({ target: dynamicSource.DynamicSourceContribution })}>
+            <div onClick={(e) => dynamicSource.toggleTimer({ target: dynamicSource.DynamicSourceContribution })}>
               <Icon type={dynamicSource.DynamicSourceContribution.timer ? "pause-circle" : "play-circle"} theme="twoTone" className="text-white text-xl" />
             </div>
             <div className="flex-1 ml-4">
               <Slider
                 value={dynamicSource.DynamicSourceContribution.index}
                 max={dynamicSource.DynamicSourceContribution.data.length}
-                onChange={e => dynamicSource.setCurrentTime({ target: dynamicSource.DynamicSourceContribution, val: Number(e), stop: true })}
+                onChange={(e) => dynamicSource.setCurrentTime({ target: dynamicSource.DynamicSourceContribution, val: Number(e), stop: true })}
               ></Slider>
             </div>
           </div>
@@ -181,14 +186,14 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
             <span className="ml-2 text-sm">{dynamicSource.curDynamicSourceWindRose?.datetime}</span>
           </div>
           <div className="stat-panel p-2 text-white flex items-center mt-2">
-            <div onClick={e => dynamicSource.toggleTimer({ target: dynamicSource.DynamicSourceWindRose })}>
+            <div onClick={(e) => dynamicSource.toggleTimer({ target: dynamicSource.DynamicSourceWindRose })}>
               <Icon type={dynamicSource.DynamicSourceWindRose.timer ? "pause-circle" : "play-circle"} theme="twoTone" className="text-white text-xl" />
             </div>
             <div className="flex-1 ml-4">
               <Slider
                 value={dynamicSource.DynamicSourceWindRose.index}
                 max={dynamicSource.DynamicSourceWindRose.data.length}
-                onChange={e => dynamicSource.setCurrentTime({ target: dynamicSource.DynamicSourceWindRose, val: Number(e), stop: true })}
+                onChange={(e) => dynamicSource.setCurrentTime({ target: dynamicSource.DynamicSourceWindRose, val: Number(e), stop: true })}
               ></Slider>
             </div>
           </div>
@@ -202,14 +207,14 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
             <span className="ml-2 text-sm">{dynamicSource.curDynamicSourceTraceSource?.datetime}</span>
           </div>
           <div className="stat-panel p-2 text-white flex items-center mt-2">
-            <div onClick={e => dynamicSource.toggleTimer({ target: dynamicSource.DynamicSourceTraceSource })}>
+            <div onClick={(e) => dynamicSource.toggleTimer({ target: dynamicSource.DynamicSourceTraceSource })}>
               <Icon type={dynamicSource.DynamicSourceTraceSource.timer ? "pause-circle" : "play-circle"} theme="twoTone" className="text-white text-xl" />
             </div>
             <div className="flex-1 ml-4">
               <Slider
                 value={dynamicSource.DynamicSourceTraceSource.index}
                 max={dynamicSource.DynamicSourceTraceSource.data.length}
-                onChange={e => dynamicSource.setCurrentTime({ target: dynamicSource.DynamicSourceTraceSource, val: Number(e), stop: true })}
+                onChange={(e) => dynamicSource.setCurrentTime({ target: dynamicSource.DynamicSourceTraceSource, val: Number(e), stop: true })}
               ></Slider>
             </div>
           </div>
@@ -224,7 +229,7 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
           <Table className="monitor-table mt-10" {...store.monitorPanel.table} pagination={false} />
           <div>
             <div className="primary-text-color mt-10 text-center">园区TVOCs排放贡献率</div>
-            <PieChart showLegend={false} pieRadius="80%" data={dynamicSource.curDynamicSourceContribution.valueList.map(i => ({ key: i.siteName, value: i.value }))} />
+            <PieChart showLegend={false} pieRadius="80%" data={dynamicSource.curDynamicSourceContribution.valueList.map((i) => ({ key: i.siteName, value: i.value }))} />
           </div>
         </div>
       )}

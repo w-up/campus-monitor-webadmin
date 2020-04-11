@@ -6,7 +6,7 @@ import blueArrow from "../../assets/img/arrow-blue.png";
 import { _ } from "utils/lodash";
 import { utils } from "../../utils/index";
 import { PolarRadialChart } from "../../components/PolarRadialChart";
-import { IPolygon } from '../../components/Polygon/index';
+import { IPolygon } from "../../components/Polygon/index";
 
 export const DynamicSourceMap = () => {
   const { config, dynamicSource } = useStore();
@@ -60,7 +60,7 @@ export const DynamicSourceMap = () => {
                 ) : (
                   <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../assets/green.png")} />
                 )}
-                <div className="number">{item.collectValue || 0}</div>
+                {item.collectValue && <div className="number">{item.collectValue}</div>}
               </div>
             </CustomOverlay>
           ))
