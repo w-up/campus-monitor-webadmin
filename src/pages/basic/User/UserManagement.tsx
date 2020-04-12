@@ -50,12 +50,12 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
     {
       title: '用户名称',
       dataIndex: 'name',
-      width: 100,
+      width: 150,
     },
     {
       title: '角色',
       dataIndex: 'roles',
-      width: 200,
+      width: 100,
       render: (roles) => {
       return roles.map(item => <Tag>{item.name}</Tag>);
       }
@@ -96,7 +96,7 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
             <a onClick={() => {
               Modal.confirm({
                 title: "删除确认",
-                content: `确定删除这条记录吗？`,
+                content: `确定删除用户${user.name}吗？`,
                 async onOk() {
                     await deleteUser([user.id]);
                     resetSelectedRowKeys();

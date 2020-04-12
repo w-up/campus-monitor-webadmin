@@ -67,10 +67,10 @@ export const EnterprisePage = observer(() => {
     if (selectedRows.length === 0) {
       return;
     }
-    const ids = selectedRows.map(key => toJS(dataSource)[key].id);
+    const ids = toJS(selectedRowKeys);
     Modal.confirm({
       title: '删除确认',
-      content: `确定删除这${ids.length}条记录吗？`,
+      content: `确定删除这${ids.length}个企业吗？`,
       async onOk() {
         try {
           await deleteEnterprise(ids);
@@ -141,47 +141,49 @@ export const EnterprisePage = observer(() => {
   }
   
   return (
-    <Spin spinning={loading}>
-      <div style={{minHeight: 50, background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px"}}>
-        <Breadcrumb>
-          <Breadcrumb.Item>基础信息</Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <a href="">企业管理</a>
-          </Breadcrumb.Item>
-        </Breadcrumb>
-      </div>
-      <Card size="small">
-        <Row>
-          <Col span={16}>
-            <Form layout="inline" onSubmit={handleSearch}>
-            <Form.Item  label="企业统一社会信用代码">
-              <Input placeholder="请输入" value={query.companyCode} onChange={handleSearchChange} />
-            </Form.Item>
-            <Form.Item>
-              <Button type="primary" htmlType="submit">查询</Button>
-              <Button style={{ marginLeft: 5}} onClick={handleSearchReset}>重置</Button>
-            </Form.Item>
-          </Form>
-          </Col>
+    <div className="enterprisePage">
+      <Spin spinning={loading}>
+        <div style={{minHeight: 50, background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px"}}>
+          <Breadcrumb>
+            <Breadcrumb.Item>基础信息</Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <a href="">企业管理</a>
+            </Breadcrumb.Item>
+          </Breadcrumb>
+        </div>
+        <Card size="small">
+          <Row>
+            <Col span={16}>
+              <Form layout="inline" onSubmit={handleSearch}>
+              <Form.Item  label="企业统一社会信用代码">
+                <Input placeholder="请输入" value={query.companyCode} onChange={handleSearchChange} />
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">查询</Button>
+                <Button style={{ marginLeft: 5}} onClick={handleSearchReset}>重置</Button>
+              </Form.Item>
+            </Form>
+            </Col>
 
-          <Col span={8} style={{ textAlign: 'right' }}>
-            <Button type="primary"><Link to="/base/enterprise-edit">新建</Link></Button>
-            <Button onClick={onBatchDeleteEnterprise} style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button>
-          </Col>
-        </Row>
+            <Col span={8} style={{ textAlign: 'right' }}>
+              <Button type="primary"><Link to="/base/enterprise-edit">新建</Link></Button>
+              <Button onClick={onBatchDeleteEnterprise} style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button>
+            </Col>
+          </Row>
 
-        {!!selectedRowKeys.length &&
-        <Row style={{ marginTop: 20, marginBottom: 10 }}>
-          <Alert message={selectMsg(selectedRowKeys.length)} type="info" showIcon />
-        </Row>
-        }
-        
-        <Divider />
+          {!!selectedRowKeys.length &&
+          <Row style={{ marginTop: 20, marginBottom: 10 }}>
+            <Alert message={selectMsg(selectedRowKeys.length)} type="info" showIcon />
+          </Row>
+          }
+          
+          <Divider />
 
-        <Row>
-          <Table rowKey="id" size="small" bordered rowSelection={rowSelection} columns={columns} dataSource={toJS(dataSource)} pagination={pagination} />
-        </Row>
-      </Card>
-    </Spin>
+          <Row>
+            <Table rowKey="id" size="small" bordered rowSelection={rowSelection} columns={columns} dataSource={toJS(dataSource)} pagination={pagination} />
+          </Row>
+        </Card>
+      </Spin>
+    </div>
   );
 });

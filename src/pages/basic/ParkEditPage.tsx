@@ -102,7 +102,7 @@ export const ParkEditPage = Form.create()(
               <Input placeholder="请输入园区ID" />
             )}
           </Form.Item>
-          <Form.Item label="园区编号">
+          <Form.Item label="园区代码">
             {getFieldDecorator("parkNo", { initialValue: parkNo, rules: [{ required: true }] })(
               <Input placeholder="请输入园区代码" />
             )}

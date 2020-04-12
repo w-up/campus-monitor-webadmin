@@ -58,6 +58,7 @@ export class Park {
       current: 1,
       pageSize: 10,
     }
+    this.getParkList();
   }
   
   @action.bound

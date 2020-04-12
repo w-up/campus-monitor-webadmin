@@ -807,7 +807,10 @@ svg {
 .dataViewPage,
 .myEnterprisePage,
 .userManagePage,
-.parkPage {
+.parkPage,
+.rolesPage,
+.systemConfigPage,
+.enterprisePage {
   .ant-table * {
     font-size: 12px !important;
   }

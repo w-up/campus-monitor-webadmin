@@ -91,7 +91,7 @@ export const RoleEdit = Form.create()(observer(({ form }: any) => {
             <Input hidden placeholder="请输入ID" />
           )}
 
-          <Form.Item label="角色编号">
+          <Form.Item label="角色代码">
             {getFieldDecorator("code", { initialValue: code, rules: [{ required: true }] })(
               <Input disabled={!!id} placeholder="请输入角色代码" />
             )}

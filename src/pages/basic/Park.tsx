@@ -61,7 +61,7 @@ export const ParkPage = observer(() => {
     console.log(item);
     Modal.confirm({
       title: "删除确认",
-      content: "确定删除这条记录吗？",
+      content: `确定删除园区${item.parkName}吗？`,
       async onOk() {
         try {
           await deletePark([item.id]);
@@ -81,7 +81,7 @@ export const ParkPage = observer(() => {
     const ids = selectedRowKeys;
     Modal.confirm({
       title: "删除确认",
-      content: `确定删除这${ids.length}条记录吗？`,
+      content: `确定删除这${ids.length}个园区吗？`,
       async onOk() {
         try {
           await deletePark(ids);
@@ -96,7 +96,7 @@ export const ParkPage = observer(() => {
 
   const columns = [
     {
-      title: "园区编号",
+      title: "园区代码",
       dataIndex: "parkNo",
       width: 200
     },
