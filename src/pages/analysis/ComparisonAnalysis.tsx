@@ -9,74 +9,6 @@ import { toJS } from "mobx";
 const { Option } = Select;
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
-const option3 = {
-  tooltip: {
-    trigger: "axis",
-  },
-  legend: {
-    orient: "horizontal",
-    x: "center",
-    y: "bottom",
-    data: ["A化工", "B化工", "C化工", "D化工", "E化工"],
-  },
-  backgroundColor: "#f0f0f0",
-  toolbox: {
-    show: true,
-    feature: {
-      mark: { show: true },
-      dataView: { show: true, readOnly: false },
-      magicType: { show: true, type: ["line", "bar", "stack", "tiled"] },
-      restore: { show: true },
-      saveAsImage: { show: true },
-    },
-  },
-  calculable: true,
-  xAxis: [
-    {
-      type: "category",
-      boundaryGap: false,
-      data: ["10-24-00", "10-24-06", "10-24-12", "10-24-18", "10-25-00"],
-    },
-  ],
-  yAxis: [
-    {
-      type: "value",
-    },
-  ],
-  series: [
-    {
-      name: "A化工",
-      type: "line",
-      stack: "总量",
-      data: [120, 132, 101, 134, 90],
-    },
-    {
-      name: "B化工",
-      type: "line",
-      stack: "总量",
-      data: [220, 182, 191, 234, 290],
-    },
-    {
-      name: "C化工",
-      type: "line",
-      stack: "总量",
-      data: [150, 232, 201, 154, 190],
-    },
-    {
-      name: "D化工",
-      type: "line",
-      stack: "总量",
-      data: [320, 332, 301, 334, 390],
-    },
-    {
-      name: "E化工",
-      type: "line",
-      stack: "总量",
-      data: [820, 932, 901, 934, 1290],
-    },
-  ],
-};
-
 export const ComparisonAnalysisPage = Form.create()(
   observer(({ form }: any) => {
     const chart1 = React.useRef<any>();
@@ -89,7 +21,7 @@ export const ComparisonAnalysisPage = Form.create()(
       analysis: { comparison },
     } = useStore();
 
-    const { loading, parkTree, ptList, option1, option2 } = comparison;
+    const { loading, parkTree, ptList, option1, option2, option3 } = comparison;
 
     const doSubmit = (e) => {
       e.preventDefault();
@@ -202,12 +134,12 @@ export const ComparisonAnalysisPage = Form.create()(
                         <Radio.Button value={3} style={{ width: "20%", textAlign: "center" }}>
                           年
                         </Radio.Button>
-                        <Radio.Button value={4} style={{ width: "20%", textAlign: "center" }}>
+                        {/* <Radio.Button value={4} style={{ width: "20%", textAlign: "center" }}>
                           周
                         </Radio.Button>
                         <Radio.Button value={5} style={{ width: "20%", textAlign: "center" }}>
                           季
-                        </Radio.Button>
+                        </Radio.Button> */}
                       </Radio.Group>
                     )}
                   </Form.Item>
@@ -286,7 +218,7 @@ export const ComparisonAnalysisPage = Form.create()(
                   <Card bordered size="small" title="区域排放趋势对比" extra="2019-10-24">
                     <ReactEcharts
                       //@ts-ignore
-                      option={option3}
+                      option={toJS(option3)}
                       ref={chart3}
                       style={{ height: "360px" }}
                     />

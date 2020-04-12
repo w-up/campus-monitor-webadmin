@@ -135,6 +135,74 @@ export class Comparison {
     ],
   };
 
+  @observable option3: any = {
+    tooltip: {
+      trigger: "axis",
+    },
+    legend: {
+      orient: "horizontal",
+      x: "center",
+      y: "bottom",
+      // data: ["A化工", "B化工", "C化工", "D化工", "E化工"],
+    },
+    backgroundColor: "#f0f0f0",
+    toolbox: {
+      show: true,
+      feature: {
+        mark: { show: true },
+        dataView: { show: true, readOnly: false },
+        magicType: { show: true, type: ["line", "bar", "stack", "tiled"] },
+        restore: { show: true },
+        saveAsImage: { show: true },
+      },
+    },
+    calculable: true,
+    xAxis: [
+      {
+        type: "category",
+        boundaryGap: false,
+        // data: ["10-24-00", "10-24-06", "10-24-12", "10-24-18", "10-25-00"],
+      },
+    ],
+    yAxis: [
+      {
+        type: "value",
+      },
+    ],
+    series: [
+      // {
+      //   name: "A化工",
+      //   type: "line",
+      //   stack: "总量",
+      //   data: [120, 132, 101, 134, 90],
+      // },
+      // {
+      //   name: "B化工",
+      //   type: "line",
+      //   stack: "总量",
+      //   data: [220, 182, 191, 234, 290],
+      // },
+      // {
+      //   name: "C化工",
+      //   type: "line",
+      //   stack: "总量",
+      //   data: [150, 232, 201, 154, 190],
+      // },
+      // {
+      //   name: "D化工",
+      //   type: "line",
+      //   stack: "总量",
+      //   data: [320, 332, 301, 334, 390],
+      // },
+      // {
+      //   name: "E化工",
+      //   type: "line",
+      //   stack: "总量",
+      //   data: [820, 932, 901, 934, 1290],
+      // },
+    ],
+  };
+
   @action.bound
   async getAllSitesTree() {
     this.loading = true;
@@ -162,6 +230,20 @@ export class Comparison {
 
       this.option2.legend.data = factoryData.map((item) => item.areaName);
       this.option2.series[0].data = factoryData.map((item) => ({ name: item.areaName, value: item.sumValue }));
+
+      if (trendData) {
+        this.option3.legend.data = Object.keys(trendData);
+        this.option3.xAxis[0].data = Object.keys(Object.values(trendData)[0] as any);
+        this.option3.series = Object.keys(trendData).map(name => {
+          const item = {
+            name,
+            type: "line",
+            stack: "总量",
+            data: Object.values(trendData[name]),
+          }
+          return item;
+        })
+      }
     } catch {}
 
     this.loading = false;
