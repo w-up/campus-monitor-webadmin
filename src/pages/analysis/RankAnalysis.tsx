@@ -204,7 +204,7 @@ export const RankAnalysisPage = Form.create()(
                 <Col span={12} style={{ marginBottom: "10px" }}>
                   <Card bordered size="small" title="排放量">
                     <Tabs defaultActiveKey="1" size="small">
-                      <TabPane tab="企业排名" key="1">
+                      <TabPane tab="厂区排名" key="1">
                         <ReactEcharts
                           //@ts-ignore
                           option={toJS(option1)}

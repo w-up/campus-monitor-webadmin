@@ -137,12 +137,12 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
           </Form.Item>
 
           <Form.Item label="用户姓名">
-            {getFieldDecorator("name", { initialValue: name, rules: [{ required: true }] })(
+            {getFieldDecorator("name", { initialValue: name, rules: [{ required: false }] })(
               <Input placeholder="请输入用户姓名" />
             )}
           </Form.Item>
           <Form.Item label="联系方式">
-            {getFieldDecorator("contact", { initialValue: contact, rules: [{ required: true }] })(
+            {getFieldDecorator("contact", { initialValue: contact, rules: [{ required: false }] })(
               <Input placeholder="请输入联系方式" />
             )}
           </Form.Item>
