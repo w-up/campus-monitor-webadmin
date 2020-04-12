@@ -299,6 +299,16 @@ svg {
     font-size: 14px;
     color: #04b2f0;
   }
+  .shape-bg {
+    position: absolute;
+    width: 230px;
+    height: 40px;
+    background: url("/images/combined_sp.png") no-repeat;
+    background-size: contain;
+    line-height: 35px;
+    text-align: center;
+    margin-left: 40px;
+  }
 
   .parkScreenTop {
     width: 100%;
