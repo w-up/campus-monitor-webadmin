@@ -215,11 +215,11 @@ export type AlarmInfo = {
   monitorType: string;
   siteName: string;
   warnName: string;
-  warnLevel: string;
+  warnLevel: string | null;
   warnTime: string;
   totalTime: number;
   warnPeriod: number;
-  pmValue: string;
+  pmValue: string | null;
   deviceName: string | null;
 };
 

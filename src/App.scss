@@ -203,12 +203,12 @@ svg {
 }
 
 .listItem {
-  color: #88a8c5!important;
+  color: #88a8c5 !important;
   font-size: 12px;
   text-align: center;
   line-height: 35px;
   &.warningColor {
-    color: #F90421!important;
+    color: #f90421 !important;
   }
 
   & > div {
@@ -219,13 +219,13 @@ svg {
 .sliderDotButton {
   width: 7px;
   height: 7px;
-  background: #1C5067;
+  background: #1c5067;
   border-radius: 50%;
   margin: 2px 9px;
   opacity: 0.7;
 
   &.carousel__dot--selected {
-    background: #04F9CC;
+    background: #04f9cc;
   }
 }
 
@@ -373,7 +373,7 @@ svg {
   }
 }
 
-@media screen and (min-width:2265px){
+@media screen and (min-width: 2265px) {
   .screenPage .header-bg {
     height: 150px;
     line-height: 90px;
@@ -566,8 +566,8 @@ svg {
 .factoryAreaYellow {
   width: 35px;
   height: 11px;
-  border: 2px solid #FAD932;
-  background: #C4B40F;
+  border: 2px solid #fad932;
+  background: #c4b40f;
   display: inline-block;
   border-radius: 1px;
   margin-right: 8px;
@@ -578,7 +578,7 @@ svg {
   height: 2px;
   //border: 1px dashed #08B85F;
   display: inline-block;
-  background-image: linear-gradient(to right, #08B85F 0%, #08B85F 50%, transparent 50%);
+  background-image: linear-gradient(to right, #08b85f 0%, #08b85f 50%, transparent 50%);
   background-size: 12px 2px;
   background-repeat: repeat-x;
   margin-right: 8px;
@@ -596,7 +596,7 @@ svg {
 .redOver {
   width: 15px;
   height: 8px;
-  background: #FB051E;
+  background: #fb051e;
   display: inline-block;
   margin-right: 8px;
 }
@@ -829,7 +829,6 @@ svg {
   .ant-descriptions * {
     font-size: 12px !important;
   }
-  
 }
 
 .ant-select-dropdown-menu-item {
@@ -853,4 +852,12 @@ svg {
 
 .anchorBL {
   display: none;
+}
+
+.ant-notification-notice {
+  background: rgb(13, 20, 47);
+}
+
+.ant-notification-notice-with-icon .ant-notification-notice-message {
+  color: white;
 }

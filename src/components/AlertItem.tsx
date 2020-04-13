@@ -7,7 +7,7 @@ import { useStore } from "../stores/index";
 export const AlertItem = ({ item }: { item: AlarmInfo }) => {
   const { mapMonitor } = useStore();
   return useObserver(() => (
-    <Card className="w-full" bordered={false} style={{ background: "#23283E", marginTop: 20 }}>
+    <Card className="w-full text-white" bordered={false} style={{ background: "#23283E", marginTop: 20, color: "white" }}>
       <Row className="alertCardRow">
         <Col span={8}>告警对象:</Col>
         <Col className="text-right" span={12} offset={4}>
