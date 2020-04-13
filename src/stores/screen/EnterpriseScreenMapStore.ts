@@ -148,13 +148,15 @@ export class EnterpriseScreenMapStore {
 
   @action.bound
   async loadAllFactory() {
-    const result = await api.Factory.getAllFactoryLogin();
-    this.allfactoriy = result.data;
-    this.allfactoriy.forEach((i) => {
-      if (i.select) {
-        this.currentFactory = i.factoryId;
-      }
-    });
+    const res = await api.Factory.getAllFactoryLogin();
+    if (res.data) {
+      this.allfactoriy = res.data;
+      this.allfactoriy.forEach((i) => {
+        if (i.select) {
+          this.currentFactory = i.factoryId;
+        }
+      });
+    }
   }
 
   @action.bound

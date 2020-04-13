@@ -154,6 +154,8 @@ export class ParkScreenMapStore {
   @observable dailyData: {
     siteId: string;
     points: Array<{
+      collectValueDe: string;
+      collectValueIn: string;
       collectValue: number;
       time: string;
       unit: string;

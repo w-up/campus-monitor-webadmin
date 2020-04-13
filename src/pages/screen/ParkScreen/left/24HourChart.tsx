@@ -51,15 +51,11 @@ export const ParkScreen24HourChart = () => {
               //名称
               var text = params[i].axisValue;
               //值
-              var value = params[i].data.value;
-              var limit = params[i].data.limit;
-              var unit = params[i].data.unit;
-              if (Number(value) > 0) {
+              var { valueRaw, valueIn, value, limit, unit } = params[i].data;
+              if (valueRaw > 0) {
                 showHtml += `
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px;${limit && value > limit ? "color:red;" : ""}">${
-                  value ? utils.number.toPrecision(value) + unit : ""
-                }</div>`;
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px;${limit && valueRaw > limit ? "color:red;" : ""}">${value ? `${value}*${valueIn} ${unit}` : ""}</div>`;
               }
             }
 
@@ -118,7 +114,9 @@ export const ParkScreen24HourChart = () => {
             name: parkScreenMap.curPmValue?.pmName,
             type: "line",
             data: parkScreenMap.dailyData.points.map((i) => ({
-              value: i.collectValue,
+              value: Number(i.collectValueDe),
+              valueRaw: i.collectValue,
+              valueIn: i.collectValueIn,
               limit: parkScreenMap.dailyData.upperLimit,
               unit: i.unit,
             })),
@@ -138,12 +136,14 @@ export const ParkScreen24HourChart = () => {
                   color: "red",
                 },
               },
-              data: [
-                {
-                  name: "预警值",
-                  yAxis: parkScreenMap.dailyData.upperLimit || 0,
-                },
-              ],
+              data: parkScreenMap.dailyData.upperLimit
+                ? [
+                    {
+                      name: "预警值",
+                      yAxis: parkScreenMap.dailyData.upperLimit,
+                    },
+                  ]
+                : [],
             },
             symbol: "circle", //设定为实心点
             symbolSize: 6, //设定实心点的大小

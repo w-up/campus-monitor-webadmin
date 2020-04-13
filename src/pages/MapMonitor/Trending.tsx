@@ -128,7 +128,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
         yAxis: [
           {
             type: "value",
-            name: "排水量",
+            name: "排放量",
             // min: 0,
             // max: 250,
             // interval: 50,

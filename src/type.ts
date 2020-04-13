@@ -142,6 +142,7 @@ export type AllParkData = {
 export type SiteData = {
   siteId: string;
   siteName: string;
+  monitorType: string;
   environmentData: {
     windSpeed: string;
     windDirection: string;

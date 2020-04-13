@@ -159,7 +159,11 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
       {store.siteData && (
         <div className="monitor-row-panel p-4 overflow-y-scroll">
           <div className="flex justify-between items-center mt-4">
-            <div className="primary-button-text-dark text-lg">{store.siteData?.siteName}</div>
+            <div className="primary-button-text-dark text-lg">
+              <span>{store.siteData?.siteName}</span>
+              <span className="text-sm ml-2">{store.siteData?.monitorType}</span>
+            </div>
+
             <div className="primary-button-text-dark text-sm"> 更新时间: {store.updateTime}</div>
           </div>
           <div className="stat-panel grid grid-flow-col grid-cols-3 grid-rows-2 gap-4 text-white mt-8 p-4">
