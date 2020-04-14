@@ -25,6 +25,14 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
         span: 15,
       },
     },
+    startTime: moment() as any,
+    endTime: null as any,
+    disabledEndDate(endTime) {
+      if (!this.startTime || !endTime) {
+        return false;
+      }
+      return !moment(endTime).isBetween(this.startTime, moment(this.startTime).add(1, "day"));
+    },
     togglePlay() {
       this.isPlaying = !this.isPlaying;
     },
@@ -147,8 +155,16 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
               </Form.Item>
             </div>
           )}
-          <Form.Item label="起始时间">{getFieldDecorator("startTime", { initialValue: moment() })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}</Form.Item>
-          <Form.Item label="终止时间">{getFieldDecorator("endTime", { initialValue: moment().subtract(1, "day") })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}</Form.Item>
+          <Form.Item label="起始时间">
+            {getFieldDecorator("startTime", { initialValue: store.startTime })(
+              <DatePicker showTime={{ format: "HH" }} onChange={(val) => (store.startTime = val)} className="w-full" format="YYYY-MM-DD HH" />
+            )}
+          </Form.Item>
+          <Form.Item label="终止时间">
+            {getFieldDecorator("endTime", { initialValue: store.endTime })(
+              <DatePicker disabledDate={store.disabledEndDate} className="w-full" onChange={(val) => (store.endTime = val)} showTime={{ format: "HH" }} format="YYYY-MM-DD HH" />
+            )}
+          </Form.Item>
           <Form.Item wrapperCol={{ span: 22, offset: 1 }}>
             <Button type="primary" htmlType="submit" className="w-full">
               开始计算

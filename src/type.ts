@@ -142,6 +142,7 @@ export type AllParkData = {
 export type SiteData = {
   siteId: string;
   siteName: string;
+  monitorType: string;
   environmentData: {
     windSpeed: string;
     windDirection: string;
@@ -215,11 +216,11 @@ export type AlarmInfo = {
   monitorType: string;
   siteName: string;
   warnName: string;
-  warnLevel: string;
+  warnLevel: string | null;
   warnTime: string;
   totalTime: number;
   warnPeriod: number;
-  pmValue: string;
+  pmValue: string | null;
   deviceName: string | null;
 };
 

@@ -12,55 +12,55 @@ export const ColumnLineChart = () => {
         axisPointer: {
           type: "cross",
           crossStyle: {
-            color: "#999"
-          }
-        }
+            color: "#999",
+          },
+        },
       },
       legend: {
         data: ["排放量", "平均浓度"],
         textStyle: {
           fontSize: 10,
-          color: "#88A8C5" // 图例文字颜色
-        }
+          color: "#88A8C5", // 图例文字颜色
+        },
       },
       xAxis: [
         {
           type: "category",
           data: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
           axisPointer: {
-            type: "shadow"
+            type: "shadow",
           },
           axisLabel: {
             textStyle: {
               color: "rgba(136,168,197,0.5)",
-              fontSize: "10"
-            }
-          }
-        }
+              fontSize: "10",
+            },
+          },
+        },
       ],
       yAxis: [
         {
           type: "value",
-          name: "排水量",
+          name: "排放量",
           min: 0,
           max: 250,
           interval: 50,
           axisLine: {
             lineStyle: {
-              color: "rgba(136,168,197,0.5)"
-            }
+              color: "rgba(136,168,197,0.5)",
+            },
           },
           axisLabel: {
             textStyle: {
               color: "rgba(136,168,197,0.5)",
-              fontSize: "10"
-            }
+              fontSize: "10",
+            },
           },
           splitLine: {
             lineStyle: {
-              color: "rgba(101,198,231,0.2)"
-            }
-          }
+              color: "rgba(101,198,231,0.2)",
+            },
+          },
         },
         {
           type: "value",
@@ -70,21 +70,21 @@ export const ColumnLineChart = () => {
           interval: 5,
           axisLine: {
             lineStyle: {
-              color: "rgba(136,168,197,0.5)"
-            }
+              color: "rgba(136,168,197,0.5)",
+            },
           },
           axisLabel: {
             textStyle: {
               color: "rgba(136,168,197,0.5)",
-              fontSize: "10"
-            }
+              fontSize: "10",
+            },
           },
           splitLine: {
             lineStyle: {
-              color: "rgba(101,198,231,0.2)"
-            }
-          }
-        }
+              color: "rgba(101,198,231,0.2)",
+            },
+          },
+        },
       ],
       series: [
         {
@@ -95,20 +95,20 @@ export const ColumnLineChart = () => {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
-                  color: "#459cbd" // 0% 处的颜色
+                  color: "#459cbd", // 0% 处的颜色
                 },
                 {
                   offset: 0.5,
-                  color: "#376ddb" // 0% 处的颜色
+                  color: "#376ddb", // 0% 处的颜色
                 },
                 {
                   offset: 1,
-                  color: "#5929d3" // 100% 处的颜色
-                }
-              ])
-            }
+                  color: "#5929d3", // 100% 处的颜色
+                },
+              ]),
+            },
           },
-          data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+          data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
         },
         {
           name: "平均浓度",
@@ -118,14 +118,14 @@ export const ColumnLineChart = () => {
             normal: {
               color: "#FE7B43", //改变折线点的颜色
               lineStyle: {
-                color: "#FE7B43" //改变折线颜色
-              }
-            }
+                color: "#FE7B43", //改变折线颜色
+              },
+            },
           },
-          data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
-        }
-      ]
-    }
+          data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2],
+        },
+      ],
+    },
   }));
   return useObserver(() => (
     <div className="mt-4">

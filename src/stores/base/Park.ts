@@ -1,12 +1,12 @@
 import { action, observable } from "mobx";
 import { GET, POST } from "../../utils/request";
-import Mock, { Random } from 'mockjs';
+import Mock, { Random } from "mockjs";
 
 export class Park {
   @observable query: any = {
-    parkName: '',
+    parkName: "",
     current: 1,
-    pageSize: 10
+    pageSize: 10,
   };
   @observable total: number = 100;
   @observable selectedRowKeys: any = [];
@@ -15,7 +15,7 @@ export class Park {
 
   @action.bound
   onSelectChange(selectedRowKeys) {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
+    console.log("selectedRowKeys changed: ", selectedRowKeys);
     this.selectedRowKeys = selectedRowKeys;
   }
 
@@ -32,35 +32,35 @@ export class Park {
 
   @action.bound
   async deletePark(parkIds) {
-    await POST('/park/deletePark', parkIds);
+    await POST("/park/deletePark", parkIds);
     await this.getParkList();
   }
 
   @action.bound
   handleSearchSubmit(e) {
-    console.log(e)
+    console.log(e);
   }
 
   @action.bound
   handleSearchChange(e) {
-    console.log(e)
+    console.log(e);
     this.query = {
       ...this.query,
       parkName: e.target.value,
-    }
+    };
   }
 
   @action.bound
   handleSearchReset(e) {
-    console.log(e)
+    console.log(e);
     this.query = {
-      parkName: '',
+      parkName: "",
       current: 1,
       pageSize: 10,
-    }
+    };
     this.getParkList();
   }
-  
+
   @action.bound
   resetSelectedRowKeys() {
     this.selectedRowKeys = [];
@@ -69,19 +69,19 @@ export class Park {
   @action.bound
   async getParkList() {
     this.loading = true;
-    const { data }: any = await POST('/park/getParkListPage', {
+    const res: any = await POST("/park/getParkListPage", {
       current: this.query.current,
       pageNo: this.query.current,
       pageSize: this.query.pageSize,
       parkName: this.query.parkName,
       size: this.query.pageSize,
     });
-
-    this.total = data.total;
-    this.query.pageSize = data.size;
-    this.query.current = data.current;
-    this.dataSource = data.records;
-    this.loading = false;
+    if (res.data) {
+      this.total = res.data.total;
+      this.query.pageSize = res.data.size;
+      this.query.current = res.data.current;
+      this.dataSource = res.data.records;
+      this.loading = false;
+    }
   }
-
 }
