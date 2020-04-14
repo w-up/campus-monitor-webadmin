@@ -65,7 +65,7 @@ export class SystemConfig {
   }
 
   @action.bound
-  async getSysParamList() {
+  async getSysParamList(param = {}) {
     this.loading = true;
     const { data }: any = await POST('/sys-param/getSysParamListPage', {
       current: this.query.current,
@@ -73,6 +73,7 @@ export class SystemConfig {
       pageSize: this.query.pageSize,
       paramName: this.query.paramName,
       size: this.query.pageSize,
+      ...param,
     });
 
     this.total = data.total;

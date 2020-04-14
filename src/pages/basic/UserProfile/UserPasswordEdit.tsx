@@ -55,7 +55,8 @@ export const UserPasswordEdit = Form.create()(observer(({form}: {form: WrappedFo
         return;
       }
       await auth.editPassword(values);
-      history.goBack();
+      await auth.logout();
+      history.replace("/login");
     });
 
   };

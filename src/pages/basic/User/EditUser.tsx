@@ -87,13 +87,13 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
             <Input hidden placeholder="请输入ID" />
           )}
           <Form.Item label="登录名">
-            {getFieldDecorator("username", { initialValue: username, rules: [{ required: true }] })(
+            {getFieldDecorator("username", { initialValue: username, rules: [{ required: true, message: '请输入登录名' }] })(
               <Input placeholder="请输入登录名" />
             )}
           </Form.Item>
 
           <Form.Item label="用户类型">
-            {getFieldDecorator("type", { initialValue: type, rules: [{ required: true }] })(
+            {getFieldDecorator("type", { initialValue: type, rules: [{ required: true, message: '请选择用户类型' }] })(
               <Radio.Group disabled={!!id}>
                 <Radio value={0}>园区用户</Radio>
                 <Radio value={1}>企业用户</Radio>
@@ -104,7 +104,7 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
 
           {getFieldValue('type') === 0 &&
           <Form.Item label="所属园区">
-            {getFieldDecorator("parkOrEnterpriseId", { initialValue: porc.id, rules: [{ required: true }] })(
+            {getFieldDecorator("parkOrEnterpriseId", { initialValue: porc.id, rules: [{ required: true, message: '请选择所属园区' }] })(
               <Select disabled={!!id} placeholder="请选择所属园区">
                 {parkList.map(item => <Option key={item.id} value={item.id}>{item.parkName}</Option>)}
               </Select>
@@ -114,7 +114,7 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
 
           {getFieldValue('type') === 1 &&
           <Form.Item label="所属企业">
-            {getFieldDecorator("parkOrEnterpriseId", { initialValue: porc.id, rules: [{ required: true }] })(
+            {getFieldDecorator("parkOrEnterpriseId", { initialValue: porc.id, rules: [{ required: true, message: '请选择所属企业' }] })(
               <Select disabled={!!id} placeholder="请选择所属企业">
                 {companyList.map(item => <Option key={item.id} value={item.id}>{item.companyName}</Option>)}
               </Select>
@@ -123,7 +123,7 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
           }
 
           <Form.Item label="所属角色">
-            {getFieldDecorator("roleIds", { initialValue: (initialRoles || []).map(item => item.id), rules: [{ required: true }] })(
+            {getFieldDecorator("roleIds", { initialValue: (initialRoles || []).map(item => item.id), rules: [{ required: true, message: '请选择所属角色' }] })(
               <Select mode="multiple" placeholder="请选择所属角色">
                 {roles.map(item => <Option key={item.id} value={item.id}>{item.name}</Option>)}
               </Select>
@@ -131,7 +131,7 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
           </Form.Item>
 
           <Form.Item label="密码">
-            {getFieldDecorator("password", { initialValue: '', rules: [{ required: true }] })(
+            {getFieldDecorator("password", { initialValue: '', rules: [{ required: true, message: '请输入密码' }] })(
               <Input.Password placeholder="请输入密码" />
             )}
           </Form.Item>

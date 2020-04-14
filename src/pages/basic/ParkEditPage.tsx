@@ -33,6 +33,21 @@ const tailFormItemLayout = {
   }
 };
 
+const strlen = (str) => {
+  var len = 0;
+  for (var i=0; i<str.length; i++) {
+   var c = str.charCodeAt(i);
+  //单字节加1
+   if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) {
+     len++;
+   }
+   else {
+    len+=2;
+   }
+  }
+  return len;
+}
+
 export const ParkEditPage = Form.create()(
   observer(({ form }: any) => {
     const { state = {} }: any = useLocation();
@@ -63,6 +78,10 @@ export const ParkEditPage = Form.create()(
         e.preventDefault();
         validateFields(async (err, values) => {
           if (err) {
+            return;
+          }
+          if (parkEdit.scope.length === 0) {
+            message.error('请输入园区范围');
             return;
           }
           const param = { ...values, scope: parkEdit.scope };
@@ -103,17 +122,35 @@ export const ParkEditPage = Form.create()(
             )}
           </Form.Item>
           <Form.Item label="园区代码">
-            {getFieldDecorator("parkNo", { initialValue: parkNo, rules: [{ required: true }] })(
+            {getFieldDecorator("parkNo", { initialValue: parkNo, rules: [
+              { required: true, message: '请输入园区代码' },
+              { validator: (rule, value, callback) => {
+                if (strlen(value) < 30) {
+                  callback();
+                } else {
+                  callback('园区代码长度超过限制');
+                }
+              } },
+            ] })(
               <Input placeholder="请输入园区代码" />
             )}
           </Form.Item>
           <Form.Item label="园区名称" >
-            {getFieldDecorator("parkName", { initialValue: parkName, rules: [{ required: true }] })(
+            {getFieldDecorator("parkName", { initialValue: parkName, rules: [
+              { required: true, message: '请输入园区名称' },
+              { validator: (rule, value, callback) => {
+                if (strlen(value) < 60) {
+                  callback();
+                } else {
+                  callback('园区名称长度超过限制');
+                }
+              } },
+            ] })(
               <Input placeholder="请输入园区名称" />
             )}
           </Form.Item>
           <Form.Item label="园区状态" style={{ display: 'none' }} >
-            {getFieldDecorator("parkStatus", { initialValue: 1, rules: [{ required: true }] })(
+            {getFieldDecorator("parkStatus", { initialValue: 1, rules: [{ required: true, message: '请输入园区状态' }] })(
               <Input placeholder="请输入园区状态" />
             )}
           </Form.Item>

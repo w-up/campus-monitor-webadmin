@@ -36,7 +36,7 @@ export const ParkPage = observer(() => {
 
   const handleSearch = e => {
     e.preventDefault();
-    park.getParkList();
+    park.getParkList({ current: 1, pageNo: 1 });
   };
 
   const rowSelection = {
@@ -76,6 +76,7 @@ export const ParkPage = observer(() => {
   const onBatchDeletePark = () => {
     const selectedRows = toJS(selectedRowKeys);
     if (selectedRows.length === 0) {
+      message.warning("请勾选要删除的园区");
       return;
     }
     const ids = selectedRowKeys;

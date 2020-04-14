@@ -91,7 +91,7 @@ export class UserManagement {
   }
 
   @action.bound
-  async getUsers() {
+  async getUsers(param = {}) {
     this.loading = true;
     try {
       const { data }: any = await POST('/user/getUsers', {
@@ -100,6 +100,7 @@ export class UserManagement {
         size: this.query.pageSize,
         status: this.query.status,
         username: this.query.userName,
+        ...param,
       });
   
       this.query.total = data.total;

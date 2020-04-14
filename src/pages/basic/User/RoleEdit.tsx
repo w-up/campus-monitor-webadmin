@@ -92,19 +92,19 @@ export const RoleEdit = Form.create()(observer(({ form }: any) => {
           )}
 
           <Form.Item label="角色代码">
-            {getFieldDecorator("code", { initialValue: code, rules: [{ required: true }] })(
+            {getFieldDecorator("code", { initialValue: code, rules: [{ required: true, message: '请输入角色代码' }] })(
               <Input disabled={!!id} placeholder="请输入角色代码" />
             )}
           </Form.Item>
 
           <Form.Item label="角色名称">
-            {getFieldDecorator("name", { initialValue: name, rules: [{ required: true }] })(
+            {getFieldDecorator("name", { initialValue: name, rules: [{ required: true, message: '请输入角色名称' }] })(
               <Input placeholder="请输入角色名称" />
             )}
           </Form.Item>
 
           <Form.Item label="角色描述">
-            {getFieldDecorator("desc", { initialValue: desc, rules: [{ required: true }] })(
+            {getFieldDecorator("desc", { initialValue: desc, rules: [{ required: true, message: '请输入角色描述' }] })(
               <TextArea rows={4} placeholder='请输入角色描述' />
             )}
           </Form.Item>
@@ -114,7 +114,7 @@ export const RoleEdit = Form.create()(observer(({ form }: any) => {
               valuePropName: 'checkedKeys',
               trigger: 'onCheck',
               initialValue: (initialPerms || []).map(item => item.id),
-              rules: [{ required: true }],
+              rules: [{ required: true, message: '请选择权限配置' }],
             })(
               <Tree
                 checkable

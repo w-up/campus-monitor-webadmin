@@ -6,14 +6,11 @@ export class EnterpriseEdit {
 
   @action.bound
   async onSubmit(param) {
-    this.loading = true;
-    console.log(param);
     if (!param.id) {
       await POST('/company/addCompany', param);
     } else {
       await POST('/company/editCompany', param);
     }
-    this.loading = false;
   }
 
 }

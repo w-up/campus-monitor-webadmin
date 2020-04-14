@@ -21,7 +21,7 @@ export const SystemConfigration = Form.create()(observer((props: any) => {
 
   const handleSearch = e => {
     e.preventDefault();
-    systemConfig.getSysParamList();
+    systemConfig.getSysParamList({ current: 1, pageSize: 1 });
   }
 
   const pagination = {

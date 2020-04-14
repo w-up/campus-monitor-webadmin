@@ -122,7 +122,7 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
 
   const handleSearch = e => {
     e.preventDefault();
-    user.getUsers();
+    user.getUsers({ current: 1, pageNo: 1 });
   };
 
   const selectMsg = (num: number) => {
@@ -136,6 +136,7 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
   const handleResetPasswrod = async () => {
     const ids = toJS(selectedRowKeys);
     if (ids.length === 0) {
+      message.warning('请勾选要重置密码的用户');
       return;
     }
     Modal.confirm({

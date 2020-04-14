@@ -16,22 +16,12 @@ export const Roles = Form.create()(observer((props: any) => {
   const {
     loading,
     roleList, query,
-    resetSelectedRowKeys, selectedRowKeys, handleSearchReset, handleSearchNameChange, handleSearchStatusChange, onSelectChange,
+    resetSelectedRowKeys, selectedRowKeys, handleSearchReset, handleSearchNameChange, handleSearchStatusChange, onSelectChange, paginationChange,
   } = role;
 
   useEffect(() => {
     role.getRoleList();
   }, []);
-
-
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-    getCheckboxProps: record => ({
-      disabled: record.status !== 0,
-      name: record.name,
-    }),
-  };
 
   const columns = [
     {
@@ -98,7 +88,7 @@ export const Roles = Form.create()(observer((props: any) => {
 
   const handleSearch = e => {
     e.preventDefault();
-    role.getRoleList();
+    role.getRoleList({ current: 1, pageNo: 1 });
   };
 
   const selectMsg = (num: number) => {
@@ -107,6 +97,19 @@ export const Roles = Form.create()(observer((props: any) => {
         已选择 <a>{num}</a> 项 <a onClick={resetSelectedRowKeys}>清空</a>
       </div>
     );
+  };
+
+  const pagination = {
+    current: query.current,
+    pageSize: query.pageSize,
+    total: query.total,
+    showSizeChanger: true,
+    showQuickJumper: true,
+    showTotal: total => {
+      return "共 " + total + " 条记录";
+    },
+    onChange: paginationChange,
+    onShowSizeChange: paginationChange
   };
 
   return (
@@ -156,8 +159,7 @@ export const Roles = Form.create()(observer((props: any) => {
           <Divider />
 
           <Row>
-            {/* <Table bordered size="small" rowKey="id" rowSelection={rowSelection} columns={columns} dataSource={toJS(roleList)} /> */}
-            <Table bordered size="small" rowKey="id" columns={columns} dataSource={toJS(roleList)} />
+            <Table bordered size="small" rowKey="id" pagination={pagination} columns={columns} dataSource={toJS(roleList)} />
           </Row>
         </Card>
       </Spin>

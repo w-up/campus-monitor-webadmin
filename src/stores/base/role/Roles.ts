@@ -83,7 +83,7 @@ export class Roles {
   }
 
   @action.bound
-  async getRoleList() {
+  async getRoleList(param = {}) {
     this.loading = true;
     try {
       const { data }: any = await POST('/role/getRoles', {
@@ -92,11 +92,12 @@ export class Roles {
         size: this.query.pageSize,
         name: this.query.name,
         status: this.query.status,
+        ...param,
       });
   
       this.query.total = data.total;
       this.query.pageSize = data.size;
-      this.query.current = data.current;
+      this.query.current = Number(data.current);
       this.roleList = data.records;
     } catch {
 

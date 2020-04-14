@@ -67,7 +67,7 @@ export class Park {
   }
 
   @action.bound
-  async getParkList() {
+  async getParkList(param = {}) {
     this.loading = true;
     const res: any = await POST("/park/getParkListPage", {
       current: this.query.current,
@@ -75,6 +75,7 @@ export class Park {
       pageSize: this.query.pageSize,
       parkName: this.query.parkName,
       size: this.query.pageSize,
+      ...param,
     });
     if (res.data) {
       this.total = res.data.total;

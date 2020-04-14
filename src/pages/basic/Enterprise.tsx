@@ -19,7 +19,7 @@ export const EnterprisePage = observer(() => {
 
   const handleSearch = e => {
     e.preventDefault();
-    enterprise.getCompanyList();
+    enterprise.getCompanyList({ current: 1, pageNo: 1 });
   }
 
   useEffect(() => {
@@ -65,6 +65,7 @@ export const EnterprisePage = observer(() => {
     console.log(toJS(selectedRowKeys));
     const selectedRows = toJS(selectedRowKeys)
     if (selectedRows.length === 0) {
+      message.warning('请勾选要删除的企业');
       return;
     }
     const ids = toJS(selectedRowKeys);

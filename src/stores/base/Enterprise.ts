@@ -65,7 +65,7 @@ export class Enterprise {
   }
 
   @action
-  async getCompanyList() {
+  async getCompanyList(param = {}) {
     this.loading = true;
     const { data }: any = await POST('/company/getCompanyListPage', {
       current: this.query.current,
@@ -73,6 +73,7 @@ export class Enterprise {
       pageSize: this.query.pageSize,
       companyCode: this.query.companyCode,
       size: this.query.pageSize,
+      ...param,
     });
     console.log(data)
 

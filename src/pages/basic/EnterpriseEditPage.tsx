@@ -29,10 +29,24 @@ const tailFormItemLayout = {
   },
 };
 
+const strlen = (str) => {
+  var len = 0;
+  for (var i=0; i<str.length; i++) {
+   var c = str.charCodeAt(i);
+  //单字节加1
+   if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) {
+     len++;
+   }
+   else {
+    len+=2;
+   }
+  }
+  return len;
+}
+
 export const EnterpriseEditPage = Form.create()(observer(({ form }: any) => {
   
   const { state = {} }: any = useLocation();
-  console.log('state', state)
 
   const { id, companyCode, companyName, remark, companyStatus } = state.enterprise || {};
   const history = useHistory();
@@ -54,14 +68,18 @@ export const EnterpriseEditPage = Form.create()(observer(({ form }: any) => {
       if (err) {
         return;
       }
-      await onSubmit(values);
-      history.replace("/base/enterprise");
+      enterpriseEdit.loading = true;
+      try {
+        await onSubmit(values);
+        history.replace("/base/enterprise");
+      } catch {}
+      enterpriseEdit.loading = false;
     })
   }
 
   return (
     <Spin spinning={loading}>
-      <div style={{height: 100, background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px"}}>
+      <div style={{ background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px"}}>
         <Breadcrumb>
           <Breadcrumb.Item>基础信息</Breadcrumb.Item>
           <Breadcrumb.Item>
@@ -71,7 +89,6 @@ export const EnterpriseEditPage = Form.create()(observer(({ form }: any) => {
             <a>{state.enterprise ? '编辑企业' : '新增企业'}</a>
           </Breadcrumb.Item>
         </Breadcrumb>
-      <div style={{margin: 10, marginLeft: 0, fontWeight: "bold", fontSize: 20}}>{state.enterprise ? '编辑企业' : '新增企业'}</div>
       </div>
       <Card>
         <Form {...formItemLayout} onSubmit={doSubmit}>
@@ -81,22 +98,49 @@ export const EnterpriseEditPage = Form.create()(observer(({ form }: any) => {
             )}
           </Form.Item>
           <Form.Item label="企业统一社会信用代码">
-            {getFieldDecorator("companyCode", { initialValue: companyCode, rules: [{ required: true }] })(
+            {getFieldDecorator("companyCode", { initialValue: companyCode, rules: [
+              { required: true, message: '请输入企业统一社会信用代码' },
+              { validator: (rule, value, callback) => {
+                if (value.match(/[^_IOZSVa-z\W]{2}\d{6}[^_IOZSVa-z\W]{10}/g)) {
+                  callback();
+                } else {
+                  callback('企业统一社会信用代码格式错误');
+                }
+              } },
+            ] })(
               <Input placeholder="请输入企业统一社会信用代码" />
             )}
           </Form.Item>
           <Form.Item label="企业名称">
-            {getFieldDecorator("companyName", { initialValue: companyName, rules: [{ required: true }] })(
+            {getFieldDecorator("companyName", { initialValue: companyName, rules: [
+              { required: true, message: '请输入企业名称' },
+              { validator: (rule, value, callback) => {
+                if (strlen(value) < 60) {
+                  callback();
+                } else {
+                  callback('企业名称长度超过限制');
+                }
+              } },
+            ] })(
               <Input placeholder="请输入企业名称" />
             )}
           </Form.Item>
           <Form.Item label="企业状态" style={{ display: 'none' }} >
-            {getFieldDecorator("companyStatus", { initialValue: 1, rules: [{ required: true }] })(
+            {getFieldDecorator("companyStatus", { initialValue: 1, rules: [{ required: true, message: '请输入企业状态' }] })(
               <Input placeholder="请输入企业状态" />
             )}
           </Form.Item>
           <Form.Item label="描述" >
-            {getFieldDecorator("remark", { initialValue: remark })(
+            {getFieldDecorator("remark", { initialValue: remark, rules: [
+              { required: false },
+              { validator: (rule, value, callback) => {
+                if (strlen(value) < 200) {
+                  callback();
+                } else {
+                  callback('描述长度超过限制');
+                }
+              } },
+            ] })(
               <TextArea rows={4} placeholder='请输入描述' />
             )}
           </Form.Item>
