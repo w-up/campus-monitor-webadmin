@@ -61,8 +61,11 @@ export class HistoryData {
         const config = { ...item, width: 100, key: item.titleKey, dataIndex: item.titleKey };
         if (index === 0) {
           config.fixed = "left";
-          config.width = 150;
+          // config.width = 150;
         }
+        // if (index === data.titles.length - 1) {
+        //   delete config.width;
+        // }
         return config;
       });
       this.dataList = data.dataList.records.map((item, index) => ({ ...item, key: index }));

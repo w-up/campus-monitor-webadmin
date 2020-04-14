@@ -24,6 +24,7 @@ export class ParkEdit {
     } else {
       await POST("/park/editPark", param);
     }
+    this.scope = [];
     this.loading = false;
   }
 

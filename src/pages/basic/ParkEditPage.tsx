@@ -153,6 +153,7 @@ export const ParkEditPage = Form.create()(
             okText="确认"
             cancelText="取消"
             width={800}
+            destroyOnClose
           >
             <div style={{ width: "100%", height: "400px" }}>
               <DrawBaiduMap />
