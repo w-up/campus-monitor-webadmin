@@ -146,29 +146,31 @@ export const ComparisonAnalysisPage = Form.create()(
 
                   {getFieldValue("timeCycle") === 1 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<DatePicker format="YYYY-MM-DD" style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(
+                        <DatePicker allowClear={false} format="YYYY-MM-DD" style={{ width: "100%" }} size="small" />
+                      )}
                     </Form.Item>
                   )}
                   {getFieldValue("timeCycle") === 2 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<MonthPicker format="YYYY-MM" style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<MonthPicker allowClear={false} format="YYYY-MM" style={{ width: "100%" }} size="small" />)}
                     </Form.Item>
                   )}
                   {getFieldValue("timeCycle") === 3 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<DatePicker format="YYYY" style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<DatePicker allowClear={false} format="YYYY" style={{ width: "100%" }} size="small" />)}
                     </Form.Item>
                   )}
 
                   {getFieldValue("timeCycle") === 4 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<WeekPicker style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<WeekPicker allowClear={false} style={{ width: "100%" }} size="small" />)}
                     </Form.Item>
                   )}
 
                   {getFieldValue("timeCycle") === 5 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<DatePicker format="Q" style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<DatePicker allowClear={false} format="Q" style={{ width: "100%" }} size="small" />)}
                     </Form.Item>
                   )}
 

@@ -12,7 +12,7 @@ export interface PolygonProps extends BMap.PolygonOptions, BMap.PolygonEvents, O
 
 export const IPolygon = React.forwardRef<PolygonProps & { polygon?: BMap.Polygon }, PolygonProps>((props, ref) => {
   const { polygon, reloadPath } = usePolygon(props);
-
+  console.log(props);
   if (props.updateable) {
     reloadPath();
   }

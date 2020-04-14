@@ -28,7 +28,7 @@ export default {
   getFactoryList(data: { parkId: number }) {
     return GET("/mapMonitor/getFactoryList", data);
   },
-  getPmCodeList(data: { factoryId: number }) {
+  getPmCodeList(data: { factoryId: number; parkId: string }) {
     return GET("/mapMonitor/getPmCodeList", data);
   },
   getSitePmValueList(data: { pmCode: string; parkId: number; factoryId: number }) {
@@ -59,5 +59,5 @@ export default {
   },
   getDynamicSourceTraceSource(data: { endTime: string; parkId: number; pmCode: string; startTime: string }) {
     return POST("/mapMonitor/getDynamicSourceTraceSource", data);
-  }
+  },
 };

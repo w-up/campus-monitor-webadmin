@@ -1,14 +1,14 @@
 import { action, observable } from "mobx";
-import moment from 'moment';
+import moment from "moment";
 import { message } from "antd";
 import { GET, POST } from "../../utils/request";
 import { store } from "../index";
 
 export class MyEnterprise {
   @observable query: any = {
-    companyCode: '',
+    companyCode: "",
     current: 1,
-    pageSize: 10
+    pageSize: 10,
   };
   @observable total: number = 100;
   @observable selectedRowKeys: any = [];
@@ -50,7 +50,7 @@ export class MyEnterprise {
 
   @action.bound
   onSelectChange(selectedRowKeys) {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
+    console.log("selectedRowKeys changed: ", selectedRowKeys);
     this.selectedRowKeys = selectedRowKeys;
   }
 
@@ -67,34 +67,34 @@ export class MyEnterprise {
 
   @action.bound
   async deleteEnterprise(ids) {
-    await POST('/company/deleteCompany', ids);
+    await POST("/company/deleteCompany", ids);
     // await this.getCompanyList();
   }
 
   @action.bound
   handleSearchSubmit(e) {
-    console.log(e)
+    console.log(e);
   }
 
   @action.bound
   handleSearchChange(e) {
-    console.log(e)
+    console.log(e);
     this.query = {
       ...this.query,
       companyCode: e.target.value,
-    }
+    };
   }
 
   @action.bound
   handleSearchReset(e) {
-    console.log(e)
+    console.log(e);
     this.query = {
-      companyCode: '',
+      companyCode: "",
       current: 1,
       pageSize: 20,
-    }
+    };
   }
-  
+
   @action.bound
   resetSelectedRowKeys() {
     this.selectedRowKeys = [];
@@ -102,8 +102,8 @@ export class MyEnterprise {
 
   @action.bound
   async onTreeItemSelect(selectedKeys) {
-    console.log('selectedKeys', selectedKeys);
-    this.treeData.some(item => {
+    console.log("selectedKeys", selectedKeys);
+    this.treeData.some((item) => {
       if (item.id === selectedKeys[0]) {
         this.selectedEnterprise = item;
         return true;
@@ -119,11 +119,11 @@ export class MyEnterprise {
     this.loading = true;
     param = {
       ...param,
-      registerDate: param.registerDate ? moment(param.registerDate).format('YYYY-MM-DD HH:mm:ss') : '',
-      businessPeriodStart: param.businessPeriodStart ? moment(param.businessPeriodStart).format('YYYY-MM-DD HH:mm:ss') : '',
-      businessPeriodEnd: param.businessPeriodEnd ? moment(param.businessPeriodEnd).format('YYYY-MM-DD HH:mm:ss') : '',
-    }
-    
+      registerDate: param.registerDate ? moment(param.registerDate).format("YYYY-MM-DD HH:mm:ss") : "",
+      businessPeriodStart: param.businessPeriodStart ? moment(param.businessPeriodStart).format("YYYY-MM-DD HH:mm:ss") : "",
+      businessPeriodEnd: param.businessPeriodEnd ? moment(param.businessPeriodEnd).format("YYYY-MM-DD HH:mm:ss") : "",
+    };
+
     await POST(`/company-business-info/editCompanyBusinessInfo?companyId=${param.companyId}`, param);
     this.loading = false;
   }
@@ -131,17 +131,19 @@ export class MyEnterprise {
   @action
   async getCompanyNatureType() {
     const { data }: any = await GET(`/dict-data/getDictDataByCode?typeCode=company_category`, {});
-    console.log('type', data)
+    console.log("type", data);
     this.companyNatureType = data;
   }
 
   @action
   async getIndustryType() {
-    let { data }: any = await GET(`/dict-data/getDictDataByCode`, { typeCode: 'industry_category' });
-    data = data.map(v => ({ ...v, value: v.id, label: v.dictName }));
+    let { data }: any = await GET(`/dict-data/getDictDataByCode`, { typeCode: "industry_category" });
+    data = data.map((v) => ({ ...v, value: v.id, label: v.dictName }));
 
     const promiseArr = data.map((_, i) => {
-      const p = GET(`/dict-data/getDictDataByCode`, { typeCode: data[i].dictCode }).then(({ data: innerData }) => data[i].children = innerData.map(k => ({ ...k, value: k.id, label: k.dictName })));
+      const p = GET(`/dict-data/getDictDataByCode`, { typeCode: data[i].dictCode }).then(
+        ({ data: innerData }) => (data[i].children = innerData.map((k) => ({ ...k, value: k.id, label: k.dictName })))
+      );
       return p;
     });
 
@@ -150,16 +152,15 @@ export class MyEnterprise {
     this.industryType = data;
     console.log(data);
   }
-  
 
   @action
   async getTree() {
-    const { data }: any = await GET('/company/getCompanyTreeByUserId', {});
+    const { data }: any = await GET("/company/getCompanyTreeByUserId", {});
 
-    const transformList = list => list.map(v => ({ ...v, title: v.label, key: v.id, children: v.children.length > 0 ? transformList(v.children) : [] }));
+    const transformList = (list) => list.map((v) => ({ ...v, title: v.label, key: v.id, children: v.children.length > 0 ? transformList(v.children) : [] }));
 
     this.treeData = transformList(data);
-    
+
     if (!this.selectedEnterprise.id) {
       this.selectedEnterprise = this.treeData[0];
     }
@@ -170,20 +171,20 @@ export class MyEnterprise {
   @action.bound
   async getCompanyInfo() {
     if (this.selectedEnterprise.id) {
-      const { data }: any = await GET('/company-business-info/getCompanyBusinessInfoById', { companyId: this.selectedEnterprise.id });
+      const { data }: any = await GET("/company-business-info/getCompanyBusinessInfoById", { companyId: this.selectedEnterprise.id });
       this.enterpriseInfo = data || {};
     }
   }
 
   @action.bound
   async getDeviceInfo(deviceCode) {
-    const { data }: any = await GET('/device/getDeviceByCode', { deviceCode });
-    this.deviceInfo ={ ...data };
+    const { data }: any = await GET("/device/getDeviceByCode", { deviceCode });
+    this.deviceInfo = { ...data };
   }
 
   @action.bound
   async getBelongChildType() {
-    const { data }: any = await GET('/dict-data/getDictDataByCode', { typeCode: 'belong_child_type' });
+    const { data }: any = await GET("/dict-data/getDictDataByCode", { typeCode: "belong_child_type" });
     this.belongChildTypeList = data;
   }
 
@@ -199,7 +200,7 @@ export class MyEnterprise {
 
   @action.bound
   async getParkList() {
-    const { data }: any = await GET('/park/getAllParks', {});
+    const { data }: any = await GET("/park/getAllParks", {});
     this.parkList = data;
   }
 
@@ -210,10 +211,10 @@ export class MyEnterprise {
 
   @action.bound
   async getDeviceSiteInfo(siteCode) {
-    const { data }: any = await GET('/device-site/getSiteByCode', { siteCode });
-    console.log('getDeviceSiteInfo', data)
+    const { data }: any = await GET("/device-site/getSiteByCode", { siteCode });
+    console.log("getDeviceSiteInfo", data);
     if (!data) {
-      message.error('获取站点信息失败');
+      message.error("获取站点信息失败");
       return;
     }
     this.deviceSiteInfo = { ...this.deviceSiteInfo, ...data };
@@ -221,7 +222,7 @@ export class MyEnterprise {
 
   @action.bound
   async getDeviceSiteList() {
-    const { data }: any = await POST('/device-site/getSiteListPage', { factoryId: this.factoryInfo.id });
+    const { data }: any = await POST("/device-site/getSiteListPage", { factoryId: this.factoryInfo.id });
     this.deviceSiteListInfo.data = data.records || [];
     this.deviceSiteListInfo.total = data.total;
     this.deviceSiteListInfo.pageSize = data.size;
@@ -230,7 +231,7 @@ export class MyEnterprise {
 
   @action.bound
   async getDeviceList() {
-    const { data }: any = await POST('/device/getDeviceListPage', { siteId: this.deviceSiteInfo.id });
+    const { data }: any = await POST("/device/getDeviceListPage", { siteId: this.deviceSiteInfo.id });
     this.deviceListInfo.data = data.records || [];
     this.deviceListInfo.total = data.total;
     this.deviceListInfo.pageSize = data.size;
@@ -240,7 +241,7 @@ export class MyEnterprise {
   @action.bound
   async getFactoryList() {
     if (this.selectedEnterprise.id) {
-      const { data }: any = await POST('/factory/getFactoryListPage', { companyId: this.selectedEnterprise.id });
+      const { data }: any = await POST("/factory/getFactoryListPage", { companyId: this.selectedEnterprise.id });
       this.factoryListInfo.data = data.records || [];
       this.factoryListInfo.total = data.total;
       this.factoryListInfo.pageSize = data.size;
@@ -253,45 +254,43 @@ export class MyEnterprise {
     this.loading = true;
     try {
       if (!param.id) {
-        await POST('/factory/addFactory', param);
+        await POST("/factory/addFactory", param);
       } else {
-        await POST('/factory/editFactory', param);
+        await POST("/factory/editFactory", param);
       }
-    } catch {
+    } catch {}
 
-    }
-    
     this.loading = false;
     await this.getFactoryList();
   }
 
   @action.bound
   async addDeviceSite({ factoryId, id }) {
-    await POST('/device-site/addFactorySite', { factoryId, siteId: id });
+    await POST("/device-site/addFactorySite", { factoryId, siteId: id });
     await this.getDeviceSiteList();
     await this.getTree();
   }
 
   @action.bound
   async deleteFactory(param) {
-    await POST('/factory/deleteFactory', param);
+    await POST("/factory/deleteFactory", param);
     await this.getFactoryList();
     await this.getTree();
   }
 
   @action.bound
   async deleteDeviceSite(ids) {
-    await POST('/device-site/deleteFactorySite', ids);
+    await POST("/device-site/deleteFactorySite", ids);
     await this.getDeviceSiteList();
     await this.getTree();
   }
 
   @action.bound
   addScope() {
-    if (this.factoryInfo.scope) { 
-      this.factoryInfo.scope = [ ...this.factoryInfo.scope, { scopeName: `点${this.factoryInfo.scope.length + 1}`, longitude: '', latitude: '' } ];
+    if (this.factoryInfo.scope) {
+      this.factoryInfo.scope = [...this.factoryInfo.scope, { scopeName: `点${this.factoryInfo.scope.length + 1}`, longitude: "", latitude: "" }];
     } else {
-      this.factoryInfo.scope = [{ scopeName: `点1`, longitude: '', latitude: '' }];
+      this.factoryInfo.scope = [{ scopeName: `点1`, longitude: "", latitude: "" }];
     }
   }
 
@@ -317,13 +316,12 @@ export class MyEnterprise {
 
   @action.bound
   updateMapPoints() {
-    console.log(store.map.drawMap.polygon.paths);
-    this.factoryInfo.scope = store.map.drawMap.polygon.paths[0].map((item, index) => ({
+    console.log(store.map.drawMap.paths);
+    this.factoryInfo.scope = store.map.drawMap.paths[0].map((item, index) => ({
       key: index,
       scopeName: `点${index + 1}`,
       latitude: item.lat,
-      longitude: item.lng
+      longitude: item.lng,
     }));
   }
-
 }

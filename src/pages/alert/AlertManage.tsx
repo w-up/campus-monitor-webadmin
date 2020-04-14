@@ -516,7 +516,7 @@ export const AlertManagePage = Form.create()(
                   <Divider orientation="left">起止时间</Divider>
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="">
-                    {getFieldDecorator("timeRange", { initialValue: "", rules: [{ required: false }] })(<DatePicker.RangePicker size="small" />)}
+                    {getFieldDecorator("timeRange", { initialValue: "", rules: [{ required: false }] })(<DatePicker.RangePicker size="small" allowClear={false} />)}
                   </Form.Item>
 
                   <Button type="primary" htmlType="submit" block>

@@ -19,18 +19,19 @@ export class DynamicSourceStore {
   }
   @observable offset = {
     width: 0,
-    height: -20
+    height: -20,
   };
 
   //init
   @action.bound
   async init() {
-    await Promise.all([this.loadPark(), this.loadParkData()]);
+    await Promise.all([this.loadPark(), this.loadPmCodes({})]);
+    await this.loadParkData();
   }
 
   @observable curPoint = {
     lng: 0,
-    lat: 0
+    lat: 0,
   };
 
   @observable currentPark = "0";
@@ -45,12 +46,23 @@ export class DynamicSourceStore {
 
   @action.bound
   async loadPark() {
-    const [parkRes, factoryRes, pmCodesRes] = await Promise.all([api.MapMonitor.getParkList(), api.MapMonitor.getFactoryListAll(), api.MapMonitor.getPmCodeListAll()]);
+    const [parkRes] = await Promise.all([api.MapMonitor.getParkList(), this.loadPmCodes({})]);
     this.parks = parkRes.data;
-    this.factories = factoryRes.data;
-    this.pmcodes = pmCodesRes.data;
-    this.currentPmCode = this.pmcodes[0].pmCode;
   }
+
+  async loadPmCodes({ parkId = this.currentPark }: { parkId?: any }) {
+    const res = await api.MapMonitor.getPmCodeList({
+      factoryId: 0,
+      parkId,
+    });
+    if (res.data) {
+      this.pmcodes = res.data;
+      if (this.currentPmCode == "0") {
+        this.currentPmCode = this.pmcodes[0].pmCode;
+      }
+    }
+  }
+
   @action.bound
   async loadParkData({ parkId, pmCode }: { parkId?: string; pmCode?: string } = { parkId: this.currentPark, pmCode: this.currentPmCode }) {
     const result = await api.MapMonitor.getMapInfoByPmCodeAndParkId({ parkId: Number(parkId), pmCode: this.currentPmCode });
@@ -81,16 +93,28 @@ export class DynamicSourceStore {
   } = {
     index: 0,
     data: [],
-    timer: 0
+    timer: 0,
   };
   @observable DynamicSourceWindRose: {
     index: number;
-    data: Array<DynamicSourceData>;
+    data: Array<{
+      datetime: string;
+      valueList: Array<{
+        device_id: string;
+        lat: string;
+        lng: string;
+        roseData: {
+          directionWithValue: Array<string>;
+          value: Array<string>;
+          wind_direction: Array<string>;
+        };
+      }>;
+    }>;
     timer: any;
   } = {
     index: 0,
     data: [],
-    timer: 0
+    timer: 0,
   };
   @observable DynamicSourceTraceSource: {
     index: number;
@@ -99,7 +123,7 @@ export class DynamicSourceStore {
   } = {
     index: 0,
     data: [],
-    timer: 0
+    timer: 0,
   };
 
   @computed
@@ -146,8 +170,8 @@ export class DynamicSourceStore {
 
   @action.bound
   fillArrow() {
-    this.arrows.forEach(i => this.map.removeOverlay(i));
-    this.arrowLine.forEach(i => this.map.removeOverlay(i));
+    this.arrows.forEach((i) => this.map.removeOverlay(i));
+    this.arrowLine.forEach((i) => this.map.removeOverlay(i));
   }
 
   @action.bound
@@ -224,6 +248,7 @@ export class DynamicSourceStore {
       this.map = e.target;
       //@ts-ignore
       this.map.setMapStyle({ features: [], style: "midnight" });
+      this.updateMap();
     } else {
       // this.fillArrow();
     }

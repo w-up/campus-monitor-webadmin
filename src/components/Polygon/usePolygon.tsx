@@ -11,7 +11,7 @@ export default (props = {} as UsePolygon) => {
   const opts = { strokeColor, fillColor, strokeWeight, strokeOpacity, fillOpacity, strokeStyle, enableMassClear, enableEditing, enableClicking };
   useMemo(() => {
     if (map && !polygon) {
-      const points = (path || []).map(item => new BMap.Point(item.lng, item.lat));
+      const points = (path || []).map((item) => new BMap.Point(item.lng, item.lat));
       const instance = new BMap.Polygon(points, opts);
       map.addOverlay(instance);
       setPolygon(instance);
@@ -20,7 +20,7 @@ export default (props = {} as UsePolygon) => {
 
   const reloadPath = () => {
     if (path && polygon) {
-      const points = path.map(item => new BMap.Point(item.lng, item.lat));
+      const points = path.map((item) => new BMap.Point(item.lng, item.lat));
       polygon.setPath(points);
     }
   };
@@ -42,6 +42,6 @@ export default (props = {} as UsePolygon) => {
     polygon,
     setPolygon,
     path,
-    reloadPath
+    reloadPath,
   };
 };

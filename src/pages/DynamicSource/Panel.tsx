@@ -157,12 +157,12 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
           )}
           <Form.Item label="起始时间">
             {getFieldDecorator("startTime", { initialValue: store.startTime })(
-              <DatePicker showTime={{ format: "HH" }} onChange={(val) => (store.startTime = val)} className="w-full" format="YYYY-MM-DD HH" />
+              <DatePicker allowClear={false} showTime={{ format: "HH" }} onChange={(val) => (store.startTime = val)} className="w-full" format="YYYY-MM-DD HH" />
             )}
           </Form.Item>
           <Form.Item label="终止时间">
             {getFieldDecorator("endTime", { initialValue: store.endTime })(
-              <DatePicker disabledDate={store.disabledEndDate} className="w-full" onChange={(val) => (store.endTime = val)} showTime={{ format: "HH" }} format="YYYY-MM-DD HH" />
+              <DatePicker allowClear={false} disabledDate={store.disabledEndDate} className="w-full" onChange={(val) => (store.endTime = val)} showTime={{ format: "HH" }} format="YYYY-MM-DD HH" />
             )}
           </Form.Item>
           <Form.Item wrapperCol={{ span: 22, offset: 1 }}>

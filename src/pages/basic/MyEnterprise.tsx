@@ -521,7 +521,7 @@ export const MyEnterprisePage = Form.create()(
                         </Descriptions.Item>
                         <Descriptions.Item label="注册日期" span={1.5}>
                           {getFieldDecorator("registerDate", { initialValue: registerDate && moment(registerDate), rules: [{ required: true }] })(
-                            <DatePicker disabled={!enterpriseInfoEditable} placeholder="" />
+                            <DatePicker allowClear={false} disabled={!enterpriseInfoEditable} placeholder="" />
                           )}
                         </Descriptions.Item>
                         <Descriptions.Item label="公司性质" span={1.5}>
@@ -537,7 +537,7 @@ export const MyEnterprisePage = Form.create()(
                           <Row type="flex" justify="center" gutter={6}>
                             <Col span={10}>
                               {getFieldDecorator("businessPeriodStart", { initialValue: businessPeriodStart && moment(businessPeriodStart), rules: [{ required: true }] })(
-                                <DatePicker disabled={!enterpriseInfoEditable} placeholder="" />
+                                <DatePicker allowClear={false} disabled={!enterpriseInfoEditable} placeholder="" />
                               )}
                             </Col>
                             <Col span={4} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -545,7 +545,7 @@ export const MyEnterprisePage = Form.create()(
                             </Col>
                             <Col span={10}>
                               {getFieldDecorator("businessPeriodEnd", { initialValue: businessPeriodEnd && moment(businessPeriodEnd), rules: [{ required: true }] })(
-                                <DatePicker disabled={!enterpriseInfoEditable} placeholder="" />
+                                <DatePicker allowClear={false} disabled={!enterpriseInfoEditable} placeholder="" />
                               )}
                             </Col>
                           </Row>

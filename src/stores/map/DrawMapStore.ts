@@ -5,10 +5,9 @@ export class DrawMapStore {
   @observable center = { lng: 120.983642, lat: 31.36556 };
   @observable zoom = 17;
   @observable map: any = null;
-  @observable polygon = {
-    paths: [] as Array<Array<{ lng: number; lat: number }>>
-  };
+  @observable paths = [[]] as Array<Array<{ lng: number; lat: number }>>;
   @observable editType = "add" as "view" | "add" | "edit";
+  @observable count = 0;
 
   @action.bound
   init(data: Partial<DrawMapStore> = {}) {
@@ -20,10 +19,10 @@ export class DrawMapStore {
   reset(data: Partial<DrawMapStore> = {}) {
     Object.assign(this, {
       map: null,
-      polygon: {
-        paths: []
-      },
-      ...data
+      zoom: 17,
+      editType: "add",
+      paths: [],
+      ...data,
     });
     return this;
   }
@@ -31,20 +30,20 @@ export class DrawMapStore {
   @action.bound
   getCurLocation() {
     const local = new BMap.LocalCity();
-    local.get(result => {
+    local.get((result) => {
       console.log(result);
 
       Object.assign(this, {
         center: result.center,
-        zoom: result.level
+        zoom: result.level,
       });
       console.log(this.center);
     });
   }
 
   @action.bound
-  setPaths(paths: DrawMapStore["polygon"]["paths"]) {
-    this.polygon.paths = paths;
+  setPaths(paths: DrawMapStore["paths"]) {
+    this.paths = paths;
     console.log(paths);
     if (!this.map) return;
     this.autoCenterAndZoom();
@@ -52,14 +51,14 @@ export class DrawMapStore {
 
   @action.bound
   setPathsByScope(scope: ParkEdit["scope"]) {
-    this.polygon.paths = [scope.map(i => ({ lng: Number(i.longitude), lat: Number(i.latitude) }))];
+    this.paths = [scope.map((i) => ({ lng: Number(i.longitude), lat: Number(i.latitude) }))];
     if (!this.map) return;
     this.autoCenterAndZoom();
   }
 
   @action.bound
   autoCenterAndZoom() {
-    let mapViewObj = this.map.getViewport(this.polygon.paths[0], {});
+    let mapViewObj = this.map.getViewport(this.paths[0], {});
     this.map.centerAndZoom(mapViewObj.center, mapViewObj.zoom);
   }
 
@@ -77,7 +76,7 @@ export class DrawMapStore {
   @action.bound
   search(val: string) {
     const local = new BMap.LocalSearch(this.map, {
-      renderOptions: { map: this.map, autoViewport: true, selectFirstResult: true, panel: "results" }
+      renderOptions: { map: this.map, autoViewport: true, selectFirstResult: true, panel: "results" },
     });
     local.search(val);
   }
@@ -92,10 +91,11 @@ export class DrawMapStore {
     if (this.editType !== "add") {
       return;
     }
-    const { paths } = this.polygon;
+    console.log(456);
+    const paths = this.paths;
     !paths.length && paths.push([]);
     paths[paths.length - 1].push(e.point);
-    console.log(e.getPath);
+    this.count++;
   }
 
   @action.bound
@@ -103,7 +103,7 @@ export class DrawMapStore {
     if (this.editType !== "add") {
       return;
     }
-    const { paths } = this.polygon;
+    const { paths } = this;
 
     if (!paths.length) {
       paths.push([]);

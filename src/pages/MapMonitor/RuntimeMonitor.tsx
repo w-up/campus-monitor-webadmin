@@ -94,7 +94,7 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
         render: (text, record) => <div className={record.siteId == store.curSiteId ? "primary-button-text-dark" : "primary-text-color"}>{text}</div>,
       },
       {
-        title: <span>{mapMonitor.currentPmCode}</span>,
+        title: <span>{mapMonitor.currentPmCodeData?.pmName}</span>,
         dataIndex: "collectValue",
       },
     ],

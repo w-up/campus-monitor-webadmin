@@ -30,7 +30,7 @@ export class ParkEdit {
 
   @action.bound
   addScope() {
-    this.scope = [ ...this.scope, { scopeName: `点${this.scope.length + 1}`, longitude: '', latitude: '' } ];
+    this.scope = [...this.scope, { scopeName: `点${this.scope.length + 1}`, longitude: "", latitude: "" }];
   }
 
   @action.bound
@@ -55,12 +55,12 @@ export class ParkEdit {
 
   @action.bound
   updateMapPoints() {
-    console.log(store.map.drawMap.polygon.paths);
-    this.scope = store.map.drawMap.polygon.paths[0].map((item, index) => ({
+    console.log(store.map.drawMap.paths);
+    this.scope = store.map.drawMap.paths[0].map((item, index) => ({
       key: index,
       scopeName: `点${index + 1}`,
       latitude: item.lat,
-      longitude: item.lng
+      longitude: item.lng,
     }));
   }
 }

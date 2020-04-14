@@ -17,11 +17,11 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
     isPlaying: false,
     formItemLayout: {
       labelCol: {
-        span: 7
+        span: 7,
       },
       wrapperCol: {
-        span: 16
-      }
+        span: 16,
+      },
     },
     currentPark: "0",
     currentPmCode: "",
@@ -44,7 +44,7 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
       { value: "1050", color: "#eae841" },
       { value: "1400", color: "#d46131" },
       { value: "1750", color: "#d93127" },
-      { value: "2000", color: "#661322" }
+      { value: "2000", color: "#661322" },
     ],
     togglePlay() {
       this.isPlaying = !this.isPlaying;
@@ -65,7 +65,7 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
           });
         }
       });
-    }
+    },
   }));
 
   return useObserver(() => (
@@ -101,10 +101,12 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
             )}
           </Form.Item>
           <Form.Item label="起始时间">
-            {getFieldDecorator("timeStart", { initialValue: moment().subtract(1, "day"), rules: [{ required: true }] })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}
+            {getFieldDecorator("timeStart", { initialValue: moment().subtract(1, "day"), rules: [{ required: true }] })(
+              <DatePicker allowClear={false} className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />
+            )}
           </Form.Item>
           <Form.Item label="终止时间">
-            {getFieldDecorator("timeEnd", { initialValue: moment(), rules: [{ required: true }] })(<DatePicker className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}
+            {getFieldDecorator("timeEnd", { initialValue: moment(), rules: [{ required: true }] })(<DatePicker allowClear={false} className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 22, offset: 1 }}>
@@ -122,11 +124,11 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
           <span className="ml-2 text-sm">2020-01-03 15:00:00</span>
         </div>
         <div className="stat-panel p-2 text-white flex items-center mt-2">
-          <div onClick={e => mapMonitor.togglePlayPollution()}>
+          <div onClick={(e) => mapMonitor.togglePlayPollution()}>
             <Icon type={mapMonitor.playPollutionTimer ? "pause-circle" : "play-circle"} theme="twoTone" className="text-white text-xl" />
           </div>
           <div className="flex-1 ml-4">
-            <Slider value={mapMonitor.currentTime} max={mapMonitor.maxTime} onChange={e => mapMonitor.setCurrentTime(Number(e), { stop: true })}></Slider>
+            <Slider value={mapMonitor.currentTime} max={mapMonitor.maxTime} onChange={(e) => mapMonitor.setCurrentTime(Number(e), { stop: true })}></Slider>
           </div>
         </div>
         <div className="primary-text-color mt-8">
@@ -143,7 +145,7 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
               <Progress
                 strokeColor={{
                   "0%": "#0AE612",
-                  "100%": "#F80901"
+                  "100%": "#F80901",
                 }}
                 percent={100}
                 showInfo={false}

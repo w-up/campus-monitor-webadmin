@@ -5,11 +5,11 @@ import { DrawBaiduMap } from "../../../components/DrawBaiduMap";
 
 export const DrawBaiduMapExample = () => {
   const {
-    map: { drawMap }
+    map: { drawMap },
   } = useStore();
   return useObserver(() => (
     <div className="w-full h-full">
-      <div>{JSON.stringify(drawMap.polygon.paths)}</div>
+      <div>{JSON.stringify(drawMap.paths)}</div>
       <DrawBaiduMap />
     </div>
   ));

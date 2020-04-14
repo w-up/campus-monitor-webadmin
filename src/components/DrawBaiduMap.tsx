@@ -9,7 +9,7 @@ import Search from "antd/lib/input/Search";
 export const DrawBaiduMap = () => {
   const {
     map: { drawMap },
-    config
+    config,
   } = useStore();
 
   useEffect(() => {
@@ -20,16 +20,17 @@ export const DrawBaiduMap = () => {
   return useObserver(() => (
     <div className="w-full h-full">
       <APILoader akay={config.baiduMapApiKey}>
+        <div style={{ display: "none" }}>{drawMap.count}</div>
         <Map
           onTilesLoaded={drawMap.onMapUpdate}
           onDblClick={drawMap.drawPolygon}
-          onRightClick={drawMap.newPolygon}
+          // onRightClick={drawMap.newPolygon}
           zoom={drawMap.zoom}
           enableScrollWheelZoom
           enableDoubleClickZoom={false}
-          onZoomEnd={e => (drawMap.zoom = e.target.getZoom())}
+          onZoomEnd={(e) => (drawMap.zoom = e.target.getZoom())}
         >
-          {drawMap.polygon.paths.slice().map((item, index) => (
+          {drawMap.paths.slice().map((item, index) => (
             <IPolygon
               path={item}
               key={index}
@@ -38,10 +39,10 @@ export const DrawBaiduMap = () => {
               strokeColor="#00FF66"
               strokeStyle="dashed"
               strokeWeight={2}
-              onLineUpdate={e => {
+              onLineUpdate={(e) => {
                 if (drawMap.editType === "edit") {
                   const path = e.target.getPath();
-                  drawMap.polygon.paths[index] = path;
+                  drawMap.paths[index] = path;
                 }
               }}
             />

@@ -396,6 +396,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           </Form.Item>
           <Form.Item label="统计时间">
             <DatePicker
+              allowClear={false}
               className="w-full"
               format={store.dateType.format}
               mode={store.type}

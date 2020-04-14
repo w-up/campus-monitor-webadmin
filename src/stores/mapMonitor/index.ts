@@ -17,37 +17,37 @@ export class MapMonitorStore {
   @observable polygonPath = [
     { lng: 120.990022, lat: 31.3717 },
     { lng: 120.970045, lat: 31.3702 },
-    { lng: 120.981034, lat: 31.3616 }
+    { lng: 120.981034, lat: 31.3616 },
   ];
   @observable compamys = [
     [
       { lng: 120.985022, lat: 31.3687 },
       { lng: 120.985022, lat: 31.3681 },
       { lng: 120.985612, lat: 31.3681 },
-      { lng: 120.985612, lat: 31.3687 }
+      { lng: 120.985612, lat: 31.3687 },
     ],
     [
       { lng: 120.983022, lat: 31.3657 },
       { lng: 120.983022, lat: 31.3651 },
       { lng: 120.983612, lat: 31.3651 },
-      { lng: 120.983612, lat: 31.3657 }
+      { lng: 120.983612, lat: 31.3657 },
     ],
     [
       { lng: 120.980022, lat: 31.3657 },
       { lng: 120.980022, lat: 31.3651 },
       { lng: 120.980612, lat: 31.3651 },
-      { lng: 120.980612, lat: 31.3657 }
+      { lng: 120.980612, lat: 31.3657 },
     ],
     [
       { lng: 120.980022, lat: 31.3687 },
       { lng: 120.980022, lat: 31.3681 },
       { lng: 120.980612, lat: 31.3681 },
-      { lng: 120.980612, lat: 31.3687 }
-    ]
+      { lng: 120.980612, lat: 31.3687 },
+    ],
   ];
   @observable offset = {
     width: 0,
-    height: -20
+    height: -20,
   };
   @observable pointsc = [
     { position: { lng: 120.985072, lat: 31.3681 }, mapPos: { left: "376px", top: "157px" }, number: 123 },
@@ -63,17 +63,18 @@ export class MapMonitorStore {
     { position: { lng: 120.980642, lat: 31.3654 }, mapPos: { left: "253px", top: "244px" }, number: 23 },
     { position: { lng: 120.980072, lat: 31.36865 }, mapPos: { left: "237px", top: "139px" }, number: 43 },
     { position: { lng: 120.980022, lat: 31.36856 }, mapPos: { left: "236px", top: "142px" }, number: 11 },
-    { position: { lng: 120.980682, lat: 31.36813 }, mapPos: { left: "254px", top: "156px" }, number: 22 }
+    { position: { lng: 120.980682, lat: 31.36813 }, mapPos: { left: "254px", top: "156px" }, number: 22 },
   ];
   @observable compname = [
     { position: { lng: 120.985022, lat: 31.3687 }, name: "化工西北" },
     { position: { lng: 120.983022, lat: 31.3657 }, name: "长润发" },
-    { position: { lng: 120.980022, lat: 31.3657 }, name: "群力化工" }
+    { position: { lng: 120.980022, lat: 31.3657 }, name: "群力化工" },
   ];
 
   @action.bound
   async init() {
-    await Promise.all([this.loadPark(), this.loadParkData()]);
+    await Promise.all([this.loadPark(), this.loadFactories({}), this.loadPmCodes({})]);
+    this.loadParkData();
   }
 
   @observable currentTabKey = "";
@@ -89,12 +90,12 @@ export class MapMonitorStore {
 
   @computed
   get curentFactorData() {
-    return this.factories.find(i => i.id == this.currentFactory);
+    return this.factories.find((i) => i.id == this.currentFactory);
   }
 
   @computed
   get currentPmCodeData() {
-    return this.pmcodes.find(i => i.pmCode == this.currentPmCode);
+    return this.pmcodes.find((i) => i.pmCode == this.currentPmCode);
   }
 
   @observable parks: Array<Park> = [];
@@ -123,7 +124,7 @@ export class MapMonitorStore {
   selectPark(parkId) {
     this.currentPark = parkId;
     if (parkId !== "0") {
-      // this.loadFactories({ parkId });
+      this.loadFactories({ parkId });
       this.loadParkData();
     }
   }
@@ -131,9 +132,7 @@ export class MapMonitorStore {
   @action.bound
   selectFactory(factoryId) {
     this.currentFactory = factoryId;
-    if (factoryId !== "0") {
-      // this.loadPmCodes({ factoryId });
-    }
+    this.loadPmCodes({ factoryId });
   }
 
   @action.bound
@@ -154,11 +153,11 @@ export class MapMonitorStore {
 
   @action.bound
   async loadPark() {
-    const [parkRes, factoryRes, pmCodesRes] = await Promise.all([api.MapMonitor.getParkList(), api.MapMonitor.getFactoryListAll(), api.MapMonitor.getPmCodeListAll()]);
+    const [parkRes] = await Promise.all([api.MapMonitor.getParkList()]);
     this.parks = parkRes.data;
-    this.factories = factoryRes.data;
-    this.pmcodes = pmCodesRes.data;
-    this.currentPmCode = this.pmcodes[0].pmCode;
+    // this.factories = factoryRes.data;
+    // this.pmcodes = pmCodesRes.data;
+    // this.currentPmCode = this.pmcodes[0].pmCode;
   }
   @action.bound
   async loadSitePmValueList() {
@@ -166,23 +165,29 @@ export class MapMonitorStore {
     this.pmValues = result.data;
   }
 
-  async loadFactories({ parkId }: { parkId: any }) {
+  async loadFactories({ parkId = this.currentPark }: { parkId?: any }) {
     const result = await api.MapMonitor.getFactoryList({
-      parkId: Number(parkId)
+      parkId: Number(parkId),
     });
     this.factories = result.data;
   }
 
-  async loadPmCodes({ factoryId }: { factoryId: any }) {
-    const result = await api.MapMonitor.getPmCodeList({
-      factoryId: Number(factoryId)
+  async loadPmCodes({ factoryId = this.currentFactory }: { factoryId?: any }) {
+    const res = await api.MapMonitor.getPmCodeList({
+      parkId: this.currentPark,
+      factoryId: Number(factoryId),
     });
-    this.pmcodes = result.data;
+    if (res) {
+      this.pmcodes = res.data;
+      if (this.currentPmCode == "0") {
+        this.currentPmCode = this.pmcodes[0].pmCode;
+      }
+    }
   }
 
   @action.bound
   clearOverlay() {
-    this.curOverlays.map(i => {
+    this.curOverlays.map((i) => {
       if (i.destroy) {
         i.destroy();
       }
@@ -199,7 +204,7 @@ export class MapMonitorStore {
       parkId,
       pmCode,
       timeStart: moment(timeStart).format("YYYY-MM-DD HH"),
-      timeEnd: moment(timeEnd).format("YYYY-MM-DD HH")
+      timeEnd: moment(timeEnd).format("YYYY-MM-DD HH"),
     });
     if (res.data) {
       this.polltionDatas = res.data;
@@ -262,13 +267,13 @@ export class MapMonitorStore {
     if (!this.curPollutionData) return;
     let data = [] as any;
 
-    this.curPollutionData.pmValues.forEach(pmValue => {
+    this.curPollutionData.pmValues.forEach((pmValue) => {
       data.push({
         geometry: {
           type: "Point",
-          coordinates: [pmValue.longitude, pmValue.latitude]
+          coordinates: [pmValue.longitude, pmValue.latitude],
         },
-        count: Number(pmValue.specificValue) * 100
+        count: Number(pmValue.specificValue) * 100,
       });
       // });
 
@@ -302,7 +307,7 @@ export class MapMonitorStore {
       //   // font: '20px Arial',
       //   // shadowBlur: 10,
       // },
-      draw: "grid"
+      draw: "grid",
       // animation: {
       //   type: "time", // 按时间展示动画
       //   stepsRange: {
@@ -343,7 +348,7 @@ export class MapMonitorStore {
       // this.fillPollution();
       this.updateMap();
     } else {
-      this.draw();
+      // this.draw();
     }
   }
 }
