@@ -41,7 +41,7 @@ export const MapMonitorMap = () => {
               fillColor="#FFD800"
               strokeColor="#FFD800"
               strokeWeight={2}
-            ></IPolygon>
+            />
           ))
         )}
         {mapMonitor.curParkData?.map((park) =>
@@ -56,7 +56,7 @@ export const MapMonitorMap = () => {
                 //@ts-ignore
                 style={{ color: "white", fontSize: "12px", backgroundColor: "#0072FF", borderColor: "#0EFCFF" }}
                 item={item.factoryName}
-              ></Label>
+              />
             );
           })
         )}

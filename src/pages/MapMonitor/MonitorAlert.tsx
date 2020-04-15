@@ -21,7 +21,7 @@ export const MonitorAlert = () => {
       </div>
       <Scrollbars style={{ height: "calc(100vh - 120px)" }}>
       {mapMonitor.alarms.map((item) => {
-        return <AlertItem item={item}></AlertItem>;
+        return <AlertItem item={item}/>;
       })}
       </Scrollbars>
     </div>
