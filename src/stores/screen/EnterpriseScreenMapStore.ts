@@ -270,7 +270,7 @@ export class EnterpriseScreenMapStore {
     const code = _.get(result, "code", "");
     if (result && code == 20000) {
       this.curMapConfig.picUrl = "";
-      this.reload();
+      // this.reload();
     }
   }
 
