@@ -11,6 +11,7 @@ import { constant } from "../../common/constants";
 import { utils } from "utils";
 import moment from "moment";
 import { LineChart } from "components/LineChart";
+import { Scrollbars } from "react-custom-scrollbars";
 
 //@ts-ignore
 export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils }) => {
@@ -135,7 +136,6 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
           <Form.Item label="监测因子">
             {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
               <Select onChange={mapMonitor.selectPmcode}>
-                <Select.Option value="0">全部</Select.Option>
                 {mapMonitor.pmcodes.map((item, index) => (
                   <Select.Option value={item.pmCode} key={index}>
                     {item.pmName}
@@ -157,30 +157,32 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
       </div>
       <Table className="monitor-table mt-2" {...table} dataSource={mapMonitor.pmValues} pagination={false} />
       {store.siteData && (
-        <div className="monitor-row-panel p-4 overflow-y-scroll">
-          <div className="flex justify-between items-center mt-4">
-            <div className="primary-button-text-dark text-lg">
-              <span>{store.siteData?.siteName}</span>
-              <span className="text-sm ml-2">{store.siteData?.monitorType}</span>
-            </div>
+        <div className="monitor-row-panel pl-4 pt-4 pb-4">
+          <Scrollbars style={{ height: "calc(100vh - 64px)" }}>
+            <div className="flex justify-between items-center mt-4 mr-4">
+              <div className="primary-button-text-dark text-lg">
+                <span>{store.siteData?.siteName}</span>
+                <span className="text-sm ml-2">{store.siteData?.monitorType}</span>
+              </div>
 
-            <div className="primary-button-text-dark text-sm"> 更新时间: {store.updateTime}</div>
-          </div>
-          <div className="stat-panel grid grid-flow-col grid-cols-3 grid-rows-2 gap-4 text-white mt-8 p-4">
-            <div>风速: {store.siteData?.environmentData?.windSpeed}</div>
-            <div>风向: {store.siteData?.environmentData?.windDirection}</div>
-            <div>温度: {store.siteData?.environmentData?.temperature}</div>
-            <div>湿度: {store.siteData?.environmentData?.humidity}</div>
-            <div>气压: {store.siteData?.environmentData?.airPressure}</div>
-          </div>
-          <Table className="monitor-table mt-10" {...store.monitorTable} pagination={false} />
-
-          <div>
-            <div className="primary-text-color mt-10 text-center">24小时监测浓度趋势图</div>
-            <div className="mt-4">
-              <LineChart datas={store.siteData?.dataTrend.map((i) => ({ upperLimit: 0, ...i, datas: i.points }))}></LineChart>
+              <div className="primary-button-text-dark text-sm"> 更新时间: {store.updateTime}</div>
             </div>
-          </div>
+            <div className="stat-panel grid grid-flow-col grid-cols-3 grid-rows-2 gap-4 text-white mt-8 p-4 mr-4">
+              <div>风速: {store.siteData?.environmentData?.windSpeed}</div>
+              <div>风向: {store.siteData?.environmentData?.windDirection}</div>
+              <div>温度: {store.siteData?.environmentData?.temperature}</div>
+              <div>湿度: {store.siteData?.environmentData?.humidity}</div>
+              <div>气压: {store.siteData?.environmentData?.airPressure}</div>
+            </div>
+            <Table className="monitor-table mt-10 mr-4" {...store.monitorTable} pagination={false} />
+
+            <div className="mr-4">
+              <div className="primary-text-color mt-10 text-center">24小时监测浓度趋势图</div>
+              <div className="mt-4">
+                <LineChart datas={store.siteData?.dataTrend.map((i) => ({ upperLimit: 0, ...i, datas: i.points }))}></LineChart>
+              </div>
+            </div>
+          </Scrollbars>
         </div>
       )}
     </div>

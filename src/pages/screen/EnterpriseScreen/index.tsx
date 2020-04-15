@@ -22,12 +22,12 @@ export const EnterpriseScreenPage = () => {
   }, []);
 
   return useObserver(() => (
-    <div className="p-4 screenPage flex flex-col" style={{height: "calc(100vh - 64px)"}}>
+    <div className="p-4 screenPage flex flex-col">
       <div className="text-white pb-4 pl-2 cursor-pointer" style={{ color: "#0DACF2" }} onClick={() => fullScreenRef.current?.requestFullscreen()}>
         <Icon className="text-3xl font-black" type="fullscreen" />
         <span className="ml-2">全屏展示</span>
       </div>
-      <div ref={fullScreenRef} className="flex-1 flex flex-col w-full pb-4" style={{ backgroundColor: "#061630" }}>
+      <div ref={fullScreenRef} className="flex-1 flex flex-col w-full pb-4" style={{ backgroundColor: "#061630",height: "100vh" }}>
         <ScreenTop />
         <div className="pb-4 flex-1" style={{ backgroundColor: "#061630" }}>
           <div className="flex mt-4 justify-between">

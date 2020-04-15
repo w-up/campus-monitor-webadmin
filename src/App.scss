@@ -702,6 +702,9 @@ svg {
       font-weight: normal;
       margin: 4px 0;
       width: 50%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
 
       .ant-radio-inner {
         background-color: $screen-setting-background-color;
@@ -835,7 +838,6 @@ svg {
   font-size: 12px !important;
 }
 
-
 .tableFloat {
   line-height: 20px;
 
@@ -857,4 +859,8 @@ svg {
 
 .ant-notification-notice-with-icon .ant-notification-notice-message {
   color: white;
+}
+
+.BMapLabel {
+  text-align: center;
 }

@@ -86,7 +86,7 @@ export const ParkScreen24HourChart = () => {
           data: parkScreenMap.dailyData.points.map((i) => i.time),
         },
         yAxis: {
-          name: "(mg/m³)",
+          // name: "(mg/m³)",
           nameTextStyle: { color: "rgba(136,168,197,0.5)", align: "center", verticalAlign: "middle", padding: [5, 0, 15, 20] },
           type: "value",
           // min: 0,

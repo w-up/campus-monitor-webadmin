@@ -7,6 +7,7 @@ import { _ } from "utils/lodash";
 import { utils } from "../../utils/index";
 import { PolarRadialChart } from "../../components/PolarRadialChart";
 import { IPolygon } from "../../components/Polygon/index";
+import { ILabel } from "../../components/Label/index";
 
 export const DynamicSourceMap = () => {
   const { config, dynamicSource } = useStore();
@@ -39,7 +40,7 @@ export const DynamicSourceMap = () => {
           park.factoryDatas?.map((item) => {
             if (!item.factoryPoints) return;
             return (
-              <Label
+              <ILabel
                 offset={dynamicSource.offset}
                 content={item.factoryName}
                 key={item.factoryName}
@@ -47,7 +48,7 @@ export const DynamicSourceMap = () => {
                 //@ts-ignore
                 style={{ color: "white", fontSize: "12px", backgroundColor: "#0072FF", borderColor: "#0EFCFF" }}
                 item={item.factoryName}
-              ></Label>
+              ></ILabel>
             );
           })
         )}

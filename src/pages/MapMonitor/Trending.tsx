@@ -294,7 +294,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           data: this.siteData?.siteConcentrationMonitoringTrend[0]?.pmValues.map((i) => i.statisticalTime),
         },
         yAxis: {
-          name: "（mg/m³）",
+          // name: "（mg/m³）",
           nameTextStyle: {
             color: "rgba(136,168,197,0.5)",
             align: "center",

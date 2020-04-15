@@ -95,7 +95,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean 
           data: props.datas[0]?.datas.map((i) => i.time),
         },
         yAxis: {
-          name: "（mg/m³）",
+          // name: "（mg/m³）",
           nameTextStyle: {
             color: "rgba(136,168,197,0.5)",
             align: "center",

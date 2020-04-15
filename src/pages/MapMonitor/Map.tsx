@@ -4,6 +4,7 @@ import { Map, APILoader, Label, CustomOverlay } from "@uiw/react-baidu-map";
 import { useStore } from "../../stores/index";
 import { utils } from "../../utils/index";
 import { IPolygon } from "../../components/Polygon/index";
+import { ILabel } from "../../components/Label/index";
 
 export const MapMonitorMap = () => {
   const { config, mapMonitor } = useStore();
@@ -18,37 +19,43 @@ export const MapMonitorMap = () => {
   return useObserver(() => (
     <APILoader akay={config.baiduMapApiKey}>
       <Map onTilesLoaded={mapMonitor.onMapUpdate} zoom={mapMonitor.zoom} center={mapMonitor.center} enableScrollWheelZoom onZoomEnd={(e) => (mapMonitor.zoom = e.target.getZoom())}>
-        {mapMonitor.curParkData?.map((park, index) => (
-          <IPolygon
-            updateable
-            path={utils.array.formatToLatLngShort(park.parkPoints)}
-            key={park.parkName}
-            strokeColor="#00FF66"
-            strokeStyle="dashed"
-            strokeWeight={2}
-            fillOpacity={1}
-            fillColor={mapMonitor.currentTabKey == "2" ? config.sysParams.bottom_color.paramValue : ""}
-          ></IPolygon>
-        ))}
-        {mapMonitor.curParkData?.map((park) =>
-          park.factoryDatas?.map((item, index) => (
+        {mapMonitor.curParkData?.map((park, index) => {
+          // if (!park.parkPoints) return;
+          return (
             <IPolygon
               updateable
-              visiable={mapMonitor.currentTabKey != "2"}
-              path={utils.array.formatToLatLngShort(item.factoryPoints)}
-              key={index}
-              strokeStyle="solid"
-              fillColor="#FFD800"
-              strokeColor="#FFD800"
+              path={utils.array.formatToLatLngShort(park.parkPoints)}
+              key={park.parkName}
+              strokeColor="#00FF66"
+              strokeStyle="dashed"
               strokeWeight={2}
+              fillOpacity={1}
+              fillColor={mapMonitor.currentTabKey == "2" ? config.sysParams.bottom_color.paramValue : ""}
             ></IPolygon>
-          ))
+          );
+        })}
+        {mapMonitor.curParkData?.map((park) =>
+          park.factoryDatas?.map((item, index) => {
+            // if (!item.factoryPoints) return;
+            return (
+              <IPolygon
+                updateable
+                visiable={mapMonitor.currentTabKey != "2"}
+                path={utils.array.formatToLatLngShort(item.factoryPoints)}
+                key={index}
+                strokeStyle="solid"
+                fillColor="#FFD800"
+                strokeColor="#FFD800"
+                strokeWeight={2}
+              />
+            );
+          })
         )}
         {mapMonitor.curParkData?.map((park) =>
           park.factoryDatas?.map((item) => {
             if (!item.factoryPoints) return;
             return (
-              <Label
+              <ILabel
                 offset={mapMonitor.offset}
                 content={item.factoryName}
                 key={item.factoryName}
@@ -56,7 +63,7 @@ export const MapMonitorMap = () => {
                 //@ts-ignore
                 style={{ color: "white", fontSize: "12px", backgroundColor: "#0072FF", borderColor: "#0EFCFF" }}
                 item={item.factoryName}
-              ></Label>
+              />
             );
           })
         )}

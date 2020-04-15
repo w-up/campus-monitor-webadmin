@@ -160,7 +160,7 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
       data: site.sites[0].datas.map((i) => i.time),
     },
     yAxis: {
-      name: "日均值（mg/m³）",
+      name: "日均值",
       type: "value",
       min: 0,
       max: 10,
