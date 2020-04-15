@@ -1,6 +1,6 @@
 import React from "react";
 import {useObserver} from "mobx-react-lite";
-import {Button, Icon, Radio, Tabs, Checkbox} from "antd";
+import {Button, Icon, Radio, Tabs, Checkbox, Tooltip} from "antd";
 import {Scrollbars} from "react-custom-scrollbars";
 import {MapSettingTab} from "./MapSettingTab";
 import {useStore} from "../../../../stores/index";
@@ -64,7 +64,10 @@ export const SettingBox = () => {
               <Radio.Group value={enterpriseScreenMap.currentFactory}
                            onChange={e => enterpriseScreenMap.selectFactory(e.target.value)}>
                 {enterpriseScreenMap.allfactoriy.map(item => {
-                  return <Radio value={item.factoryId}>{item.factoryName}</Radio>;
+                  return <Radio value={item.factoryId}>
+                    <Tooltip title={item.factoryName}>
+                      <span>{item.factoryName}</span>
+                    </Tooltip></Radio>;
                 })}
               </Radio.Group>
             </Scrollbars>

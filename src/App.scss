@@ -702,6 +702,9 @@ svg {
       font-weight: normal;
       margin: 4px 0;
       width: 50%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
 
       .ant-radio-inner {
         background-color: $screen-setting-background-color;

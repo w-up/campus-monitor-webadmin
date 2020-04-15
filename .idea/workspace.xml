@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0b5aa787-9ba3-4839-bcb1-9b38c1c54b5a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/MapSettingTab.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/MapSettingTab.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/SettingBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/SettingBox.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +99,7 @@
       <workItem from="1586524708929" duration="2000" />
       <workItem from="1586581801623" duration="9099000" />
       <workItem from="1586865770473" duration="1035000" />
-      <workItem from="1586924153870" duration="1933000" />
+      <workItem from="1586924153870" duration="2477000" />
     </task>
     <servers />
   </component>
@@ -126,6 +127,10 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1418" height="216" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1586757812602" />
+    <state x="409" y="93" key="RollbackChangesDialog" timestamp="1586931940897">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="409" y="93" key="RollbackChangesDialog/0.23.1440.877@0.23.1440.877" timestamp="1586931940897" />
     <state x="271" y="89" key="SettingsEditor" timestamp="1585736320388">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
