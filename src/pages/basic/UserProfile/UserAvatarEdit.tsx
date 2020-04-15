@@ -52,7 +52,7 @@ export const UserAvatarEdit = Form.create()(
     const uploadButton = (
       <div style={{ width: 150, height: 150 }} className="flex flex-col justify-center">
         <Icon type="plus" />
-        <div className="ant-upload-text">Upload</div>
+        <div className="ant-upload-text">上传</div>
       </div>
     );
 

@@ -156,7 +156,7 @@ export const DataReplenish = Form.create()(observer(({ form, history }: any) => 
 
                     {pmList.map(item => {
                       return (
-                        <Form.Item colon={false} key={item.pmCode} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label={item.pmCode} >
+                        <Form.Item colon={false} key={item.pmCode} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label={item.pmName} >
                           {getFieldDecorator(`pmList[${item.pmCode}]`, { initialValue: '', rules: [{ required: false }] })(
                             <Input size="small" suffix={item.pmUnit} />
                           )}

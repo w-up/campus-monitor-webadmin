@@ -65,7 +65,7 @@ export const RuntimeDataPage = Form.create()(
         if (err) {
           return;
         }
-        runTimeData.queryDatas(values);
+        runTimeData.queryDatas({ ...values, current: 1 });
       });
     };
 
@@ -225,7 +225,7 @@ export const RuntimeDataPage = Form.create()(
             </Col>
             <Col span={18}>
               <Card size="small" title="数据列表">
-                <Table size="small" bordered scroll={{ x: 1300 }} pagination={pagination} columns={toJS(columns)} dataSource={toJS(dataList)} />
+                <Table size="small" bordered scroll={{ x: 900 }} pagination={pagination} columns={toJS(columns)} dataSource={toJS(dataList)} />
               </Card>
             </Col>
           </Row>

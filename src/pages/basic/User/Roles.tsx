@@ -125,8 +125,8 @@ export const Roles = Form.create()(observer((props: any) => {
         </Row>
         <Card>
           <Row>
-            <Col span={16}>
-              <Form layout="inline" onSubmit={handleSearch}>
+            <Form layout="inline" onSubmit={handleSearch}>
+              <Col span={16}>
                 <Form.Item label="角色名">
                   <Input placeholder="请输入" value={query.name} onChange={handleSearchNameChange} />
                 </Form.Item>
@@ -140,14 +140,12 @@ export const Roles = Form.create()(observer((props: any) => {
                   <Button type="primary" htmlType="submit">查询</Button>
                   <Button onClick={handleSearchReset} style={{ marginLeft: 5 }}>重置</Button>
                 </Form.Item>
-              </Form>
-            </Col>
-
-            <Col span={8} style={{ textAlign: "right" }}>
-              <Button type="primary" onClick={() => props.history.push('/user/role-edit')}>新建</Button>
-              {/* <Button style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button> */}
-            </Col>
-
+              </Col>
+              <Col span={8} style={{ textAlign: "right" }}>
+                <Button type="primary" onClick={() => props.history.push('/user/role-edit')}>新建</Button>
+                {/* <Button style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button> */}
+              </Col>
+            </Form>
           </Row>
 
           {!!selectedRowKeys.length &&

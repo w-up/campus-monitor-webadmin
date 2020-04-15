@@ -160,8 +160,8 @@ export const ParkPage = observer(() => {
         </Row>
         <Card size="small">
           <Row>
-            <Col span={16}>
-              <Form layout="inline" onSubmit={handleSearch}>
+            <Form layout="inline" onSubmit={handleSearch}>
+              <Col span={16}>
                 <Form.Item label="园区名称">
                   <Input placeholder="请输入" value={query.parkName} onChange={handleSearchChange} />
                 </Form.Item>
@@ -169,17 +169,18 @@ export const ParkPage = observer(() => {
                   <Button type="primary" htmlType="submit">查询</Button>
                   <Button style={{ marginLeft: 5 }} onClick={handleSearchReset}>重置</Button>
                 </Form.Item>
-              </Form>
-            </Col>
-
-            <Col span={8} style={{ textAlign: "right" }}>
-              <Button type="primary">
-                <Link to="/base/park-edit">新建</Link>
-              </Button>
-              <Button onClick={onBatchDeletePark} style={{ marginLeft: 5, marginRight: 5 }}>
-                批量删除
-              </Button>
-            </Col>
+              </Col>
+              <Col span={8} style={{ textAlign: "right" }}>
+                <Form.Item>
+                  <Button type="primary">
+                    <Link to="/base/park-edit">新建</Link>
+                  </Button>
+                  <Button style={{ marginLeft: 5 }} onClick={onBatchDeletePark} >
+                    批量删除
+                  </Button>
+                </Form.Item>
+              </Col>
+            </Form>
           </Row>
 
           {!!selectedRowKeys.length &&

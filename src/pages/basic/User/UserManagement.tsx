@@ -96,7 +96,7 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
             <a onClick={() => {
               Modal.confirm({
                 title: "删除确认",
-                content: `确定删除用户${user.name}吗？`,
+                content: `确定删除用户${user.username}吗？`,
                 async onOk() {
                     await deleteUser([user.id]);
                     resetSelectedRowKeys();
@@ -140,7 +140,7 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
       return;
     }
     Modal.confirm({
-      title: '操作哦确认',
+      title: '操作确认',
       content: `确定重置这些用户的密码吗？`,
       maskClosable: true,
       async onOk() {
@@ -181,8 +181,8 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
         </Row>
         <Card>
           <Row>
-            <Col span={16}>
-              <Form layout="inline" onSubmit={handleSearch}>
+            <Form layout="inline" onSubmit={handleSearch}>
+              <Col span={16}>
                 <Form.Item label="登录名">
                   <Input value={query.userName} onChange={handleSearchUsernameChange} placeholder="请输入" />
                 </Form.Item>
@@ -196,16 +196,15 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
                   <Button type="primary" htmlType="submit">查询</Button>
                   <Button onClick={handleSearchReset} style={{ marginLeft: 5 }}>重置</Button>
                 </Form.Item>
-              </Form>
-            </Col>
-
-            <Col span={8} style={{ textAlign: "right" }}>
-              <Button type="primary" onClick={() => props.history.push('/user/user-edit')}>新建</Button>
-              <Divider type="vertical" />
-              {/* <Button style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button> */}
-              <Button onClick={handleResetPasswrod}>密码重置</Button>
-            </Col>
-
+              </Col>
+              <Col span={8} style={{ textAlign: "right" }}>
+                <Form.Item>
+                  <Button type="primary" onClick={() => props.history.push('/user/user-edit')}>新建</Button>
+                  {/* <Button style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button> */}
+                  <Button style={{ marginLeft: 5 }} onClick={handleResetPasswrod}>密码重置</Button>
+                </Form.Item>
+              </Col>
+            </Form>
           </Row>
 
           {!!selectedRowKeys.length &&

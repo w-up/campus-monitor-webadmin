@@ -87,7 +87,7 @@ export const UserInfoEdit = Form.create()(
               </Form.Item>
             )}
 
-            <Form.Item label="联系方式">{getFieldDecorator("contact", { initialValue: auth.user?.contact, rules: [{ required: true }] })(<Input placeholder="请输入联系方式" />)}</Form.Item>
+            <Form.Item label="联系方式">{getFieldDecorator("contact", { initialValue: auth.user?.contact, rules: [{ required: false }] })(<Input placeholder="请输入联系方式" />)}</Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
               <Button type="primary" htmlType="submit">

@@ -55,7 +55,7 @@ export const HistoryDataPage = Form.create()(
         if (err) {
           return;
         }
-        historyData.queryDatas(values);
+        historyData.queryDatas({ ...values, current: 1 });
       });
     };
 

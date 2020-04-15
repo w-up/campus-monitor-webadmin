@@ -188,11 +188,11 @@ export const ReportPage = Form.create()(
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计周期">
                     {getFieldDecorator("timeCycle", { initialValue: 1, rules: [{ required: true }] })(
                       <Radio.Group style={{ width: "100%" }} size="small" buttonStyle="solid">
-                        {timeCycleArr.map((val, index) => (
-                          <Radio.Button style={{ width: "20%", textAlign: "center" }} key={index + 1} value={index + 1}>
-                            {val}
-                          </Radio.Button>
-                        ))}
+                        <Radio.Button style={{ width: "20%", textAlign: "center" }} key={1} value={1}>日</Radio.Button>
+                        <Radio.Button style={{ width: "20%", textAlign: "center" }} key={4} value={4}>周</Radio.Button>
+                        <Radio.Button style={{ width: "20%", textAlign: "center" }} key={2} value={2}>月</Radio.Button>
+                        <Radio.Button style={{ width: "20%", textAlign: "center" }} key={5} value={5}>季</Radio.Button>
+                        <Radio.Button style={{ width: "20%", textAlign: "center" }} key={3} value={3}>年</Radio.Button>
                       </Radio.Group>
                     )}
                   </Form.Item>
@@ -211,7 +211,7 @@ export const ReportPage = Form.create()(
                   )}
                   {getFieldValue("timeCycle") === 3 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<DatePicker format="YYYY" style={{ width: "100%" }} size="small" allowClear={false} />)}
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<DatePicker format="YYYY" mode={"year" as any} style={{ width: "100%" }} size="small" allowClear={false} />)}
                     </Form.Item>
                   )}
 

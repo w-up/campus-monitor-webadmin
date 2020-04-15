@@ -48,6 +48,7 @@ export const RoleEdit = Form.create()(observer(({ form }: any) => {
     roleEdit.getAllPerms();
   }, []);
 
+
   const doSubmit = e => {
     e.preventDefault();
 
@@ -104,7 +105,7 @@ export const RoleEdit = Form.create()(observer(({ form }: any) => {
           </Form.Item>
 
           <Form.Item label="角色描述">
-            {getFieldDecorator("desc", { initialValue: desc, rules: [{ required: true, message: '请输入角色描述' }] })(
+            {getFieldDecorator("desc", { initialValue: desc, rules: [{ required: false, message: '请输入角色描述' }] })(
               <TextArea rows={4} placeholder='请输入角色描述' />
             )}
           </Form.Item>
@@ -118,6 +119,9 @@ export const RoleEdit = Form.create()(observer(({ form }: any) => {
             })(
               <Tree
                 checkable
+                onCheck={(checkedKeys, e) => {
+                  // debugger
+                }}
                 showLine={true}
                 showIcon={true}
                 treeData={toJS(perms)}
