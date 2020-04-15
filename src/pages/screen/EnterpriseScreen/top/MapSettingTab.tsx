@@ -66,7 +66,7 @@ export const MapSettingTab = Form.create()(({form}: { form: WrappedFormUtils }) 
   const uploadButton = (
     <div>
       <Icon type="plus"/>
-      <div className="ant-upload-text">Upload</div>
+      <div className="ant-upload-text">上传</div>
     </div>
   );
 
