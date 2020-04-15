@@ -46,7 +46,7 @@ export class DynamicSourceStore {
 
   @action.bound
   async loadPark() {
-    const [parkRes] = await Promise.all([api.MapMonitor.getParkList(), this.loadPmCodes({})]);
+    const [parkRes] = await Promise.all([api.MapMonitor.getParkListByUser(), this.loadPmCodes({})]);
     this.parks = parkRes.data;
   }
 

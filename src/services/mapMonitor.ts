@@ -60,4 +60,7 @@ export default {
   getDynamicSourceTraceSource(data: { endTime: string; parkId: number; pmCode: string; startTime: string }) {
     return POST("/mapMonitor/getDynamicSourceTraceSource", data);
   },
+  getParkListByUser() {
+    return GET("/mapMonitor/getParkListByUser ");
+  },
 };

@@ -130,7 +130,7 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
       data: utils.array.sliceArray(data.dates, dataIndex, count),
     },
     yAxis: {
-      name: "（mg/m³）",
+      // name: "（mg/m³）",
       nameTextStyle: {
         color: "rgba(136,168,197,0.5)",
         align: "center",
