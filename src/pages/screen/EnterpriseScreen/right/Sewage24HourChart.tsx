@@ -80,17 +80,14 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
           //名称
           var text = params[i].axisValue;
           //值
-          var value = params[i].data.value;
-          var overLimit = params[i].data.overLimit;
-          var unit = params[i].data.unit;
-          var valueUnit = params[i].data.valueUnit;
+          var { valueRaw, valueIn, value, limit, unit } = params[i].data;
 
-          if (Number(value) > 0) {
+          if (valueRaw > 0) {
             showHtml += `
             <div style="display:flex;align-items: center;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px; ${overLimit ? "color:red;" : ""}">${value ? `${value}*${valueUnit} ${unit}` : ""}</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px; ${limit && valueRaw > limit ? "color:red;" : ""}">${value ? `${value}*${valueIn} ${unit}` : ""}</div>
           </div>
           `;
           }
@@ -162,9 +159,11 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
       name: item.pmName,
       data: utils.array.sliceArray(
         item.datas.map((i) => ({
+          symbolSize: i.collectValue > item.upperLimit ? 12 : 0,
           value: Number(i.collectValueDe),
-          valueUnit: i.collectValueIn,
-          overLimit: i.collectValue >= item.upperLimit,
+          valueRaw: i.collectValue,
+          valueIn: i.collectValueIn,
+          limit: item.upperLimit,
           unit: i.unit,
         })),
         dataIndex,
@@ -181,7 +180,7 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
       },
 
       symbol: "circle", //设定为实心点
-      symbolSize: 2, //设定实心点的大小,
+      // symbolSize: 2, //设定实心点的大小,
     })),
   };
 };

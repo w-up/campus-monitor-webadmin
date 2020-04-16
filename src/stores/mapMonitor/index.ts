@@ -114,7 +114,7 @@ export class MapMonitorStore {
 
   @action.bound
   async doConfirmAlarmInfoById(alarmId) {
-    const result = await api.MapMonitor.confirmAlarmInfoById({ alarmId: alarmId });
+    const result = await api.MapMonitor.confirmAlarmInfoById({ alarmId: alarmId, isFromPopup: 1 });
     if (result) {
       this.loadAlarms();
     }

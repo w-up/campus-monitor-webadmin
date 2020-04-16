@@ -190,27 +190,47 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
         show: false,
       },
     },
-    series: site.sites.map((item, index) => ({
-      name: item.siteName,
-      data: item.datas.map((i) => ({
-        value: Number(i.collectValueDe),
-        valueRaw: i.collectValue,
-        valueIn: i.collectValueIn,
-        limit: site.upperLimit,
-        unit: i.unit,
-      })),
-      type: "line",
-      itemStyle: {
-        normal: {
-          color: constant.seriesColors[index], //改变折线点的颜色
-          lineStyle: {
-            color: constant.seriesColors[index], //改变折线颜色
+    series: [
+      ...site.sites.map((item, index) => ({
+        name: item.siteName,
+        data: item.datas.map((i) => ({
+          symbolSize: i.collectValue > site.upperLimit ? 12 : 0,
+          value: Number(i.collectValueDe),
+          valueRaw: i.collectValue,
+          valueIn: i.collectValueIn,
+          limit: site.upperLimit,
+          unit: i.unit,
+        })),
+        type: "line",
+        itemStyle: {
+          normal: {
+            color: constant.seriesColors[index], //改变折线点的颜色
+            lineStyle: {
+              color: constant.seriesColors[index], //改变折线颜色
+            },
           },
         },
-      },
-      symbol: "circle", //设定为实心点
-      symbolSize: 2, //设定实心点的大小
-    })),
+        markLine: {
+          symbol: "none",
+          lineStyle: {
+            normal: {
+              type: "solid",
+              color: "red",
+            },
+          },
+          data: site.upperLimit
+            ? [
+                {
+                  name: "预警值",
+                  yAxis: site.upperLimit,
+                },
+              ]
+            : [],
+        },
+        symbol: "circle", //设定为实心点
+        // symbolSize: 2, //设定实心点的大小
+      })),
+    ],
   };
   return option;
 };

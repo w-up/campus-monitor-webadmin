@@ -127,6 +127,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean 
           name: item.pmName,
           type: "line",
           data: item.datas.map((i) => ({
+            symbolSize: i.collectValue > item.upperLimit ? 12 : 0,
             value: Number(i.collectValueDe),
             valueRaw: i.collectValue,
             valueIn: i.collectValueIn,
@@ -157,7 +158,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean 
             },
           },
           symbol: "circle", //设定为实心点
-          symbolSize: 6, //设定实心点的大小
+          // symbolSize: 6, //设定实心点的大小
         })),
       };
     },

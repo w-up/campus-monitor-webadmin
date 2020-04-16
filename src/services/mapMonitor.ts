@@ -45,7 +45,7 @@ export default {
     return GET("/mapMonitor/getUncheckedAlarmInformation");
   },
 
-  confirmAlarmInfoById(data: { alarmId: string }) {
+  confirmAlarmInfoById(data: { alarmId: string; isFromPopup: number }) {
     return GET("/mapMonitor/confirmAlarmInfoById", data);
   },
   getMapInfoByPmCodeAndParkId(data: { parkId: number; pmCode: string }) {
