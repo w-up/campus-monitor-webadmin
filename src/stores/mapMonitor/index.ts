@@ -1,6 +1,6 @@
 import { action, observable, computed } from "mobx";
 import api from "services";
-import { Park, Factory, PMCode, PMValue, AlarmInfo, AllParkData, PollutionData } from "../../type";
+import { Park, Factory, PMCode, PMValue, AlarmInfo, AllParkData, PollutionData, SiteData } from "../../type";
 import * as mapv from "mapv";
 import { _ } from "utils/lodash";
 import { utils } from "../../utils/index";
@@ -126,6 +126,18 @@ export class MapMonitorStore {
     if (parkId !== "0") {
       this.loadFactories({ parkId });
       this.loadParkData();
+    }
+  }
+
+  @observable curSiteId = null;
+  @observable siteData: SiteData | null = null;
+
+  @action.bound
+  async setCurrentRuntimeSite(siteId) {
+    this.curSiteId = siteId;
+    const res = await api.MapMonitor.getSiteMonitorDataById({ siteId });
+    if (res.data) {
+      this.siteData = res.data;
     }
   }
 

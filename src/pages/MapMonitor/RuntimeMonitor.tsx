@@ -21,8 +21,6 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
   const store = useLocalStore(() => ({
     loading: false,
     updateTime: null as any,
-    curSiteId: null as any,
-    siteData: null as SiteData | null,
     formItemLayout: {
       labelCol: {
         span: 7,
@@ -49,7 +47,7 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
     },
     get monitorTable() {
       return {
-        dataSource: this.siteData?.realTimeData,
+        dataSource: mapMonitor.siteData?.realTimeData,
         columns: [
           {
             title: "检测物质",
@@ -74,9 +72,7 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
 
   const table = {
     async onRowClick(data, index) {
-      store.curSiteId = data.siteId;
-      const result = await api.MapMonitor.getSiteMonitorDataById({ siteId: data.siteId });
-      store.siteData = result.data;
+      mapMonitor.setCurrentRuntimeSite(data.siteId);
     },
     columns: [
       {
@@ -87,12 +83,12 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
         title: "监测类型",
         dataIndex: "monitorType",
         align: "center",
-        render: (text, record) => <div className={record.siteId == store.curSiteId ? "primary-button-text-dark" : "primary-text-color"}>{text}</div>,
+        render: (text, record) => <div className={record.siteId == mapMonitor.curSiteId ? "primary-button-text-dark" : "primary-text-color"}>{text}</div>,
       },
       {
         title: "站点",
         dataIndex: "siteName",
-        render: (text, record) => <div className={record.siteId == store.curSiteId ? "primary-button-text-dark" : "primary-text-color"}>{text}</div>,
+        render: (text, record) => <div className={record.siteId == mapMonitor.curSiteId ? "primary-button-text-dark" : "primary-text-color"}>{text}</div>,
       },
       {
         title: <span>{mapMonitor.currentPmCodeData?.pmName}</span>,
@@ -156,30 +152,30 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
         <span className="ml-2">更新时间: {store.updateTime}</span>
       </div>
       <Table className="monitor-table mt-2" {...table} dataSource={mapMonitor.pmValues} pagination={false} />
-      {store.siteData && (
+      {mapMonitor.siteData && (
         <div className="monitor-row-panel pl-4 pt-4 pb-4">
           <Scrollbars style={{ height: "calc(100vh - 64px)" }}>
             <div className="flex justify-between items-center mt-4 mr-4">
               <div className="primary-button-text-dark text-lg">
-                <span>{store.siteData?.siteName}</span>
-                <span className="text-sm ml-2">{store.siteData?.monitorType}</span>
+                <span>{mapMonitor.siteData?.siteName}</span>
+                <span className="text-sm ml-2">{mapMonitor.siteData?.monitorType}</span>
               </div>
 
               <div className="primary-button-text-dark text-sm"> 更新时间: {store.updateTime}</div>
             </div>
             <div className="stat-panel grid grid-flow-col grid-cols-3 grid-rows-2 gap-4 text-white mt-8 p-4 mr-4">
-              <div>风速: {store.siteData?.environmentData?.windSpeed}</div>
-              <div>风向: {store.siteData?.environmentData?.windDirection}</div>
-              <div>温度: {store.siteData?.environmentData?.temperature}</div>
-              <div>湿度: {store.siteData?.environmentData?.humidity}</div>
-              <div>气压: {store.siteData?.environmentData?.airPressure}</div>
+              <div>风速: {mapMonitor.siteData?.environmentData?.windSpeed}</div>
+              <div>风向: {mapMonitor.siteData?.environmentData?.windDirection}</div>
+              <div>温度: {mapMonitor.siteData?.environmentData?.temperature}</div>
+              <div>湿度: {mapMonitor.siteData?.environmentData?.humidity}</div>
+              <div>气压: {mapMonitor.siteData?.environmentData?.airPressure}</div>
             </div>
             <Table className="monitor-table mt-10 mr-4" {...store.monitorTable} pagination={false} />
 
             <div className="mr-4">
               <div className="primary-text-color mt-10 text-center">24小时监测浓度趋势图</div>
               <div className="mt-4">
-                <LineChart datas={store.siteData?.dataTrend.map((i) => ({ upperLimit: 0, ...i, datas: i.points }))}></LineChart>
+                <LineChart datas={mapMonitor.siteData?.dataTrend.map((i) => ({ upperLimit: 0, ...i, datas: i.points }))}></LineChart>
               </div>
             </div>
           </Scrollbars>

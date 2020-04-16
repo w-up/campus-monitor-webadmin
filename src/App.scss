@@ -864,3 +864,11 @@ svg {
 .BMapLabel {
   text-align: center;
 }
+
+.circle {
+  width: 4px;
+  height: 4px;
+  background-color: #0efcff;
+  border-radius: 50%;
+  display: inline-block;
+}

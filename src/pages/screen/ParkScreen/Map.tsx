@@ -54,11 +54,17 @@ export const ParkScreenMap = () => {
               <ILabel
                 offset={parkScreenMap.offset}
                 visiable={!!item.factoryPoints}
-                content={`<div style="border-radius: 20px; border: 1px solid #0EFCFF;">${item.averageValue || 0}</div> ${item.factoryName}`}
+                content={
+                  parkScreenMap.zoom > 17
+                    ? item.factoryName
+                    : `<div style="border-bottom: 1px solid #eee; display:flex; align-items: center;"><div class="circle"></div><div class="w-full text-center">${
+                        item.averageValue || 0
+                      }</div></div><div>${item.factoryName}</div>`
+                }
                 key={index}
                 position={utils.obj.formatLatLngShort(item.factoryPoints ? item.factoryPoints[0] : [])}
                 //@ts-ignore
-                style={{ color: "white", fontSize: "12px", backgroundColor: "#0072FF", borderColor: "#0EFCFF" }}
+                style={{ color: "white", fontSize: "12px", backgroundColor: "#0072FF", borderColor: "#0EFCFF", padding: "4px" }}
                 item={item.factoryName}
               ></ILabel>
             );
