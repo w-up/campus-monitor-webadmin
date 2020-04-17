@@ -58,6 +58,7 @@ export const RoleEdit = Form.create()(observer(({ form }: any) => {
       }
 
       try {
+        values.permIds = values.permIds.checked;
         await roleEdit.doSaveRole(values);
         message.success('操作成功');
         history.replace("/user/rolelist");
@@ -69,8 +70,6 @@ export const RoleEdit = Form.create()(observer(({ form }: any) => {
   }
 
   const { id, code, name, desc, perms: initialPerms } = state.perm || {};
-
-  console.log('initialPerms', initialPerms)
 
   return (
     <Spin spinning={loading}>
@@ -122,6 +121,7 @@ export const RoleEdit = Form.create()(observer(({ form }: any) => {
                 onCheck={(checkedKeys, e) => {
                   // debugger
                 }}
+                checkStrictly
                 showLine={true}
                 showIcon={true}
                 treeData={toJS(perms)}

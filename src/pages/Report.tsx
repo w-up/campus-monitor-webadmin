@@ -149,7 +149,7 @@ export const ReportPage = Form.create()(
                     </Form.Item>
                   )}
 
-                  <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测对象">
+                  <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测因子">
                     {getFieldDecorator("pmType", { initialValue: "", rules: [{ required: true }] })(
                       <Select onChange={() => setFieldsValue({ pmCodes: [] })} placeholder="请选择" size="small">
                         {pmList.map((item) => (

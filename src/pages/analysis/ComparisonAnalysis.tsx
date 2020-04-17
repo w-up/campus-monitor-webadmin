@@ -125,13 +125,13 @@ export const ComparisonAnalysisPage = Form.create()(
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计周期">
                     {getFieldDecorator("timeCycle", { initialValue: 1, rules: [{ required: true }] })(
                       <Radio.Group style={{ width: "100%" }} size="small" buttonStyle="solid">
-                        <Radio.Button value={1} style={{ width: "20%", textAlign: "center" }}>
+                        <Radio.Button value={1} style={{ width: "33%", textAlign: "center" }}>
                           日
                         </Radio.Button>
-                        <Radio.Button value={2} style={{ width: "20%", textAlign: "center" }}>
+                        <Radio.Button value={2} style={{ width: "33%", textAlign: "center" }}>
                           月
                         </Radio.Button>
-                        <Radio.Button value={3} style={{ width: "20%", textAlign: "center" }}>
+                        <Radio.Button value={3} style={{ width: "33%", textAlign: "center" }}>
                           年
                         </Radio.Button>
                         {/* <Radio.Button value={4} style={{ width: "20%", textAlign: "center" }}>
@@ -158,7 +158,7 @@ export const ComparisonAnalysisPage = Form.create()(
                   )}
                   {getFieldValue("timeCycle") === 3 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<DatePicker allowClear={false} format="YYYY" style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<DatePicker allowClear={false} mode="year" format="YYYY" style={{ width: "100%" }} size="small" />)}
                     </Form.Item>
                   )}
 

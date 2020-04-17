@@ -82,6 +82,18 @@ export const RuntimeDataPage = Form.create()(
       onShowSizeChange: paginationChange,
     };
 
+    const doResetFields = () => {
+      resetFields();
+      runTimeData.query = {
+        current: 1,
+        pageSize: 10,
+        size: 10,
+      };
+      runTimeData.total = 0;
+      runTimeData.columns = [];
+      runTimeData.dataList = [];
+    }
+
     const onSelectAll = (e) => {
       const { checked } = e.target;
       if (checked) {
@@ -130,7 +142,7 @@ export const RuntimeDataPage = Form.create()(
                   size="small"
                   title="实时数据查询"
                   extra={
-                    <Button size="small" onClick={() => resetFields()}>
+                    <Button size="small" onClick={() => doResetFields()}>
                       重置
                     </Button>
                   }

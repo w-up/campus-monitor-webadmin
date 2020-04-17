@@ -63,7 +63,7 @@ export class RuntimeData {
       const { data }: any = await POST("/device-data/getAllPMDataBySitesAndPMs", this.query);
       this.columns = data.titles.map((item, index) => {
         const config = { ...item, width: 150, key: item.titleKey, dataIndex: item.titleKey };
-        if (index === 0) {
+        if (item.titleKey === 'time') {
           config.fixed = "left";
           config.width = 150;
         }

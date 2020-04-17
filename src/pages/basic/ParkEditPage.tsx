@@ -124,7 +124,7 @@ export const ParkEditPage = Form.create()(
           <Form.Item label="园区代码">
             {getFieldDecorator("parkNo", { initialValue: parkNo, rules: [
               { required: true, message: '请输入园区代码' },
-              { validator: (rule, value, callback) => {
+              { validator: (rule, value = '', callback) => {
                 if (strlen(value) < 30) {
                   callback();
                 } else {
@@ -138,7 +138,7 @@ export const ParkEditPage = Form.create()(
           <Form.Item label="园区名称" >
             {getFieldDecorator("parkName", { initialValue: parkName, rules: [
               { required: true, message: '请输入园区名称' },
-              { validator: (rule, value, callback) => {
+              { validator: (rule, value = '', callback) => {
                 if (strlen(value) < 60) {
                   callback();
                 } else {

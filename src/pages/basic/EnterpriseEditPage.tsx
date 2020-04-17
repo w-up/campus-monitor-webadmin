@@ -100,7 +100,7 @@ export const EnterpriseEditPage = Form.create()(observer(({ form }: any) => {
           <Form.Item label="企业统一社会信用代码">
             {getFieldDecorator("companyCode", { initialValue: companyCode, rules: [
               { required: true, message: '请输入企业统一社会信用代码' },
-              { validator: (rule, value, callback) => {
+              { validator: (rule, value = '', callback) => {
                 if (value.match(/[^_IOZSVa-z\W]{2}\d{6}[^_IOZSVa-z\W]{10}/g)) {
                   callback();
                 } else {
@@ -114,7 +114,7 @@ export const EnterpriseEditPage = Form.create()(observer(({ form }: any) => {
           <Form.Item label="企业名称">
             {getFieldDecorator("companyName", { initialValue: companyName, rules: [
               { required: true, message: '请输入企业名称' },
-              { validator: (rule, value, callback) => {
+              { validator: (rule, value = '', callback) => {
                 if (strlen(value) < 60) {
                   callback();
                 } else {
@@ -133,7 +133,7 @@ export const EnterpriseEditPage = Form.create()(observer(({ form }: any) => {
           <Form.Item label="描述" >
             {getFieldDecorator("remark", { initialValue: remark, rules: [
               { required: false },
-              { validator: (rule, value, callback) => {
+              { validator: (rule, value = '', callback) => {
                 if (strlen(value) < 200) {
                   callback();
                 } else {

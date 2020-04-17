@@ -169,7 +169,7 @@ export const RankAnalysisPage = Form.create()(
                   )}
                   {getFieldValue("timeCycle") === 3 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<DatePicker allowClear={false} format="YYYY" style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<DatePicker allowClear={false} mode={"year"} format="YYYY" style={{ width: "100%" }} size="small" />)}
                     </Form.Item>
                   )}
 

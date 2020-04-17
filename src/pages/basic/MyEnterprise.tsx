@@ -472,7 +472,7 @@ export const MyEnterprisePage = Form.create()(
             </Col>
             <Col span={18}>
               {enterpriseInfoVisible && (
-                <Card bordered title={selectedEnterprise.title}>
+                <Card bordered title={<Col>{selectedEnterprise.title}<span style={{ marginLeft: '6px', fontSize: '12px', color: '#999' }}>统一社会信用代码: </span></Col>}>
                   <Form onSubmit={submitEnterpriseInfo}>
                     <Card
                       bordered
