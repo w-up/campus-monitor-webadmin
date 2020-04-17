@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0b5aa787-9ba3-4839-bcb1-9b38c1c54b5a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/screen/EnterpriseScreenMapStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/screen/EnterpriseScreenMapStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/ParkScreen/left/FocusStationTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/ParkScreen/left/FocusStationTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/ParkScreen/left/TopTenMonitorTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/ParkScreen/left/TopTenMonitorTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/SewageWaterTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/SewageWaterTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/WasteGasTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/WasteGasTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/type.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +102,8 @@
       <workItem from="1586524708929" duration="2000" />
       <workItem from="1586581801623" duration="9099000" />
       <workItem from="1586865770473" duration="1035000" />
-      <workItem from="1586924153870" duration="3576000" />
+      <workItem from="1586924153870" duration="4240000" />
+      <workItem from="1587104945932" duration="1594000" />
     </task>
     <servers />
   </component>

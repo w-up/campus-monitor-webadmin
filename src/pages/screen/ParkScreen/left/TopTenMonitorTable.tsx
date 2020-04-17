@@ -26,10 +26,10 @@ export const TopTenMonitorTable = () => {
       </div>
       <div className="">
         <div className="tabTitle">
+          <div>采集时间</div>
           <div>区域</div>
           <div>污染物</div>
           <div>浓度值</div>
-          <div>限值</div>
         </div>
         <CarouselProvider naturalSlideWidth={100} naturalSlideHeight={60} isPlaying interval={5000} totalSlides={store.topTenMonitorData.length}>
           <Slider>
@@ -39,12 +39,12 @@ export const TopTenMonitorTable = () => {
                   {page.map((item) => {
                     return (
                       <div className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"} onClick={(e) => parkScreenMap.setCurrentSite(item.siteId)}>
+                        <div>{item.collectDate}</div>
                         <div>{item.siteName}</div>
                         <div>
                           <span>{utils.number.toPrecision(item.collectValue)}</span>
                         </div>
                         <div>{item.limit}</div>
-                        <div>{item.overRate}</div>
                       </div>
                     );
                   })}
