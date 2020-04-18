@@ -872,3 +872,16 @@ svg {
   border-radius: 50%;
   display: inline-block;
 }
+
+.ant-notification {
+  margin-right: 0;
+  bottom: 0!important;
+  .ant-notification-notice {
+    height: calc(100vh - 64px);
+    margin-bottom: 0;
+    padding: 16px 0px 16px 24px;
+  }
+  .ant-notification-notice-with-icon .ant-notification-notice-description {
+    margin-left: 0;
+  }
+}

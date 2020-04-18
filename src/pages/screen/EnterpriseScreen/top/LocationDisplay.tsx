@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {useLocalStore, useObserver} from "mobx-react-lite";
 import {Icon} from "antd";
 import axios from "axios";
-import {get} from "mobx";
 
 
 export const LocationDisplay = () => {
