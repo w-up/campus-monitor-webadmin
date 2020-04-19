@@ -36,22 +36,22 @@ export const SewageWaterTable = () => {
       </div>
       <div className="">
         <div className="tabTitle text-left">
+          <div>采集时间</div>
           <div>区域</div>
           <div>污染物</div>
           <div>浓度值</div>
-          <div>限值</div>
         </div>
         <div>
           <Scrollbars style={{ height: 250 }}>
             {parkScreenMap.gasData.map(item => {
               return (
                 <div className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"}>
+                  <div>{item.collectDate}</div>
                   <div>{item.factoryName}</div>
                   <div>{item.pmName}</div>
                   <div>
                     <span>{utils.number.toPrecision(item.collectValue)}</span>
                   </div>
-                  <div>{item.limit}</div>
                 </div>
               );
             })}

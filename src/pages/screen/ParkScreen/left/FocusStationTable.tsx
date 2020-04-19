@@ -25,10 +25,10 @@ export const FocusStationTable = () => {
       </div>
       <div className="">
         <div className="tabTitle">
+          <div>采集时间</div>
           <div>站点名称</div>
           <div>监测数值</div>
           <div>限值</div>
-          <div>超标率(%)</div>
         </div>
         <CarouselProvider isPlaying interval={5000} naturalSlideWidth={100} naturalSlideHeight={60} totalSlides={store.allConcernSiteDataPage.length}>
           <Slider>
@@ -38,12 +38,12 @@ export const FocusStationTable = () => {
                   {page.map((item) => {
                     return (
                       <div className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"} onClick={(e) => parkScreenMap.setCurrentSite(item.siteId)}>
+                        <div>{item.collectDate}</div>
                         <div>{item.siteName}</div>
                         <div>
                           <span>{utils.number.toPrecision(item.collectValue)}</span>
                         </div>
                         <div>{item.limit}</div>
-                        <div>{item.overRate}</div>
                       </div>
                     );
                   })}

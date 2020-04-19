@@ -1,9 +1,10 @@
 import React from "react";
-import { observable, action } from "mobx";
-import { notification, Card } from "antd";
-import { AlertItem } from "components/AlertItem";
-import { AlarmInfo } from "../../type";
-import { store } from "../index";
+import {observable, action} from "mobx";
+import {notification, Card} from "antd";
+import {AlertItem} from "components/AlertItem";
+import {AlarmInfo} from "../../type";
+import {store} from "../index";
+import { Scrollbars } from "react-custom-scrollbars";
 
 export class AlertModal {
   alerts: Array<AlarmInfo> = [
@@ -47,6 +48,7 @@ export class AlertModal {
       deviceName: "设备-厂界1",
     },
   ];
+
   init() {
     this.showAlert();
   }
@@ -57,6 +59,7 @@ export class AlertModal {
   }
 
   timer = null as any;
+
   @action.bound
   showAlert() {
     // if (!this.alerts || this.alerts.length == 0) return;
@@ -65,11 +68,13 @@ export class AlertModal {
       duration: 0,
       key: "0",
       description: (
-        <div className="text-white overflow-y-auto" style={{ background: "#0d142f", height: "400px" }}>
-          {this.alerts.map((i, index) => (
-            <AlertItem item={i} key={index}></AlertItem>
-          ))}
-        </div>
+        <Scrollbars style={{height: "100vh"}}>
+          <div className="text-white pr-4" style={{background: "#0d142f"}}>
+            {this.alerts.map((i, index) => (
+              <AlertItem item={i} key={index}></AlertItem>
+            ))}
+          </div>
+        </Scrollbars>
       ),
       placement: "bottomRight",
       onClose: () => {

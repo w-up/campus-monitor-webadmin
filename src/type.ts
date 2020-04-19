@@ -115,6 +115,7 @@ export interface ConcernSiteData {
   unit: string;
   limit: string;
   overRate: string;
+  collectDate: string;
 }
 
 export type AllParkData = {
