@@ -47,25 +47,29 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
           const parkId = Number(_parkId);
           const startTime = moment(_startTime).format("YYYY-MM-DD HH");
           const endTime = moment(_endTime).format("YYYY-MM-DD HH");
-          if (dynamicSource.computeType == "1") {
-            const res = await api.MapMonitor.getDynamicSourceContribution({ parkId, lat, lng, pmCode, startTime, endTime });
-            if (res) {
-              dynamicSource.DynamicSourceContribution.data = res.data;
+          try {
+            if (dynamicSource.computeType == "1") {
+              const res = await api.MapMonitor.getDynamicSourceContribution({ parkId, lat, lng, pmCode, startTime, endTime });
+              if (res) {
+                dynamicSource.DynamicSourceContribution.data = res.data;
+              }
             }
-          }
-          if (dynamicSource.computeType == "2") {
-            const res = await api.MapMonitor.getDynamicSourceWindRose({ endTime, parkId, pmCode, startTime });
-            if (res) {
-              dynamicSource.DynamicSourceWindRose.data = res.data;
+            if (dynamicSource.computeType == "2") {
+              const res = await api.MapMonitor.getDynamicSourceWindRose({ endTime, parkId, pmCode, startTime });
+              if (res) {
+                dynamicSource.DynamicSourceWindRose.data = res.data;
+              }
             }
-          }
-          if (dynamicSource.computeType == "3") {
-            const res = await api.MapMonitor.getDynamicSourceTraceSource({ endTime, parkId, pmCode, startTime });
-            if (res) {
-              dynamicSource.DynamicSourceTraceSource.data = res.data;
+            if (dynamicSource.computeType == "3") {
+              const res = await api.MapMonitor.getDynamicSourceTraceSource({ endTime, parkId, pmCode, startTime });
+              if (res) {
+                dynamicSource.DynamicSourceTraceSource.data = res.data;
+              }
             }
+            store.loading = false;
+          } catch (error) {
+            store.loading = false;
           }
-          store.loading = false;
         }
       });
     },
@@ -156,12 +160,12 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
             </div>
           )}
           <Form.Item label="起始时间">
-            {getFieldDecorator("startTime", { initialValue: store.startTime })(
+            {getFieldDecorator("startTime", { initialValue: store.startTime, rules: [{ required: true }] })(
               <DatePicker allowClear={false} showTime={{ format: "HH" }} onChange={(val) => (store.startTime = val)} className="w-full" format="YYYY-MM-DD HH" />
             )}
           </Form.Item>
           <Form.Item label="终止时间">
-            {getFieldDecorator("endTime", { initialValue: store.endTime })(
+            {getFieldDecorator("endTime", { initialValue: store.endTime, rules: [{ required: true }] })(
               <DatePicker allowClear={false} disabledDate={store.disabledEndDate} className="w-full" onChange={(val) => (store.endTime = val)} showTime={{ format: "HH" }} format="YYYY-MM-DD HH" />
             )}
           </Form.Item>
