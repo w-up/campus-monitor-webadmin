@@ -18,14 +18,12 @@ export class ParkEdit {
 
   @action.bound
   async onSubmit(param) {
-    this.loading = true;
     if (!param.id) {
       await POST("/park/addPark", param);
     } else {
       await POST("/park/editPark", param);
     }
     this.scope = [];
-    this.loading = false;
   }
 
   @action.bound

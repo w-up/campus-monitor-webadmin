@@ -323,7 +323,7 @@ export const AlertSettingPage = Form.create()(
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="因子名称">
                     {getFieldDecorator("setForm.pmName", { initialValue: "", rules: [{ required: false }] })(
-                      <Select placeholder="请选择" size="small">
+                      <Select showSearch placeholder="请选择" size="small">
                         <Option value="">不限</Option>
                         {pollutionPmList.map((item) => (
                           <Option key={item.pmName} value={item.pmName}>
@@ -452,7 +452,7 @@ export const AlertSettingPage = Form.create()(
                   <Row gutter={6}>
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测对象类型">
                       {getFieldDecorator("editForm.type", { initialValue: 1, rules: [{ required: false }] })(
-                        <Select placeholder="请选择" size="small">
+                        <Select onChange={() => setFieldsValue({ "editForm.parkOrCompanyId": '' })} placeholder="请选择" size="small">
                           <Option value={0}>园区</Option>
                           <Option value={1}>企业</Option>
                         </Select>

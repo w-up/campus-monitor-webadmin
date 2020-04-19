@@ -71,6 +71,18 @@ export const RoleEdit = Form.create()(observer(({ form }: any) => {
 
   const { id, code, name, desc, perms: initialPerms } = state.perm || {};
 
+  const initialPermsIds: any = [];
+  const flattern = arr => {
+    arr.forEach((item: any) => {
+      initialPermsIds.push(item.id);
+      if (item.children && item.children.length > 0) {
+        flattern(item.children);
+      }
+    });
+  }
+
+  flattern(initialPerms);
+
   return (
     <Spin spinning={loading}>
       <div style={{height: 100, background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px"}}>
@@ -113,7 +125,7 @@ export const RoleEdit = Form.create()(observer(({ form }: any) => {
             {getFieldDecorator("permIds", {
               valuePropName: 'checkedKeys',
               trigger: 'onCheck',
-              initialValue: (initialPerms || []).map(item => item.id),
+              initialValue: initialPermsIds,
               rules: [{ required: true, message: '请选择权限配置' }],
             })(
               <Tree

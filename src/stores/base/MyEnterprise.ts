@@ -116,7 +116,6 @@ export class MyEnterprise {
 
   @action.bound
   async doSubmitEnterpriseInfo(param) {
-    this.loading = true;
     param = {
       ...param,
       registerDate: param.registerDate ? moment(param.registerDate).format("YYYY-MM-DD HH:mm:ss") : "",
@@ -125,7 +124,6 @@ export class MyEnterprise {
     };
 
     await POST(`/company-business-info/editCompanyBusinessInfo?companyId=${param.companyId}`, param);
-    this.loading = false;
   }
 
   @action
@@ -154,8 +152,8 @@ export class MyEnterprise {
   }
 
   @action
-  async getTree() {
-    const { data }: any = await GET("/company/getCompanyTreeByUserId", {});
+  async getTree(keyWord = '') {
+    const { data }: any = await GET("/company/getCompanyTreeByUserId", { keyWord });
 
     const transformList = (list) => list.map((v) => ({ ...v, title: v.label, key: v.id, children: v.children.length > 0 ? transformList(v.children) : [] }));
 
@@ -251,16 +249,11 @@ export class MyEnterprise {
 
   @action.bound
   async saveFactory(param) {
-    this.loading = true;
-    try {
-      if (!param.id) {
-        await POST("/factory/addFactory", param);
-      } else {
-        await POST("/factory/editFactory", param);
-      }
-    } catch {}
-
-    this.loading = false;
+    if (!param.id) {
+      await POST("/factory/addFactory", param);
+    } else {
+      await POST("/factory/editFactory", param);
+    }
     await this.getFactoryList();
   }
 

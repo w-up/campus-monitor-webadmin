@@ -88,7 +88,7 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
           )}
           <Form.Item label="登录名">
             {getFieldDecorator("username", { initialValue: username, rules: [{ required: true, message: '请输入登录名' }] })(
-              <Input placeholder="请输入登录名" />
+              <Input disabled={!!id} placeholder="请输入登录名" />
             )}
           </Form.Item>
 
@@ -132,7 +132,7 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
 
           <Form.Item label="密码">
             {getFieldDecorator("password", { initialValue: '', rules: [{ required: true, message: '请输入密码' }] })(
-              <Input.Password placeholder="请输入密码" />
+              <Input.Password autoComplete="off" placeholder="请输入密码" />
             )}
           </Form.Item>
 

@@ -19,8 +19,9 @@ export const ReportPage = Form.create()(
     const { report } = useStore();
 
     useEffect(() => {
-      report.getParkList();
-      report.getCompanyList();
+      report.getAllCompanyAndPark();
+      // report.getParkList();
+      // report.getCompanyList();
       report.getAllPMTypeAndCode();
     }, []);
 
@@ -69,9 +70,9 @@ export const ReportPage = Form.create()(
 
     let cardTitle = "";
     if (getFieldValue("parkId")) {
-      cardTitle = parkList.find((item) => item.id === getFieldValue("parkId")).parkName;
+      cardTitle = parkList.find((item) => item.parkId === getFieldValue("parkId")).parkName;
     } else if (getFieldValue("companyId")) {
-      cardTitle = companyList.find((item) => item.id === getFieldValue("companyId")).companyName;
+      cardTitle = companyList.find((item) => item.companyId === getFieldValue("companyId")).companyName;
     }
 
     let cardExtra = "";
@@ -126,7 +127,7 @@ export const ReportPage = Form.create()(
                       {getFieldDecorator("parkId", { initialValue: "", rules: [{ required: true }] })(
                         <Select placeholder="请选择" size="small">
                           {parkList.map((item) => (
-                            <Option key={item.id} value={item.id}>
+                            <Option key={item.parkId} value={item.parkId}>
                               {item.parkName}
                             </Option>
                           ))}
@@ -140,7 +141,7 @@ export const ReportPage = Form.create()(
                       {getFieldDecorator("companyId", { initialValue: "", rules: [{ required: true }] })(
                         <Select placeholder="请选择" size="small">
                           {companyList.map((item) => (
-                            <Option key={item.id} value={item.id}>
+                            <Option key={item.companyId} value={item.companyId}>
                               {item.companyName}
                             </Option>
                           ))}

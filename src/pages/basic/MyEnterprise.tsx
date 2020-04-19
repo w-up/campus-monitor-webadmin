@@ -12,13 +12,8 @@ const { Column } = Table;
 
 const deviceListColumns = [
   {
-    title: "厂区名称",
-    dataIndex: "factoryName",
-    width: 200,
-  },
-  {
-    title: "站点名称",
-    dataIndex: "siteName",
+    title: "设备编号",
+    dataIndex: "deviceCode",
     width: 300,
   },
   {
@@ -142,6 +137,7 @@ export const MyEnterprisePage = Form.create()(
       setEditFactoryModalVisible(false);
       setDeviceListModalVisible(false);
       setDeviceInfoVisible(false);
+      setDeviceSiteInfo({});
     };
 
     const secondLevelClick = async (selectedKeys) => {
@@ -170,6 +166,7 @@ export const MyEnterprisePage = Form.create()(
       setFactoryInfo(info);
       setEditFactoryModalVisible(true);
       setDeviceListModalVisible(true);
+      setDeviceSiteInfo({});
       await getDeviceSiteList();
     };
 
@@ -245,8 +242,16 @@ export const MyEnterprisePage = Form.create()(
           return;
         }
         values.professionId = values.professionId[1];
-        await doSubmitEnterpriseInfo(values);
-        setFieldsValue({ enterpriseInfoEditable: false });
+
+        myEnterprise.loading = true;
+        try {
+          await doSubmitEnterpriseInfo(values);
+          setFieldsValue({ enterpriseInfoEditable: false });
+        } catch {
+
+        }
+        myEnterprise.loading = false;
+        
       });
     };
 
@@ -265,10 +270,24 @@ export const MyEnterprisePage = Form.create()(
 
     const handleFactorySubmit = async (e) => {
       e.preventDefault();
+      // if (scope && scope.length === 0) {
+      //   message.error('请输入厂区范围');
+      //   return;
+      // }
+
       const param = getFieldValue("factoryInfo");
-      await saveFactory({ ...param, scope });
-      setFactoryInfoEditable(false);
-      await myEnterprise.getTree();
+      myEnterprise.loading = true;
+      try {
+        await saveFactory({ ...param, scope });
+        setFactoryInfoEditable(false);
+        await myEnterprise.getTree();
+        setFactoryInfoVisible(false);
+        setEnterpriseInfoVisible(true);
+      } catch {
+
+      }
+      myEnterprise.loading = false;
+      
     };
 
     let initialProfessionId: any = [];
@@ -425,7 +444,8 @@ export const MyEnterprisePage = Form.create()(
 
     const [treeExpandedKeys, setTreeExpandedKeys] = useState([]);
 
-    const onTreeSearch = (value) => {
+    const onTreeSearch = async (value) => {
+      await myEnterprise.getTree(value);
       const expandedKeys: any = [];
       if (value) {
         const filterAdd = (list) =>
@@ -544,8 +564,8 @@ export const MyEnterprisePage = Form.create()(
                               至
                             </Col>
                             <Col span={10}>
-                              {getFieldDecorator("businessPeriodEnd", { initialValue: businessPeriodEnd && moment(businessPeriodEnd), rules: [{ required: true }] })(
-                                <DatePicker allowClear={false} disabled={!enterpriseInfoEditable} placeholder="" />
+                              {getFieldDecorator("businessPeriodEnd", { initialValue: businessPeriodEnd && moment(businessPeriodEnd), rules: [{ required: false }] })(
+                                <DatePicker allowClear={true} disabled={!enterpriseInfoEditable} placeholder="" />
                               )}
                             </Col>
                           </Row>
@@ -620,13 +640,13 @@ export const MyEnterprisePage = Form.create()(
                     {getFieldDecorator("factoryInfo.companyId", { initialValue: selectedEnterprise.id, rules: [{ required: false }] })(<Input hidden placeholder="请输入公司ID" />)}
                     <Card title="厂区信息" bordered size="small">
                       <Descriptions size="small" bordered>
-                        <Descriptions.Item label="厂区名称" span={1.5}>
-                          {getFieldDecorator("factoryInfo.factoryName", { initialValue: factoryInfo.factoryName, rules: [{ required: false }] })(
+                        <Descriptions.Item label={<Row>厂区名称 <span style={{ color: 'red' }}>*</span></Row>} span={1.5}>
+                          {getFieldDecorator("factoryInfo.factoryName", { initialValue: factoryInfo.factoryName, rules: [{ required: true }] })(
                             <Input disabled={!factoryInfoEditable} placeholder="请输入厂区名称" />
                           )}
                         </Descriptions.Item>
-                        <Descriptions.Item label="所属园区" span={1.5}>
-                          {getFieldDecorator("factoryInfo.parkId", { initialValue: factoryInfo.parkId, rules: [{ required: false }] })(
+                        <Descriptions.Item label={<Row>所属园区 <span style={{ color: 'red' }}>*</span></Row>} span={1.5}>
+                          {getFieldDecorator("factoryInfo.parkId", { initialValue: factoryInfo.parkId, rules: [{ required: true }] })(
                             <Select disabled={!factoryInfoEditable} placeholder="请输入所属园区">
                               {parkList.map((item) => (
                                 <Option value={item.id}>{item.parkName}</Option>
@@ -634,7 +654,7 @@ export const MyEnterprisePage = Form.create()(
                             </Select>
                           )}
                         </Descriptions.Item>
-                        <Descriptions.Item label="地址" span={1.5}>
+                        <Descriptions.Item label={<Row>地址 <span style={{ color: 'red' }}>*</span></Row>} span={1.5}>
                           {getFieldDecorator("factoryInfo.factoryAddress", { initialValue: factoryInfo.factoryAddress, rules: [{ required: false }] })(
                             <Input disabled={!factoryInfoEditable} placeholder="请输入地址" />
                           )}
@@ -667,7 +687,7 @@ export const MyEnterprisePage = Form.create()(
                       </Descriptions>
                     </Card>
                     <Divider />
-                    <Card title="厂区范围" bordered size="small">
+                    <Card title={<Row>厂区范围</Row>} bordered size="small">
                       {getFieldDecorator("scopeType", { initialValue: "location", rules: [{ required: false }] })(
                         <Radio.Group disabled={!factoryInfoEditable}>
                           <Radio value="map">地图绘制</Radio>
@@ -718,11 +738,32 @@ export const MyEnterprisePage = Form.create()(
                           key="latitude"
                           render={(latitude, _, index) => <Input disabled={!factoryInfoEditable} size="small" onChange={(e) => latitudeInput(e.target.value, index)} value={latitude} />}
                         />
+                        <Column
+                          title="操作"
+                          dataIndex="latitude"
+                          key="latitude"
+                          width={50}
+                          render={(latitude, _, index) => {
+                            return (
+                              <Row type="flex" justify="center">
+                                <Button
+                                  shape="circle"
+                                  icon="minus"
+                                  size="small"
+                                  disabled={!factoryInfoEditable}
+                                  onClick={() => {
+                                    factoryInfo.scope = factoryInfo.scope.filter((_, i) => i !== index);
+                                  }}
+                                />
+                              </Row>
+                            );
+                          }}
+                        />
                       </Table>
                     </Card>
                     <Divider />
 
-                    {!!factoryInfo.id && (
+                    {!!factoryInfo.id && !factoryInfoEditable && (
                       <Card
                         bordered
                         size="small"
@@ -752,8 +793,8 @@ export const MyEnterprisePage = Form.create()(
                       {getFieldDecorator("deviceSiteInfo.id", { initialValue: deviceSiteInfo.id, rules: [{ required: false }] })(<Input hidden placeholder="请输入站点ID" />)}
                       <Descriptions title="站点信息" size="small" bordered>
                         <Descriptions.Item label="厂区名称" span={1.5}>
-                          {getFieldDecorator("deviceSiteInfo.factoryId", { initialValue: deviceSiteInfo.factoryId, rules: [{ required: false }] })(
-                            <Select style={{ width: "100%" }} placeholder="">
+                          {getFieldDecorator("deviceSiteInfo.factoryId", { initialValue: factoryInfo.id, rules: [{ required: false }] })(
+                            <Select disabled style={{ width: "100%" }} placeholder="">
                               {factoryListInfo.data.map((item) => (
                                 <Option value={item.id}>{item.factoryName}</Option>
                               ))}

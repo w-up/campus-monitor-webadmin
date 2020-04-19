@@ -61,16 +61,25 @@ const defaultQuarterOption: any = {
 
   series: [{
     type: 'heatmap',
+    label: {
+      show: false
+    },
     coordinateSystem: 'calendar',
     calendarIndex: 0,
     // data: getVirtulData(2020)
   }, {
     type: 'heatmap',
+    label: {
+      show: false
+    },
     coordinateSystem: 'calendar',
     calendarIndex: 1,
     // data: getVirtulData(2020)
   }, {
     type: 'heatmap',
+    label: {
+      show: false
+    },
     coordinateSystem: 'calendar',
     calendarIndex: 2,
     // data: getVirtulData(2020)
@@ -97,6 +106,9 @@ const defaultMonthOption: any = {
 
   series: [{
     type: 'heatmap',
+    label: {
+      show: false
+    },
     coordinateSystem: 'calendar',
     calendarIndex: 0,
     // data: getVirtulData(2020)
@@ -175,9 +187,9 @@ export class Report {
       trigger: 'axis'
     },
     legend: {
-      orient: 'horizontal',
-      x: 'center',
-      y: 'bottom',
+      // orient: 'horizontal',
+      // x: 'center',
+      // y: 'bottom',
       // data: ['A化工', 'B化工', 'C化工', 'D化工', 'E化工']
     },
     backgroundColor: '#f0f0f0',
@@ -192,18 +204,14 @@ export class Report {
       }
     },
     calculable: true,
-    xAxis: [
-      {
-        type: 'category',
-        boundaryGap: false,
-        // data: ['10-24-00', '10-24-06', '10-24-12', '10-24-18', '10-25-00']
-      }
-    ],
-    yAxis: [
-      {
-        type: 'value'
-      }
-    ],
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      // data: ['10-24-00', '10-24-06', '10-24-12', '10-24-18', '10-25-00']
+    },
+    yAxis: {
+      type: 'value'
+    },
     // series: [
     //   {
     //     name: 'A化工',
@@ -237,6 +245,20 @@ export class Report {
     //   }
     // ]
   };
+
+  @action.bound
+  async getAllCompanyAndPark() {
+    this.loading = true;
+    try {
+      const { data: { parkList, companyList } }: any = await GET('/user/getAllCompanyAndParkSelf', {});
+      this.parkList = parkList;
+      this.companyList = companyList;
+    } catch {
+
+    }
+
+    this.loading = false;
+  }
 
   @action.bound
   async getParkList() {

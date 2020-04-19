@@ -6,6 +6,7 @@ import { useStore } from "../../stores/index";
 
 import { Checkbox, Spin, Card, Row, Col, Form, Button, Select, Tabs, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal } from "antd";
 import { toJS } from "mobx";
+import moment from "moment";
 const { Option } = Select;
 const { TabPane } = Tabs;
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
@@ -16,6 +17,11 @@ const columns = [
     dataIndex: "rankNum",
     key: "rankNum",
     render: (val, record, index) => index + 1,
+  },
+  {
+    title: "监测类型",
+    dataIndex: "jcType",
+    key: "jcType",
   },
   {
     title: "区域",
@@ -31,6 +37,7 @@ const columns = [
     title: "贡献率",
     key: "rateNum",
     dataIndex: "rateNum",
+    render: val => `${(val * 100).toFixed(2)}%`,
   },
 ];
 
@@ -102,7 +109,7 @@ export const RankAnalysisPage = Form.create()(
                   </Form.Item> */}
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计区域">
-                    {getFieldDecorator("parkId", { initialValue: "", rules: [{ required: true }] })(
+                    {getFieldDecorator("parkId", { initialValue: "", rules: [{ required: true, message: '请选择统计区域' }] })(
                       <Select onChange={() => setFieldsValue({ factoryId: "" })} placeholder="请选择" size="small">
                         {parkTree?.map((item) => (
                           <Option key={item.parkId} value={item.parkId}>
@@ -114,7 +121,7 @@ export const RankAnalysisPage = Form.create()(
                   </Form.Item>
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="因子分类">
-                    {getFieldDecorator("ptId", { initialValue: "", rules: [{ required: true }] })(
+                    {getFieldDecorator("ptId", { initialValue: "", rules: [{ required: true, message: '请选择因子分类' }] })(
                       <Select placeholder="请选择" size="small">
                         {ptList.map((item) => (
                           <Option key={item.id} value={item.id}>
@@ -126,7 +133,7 @@ export const RankAnalysisPage = Form.create()(
                   </Form.Item>
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="监测因子">
-                    {getFieldDecorator("pmCode", { initialValue: "", rules: [{ required: true }] })(
+                    {getFieldDecorator("pmCode", { initialValue: "", rules: [{ required: true, message: '请选择监测因子' }] })(
                       <Select placeholder="请选择" size="small">
                         {pmCodeList.map((item) => (
                           <Option key={item.pmCode} value={item.pmCode}>
@@ -140,7 +147,7 @@ export const RankAnalysisPage = Form.create()(
                   <Divider orientation="left">时间</Divider>
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计周期">
-                    {getFieldDecorator("timeCycle", { initialValue: 1, rules: [{ required: true }] })(
+                    {getFieldDecorator("timeCycle", { initialValue: 1, rules: [{ required: true, message: '请选择统计周期' }] })(
                       <Radio.Group style={{ width: "100%" }} size="small" buttonStyle="solid">
                         <Radio.Button value={1} style={{ width: "33%", textAlign: "center" }}>
                           日
@@ -169,7 +176,9 @@ export const RankAnalysisPage = Form.create()(
                   )}
                   {getFieldValue("timeCycle") === 3 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<DatePicker allowClear={false} mode={"year"} format="YYYY" style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<DatePicker allowClear={false} onPanelChange={(val: any) => {
+                        setFieldsValue({ collectDate: moment(val).startOf('year') });
+                      }} mode="year" format="YYYY" style={{ width: "100%" }} size="small" />)}
                     </Form.Item>
                   )}
 
@@ -245,7 +254,7 @@ export const RankAnalysisPage = Form.create()(
                 <TabPane tab="站点排名" key="2">
                   <Row gutter={6}>
                     <Col span={12} style={{ marginBottom: "10px" }}>
-                      <Card bordered size="small" title="区域排放量">
+                      <Card bordered size="small" title="站点排放量">
                         <ReactEcharts
                           //@ts-ignore
                           option={toJS(option3)}
@@ -255,7 +264,7 @@ export const RankAnalysisPage = Form.create()(
                       </Card>
                     </Col>
                     <Col span={12} style={{ marginBottom: "10px" }}>
-                      <Card bordered size="small" title="区域排放量贡献率">
+                      <Card bordered size="small" title="站点排放量贡献率">
                         <ReactEcharts
                           //@ts-ignore
                           option={toJS(option4)}

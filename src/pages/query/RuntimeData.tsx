@@ -148,7 +148,7 @@ export const RuntimeDataPage = Form.create()(
                   }
                 >
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="选择园区">
-                    {getFieldDecorator("parkId", { initialValue: "", rules: [{ required: true }] })(
+                    {getFieldDecorator("parkId", { initialValue: "", rules: [{ required: true, message: '请选择园区' }] })(
                       <Select onChange={() => setFieldsValue({ factoryId: "" })} placeholder="请选择" size="small">
                         {parkTree.map((item) => (
                           <Option key={item.parkId} value={item.parkId}>
@@ -159,7 +159,7 @@ export const RuntimeDataPage = Form.create()(
                     )}
                   </Form.Item>
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测区域">
-                    {getFieldDecorator("factoryId", { initialValue: "", rules: [{ required: true }] })(
+                    {getFieldDecorator("factoryId", { initialValue: "", rules: [{ required: true, message: '请选择监测区域' }] })(
                       <Select placeholder="请选择" size="small">
                         {factoryList.map((item) => (
                           <Option key={item.factoryId} value={item.factoryId}>
@@ -177,7 +177,7 @@ export const RuntimeDataPage = Form.create()(
                         全选
                       </Checkbox>
                       <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="">
-                        {getFieldDecorator("siteIdList", { initialValue: [], rules: [{ required: true }] })(
+                        {getFieldDecorator("siteIdList", { initialValue: [], rules: [{ required: true, message: '请选择站点' }] })(
                           <Checkbox.Group style={{ width: "100%" }}>
                             <Row gutter={4}>
                               {siteList.map((item) => (
@@ -195,7 +195,7 @@ export const RuntimeDataPage = Form.create()(
                   )}
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="因子分类">
-                    {getFieldDecorator("ptId", { initialValue: "", rules: [{ required: false }] })(
+                    {getFieldDecorator("ptId", { initialValue: "", rules: [{ required: true, message: '请选择因子分类' }] })(
                       <Select placeholder="请选择" size="small">
                         {ptList.map((item) => (
                           <Option key={item.id} value={item.id}>
@@ -207,12 +207,12 @@ export const RuntimeDataPage = Form.create()(
                   </Form.Item>
                   {!!getFieldValue("ptId") && (
                     <Row>
-                      <Divider orientation="left">监测因子</Divider>
+                      <Divider orientation="left">监测因子<span style={{ color: 'red' }}>*</span></Divider>
                       <Checkbox style={{ fontSize: "10px" }} checked={allChecked} onChange={onSelectAll}>
                         全选
                       </Checkbox>
                       <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="">
-                        {getFieldDecorator("pmCodeList", { initialValue: [], rules: [{ required: true }] })(
+                        {getFieldDecorator("pmCodeList", { initialValue: [], rules: [{ required: true, message: '请选择监测因子' }] })(
                           <Checkbox.Group style={{ width: "100%" }}>
                             <Row>
                               {pmCodeList.map((item) => (

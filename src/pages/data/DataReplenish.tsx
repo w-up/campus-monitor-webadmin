@@ -23,7 +23,7 @@ export const DataReplenish = Form.create()(observer(({ form, history }: any) => 
   useEffect(() => {
     // manage.getCheckDataList();
     replenish.getAllSitesTree();
-    replenish.getAddDevice();
+    // replenish.getAddDevice();
   }, []);
 
   let factoryList: any = [];
@@ -149,7 +149,7 @@ export const DataReplenish = Form.create()(observer(({ form, history }: any) => 
 
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="补测时间" >
                       {getFieldDecorator("collectDate", { initialValue: '', rules: [{ required: true }] })(
-                        <DatePicker size="small" />
+                        <DatePicker showTime size="small" />
                       )}
                     </Form.Item>
 

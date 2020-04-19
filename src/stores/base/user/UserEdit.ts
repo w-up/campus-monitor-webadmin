@@ -31,7 +31,7 @@ export class UserEdit {
   @action.bound
   async doSaveUser(param) {
     Object.keys(param).forEach((key) => {
-      if (!param[key]) {
+      if (param[key] === '') {
         delete param[key];
       }
     });

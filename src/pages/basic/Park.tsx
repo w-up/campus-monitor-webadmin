@@ -106,9 +106,19 @@ export const ParkPage = observer(() => {
       dataIndex: "parkName",
       width: 200
     },
+    // {
+    //   title: "描述",
+    //   dataIndex: "remark",
+    //   width: 300
+    // },
     {
-      title: "描述",
-      dataIndex: "remark",
+      title: "联络人",
+      dataIndex: "contactPerson",
+      width: 200
+    },
+    {
+      title: "邮箱",
+      dataIndex: "email",
       width: 300
     },
     {

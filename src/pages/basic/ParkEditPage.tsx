@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { observer, useLocalStore } from "mobx-react-lite";
 import { toJS } from "mobx";
-import { Spin, Card, Form, Input, Button, Radio, Breadcrumb, Modal, Table, message } from "antd";
+import { Row, Icon, Spin, Card, Form, Input, Button, Radio, Breadcrumb, Modal, Table, message } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import { useStore } from "../../stores/index";
@@ -52,7 +52,7 @@ export const ParkEditPage = Form.create()(
   observer(({ form }: any) => {
     const { state = {} }: any = useLocation();
 
-    const { id, parkName, parkNo, remark, scope: initialScope, parkStatus } = state.park || {};
+    const { id, parkName, parkNo, email, contactPerson, remark, scope: initialScope, parkStatus } = state.park || {};
 
     const history = useHistory();
 
@@ -84,9 +84,17 @@ export const ParkEditPage = Form.create()(
             message.error('请输入园区范围');
             return;
           }
-          const param = { ...values, scope: parkEdit.scope };
-          await onSubmit(param);
-          history.replace("/base/park");
+          
+          parkEdit.loading = true;
+          try {
+            const param = { ...values, scope: parkEdit.scope.map((v, i) => ({ ...v, scopeOrder: i })) };
+            await onSubmit(param);
+            history.replace("/base/park");
+          } catch {
+
+          }
+          parkEdit.loading = false;
+          
         });
       }
     }));
@@ -154,6 +162,16 @@ export const ParkEditPage = Form.create()(
               <Input placeholder="请输入园区状态" />
             )}
           </Form.Item>
+          <Form.Item label="邮箱">
+            {getFieldDecorator("email", { initialValue: email, rules: [{ required: true, message: '请输入邮箱' }] })(
+              <Input placeholder="请输入邮箱" />
+            )}
+          </Form.Item>
+          <Form.Item label="联络人">
+            {getFieldDecorator("contactPerson", { initialValue: contactPerson, rules: [{ required: true, message: '请输入联络人' }] })(
+              <Input placeholder="请输入联络人" />
+            )}
+          </Form.Item>
           <Form.Item label="园区范围" >
             {getFieldDecorator("scopeType", { initialValue: 'location', rules: [{ required: true }] })(
               <Radio.Group>
@@ -166,19 +184,42 @@ export const ParkEditPage = Form.create()(
                 title="名称"
                 dataIndex="scopeName"
                 key="scopeName"
+                width={100}
                 render={(scopeName, _, index) => <Input size="small" onChange={(e) => scopeNameInput(e.target.value, index)} value={scopeName} />}
               />
               <Column
                 title="经度"
                 dataIndex="longitude"
                 key="longitude"
+                width={100}
                 render={(longitude, _, index) => <Input size="small" onChange={(e) => longitudeInput(e.target.value, index)} value={longitude} />}
               />
               <Column
                 title="纬度"
                 dataIndex="latitude"
                 key="latitude"
+                width={100}
                 render={(latitude, _, index) => <Input size="small" onChange={(e) => latitudeInput(e.target.value, index)} value={latitude} />}
+              />
+              <Column
+                title="操作"
+                dataIndex="latitude"
+                key="latitude"
+                width={50}
+                render={(latitude, _, index) => {
+                  return (
+                    <Row type="flex" justify="center">
+                      <Button
+                        shape="circle"
+                        icon="minus"
+                        size="small"
+                        onClick={() => {
+                          parkEdit.scope = parkEdit.scope.filter((_, i) => i !== index);
+                        }}
+                      />
+                    </Row>
+                  );
+                }}
               />
             </Table>
           </Form.Item>

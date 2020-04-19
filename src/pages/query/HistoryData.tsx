@@ -200,7 +200,7 @@ export const HistoryDataPage = Form.create()(
                   )
                 }
               >
-                <Table size="small" bordered scroll={{ x: 1300 }} pagination={pagination} columns={toJS(columns)} dataSource={toJS(dataList)} />
+                <Table size="small" bordered scroll={{ x: 850 }} pagination={pagination} columns={toJS(columns)} dataSource={toJS(dataList)} />
               </Card>
             </Col>
           </Row>

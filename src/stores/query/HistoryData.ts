@@ -58,14 +58,12 @@ export class HistoryData {
     try {
       const { data }: any = await POST("/device-data-history/queryHistoryDatas", this.query);
       this.columns = data.titles.map((item, index) => {
-        const config = { ...item, width: 100, key: item.titleKey, dataIndex: item.titleKey };
-        if (index === 0) {
-          config.fixed = "left";
-          // config.width = 150;
-        }
-        // if (index === data.titles.length - 1) {
-        //   delete config.width;
+        const config = { ...item, width: 150, key: item.titleKey, dataIndex: item.titleKey, render: val => typeof val === 'undefined' ? '-' : val };
+        // if (item.titleKey === 'time') {
+        //   config.fixed = "left";
+        //   config.width = 150;
         // }
+
         return config;
       });
       this.dataList = data.dataList.records.map((item, index) => ({ ...item, key: index }));
