@@ -92,7 +92,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean 
               fontSize: "10",
             },
           },
-          data: props.datas[0]?.datas.map((i) => i.time),
+          data: props.datas[0]?.datas?.map((i) => i.time),
         },
         yAxis: {
           // name: "（mg/m³）",
@@ -126,7 +126,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean 
         series: props.datas.map((item, index) => ({
           name: item.pmName,
           type: "line",
-          data: item.datas.map((i) => ({
+          data: item.datas?.map((i) => ({
             symbolSize: i.collectValue > item.upperLimit ? 12 : 0,
             value: Number(i.collectValueDe),
             valueRaw: i.collectValue,
