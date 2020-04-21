@@ -27,6 +27,11 @@ const deviceListColumns = [
     width: 300,
   },
   {
+    title: "设备厂商",
+    dataIndex: "manufacturerName",
+    width: 300,
+  },
+  {
     title: "负责人",
     dataIndex: "chargerName",
     width: 200,

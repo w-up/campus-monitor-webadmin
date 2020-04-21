@@ -101,7 +101,7 @@ export const AlertManagePage = Form.create()(
           dataIndex: "warnTime",
           key: "warnTime",
           width: 200,
-          render: (val) => moment(val).format("YYYY-MM-DD HH:MM"),
+          render: (val) => moment(val).format("YYYY-MM-DD hh:mm:ss"),
         },
         {
           title: "因子分类",
@@ -214,7 +214,7 @@ export const AlertManagePage = Form.create()(
           dataIndex: "warnTime",
           key: "warnTime",
           width: 200,
-          render: (val) => moment(val).format("YYYY-MM-DD HH:MM"),
+          render: (val) => moment(val).format("YYYY-MM-DD hh:mm:ss"),
         },
         {
           title: "因子分类",
@@ -315,7 +315,7 @@ export const AlertManagePage = Form.create()(
           dataIndex: "warnTime",
           key: "warnTime",
           width: 200,
-          render: (val) => moment(val).format("YYYY-MM-DD HH:MM"),
+          render: (val) => moment(val).format("YYYY-MM-DD hh:mm:ss"),
         },
         {
           title: "因子分类",
