@@ -14,7 +14,7 @@ export const ParkScreen24HourChart = () => {
   const store = useLocalStore(() => ({
     dataIndex: 0,
     get dataIndexMax() {
-      return parkScreenMap.dailyData.points.length;
+      return parkScreenMap.dailyData?.points?.length;
     },
     get option() {
       return {
