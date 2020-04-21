@@ -10,6 +10,7 @@ import ReactEcharts from "echarts-for-react";
 import echarts from "echarts";
 import { constant } from "../../common/constants";
 import { utils } from "utils";
+import { Scrollbars } from "react-custom-scrollbars";
 
 //@ts-ignore
 export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => {
@@ -416,57 +417,59 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
         </Form>
       </Spin>
       {store.siteData && (
-        <div className="monitor-row-panel p-4 overflow-y-scroll">
-          <div className="primary-button-text-dark text-xl mt-8">{mapMonitor.curentFactorData?.factoryName}</div>
+        <div className="monitor-row-panel p-4">
+          <Scrollbars style={{ height: "calc(100vh - 64px)" }}>
+            <div className="primary-button-text-dark text-xl mt-8">{mapMonitor.curentFactorData?.factoryName}</div>
 
-          <div className="stat-panel text-white mt-8 p-4">
-            <div className="flex justify-between">
-              <div>检测因子: {mapMonitor.currentPmCodeData?.pmName}</div>
-              <div>统计类型: {store.dateType.label}</div>
+            <div className="stat-panel text-white mt-8 p-4">
+              <div className="flex justify-between">
+                <div>检测因子: {mapMonitor.currentPmCodeData?.pmName}</div>
+                <div>统计类型: {store.dateType.label}</div>
+              </div>
+              <div className="primary-button-text-dark mt-3">时间段： {moment(store.statisticalTime).format("YYYY-MM-DD")}</div>
             </div>
-            <div className="primary-button-text-dark mt-3">时间段： {moment(store.statisticalTime).format("YYYY-MM-DD")}</div>
-          </div>
-          <div className="text-white mt-8">
-            <div className="flex justify-between pb-4 px-4" style={{ borderBottom: "1px solid #1bb8a1" }}>
-              <div>历史监测数据</div>
-              <div>同期变化率(2020-01-03)</div>
-            </div>
-            <div className="flex">
-              <div className="mt-2 px-4" style={{ width: "50%", borderRight: "1px solid white" }}>
-                <div className="flex justify-between my-4">
-                  <div>平均浓度</div>
-                  <div className="primary-text-color">{store.siteData.factoryAverageConcentration?.averageConcentration}</div>
+            <div className="text-white mt-8">
+              <div className="flex justify-between pb-4 px-4" style={{ borderBottom: "1px solid #1bb8a1" }}>
+                <div>历史监测数据</div>
+                <div>同期变化率(2020-01-03)</div>
+              </div>
+              <div className="flex">
+                <div className="mt-2 px-4" style={{ width: "50%", borderRight: "1px solid white" }}>
+                  <div className="flex justify-between my-4">
+                    <div>平均浓度</div>
+                    <div className="primary-text-color">{store.siteData.factoryAverageConcentration?.averageConcentration}</div>
+                  </div>
+                  <div className="flex justify-between my-4">
+                    <div>排放限值</div>
+                    <div className="primary-text-color">{store.siteData.pmValueUpperLimit}</div>
+                  </div>
                 </div>
-                <div className="flex justify-between my-4">
-                  <div>排放限值</div>
-                  <div className="primary-text-color">{store.siteData.pmValueUpperLimit}</div>
+                <div className="mt-2 px-4" style={{ width: "50%" }}>
+                  <div className="flex justify-between my-4">
+                    <div>同比</div>
+                    <div className="primary-button-text-dark">{store.siteData.factoryAverageConcentration?.comparedWithLastTime} ↓</div>
+                  </div>
+                  <div className="flex justify-between my-4">
+                    <div>环比</div>
+                    <div className="primary-button-text-dark">{store.siteData.factoryAverageConcentration?.comparedWithLastYear} ↓</div>
+                  </div>
                 </div>
               </div>
-              <div className="mt-2 px-4" style={{ width: "50%" }}>
-                <div className="flex justify-between my-4">
-                  <div>同比</div>
-                  <div className="primary-button-text-dark">{store.siteData.factoryAverageConcentration?.comparedWithLastTime} ↓</div>
-                </div>
-                <div className="flex justify-between my-4">
-                  <div>环比</div>
-                  <div className="primary-button-text-dark">{store.siteData.factoryAverageConcentration?.comparedWithLastYear} ↓</div>
+              <div>
+                <div className="primary-text-color mt-10 text-center">24小时监测浓度趋势图</div>
+                <div className="mt-4">
+                  <ReactEcharts option={store.options1} style={{ width: "100%", height: "240px" }} />
                 </div>
               </div>
-            </div>
-            <div>
-              <div className="primary-text-color mt-10 text-center">24小时监测浓度趋势图</div>
-              <div className="mt-4">
-                <ReactEcharts option={store.options1} style={{ width: "100%", height: "240px" }} />
-              </div>
-            </div>
 
-            <div>
-              <div className="primary-text-color mt-10 text-center">厂界24小时排放浓度趋势图</div>
-              <div className="mt-4">
-                <ReactEcharts option={store.options2} style={{ width: "100%", height: "180px" }} />
+              <div>
+                <div className="primary-text-color mt-10 text-center">厂界24小时排放浓度趋势图</div>
+                <div className="mt-4">
+                  <ReactEcharts option={store.options2} style={{ width: "100%", height: "180px" }} />
+                </div>
               </div>
             </div>
-          </div>
+          </Scrollbars>
         </div>
       )}
     </div>

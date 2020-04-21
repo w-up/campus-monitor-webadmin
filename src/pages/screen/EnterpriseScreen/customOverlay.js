@@ -13,7 +13,7 @@ export function ComplexCustomOverlay(point, obj, index, store) {
 }
 
 ComplexCustomOverlay.prototype = new BMapGL.Overlay();
-ComplexCustomOverlay.prototype.initialize = function(map) {
+ComplexCustomOverlay.prototype.initialize = function (map) {
   let _index = this._index;
   const index = this._store.curSiteIndex;
   const isActive = _index == index;
@@ -60,7 +60,7 @@ ComplexCustomOverlay.prototype.initialize = function(map) {
   return div;
 };
 //重写渲染
-ComplexCustomOverlay.prototype.draw = function() {
+ComplexCustomOverlay.prototype.draw = function () {
   var map = this._map;
   var pixel = map.pointToOverlayPixel(this._point);
   this._div.style.position = "absolute";

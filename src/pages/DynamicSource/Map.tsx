@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useObserver } from "mobx-react-lite";
 import { Map, APILoader, Label, CustomOverlay, Marker } from "@uiw/react-baidu-map";
 import { useStore } from "../../stores/index";
-import blueArrow from "../../assets/img/arrow-blue.png";
 import { _ } from "utils/lodash";
 import { utils } from "../../utils/index";
 import { PolarRadialChart } from "../../components/PolarRadialChart";
@@ -55,14 +54,13 @@ export const DynamicSourceMap = () => {
         {dynamicSource.curParkData?.map((park) =>
           park.siteDatas?.map((item, index) => (
             <CustomOverlay position={{ lng: Number(item.gpsX), lat: Number(item.gpsY) }} key={index} visiable={dynamicSource.zoom > 17}>
-              <div>
-                {Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? (
-                  <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../assets/red.png")} />
-                ) : (
-                  <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../assets/green.png")} />
-                )}
-                {item.collectValue && <div className="number">{item.collectValue}</div>}
-              </div>
+              {item.siteIcon && (
+                <div>
+                  <img style={{ maxWidth: "55px", height: "55px" }} src={require(`../../assets/img/site${item.siteIcon}.png`)} />
+                  {false && item.collectValue && <div className="number">{item.collectValue}</div>}
+                  <div className="site-point">{`敏感点${index}`}</div>
+                </div>
+              )}
             </CustomOverlay>
           ))
         )}

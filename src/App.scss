@@ -492,6 +492,15 @@ svg {
     color: white;
     width: 20px;
   }
+  .site-point {
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    text-align: center;
+    font-size: 14px;
+    color: #92ddda;
+    width: 100px;
+  }
 
   .monitor-table {
     tr:hover td {
@@ -875,7 +884,7 @@ svg {
 
 .ant-notification {
   margin-right: 0;
-  bottom: 0!important;
+  bottom: 0 !important;
   .ant-notification-notice {
     height: calc(100vh - 64px);
     margin-bottom: 0;

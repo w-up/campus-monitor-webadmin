@@ -107,6 +107,7 @@ export interface ConcernSiteData {
   gpsX: string;
   gpsY: string;
   factoryId?: any;
+  siteIcon: number;
   siteName: string;
   device_code: string;
   collectValue: string;
