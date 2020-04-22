@@ -172,7 +172,7 @@ export const RuntimeDataPage = Form.create()(
 
                   {getFieldValue("factoryId") && (
                     <Row>
-                      <Divider orientation="left">站点名称</Divider>
+                      <Divider orientation="left"><span style={{ color: 'red' }}>*</span>站点名称</Divider>
                       <Checkbox style={{ fontSize: "10px" }} checked={allSiteChecked} onChange={onSiteSelectAll}>
                         全选
                       </Checkbox>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import ReactEcharts from "echarts-for-react";
 import { Link } from "react-router-dom";
@@ -82,6 +82,8 @@ export const RankAnalysisPage = Form.create()(
     console.log("option1", toJS(option1));
     console.log("option2", toJS(option2));
 
+    const [dateOpen, setDateOpen] = useState(false);
+
     return (
       <div className="rankPage">
         <Spin spinning={loading}>
@@ -164,40 +166,41 @@ export const RankAnalysisPage = Form.create()(
 
                   {getFieldValue("timeCycle") === 1 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true, message: '请选择统计时间' }] })(
                         <DatePicker allowClear={false} format="YYYY-MM-DD" style={{ width: "100%" }} size="small" />
                       )}
                     </Form.Item>
                   )}
                   {getFieldValue("timeCycle") === 2 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<MonthPicker allowClear={false} format="YYYY-MM" style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true, message: '请选择统计时间' }] })(<MonthPicker allowClear={false} format="YYYY-MM" style={{ width: "100%" }} size="small" />)}
                     </Form.Item>
                   )}
                   {getFieldValue("timeCycle") === 3 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<DatePicker allowClear={false} onPanelChange={(val: any) => {
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true, message: '请选择统计时间' }] })(<DatePicker allowClear={false} onPanelChange={(val: any) => {
                         setFieldsValue({ collectDate: moment(val).startOf('year') });
-                      }} mode="year" format="YYYY" style={{ width: "100%" }} size="small" />)}
+                        setDateOpen(false);
+                      }} open={dateOpen} onOpenChange={setDateOpen} mode="year" format="YYYY" style={{ width: "100%" }} size="small" />)}
                     </Form.Item>
                   )}
 
                   {getFieldValue("timeCycle") === 4 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<WeekPicker allowClear={false} style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true, message: '请选择统计时间' }] })(<WeekPicker allowClear={false} style={{ width: "100%" }} size="small" />)}
                     </Form.Item>
                   )}
 
                   {getFieldValue("timeCycle") === 5 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<DatePicker allowClear={false} format="Q" style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true, message: '请选择统计时间' }] })(<DatePicker allowClear={false} format="Q" style={{ width: "100%" }} size="small" />)}
                     </Form.Item>
                   )}
 
                   <Divider orientation="left"></Divider>
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="排名方式">
-                    {getFieldDecorator("rankType", { initialValue: 1, rules: [{ required: true }] })(
+                    {getFieldDecorator("rankType", { initialValue: 1, rules: [{ required: true, message: '请选择排名方式' }] })(
                       <Radio.Group style={{ width: "100%" }} size="small" buttonStyle="solid">
                         <Radio.Button style={{ width: "33%", textAlign: "center" }} value={1}>
                           前十

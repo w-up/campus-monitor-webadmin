@@ -36,7 +36,7 @@ http.interceptors.response.use(
         return store.auth.logout();
       }
       if (res.msg !== "success") {
-        message.error(res.msg);
+        message.error({ content: res.msg, key: 'global-message-error', duration: 2 });
         return Promise.reject(response);
       } else {
         return res;

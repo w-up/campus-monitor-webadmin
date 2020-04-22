@@ -101,7 +101,9 @@ export const EnterpriseEditPage = Form.create()(observer(({ form }: any) => {
             {getFieldDecorator("companyCode", { initialValue: companyCode, rules: [
               { required: true, message: '请输入企业统一社会信用代码' },
               { validator: (rule, value = '', callback) => {
-                if (value.match(/[^_IOZSVa-z\W]{2}\d{6}[^_IOZSVa-z\W]{10}/g)) {
+                if (!value) {
+                  callback();
+                } else if (value.match(/[^_IOZSVa-z\W]{2}\d{6}[^_IOZSVa-z\W]{10}/g)) {
                   callback();
                 } else {
                   callback('企业统一社会信用代码格式错误');

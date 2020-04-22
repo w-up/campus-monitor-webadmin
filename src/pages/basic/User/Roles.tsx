@@ -142,8 +142,10 @@ export const Roles = Form.create()(observer((props: any) => {
                 </Form.Item>
               </Col>
               <Col span={8} style={{ textAlign: "right" }}>
-                <Button type="primary" onClick={() => props.history.push('/user/role-edit')}>新建</Button>
-                {/* <Button style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button> */}
+                <Form.Item>
+                  <Button type="primary" onClick={() => props.history.push('/user/role-edit')}>新建</Button>
+                  {/* <Button style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button> */}
+                </Form.Item>
               </Col>
             </Form>
           </Row>

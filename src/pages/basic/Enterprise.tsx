@@ -49,7 +49,7 @@ export const EnterprisePage = observer(() => {
     console.log(item);
     Modal.confirm({
       title: '删除确认',
-      content: '确定删除这条记录吗？',
+      content: `确定删除企业${item.companyName}吗？`,
       async onOk() {
         try {
           await deleteEnterprise([ item.id ]);

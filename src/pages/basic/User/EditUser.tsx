@@ -58,12 +58,15 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
         return;
       }
       
+      userEdit.loading = true;
       try {
         await userEdit.doSaveUser(values);
         history.replace("/user/userlist");
       } catch {
 
       }
+      userEdit.loading = false;
+
     })
 
   }
@@ -130,11 +133,11 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
             )}
           </Form.Item>
 
-          <Form.Item label="密码">
+          {/* <Form.Item label="密码">
             {getFieldDecorator("password", { initialValue: '', rules: [{ required: true, message: '请输入密码' }] })(
               <Input.Password autoComplete="off" placeholder="请输入密码" />
             )}
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item label="用户姓名">
             {getFieldDecorator("name", { initialValue: name, rules: [{ required: false }] })(

@@ -167,7 +167,7 @@ export const DataManagePage = Form.create()(observer(({ form, history }: any) =>
               <Form onSubmit={doSubmit}>
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计区域" >
-                  {getFieldDecorator("parkId", { initialValue: query.parkId, rules: [{ required: true }] })(
+                  {getFieldDecorator("parkId", { initialValue: query.parkId, rules: [{ required: true, message: '请选择统计区域' }] })(
                     <Select onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
                       {parkTree.map(item => <Option key={item.parkId} value={item.parkId}>{item.parkName}</Option>)}
                     </Select>

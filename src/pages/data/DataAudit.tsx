@@ -162,7 +162,7 @@ export const DataAuditPage = Form.create()(observer(({ form }: any) => {
               <Form onSubmit={doSubmit}>
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计区域" >
-                  {getFieldDecorator("parkId", { initialValue: query.parkId, rules: [{ required: true }] })(
+                  {getFieldDecorator("parkId", { initialValue: query.parkId, rules: [{ required: true, message: '请选择统计区域' }] })(
                     <Select onChange={() => setFieldsValue({ factoryId: '' })} placeholder="请选择" size="small">
                       {parkTree.map(item => <Option key={item.parkId} value={item.parkId}>{item.parkName}</Option>)}
                     </Select>

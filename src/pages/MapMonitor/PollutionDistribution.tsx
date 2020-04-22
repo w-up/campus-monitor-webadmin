@@ -106,7 +106,7 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
             )}
           </Form.Item>
           <Form.Item label="终止时间">
-            {getFieldDecorator("timeEnd", { initialValue: moment(), rules: [{ required: true }] })(<DatePicker allowClear={false} className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}
+            {getFieldDecorator("timeEnd", { initialValue: moment(), rules: [{ required: true, message: '请选择终止时间' }] })(<DatePicker allowClear={false} className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />)}
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 22, offset: 1 }}>

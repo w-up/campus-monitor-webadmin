@@ -138,7 +138,7 @@ export const AlertSettingPage = Form.create()(
                 onClick={() => {
                   Modal.confirm({
                     title: "删除确认",
-                    content: `确定删除这条记录吗？`,
+                    content: `确定删除这条规则吗？`,
                     maskClosable: true,
                     async onOk() {
                       try {
@@ -235,7 +235,7 @@ export const AlertSettingPage = Form.create()(
                 onClick={() => {
                   Modal.confirm({
                     title: "删除确认",
-                    content: `确定删除这条记录吗？`,
+                    content: `确定删除这条规则吗？`,
                     maskClosable: true,
                     async onOk() {
                       try {

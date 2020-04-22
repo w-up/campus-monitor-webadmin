@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import ReactEcharts from "echarts-for-react";
 import { useStore } from "../stores/index";
@@ -101,6 +101,8 @@ export const ReportPage = Form.create()(
       pmCardTitle = pmList.find((item) => item.id === getFieldValue("pmType")).label;
     }
 
+    const [dateOpen, setDateOpen] = useState(false);
+
     return (
       <div className="reportPage">
         <Spin spinning={loading}>
@@ -114,7 +116,7 @@ export const ReportPage = Form.create()(
               <Card size="small" title="统计报表">
                 <Form onSubmit={doSubmit}>
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计方式">
-                    {getFieldDecorator("statisType", { initialValue: 1, rules: [{ required: true }] })(
+                    {getFieldDecorator("statisType", { initialValue: 1, rules: [{ required: true, message: '请选择统计方式' }] })(
                       <Select placeholder="请选择" size="small">
                         <Option value={2}>按企业</Option>
                         <Option value={1}>按园区</Option>
@@ -124,7 +126,7 @@ export const ReportPage = Form.create()(
 
                   {getFieldValue("statisType") === 1 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="选择园区">
-                      {getFieldDecorator("parkId", { initialValue: "", rules: [{ required: true }] })(
+                      {getFieldDecorator("parkId", { initialValue: "", rules: [{ required: true, message: '请选择园区' }] })(
                         <Select placeholder="请选择" size="small">
                           {parkList.map((item) => (
                             <Option key={item.parkId} value={item.parkId}>
@@ -138,7 +140,7 @@ export const ReportPage = Form.create()(
 
                   {getFieldValue("statisType") === 2 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="选择企业">
-                      {getFieldDecorator("companyId", { initialValue: "", rules: [{ required: true }] })(
+                      {getFieldDecorator("companyId", { initialValue: "", rules: [{ required: true, message: '请选择企业' }] })(
                         <Select placeholder="请选择" size="small">
                           {companyList.map((item) => (
                             <Option key={item.companyId} value={item.companyId}>
@@ -151,7 +153,7 @@ export const ReportPage = Form.create()(
                   )}
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测因子">
-                    {getFieldDecorator("pmType", { initialValue: "", rules: [{ required: true }] })(
+                    {getFieldDecorator("pmType", { initialValue: "", rules: [{ required: true, message: '请选择监测因子' }] })(
                       <Select onChange={() => setFieldsValue({ pmCodes: [] })} placeholder="请选择" size="small">
                         {pmList.map((item) => (
                           <Option key={item.id} value={item.id}>
@@ -187,7 +189,7 @@ export const ReportPage = Form.create()(
 
                   <Divider orientation="left">报表类型</Divider>
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计周期">
-                    {getFieldDecorator("timeCycle", { initialValue: 1, rules: [{ required: true }] })(
+                    {getFieldDecorator("timeCycle", { initialValue: 1, rules: [{ required: true, message: '请选择统计周期' }] })(
                       <Radio.Group style={{ width: "100%" }} size="small" buttonStyle="solid">
                         <Radio.Button style={{ width: "20%", textAlign: "center" }} key={1} value={1}>日</Radio.Button>
                         <Radio.Button style={{ width: "20%", textAlign: "center" }} key={4} value={4}>周</Radio.Button>
@@ -200,31 +202,34 @@ export const ReportPage = Form.create()(
 
                   {getFieldValue("timeCycle") === 1 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true, message: '请选择统计周期' }] })(
                         <DatePicker format="YYYY-MM-DD" style={{ width: "100%" }} size="small" allowClear={false} />
                       )}
                     </Form.Item>
                   )}
                   {getFieldValue("timeCycle") === 2 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<MonthPicker format="YYYY-MM" style={{ width: "100%" }} size="small" allowClear={false} />)}
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true, message: '请选择统计周期' }] })(<MonthPicker format="YYYY-MM" style={{ width: "100%" }} size="small" allowClear={false} />)}
                     </Form.Item>
                   )}
                   {getFieldValue("timeCycle") === 3 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<DatePicker format="YYYY" mode={"year" as any} style={{ width: "100%" }} size="small" allowClear={false} />)}
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true, message: '请选择统计周期' }] })(<DatePicker format="YYYY" onPanelChange={(val: any) => {
+                        setFieldsValue({ collectDate: moment(val).startOf('year') });
+                        setDateOpen(false);
+                      }} open={dateOpen} onOpenChange={setDateOpen} mode={"year" as any} style={{ width: "100%" }} size="small" allowClear={false} />)}
                     </Form.Item>
                   )}
 
                   {getFieldValue("timeCycle") === 4 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<WeekPicker style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true, message: '请选择统计周期' }] })(<WeekPicker style={{ width: "100%" }} size="small" />)}
                     </Form.Item>
                   )}
 
                   {getFieldValue("timeCycle") === 5 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true }] })(<DatePicker format="YYYY-Q" style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true, message: '请选择统计周期' }] })(<DatePicker format="YYYY-Q" style={{ width: "100%" }} size="small" />)}
                     </Form.Item>
                   )}
 

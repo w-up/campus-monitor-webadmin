@@ -49,6 +49,18 @@ export const HistoryDataPage = Form.create()(
       }
     }
 
+    const doResetFields = () => {
+      resetFields();
+      historyData.query = {
+        current: 1,
+        pageSize: 10,
+        size: 10,
+      };
+      historyData.total = 0;
+      historyData.columns = [];
+      historyData.dataList = [];
+    }
+
     const doSubmit = (e) => {
       e.preventDefault();
       validateFields((err, values) => {
@@ -105,13 +117,13 @@ export const HistoryDataPage = Form.create()(
                   size="small"
                   title="历史数据查询"
                   extra={
-                    <Button size="small" onClick={() => resetFields()}>
+                    <Button size="small" onClick={doResetFields}>
                       重置
                     </Button>
                   }
                 >
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="选择园区">
-                    {getFieldDecorator("parkId", { initialValue: "", rules: [{ required: true }] })(
+                    {getFieldDecorator("parkId", { initialValue: "", rules: [{ required: true, message: '请选择园区' }] })(
                       <Select onChange={() => setFieldsValue({ factoryId: "" })} placeholder="请选择" size="small">
                         {parkTree.map((item) => (
                           <Option key={item.parkId} value={item.parkId}>
@@ -122,7 +134,7 @@ export const HistoryDataPage = Form.create()(
                     )}
                   </Form.Item>
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测区域">
-                    {getFieldDecorator("factoryId", { initialValue: "", rules: [{ required: true }] })(
+                    {getFieldDecorator("factoryId", { initialValue: "", rules: [{ required: true, message: '请选择监测区域' }] })(
                       <Select placeholder="请选择" size="small">
                         {factoryList.map((item) => (
                           <Option key={item.factoryId} value={item.factoryId}>
@@ -133,7 +145,7 @@ export const HistoryDataPage = Form.create()(
                     )}
                   </Form.Item>
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="站点名称">
-                    {getFieldDecorator("siteId", { initialValue: "", rules: [{ required: true }] })(
+                    {getFieldDecorator("siteId", { initialValue: "", rules: [{ required: true, message: '请选择站点名称' }] })(
                       <Select placeholder="请选择" size="small">
                         {siteList.map((item) => (
                           <Option key={item.siteId} value={item.siteId}>
@@ -144,7 +156,7 @@ export const HistoryDataPage = Form.create()(
                     )}
                   </Form.Item>
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="因子分类">
-                    {getFieldDecorator("ptId", { initialValue: "", rules: [{ required: true }] })(
+                    {getFieldDecorator("ptId", { initialValue: "", rules: [{ required: true, message: '请选择因子分类' }] })(
                       <Select placeholder="请选择" size="small">
                         {ptList.map((item) => (
                           <Option key={item.id} value={item.id}>
@@ -161,7 +173,7 @@ export const HistoryDataPage = Form.create()(
                         全选
                       </Checkbox>
                       <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="">
-                        {getFieldDecorator("pmCodeList", { initialValue: [], rules: [{ required: true }] })(
+                        {getFieldDecorator("pmCodeList", { initialValue: [], rules: [{ required: true, message: '请选择监测因子' }] })(
                           <Checkbox.Group style={{ width: "100%" }}>
                             <Row>
                               {pmCodeList.map((item) => (
@@ -179,7 +191,7 @@ export const HistoryDataPage = Form.create()(
                   )}
                   <Divider orientation="left">起止时间</Divider>
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="">
-                    {getFieldDecorator("timeRange", { initialValue: "", rules: [{ required: true }] })(<RangePicker />)}
+                    {getFieldDecorator("timeRange", { initialValue: "", rules: [{ required: true, message: '请选择起止时间' }] })(<RangePicker />)}
                   </Form.Item>
 
                   <Button type="primary" htmlType="submit" block>

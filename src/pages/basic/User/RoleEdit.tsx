@@ -57,6 +57,7 @@ export const RoleEdit = Form.create()(observer(({ form }: any) => {
         return;
       }
 
+      roleEdit.loading = true;
       try {
         values.permIds = values.permIds.checked;
         await roleEdit.doSaveRole(values);
@@ -65,11 +66,12 @@ export const RoleEdit = Form.create()(observer(({ form }: any) => {
       } catch {
 
       }
+      roleEdit.loading = false;
     })
 
   }
 
-  const { id, code, name, desc, perms: initialPerms } = state.perm || {};
+  const { id, code, name, desc, perms: initialPerms = [] } = state.perm || {};
 
   const initialPermsIds: any = [];
   const flattern = arr => {

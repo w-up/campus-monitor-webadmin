@@ -57,6 +57,7 @@ export class Enterprise {
       current: 1,
       pageSize: 20,
     }
+    this.getCompanyList();
   }
   
   @action.bound
