@@ -287,9 +287,14 @@ export const MyEnterprisePage = Form.create()(
           return;
         }
 
+        if (!scope || scope.length === 0) {
+          message.error('请输入厂区范围');
+          return;
+        }
+
         myEnterprise.loading = true;
         try {
-          await saveFactory({ ...param, scope: scope.map((v, i) => ({ ...v, scopeOrder: i })) });
+          await saveFactory({ ...param.factoryInfo, scope: scope.map((v, i) => ({ ...v, scopeOrder: i })) });
           setFactoryInfoEditable(false);
           await myEnterprise.getTree();
           setFactoryInfoVisible(false);
