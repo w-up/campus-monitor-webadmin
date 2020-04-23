@@ -141,8 +141,8 @@ export class ParkScreenMapStore {
   }
 
   // 监测面板
-  @observable currentPmCode = "0";
-  @observable currentPmType = "0";
+  @observable currentPmCode = "";
+  @observable currentPmType = "";
   @observable allConcernSiteData: Array<ConcernSiteData> = [];
   @observable allParkMapData: AllParkData = {
     parkId: "",
@@ -248,7 +248,7 @@ export class ParkScreenMapStore {
   //站点相关
   @observable selectedSites: string[] = [];
   @action.bound
-  async saveSelectedSites(siteIds: number[]) {
+  async saveSelectedSites(siteIds: string[]) {
     await api.Other.addConcernSite({ parkId: this.currentPark, siteIds });
     notification.success({ message: "更新成功" });
     this.toggleBox();

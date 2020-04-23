@@ -8,28 +8,28 @@ export const ScreenTopSetting = () => {
   const { TabPane } = Tabs;
   const { TreeNode } = Tree;
   const {
-    screen: { parkScreenMap }
+    screen: { parkScreenMap },
   } = useStore();
 
   const store = useLocalStore(() => ({
     expandedKeys: [],
     autoExpandParent: true,
     async saveSelectedSites() {
-      const sites = parkScreenMap.selectedSites.filter(i => !i.includes("-")).map(i => Number(i));
+      const sites = parkScreenMap.selectedSites.filter((i) => !i.includes("-"));
       parkScreenMap.saveSelectedSites(sites);
     },
-    onExpand: expandedKeys => {
-      // console.log("onExpand", expandedKeys);
+    onExpand: (expandedKeys) => {
+      console.log("onExpand", expandedKeys);
       store.expandedKeys = expandedKeys;
     },
-    onCheck: checkedKeys => {
-      // console.log("onCheck", checkedKeys);
+    onCheck: (checkedKeys) => {
+      console.log("onCheck", checkedKeys);
       parkScreenMap.selectedSites = checkedKeys;
-    }
+    },
   }));
 
-  const renderTreeNodes = data =>
-    data.map(item => {
+  const renderTreeNodes = (data) =>
+    data.map((item) => {
       if (item.children) {
         return (
           <TreeNode title={item.title} key={item.key} dataRef={item}>
@@ -71,15 +71,15 @@ export const ScreenTopSetting = () => {
                   <Button type="primary" size="default" onClick={store.saveSelectedSites}>
                     确定
                   </Button>
-                  <Button className="ml-4" type="default" size="default" onClick={e => parkScreenMap.toggleBox()}>
+                  <Button className="ml-4" type="default" size="default" onClick={(e) => parkScreenMap.toggleBox()}>
                     取消
                   </Button>
                 </div>
               </TabPane>
               <TabPane tab="园区切换" key="2">
                 <Scrollbars style={{ height: 230 }}>
-                  <Radio.Group value={parkScreenMap.currentPark} onChange={e => parkScreenMap.selectFactory(e.target.value)}>
-                    {parkScreenMap.allParks.map(item => {
+                  <Radio.Group value={parkScreenMap.currentPark} onChange={(e) => parkScreenMap.selectFactory(e.target.value)}>
+                    {parkScreenMap.allParks.map((item) => {
                       return <Radio value={item.id}>{item.parkName}</Radio>;
                     })}
                   </Radio.Group>
@@ -88,7 +88,7 @@ export const ScreenTopSetting = () => {
                   <Button type="primary" size="default" onClick={parkScreenMap.saveSelectedFactory}>
                     确定
                   </Button>
-                  <Button className="ml-4" type="default" size="default" onClick={e => parkScreenMap.toggleBox()}>
+                  <Button className="ml-4" type="default" size="default" onClick={(e) => parkScreenMap.toggleBox()}>
                     取消
                   </Button>
                 </div>

@@ -4,7 +4,7 @@ export default {
   setSelectedPark(data: { parkId: number }) {
     return POST("/selected-park-or-factory/setSelectedPark", data);
   },
-  addConcernSite(data: { parkId: number; siteIds: number[] }) {
+  addConcernSite(data: { parkId: number; siteIds: string[] }) {
     return POST("/user-site-concern-rel/addConcernSite", data);
   },
   getWeather(data: { city: string }) {
@@ -12,5 +12,5 @@ export default {
   },
   setSelectedFactory(data: { factoryId: string }) {
     return POST("/selected-park-or-factory/setSelectedFactory", data);
-  }
+  },
 };
