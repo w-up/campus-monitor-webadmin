@@ -1,9 +1,9 @@
 import React from "react";
-import {observable, action} from "mobx";
-import {notification, Card} from "antd";
-import {AlertItem} from "components/AlertItem";
-import {AlarmInfo} from "../../type";
-import {store} from "../index";
+import { observable, action } from "mobx";
+import { notification, Card } from "antd";
+import { AlertItem } from "components/AlertItem";
+import { AlarmInfo } from "../../type";
+import { store } from "../index";
 import { Scrollbars } from "react-custom-scrollbars";
 
 export class AlertModal {
@@ -68,8 +68,8 @@ export class AlertModal {
       duration: 0,
       key: "0",
       description: (
-        <Scrollbars style={{height: "100vh"}}>
-          <div className="text-white pr-4" style={{background: "#0d142f"}}>
+        <Scrollbars style={{ height: "100vh" }}>
+          <div className="text-white pr-4" style={{ background: "#0d142f" }}>
             {this.alerts.map((i, index) => (
               <AlertItem item={i} key={index}></AlertItem>
             ))}
@@ -78,7 +78,7 @@ export class AlertModal {
       ),
       placement: "bottomRight",
       onClose: () => {
-        store.ws.sendMessage(10);
+        store.ws.sendMessage(store.auth.user?.id);
       },
     });
     console.log(noti);

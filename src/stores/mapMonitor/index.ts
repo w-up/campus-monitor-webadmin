@@ -6,6 +6,7 @@ import { _ } from "utils/lodash";
 import { utils } from "../../utils/index";
 import moment from "moment";
 import { store } from "../index";
+import { message, notification } from "antd";
 //@ts-ignore
 const kriging = window.kriging;
 
@@ -116,6 +117,7 @@ export class MapMonitorStore {
   async doConfirmAlarmInfoById(alarmId) {
     const result = await api.MapMonitor.confirmAlarmInfoById({ alarmId: alarmId, isFromPopup: 1 });
     if (result) {
+      message.success("处理成功");
       this.loadAlarms();
     }
   }

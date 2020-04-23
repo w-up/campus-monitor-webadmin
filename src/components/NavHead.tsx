@@ -56,7 +56,7 @@ export const NavHead = () => {
           }}
         >
           <Avatar src={auth.user?.pic} size={32} icon="user" />
-          <span className="ml-2">{auth.user?.username}</span>
+          <span className="ml-2">{auth.user?.name}</span>
           <Icon type="down" style={{ fontSize: "16px" }} />
         </a>
       </Dropdown>
