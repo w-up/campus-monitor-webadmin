@@ -4,7 +4,7 @@ import { Card, Row, Col, Button } from "antd";
 import { AlarmInfo } from "../type";
 import { useStore } from "../stores/index";
 
-export const AlertItem = ({ item }: { item: AlarmInfo }) => {
+export const AlertItem = ({ item, onUpdate }: { item: AlarmInfo; onUpdate?: Function }) => {
   const { mapMonitor } = useStore();
   return useObserver(() => (
     <Card className="w-full text-white" bordered={false} style={{ background: "#23283E", marginTop: 20, color: "white" }}>
@@ -64,7 +64,13 @@ export const AlertItem = ({ item }: { item: AlarmInfo }) => {
       </Row>
       <Row className="mt-4">
         <Col className="text-right" span={8} offset={16}>
-          <Button type="primary" onClick={() => mapMonitor.doConfirmAlarmInfoById(item.id)}>
+          <Button
+            type="primary"
+            onClick={() => {
+              mapMonitor.doConfirmAlarmInfoById(item.id);
+              onUpdate && onUpdate();
+            }}
+          >
             处理
           </Button>
         </Col>
