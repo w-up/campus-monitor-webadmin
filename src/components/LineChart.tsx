@@ -127,7 +127,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean 
           name: item.pmName,
           type: "line",
           data: item.datas?.map((i) => ({
-            symbolSize: i.collectValue > item.upperLimit ? 12 : 0,
+            symbolSize: item.upperLimit && i.collectValue > item.upperLimit ? 12 : 6,
             value: Number(i.collectValueDe),
             valueRaw: i.collectValue,
             valueIn: i.collectValueIn,

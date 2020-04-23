@@ -25,7 +25,7 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
         span: 15,
       },
     },
-    startTime: moment() as any,
+    startTime: moment().startOf("d") as any,
     endTime: null as any,
     disabledEndDate(endTime) {
       if (!this.startTime || !endTime) {

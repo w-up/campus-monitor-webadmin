@@ -159,7 +159,7 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
       name: item.pmName,
       data: utils.array.sliceArray(
         item.datas.map((i) => ({
-          symbolSize: i.collectValue > item.upperLimit ? 12 : 0,
+          symbolSize: item.upperLimit && i.collectValue > item.upperLimit ? 12 : 0,
           value: Number(i.collectValueDe),
           valueRaw: i.collectValue,
           valueIn: i.collectValueIn,
