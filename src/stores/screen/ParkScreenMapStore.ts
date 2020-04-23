@@ -137,6 +137,7 @@ export class ParkScreenMapStore {
   }
   @action.bound
   reload() {
+    if (!store.auth.token) return;
     this.init();
   }
 

@@ -5,6 +5,8 @@ import { SitlePMData, DailySewage } from "../../type";
 import { _ } from "utils/lodash";
 import { message, notification } from "antd";
 import style from "../../common/mapStyle";
+import auth from "services/auth";
+import { store } from "../index";
 
 //@ts-ignore
 const BMapGL = window.BMapGL;
@@ -38,6 +40,7 @@ export class EnterpriseScreenMapStore {
 
   @action.bound
   async reload() {
+    if (!store.auth.token) return;
     this.init();
   }
 
