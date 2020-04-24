@@ -326,7 +326,7 @@ export class EnterpriseScreenMapStore {
 
     this.curSiteIndex = index;
     this.overlays = [];
-    this.SiteRuntimePmDateForMap.forEach((v, i) => {
+    this.SiteRuntimePmDateForMap.filter((v, i) => i == index).forEach((v, i) => {
       const myCompOverlay = new ComplexCustomOverlay(v.position, v, i, this);
       this.overlays.push(myCompOverlay);
       this.map?.addOverlay(myCompOverlay);

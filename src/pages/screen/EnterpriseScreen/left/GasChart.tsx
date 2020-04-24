@@ -45,7 +45,7 @@ export const EnterpriseScreenGasChart = () => {
         <div>气体日均排放浓度趋势图</div>
         <img src="/images/right1.png" className="img" />
       </div>
-      <CarouselProvider naturalSlideWidth={100} isPlaying naturalSlideHeight={80} interval={5000} totalSlides={enterpriseScreenMap.dailyGas.length}>
+      <CarouselProvider naturalSlideWidth={100} isPlaying naturalSlideHeight={80} interval={10000} totalSlides={enterpriseScreenMap.dailyGas.length}>
         <Slider>
           {enterpriseScreenMap.dailyGas.map((item, index) => {
             return (

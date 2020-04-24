@@ -7,7 +7,7 @@ import { store } from "../index";
 import { Scrollbars } from "react-custom-scrollbars";
 
 export class AlertModal {
-  alerts: Array<AlarmInfo> = [
+  @observable alerts: Array<AlarmInfo> = [
     {
       id: "1242360753860657153",
       warnTarget: "测试园区",
@@ -49,13 +49,21 @@ export class AlertModal {
     },
   ];
 
+  @observable visible = false;
+
   init() {
     this.showAlert();
   }
 
-  setAlerts(data) {
+  setAlerts({ messageType, data }: { messageType: string; data: any }) {
     this.alerts = data;
-    this.showAlert();
+    if (messageType == "1") {
+      this.showAlert();
+    } else if (messageType == "2") {
+      if (this.visible) {
+        this.showAlert();
+      }
+    }
   }
 
   timer = null as any;
@@ -63,6 +71,7 @@ export class AlertModal {
   @action.bound
   showAlert() {
     // if (!this.alerts || this.alerts.length == 0) return;
+    this.visible = true;
     const noti = notification.info({
       message: "告警",
       duration: 0,
@@ -79,6 +88,7 @@ export class AlertModal {
       placement: "bottomRight",
       onClose: () => {
         store.ws.sendMessage(store.auth.user?.id);
+        this.visible = false;
       },
     });
     console.log(noti);

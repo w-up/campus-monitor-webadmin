@@ -14,9 +14,11 @@ export const ScreenTopSetting = () => {
   const store = useLocalStore(() => ({
     expandedKeys: [],
     autoExpandParent: true,
+    get finalSelectSite(){
+      return parkScreenMap.selectedSites.filter((i) => !i.includes("-"))
+    },
     async saveSelectedSites() {
-      const sites = parkScreenMap.selectedSites.filter((i) => !i.includes("-"));
-      parkScreenMap.saveSelectedSites(sites);
+      parkScreenMap.saveSelectedSites(this.finalSelectSite);
     },
     onExpand: (expandedKeys) => {
       console.log("onExpand", expandedKeys);
@@ -68,7 +70,7 @@ export const ScreenTopSetting = () => {
                   </Tree>
                 </Scrollbars>
                 <div className="setting-box-footer p-2">
-                  <Button type="primary" size="default" onClick={store.saveSelectedSites}>
+                  <Button type="primary" size="default" onClick={store.saveSelectedSites}  disabled={store.finalSelectSite.length <=0}>
                     确定
                   </Button>
                   <Button className="ml-4" type="default" size="default" onClick={(e) => parkScreenMap.toggleBox()}>
