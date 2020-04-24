@@ -301,7 +301,7 @@ export class MapMonitorStore {
     //@ts-ignore
     const latrange = [latitude.min(), latitude.max()];
     const polygons = [[parkPoints.map((i) => Number(i.longitude)), parkPoints.map((i) => Number(i.latitude))]];
-    var x = new kriging("mycanvas", 4);
+    var x = new kriging("mycanvas", 1);
     x.krig(longitude, latitude, response, polygons);
     //@ts-ignore
     x.map([longrange.mean(), latrange.mean()], 2.8);
