@@ -5,6 +5,7 @@ import { useStore } from "../../stores/index";
 import { utils } from "../../utils/index";
 import { IPolygon } from "../../components/Polygon/index";
 import { ILabel } from "../../components/Label/index";
+import * as geolib from "geolib";
 
 export const MapMonitorMap = () => {
   const { config, mapMonitor } = useStore();
@@ -19,6 +20,15 @@ export const MapMonitorMap = () => {
   return useObserver(() => (
     <APILoader akay={config.baiduMapApiKey}>
       <Map onTilesLoaded={mapMonitor.onMapUpdate} zoom={mapMonitor.zoom} center={mapMonitor.center} enableScrollWheelZoom onZoomEnd={(e) => (mapMonitor.zoom = e.target.getZoom())}>
+        {false && <canvas width="200" height="200" id="mycanvas" style={{ marginTop: "-10%", marginLeft: "-50%" }} />}
+        {mapMonitor.curParkData?.map((park, index) => {
+          // if (!park.parkPoints) return;
+          return (
+            <CustomOverlay position={utils.obj.formatLatLngShort(geolib.getCenter(park.parkPoints))}>
+              <canvas width="200" height="200" id="mycanvas" style={{ marginTop: "-15%", marginLeft: "-45%" }} />
+            </CustomOverlay>
+          );
+        })}
         {mapMonitor.curParkData?.map((park, index) => {
           // if (!park.parkPoints) return;
           return (

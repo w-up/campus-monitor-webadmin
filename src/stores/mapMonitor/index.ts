@@ -72,6 +72,14 @@ export class MapMonitorStore {
     { position: { lng: 120.980022, lat: 31.3657 }, name: "群力化工" },
   ];
 
+  krigingParams = {
+    krigingModel: "spherical", //model还可选'gaussian','spherical'
+    krigingSigma2: 0,
+    krigingAlpha: 100,
+    canvasAlpha: 0.75, //canvas图层透明度
+    colors: ["#006837", "#1a9850", "#66bd63", "#a6d96a", "#d9ef8b", "#ffffbf", "#fee08b", "#fdae61", "#f46d43", "#d73027", "#a50026"],
+  };
+
   @action.bound
   async init() {
     await Promise.all([this.loadPark(), this.loadFactories({}), this.loadPmCodes({})]);
@@ -276,10 +284,60 @@ export class MapMonitorStore {
   }
 
   @action.bound
+  drawKirigin() {
+    const { parkPoints, siteDatas } = this.curParkData[0];
+
+    // let extent: number[] = [parkPoints[0].longitude, parkPoints[0].latitude, parkPoints[2].longitude, parkPoints[2].latitude].map((i) => Number(i));
+    let response: number[] = [];
+    let longitude: number[] = [];
+    let latitude: number[] = [];
+    siteDatas.forEach((i, index) => {
+      response.push(index * 10);
+      longitude.push(Number(i.gpsX));
+      latitude.push(Number(i.gpsY));
+    });
+    //@ts-ignore
+    const longrange = [longitude.min(), longitude.max()];
+    //@ts-ignore
+    const latrange = [latitude.min(), latitude.max()];
+    const polygons = [[parkPoints.map((i) => Number(i.longitude)), parkPoints.map((i) => Number(i.latitude))]];
+    var x = new kriging("mycanvas", 4);
+    x.krig(longitude, latitude, response, polygons);
+    //@ts-ignore
+    x.map([longrange.mean(), latrange.mean()], 2.8);
+
+    // let variogram = kriging.train(values, lngs, lats, this.krigingParams.krigingModel, this.krigingParams.krigingSigma2, this.krigingParams.krigingAlpha);
+    // let polygons = [] as any;
+    // // polygons.push([
+    // //   [extent[0], extent[1]],
+    // //   [extent[0], extent[3]],
+    // //   [extent[2], extent[3]],
+    // //   [extent[2], extent[1]]
+    // // ]);
+    // polygons = [this.curParkData[0].parkPoints.map((i) => [Number(i.longitude), Number(i.latitude)])];
+    // console.log(this.curParkData[0].parkPoints.map((i) => [i.longitude, i.latitude]));
+    // let grid = kriging.grid(polygons, variogram, (extent[2] - extent[0]) / 300);
+    // console.log({ values, lngs, lats, grid, variogram, polygons });
+    // const that = this;
+    // const canvasLayer = new mapv.baiduMapCanvasLayer({
+    //   map: this.map,
+    // });
+    // const ctx = canvasLayer.canvas.getContext("2d");
+    // const canvas = document.createElement("canvas");
+    // kriging.plot(canvas, grid, [extent[0], extent[2]], [extent[1], extent[3]], that.krigingParams.colors);
+    // ctx.globalAlpha = this.krigingParams.canvasAlpha;
+    // ctx.drawImage(canvas, 200, 200);
+  }
+
+  @action.bound
   fillPollution() {
     this.clearOverlay();
     if (!this.curPollutionData) return;
     let data = [] as any;
+
+    this.drawKirigin();
+
+    return;
 
     this.curPollutionData.pmValues.forEach((pmValue) => {
       data.push({
@@ -289,6 +347,7 @@ export class MapMonitorStore {
         },
         count: Number(pmValue.specificValue) * 100,
       });
+
       // });
 
       // i.pmValues.forEach((pmValue, pmIndex) => {
@@ -302,6 +361,7 @@ export class MapMonitorStore {
       //   });
       // });
     });
+
     this.mapvLayer = new mapv.baiduMapLayer(this.map, new mapv.DataSet(data), {
       size: store.config.sysParams.point_size.paramValue,
       // gradient: { 0.25: "rgb(0,0,255)", 0.55: "rgb(0,255,0)", 0.85: "yellow", 1.0: "rgb(255,0,0)" },
