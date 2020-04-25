@@ -16,7 +16,7 @@ export const FocusStationTable = () => {
     },
   }));
   return useObserver(() => (
-    <div className="pr-4 topRight screenTable flex-1">
+    <div className="pr-4 topRight screenTable flex-1" style={{minHeight:200}}>
       <div className="pt-8 pb-2 tableTitle flex justify-between">
         <div className="text-left">重点关注站点</div>
         <div className="vertical-middle">
@@ -61,4 +61,3 @@ export const FocusStationTable = () => {
     </div>
   ));
 };
-  
