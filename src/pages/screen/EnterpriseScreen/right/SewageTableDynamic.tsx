@@ -37,7 +37,7 @@ export const SewageTableDynamic = () => {
           <div>限值</div>
           {false && <div>超标率</div>}
         </div>
-        <CarouselProvider naturalSlideWidth={100} dragEnabled={store.carouselProviderPlay} naturalSlideHeight={80} totalSlides={enterpriseScreenMap.SiteRuntimePmDate.length}>
+        <CarouselProvider naturalSlideWidth={100} dragEnabled={store.carouselProviderPlay} naturalSlideHeight={60} totalSlides={enterpriseScreenMap.SiteRuntimePmDate.length}>
           <Slider>
             {store.SiteRuntimePmDate.map((site, index) => {
               return (

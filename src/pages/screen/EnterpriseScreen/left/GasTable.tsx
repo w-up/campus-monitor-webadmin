@@ -62,7 +62,7 @@ export const GasTable = () => {
               );
             })}
           </Slider>
-          <DotGroup className="text-center">
+          <DotGroup className="text-center bottom-0">
             {store.SiteRuntimePmDate.map((site, index) => {
               return <Dot slide={index} className="text-white sliderDotButton" children="" />;
             })}
