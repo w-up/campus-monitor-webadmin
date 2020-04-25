@@ -78,7 +78,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean 
           // y:"-10px",
         },
         grid: {
-          top: "25%",
+          top: "20%",
           left: "4%",
           right: "2%",
           bottom: "0%",
@@ -100,7 +100,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean 
             color: "rgba(136,168,197,0.5)",
             align: "center",
             verticalAlign: "middle",
-            padding: [5, 0, 15, 20],
+            padding: [5, 0, 10, 20],
           },
           type: "value",
           min: 0,

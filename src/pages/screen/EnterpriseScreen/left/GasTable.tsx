@@ -37,7 +37,7 @@ export const GasTable = () => {
           <div>限值</div>
           {false && <div>超标率</div>}
         </div>
-        <CarouselProvider naturalSlideWidth={100} isPlaying naturalSlideHeight={100} totalSlides={store.SiteRuntimePmDate.length}>
+        <CarouselProvider naturalSlideWidth={100} isPlaying naturalSlideHeight={80} totalSlides={store.SiteRuntimePmDate.length}>
           <Slider>
             {store.SiteRuntimePmDate.map((site, index) => {
               return (

@@ -22,7 +22,8 @@ export const SewageTableDynamic = () => {
         });
       });
       return _.chunk<any>(datas, 6);
-    }
+    },
+    carouselProviderPlay: enterpriseScreenMap.SiteRuntimePmDate.length>1?true:false
   }));
 
   return useObserver(() => (
@@ -36,7 +37,7 @@ export const SewageTableDynamic = () => {
           <div>限值</div>
           {false && <div>超标率</div>}
         </div>
-        <CarouselProvider naturalSlideWidth={100} isPlaying naturalSlideHeight={80} totalSlides={enterpriseScreenMap.SiteRuntimePmDate.length}>
+        <CarouselProvider naturalSlideWidth={100} dragEnabled={store.carouselProviderPlay} naturalSlideHeight={80} totalSlides={enterpriseScreenMap.SiteRuntimePmDate.length}>
           <Slider>
             {store.SiteRuntimePmDate.map((site, index) => {
               return (

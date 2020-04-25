@@ -49,7 +49,7 @@ const App = (props) => {
             <Layout style={{ marginTop: 64 }}>
               <Layout.Sider
                 style={{
-                  height: "100vh",
+                  height: "calc(100vh - 64px)",
                   position: "fixed",
                   left: 0,
                 }}

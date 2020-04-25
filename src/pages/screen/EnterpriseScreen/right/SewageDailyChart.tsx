@@ -16,7 +16,9 @@ export const SewageDailyChart = () => {
         <div>污水日均排放趋势图</div>
         <img src="/images/right1.png" className="img" />
       </div>
-      {enterpriseScreenMap.dailySewage.pms.length > 0 && <LineChart animate datas={enterpriseScreenMap.dailySewage.pms} />}
+      <div style={{ width: "100%", height: "300px" }}>
+        {enterpriseScreenMap.dailySewage.pms.length > 0 && <LineChart animate datas={enterpriseScreenMap.dailySewage.pms} />}
+      </div>
     </div>
   ));
 };
