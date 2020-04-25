@@ -893,6 +893,8 @@ svg {
   .ant-notification-notice-with-icon .ant-notification-notice-description {
     margin-left: 0;
   }
+  -moz-box-shadow: -5px 1px 3px #A30B3D; /* 老的 Firefox */
+  box-shadow: -5px 1px 3px #A30B3D;
 }
 .ant-notification-notice-close {
   color: white;
