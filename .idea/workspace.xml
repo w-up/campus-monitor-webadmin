@@ -4,7 +4,14 @@
     <list default="true" id="0b5aa787-9ba3-4839-bcb1-9b38c1c54b5a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AlertItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AlertItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LineChart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LineChart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/center/GroupChart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/center/GroupChart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasChart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasChart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/left/GasTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/Sewage24HourChart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/Sewage24HourChart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/SewageDailyChart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/SewageDailyChart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/SewageTableDynamic.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/right/SewageTableDynamic.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/ScreenTop.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/ScreenTop.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +110,7 @@
       <workItem from="1587104945932" duration="13685000" />
       <workItem from="1587473625977" duration="1462000" />
       <workItem from="1587787464628" duration="5976000" />
-      <workItem from="1587800078986" duration="3962000" />
+      <workItem from="1587800078986" duration="9504000" />
     </task>
     <servers />
   </component>

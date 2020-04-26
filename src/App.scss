@@ -46,6 +46,12 @@ svg {
 .screenPage {
   background: #1e2538;
   font-family: "Microsoft Yahei", sans-serif;
+  .screen-title-text-size {
+    font-size: 28px;
+  }
+  .screen-top-height {
+    height: 105px;
+  }
 
   .groundImg {
     position: absolute;
@@ -119,6 +125,16 @@ svg {
     width: 100%;
     //min-width: 320px;
     border: 1px solid #2e3b61;
+    position: relative;
+    .table-title-more {
+      cursor: pointer;
+      position: absolute;
+      color: #0564E6;
+      font-size: 12px;
+      top: 12px;
+      right: 0;
+      margin-right: 40px;
+    }
   }
 
   .screenCenterTable {
@@ -161,6 +177,7 @@ svg {
 
   .topLeft,
   .topRight {
+    height: 292px;
     .tabTitle {
       line-height: 40px;
       display: flex;
@@ -182,7 +199,8 @@ svg {
 
   .tableTitle {
     color: $screen-text-color-2;
-    padding: 9px 0px;
+    font-size: 18px;
+    line-height: 40px;
     background-image: url("/images/title.png");
     font-weight: 700;
   }

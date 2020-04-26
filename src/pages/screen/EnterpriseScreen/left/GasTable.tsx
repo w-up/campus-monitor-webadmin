@@ -22,13 +22,14 @@ export const GasTable = () => {
           }
         });
       });
-      return _.chunk<any>(datas, 8);
+      return _.chunk<any>(datas, 10);
     }
   }));
 
   return useObserver(() => (
     <div className="topLeft screenTable flex-1">
       <div className="tableTitle text-center">气体排放情况（实时）</div>
+      <div className="table-title-more">详情 ></div>
       <div className="box">
         <div className="tabTitle">
           <div>站点名称</div>
@@ -37,7 +38,7 @@ export const GasTable = () => {
           <div>限值</div>
           {false && <div>超标率</div>}
         </div>
-        <CarouselProvider naturalSlideWidth={100} isPlaying naturalSlideHeight={80} totalSlides={store.SiteRuntimePmDate.length}>
+        <CarouselProvider naturalSlideWidth={100} isPlaying naturalSlideHeight={100} totalSlides={store.SiteRuntimePmDate.length}>
           <Slider>
             {store.SiteRuntimePmDate.map((site, index) => {
               return (

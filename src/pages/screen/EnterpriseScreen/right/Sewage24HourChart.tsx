@@ -35,7 +35,7 @@ export const Sewage24HourChart = () => {
     }, 1000);
   }, []);
   return useObserver(() => (
-    <div className="screenTable mt-4 pb-4">
+    <div className="screenTable pb-4" style={{marginTop:14, height:292}}>
       <div className="tableTitle flex justify-between items-center">
         <img src="/images/left.png" className="img" />
         <div>污水排放浓度24小时趋势</div>

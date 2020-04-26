@@ -1,17 +1,17 @@
 import React from "react";
-import { useObserver, useLocalStore } from "mobx-react-lite";
+import {useObserver, useLocalStore} from "mobx-react-lite";
 import ReactEcharts from "echarts-for-react";
-import { useStore } from "../../../../stores/index";
-import { useEffect } from "react";
-import { _ } from "../../../../utils/lodash";
-import { Icon, Tabs } from "antd";
-import { constant } from "common/constants";
-import { utils } from "utils";
-import { LineChart } from "components/LineChart";
+import {useStore} from "../../../../stores/index";
+import {useEffect} from "react";
+import {_} from "../../../../utils/lodash";
+import {Icon, Tabs} from "antd";
+import {constant} from "common/constants";
+import {utils} from "utils";
+import {LineChart} from "components/LineChart";
 
 export const EnterpriseScreenGroupChart = () => {
   const {
-    screen: { enterpriseScreenMap },
+    screen: {enterpriseScreenMap},
   } = useStore();
   const mapRef = React.useRef<any>();
 
@@ -45,14 +45,17 @@ export const EnterpriseScreenGroupChart = () => {
             key={String(index)}
             tab={
               <span>
-                {enterpriseScreenMap.curSiteIndex == index && <Icon type="environment" theme="filled" />}
+                {enterpriseScreenMap.curSiteIndex == index && <Icon type="environment" theme="filled"/>}
                 {item.siteName}
               </span>
             }
           ></Tabs.TabPane>
         ))}
       </Tabs>
-      {enterpriseScreenMap.curSiteRuntimeData.length > 0 && <LineChart animate datas={enterpriseScreenMap.curSiteRuntimeData}></LineChart>}
+      <div style={{marginTop:40}}>
+        {enterpriseScreenMap.curSiteRuntimeData.length > 0 &&
+        <LineChart animate datas={enterpriseScreenMap.curSiteRuntimeData}></LineChart>}
+      </div>
     </div>
   ));
 };
