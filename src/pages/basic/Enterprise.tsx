@@ -23,6 +23,9 @@ export const EnterprisePage = observer(() => {
   }
 
   useEffect(() => {
+    enterprise.query.companyCode = '';
+    enterprise.query.current = 1;
+    enterprise.query.pageSize = 10;
     enterprise.getCompanyList();
   }, []);
 

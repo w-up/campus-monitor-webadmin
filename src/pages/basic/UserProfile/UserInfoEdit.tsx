@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { observer, useObserver } from "mobx-react-lite";
-import { Breadcrumb, Button, Card, Form, Input, Radio, Select, Spin, Avatar } from "antd";
+import { Breadcrumb, Button, Card, Form, Input, Radio, Select, Spin, Avatar, message } from "antd";
 import { useHistory, useLocation, Link } from "react-router-dom";
 import { useStore } from "../../../stores";
 const { Option } = Select;
@@ -45,6 +45,8 @@ export const UserInfoEdit = Form.create()(
           return;
         }
         await auth.updateUser(values);
+        message.success('保存成功');
+        history.goBack();
       });
     };
 
@@ -83,7 +85,7 @@ export const UserInfoEdit = Form.create()(
 
             {auth.user?.type !== 2 && (
               <Form.Item label="所属角色">
-                <Input disabled value={auth.user?.type} />
+                <Input disabled value={auth.user?.name} />
               </Form.Item>
             )}
 

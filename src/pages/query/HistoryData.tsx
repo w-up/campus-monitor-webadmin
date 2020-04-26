@@ -168,7 +168,7 @@ export const HistoryDataPage = Form.create()(
                   </Form.Item>
                   {!!getFieldValue("ptId") && (
                     <Row>
-                      <Divider orientation="left">监测因子</Divider>
+                      <Divider orientation="left"><span style={{ color: 'red' }}>*</span> 监测因子</Divider>
                       <Checkbox style={{ fontSize: "10px" }} checked={allChecked} onChange={onSelectAll}>
                         全选
                       </Checkbox>
@@ -189,7 +189,7 @@ export const HistoryDataPage = Form.create()(
                       </Form.Item>
                     </Row>
                   )}
-                  <Divider orientation="left">起止时间</Divider>
+                  <Divider orientation="left"><span style={{ color: 'red' }}>*</span> 起止时间</Divider>
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="">
                     {getFieldDecorator("timeRange", { initialValue: "", rules: [{ required: true, message: '请选择起止时间' }] })(<RangePicker />)}
                   </Form.Item>

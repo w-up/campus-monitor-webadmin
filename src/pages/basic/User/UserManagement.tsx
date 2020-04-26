@@ -24,6 +24,10 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
   } = user;
 
   useEffect(() => {
+    user.query.userName = '';
+    user.query.current = 1;
+    user.query.size = 10;
+    user.query.pageSize = 10;
     user.getUsers();
   }, []);
 

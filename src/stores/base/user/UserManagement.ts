@@ -59,6 +59,7 @@ export class UserManagement {
 
     try {
       await POST('/user/deleteUsers', { ids });
+      message.success('删除成功');
       await this.getUsers();
     } catch {
 
