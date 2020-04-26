@@ -344,4 +344,14 @@ export class EnterpriseScreenMapStore {
       });
     }, 5000);
   }
+
+
+  // 设置
+  @observable modalVisibility = false;
+  @observable modalShowType = 1;
+  @action.bound
+  toggleModal(type: number, value?: boolean) {
+    this.modalVisibility = value ? value : !this.modalVisibility;
+    this.modalShowType = type;
+  }
 }

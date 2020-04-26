@@ -204,6 +204,22 @@ svg {
     background-image: url("/images/title.png");
     font-weight: 700;
   }
+
+  .ant-modal-content {
+    height: 581px;
+    background-image: url("/images/modal-bg.png");
+    background-size: cover;
+    background-color: transparent;
+    .ant-modal-body {
+      position: relative;
+      padding: 30px 80px;
+      .screen-modal-title {
+        color: #55B7FE;
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+  }
 }
 
 .tabTitle {
