@@ -70,7 +70,7 @@ export const ScreenTop = () => {
   }, []);
 
   return useObserver(() => (
-    <div className="flex flex-row parkScreenTop h-20 text-white">
+    <div className="flex flex-row parkScreenTop text-white">
       <div className="head-left">
         <div className="time sm:pt-2 lg:pt-4">
           <div>

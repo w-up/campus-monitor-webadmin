@@ -29,7 +29,7 @@ export const SewageTableDynamic = () => {
   return useObserver(() => (
     <div className="topRight screenTable">
       <div className="tableTitle text-center">污水排放情况（实时）</div>
-      <div className="table-title-more">详情 ></div>
+      <div className="table-title-more" onClick={e => enterpriseScreenMap.toggleModal(2)}>详情 ></div>
       <div className="box">
         <div className="tabTitle">
           <div>站点名称</div>

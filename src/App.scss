@@ -204,6 +204,22 @@ svg {
     background-image: url("/images/title.png");
     font-weight: 700;
   }
+
+  .ant-modal-content {
+    height: 581px;
+    background-image: url("/images/modal-bg.png");
+    background-size: cover;
+    background-color: transparent;
+    .ant-modal-body {
+      position: relative;
+      padding: 30px 80px;
+      .screen-modal-title {
+        color: #55B7FE;
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+  }
 }
 
 .tabTitle {
@@ -334,6 +350,7 @@ svg {
     -webkit-background-size: contain;
     background-size: contain;
     text-align: center;
+    height: 80px;
 
     & > div {
       margin: auto 0;
@@ -391,7 +408,7 @@ svg {
   }
 }
 
-@media screen and (min-width: 2265px) {
+@media screen and (min-width: 1920px) {
   .screenPage .header-bg {
     height: 150px;
     line-height: 90px;
