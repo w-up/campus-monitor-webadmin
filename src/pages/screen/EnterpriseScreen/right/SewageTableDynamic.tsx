@@ -21,7 +21,7 @@ export const SewageTableDynamic = () => {
           }
         });
       });
-      return _.chunk<any>(datas, 6);
+      return _.chunk<any>(datas, 4);
     },
     carouselProviderPlay: enterpriseScreenMap.SiteRuntimePmDate.length>1?true:false
   }));

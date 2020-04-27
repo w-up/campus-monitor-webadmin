@@ -99,7 +99,7 @@ export const EnterpriseScreenPage = () => {
                           return (
                             <div
                               className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"}>
-                              <div>{item.time}</div>
+                              <div>{item.collectDate}</div>
                               <div>{item.siteName}</div>
                               <div>{item.pmName}</div>
                               <div>
