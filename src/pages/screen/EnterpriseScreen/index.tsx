@@ -66,6 +66,7 @@ export const EnterpriseScreenPage = () => {
             </div>
           </div>
         </div>
+        <div className="copyright fixed bottom-0">版权所有: 武汉三藏科技有限责任公司</div>
         <Modal
           width={956}
           getContainer={false}
