@@ -163,7 +163,7 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
 
           return {
             symbolSize: isUpperlimit ? 12 : 0,
-            value: Number(i.collectValueDe),
+            value: i.collectValueDe ? Number(i.collectValueDe) : null,
             valueRaw: i.collectValue,
             valueIn: i.collectValueIn,
             limit: item.upperLimit,

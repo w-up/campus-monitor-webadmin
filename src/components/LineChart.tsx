@@ -127,20 +127,20 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean 
           name: item.pmName,
           type: "line",
           data: item.datas?.map((i) => {
-            const isUpperlimit = item.upperLimit && i.collectValue > item.upperLimit
+            const isUpperlimit = item.upperLimit && i.collectValue > item.upperLimit;
             return {
               symbolSize: isUpperlimit ? 12 : 0,
-              value: Number(i.collectValueDe),
+              value: i.collectValueDe ? Number(i.collectValueDe) : null,
               valueRaw: i.collectValue,
               valueIn: i.collectValueIn,
               limit: item.upperLimit,
               unit: i.unit,
-              itemStyle:{
-                normal:{
-                  color:isUpperlimit ?"red":constant.seriesColors[index]
-                }
-              }
-            }
+              itemStyle: {
+                normal: {
+                  color: isUpperlimit ? "red" : constant.seriesColors[index],
+                },
+              },
+            };
           }),
           markLine: {
             symbol: "none",

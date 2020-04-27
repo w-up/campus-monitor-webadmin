@@ -46,7 +46,7 @@ export const EnterpriseScreenGasChart = () => {
         <img src="/images/right1.png" className="img" />
       </div>
       <CarouselProvider naturalSlideWidth={100} isPlaying naturalSlideHeight={66} interval={10000} totalSlides={enterpriseScreenMap.dailyGas.length}>
-        <Slider>
+        <Slider style={{ height: 307 }}>
           {enterpriseScreenMap.dailyGas.map((item, index) => {
             return (
               <Slide index={index} key={index}>
@@ -54,7 +54,7 @@ export const EnterpriseScreenGasChart = () => {
                   //@ts-ignore
                   ref={elementsRef.current[index]}
                   option={makeOption(item)}
-                  style={{ padding: "10px 10px 0 10px", width: "100%", height:"280px"}}
+                  style={{ padding: "10px 10px 0 10px", width: "100%", height: "280px" }}
                   className="react_for_echarts"
                 />
               </Slide>
@@ -195,7 +195,7 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
         name: item.siteName,
         data: item.datas.map((i) => ({
           symbolSize: i.collectValue > site.upperLimit ? 12 : 0,
-          value: Number(i.collectValueDe),
+          value: i.collectValueDe ? Number(i.collectValueDe) : null,
           valueRaw: i.collectValue,
           valueIn: i.collectValueIn,
           limit: site.upperLimit,
