@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useObserver } from "mobx-react-lite";
+import { useObserver, useLocalStore } from "mobx-react-lite";
 import { ParkScreenMap } from "./Map";
 import { ParkScreen24HourChart } from "./left/24HourChart";
 import { Icon } from "antd";
@@ -15,11 +15,29 @@ import { useStore } from "../../../stores/index";
 export const ParkScreenPage = () => {
   const fullScreenRef = useRef<HTMLDivElement>(null);
   const {
+    config: { sysParams },
     screen: { parkScreenMap },
   } = useStore();
 
+  const store = useLocalStore(() => ({
+    parkTimer: null as any,
+    setUpTimer() {
+      if (this.setUpTimer) clearInterval(this.parkTimer);
+      this.parkTimer = setInterval(() => {
+        parkScreenMap.reload();
+      }, Math.max(Number(sysParams.qyjsc_refresh_period.paramValue), 1) * 1000 * 60);
+    },
+    clearTimer() {
+      clearInterval(this.parkTimer);
+    },
+  }));
+
   useEffect(() => {
     parkScreenMap.init();
+    store.setUpTimer();
+    return () => {
+      store.clearTimer();
+    };
   }, []);
 
   return useObserver(() => (
@@ -28,9 +46,9 @@ export const ParkScreenPage = () => {
         <Icon className="text-3xl font-black" type="fullscreen" />
         <span className="ml-2">全屏展示</span>
       </div>
-      <div ref={fullScreenRef} className="flex flex-col w-full h-full p-4" style={{ backgroundColor: "#061630"}}>
+      <div ref={fullScreenRef} className="flex flex-col w-full h-full p-4" style={{ backgroundColor: "#061630" }}>
         <ScreenTop />
-        <div className="screenContent flex-1 flex mt-4" style={{height:"calc(100vh - 214px)"}}>
+        <div className="screenContent flex-1 flex mt-4" style={{ height: "calc(100vh - 214px)" }}>
           <div className="leftContent flex w-9/12 p-4">
             <span className="corner cornerTl" />
             <span className="corner cornerTr" />
