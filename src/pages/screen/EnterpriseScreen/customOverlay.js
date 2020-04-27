@@ -26,7 +26,7 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
       <div style='width:40px;height:15px;background:${isActive ? "rgba(5,100,230,1)" : "#5A6C77"};border:1px solid rgba(4,249,204,1);color:white;border-radius:2px;'>${this._obj.text}</div>
       <img style='width:40px;height:55px;' src='${isActive ? icon : iconActive}'/>
   </div>
-  <div style='display:inline-block;border:1px solid rgba(4,108,249,1);border-radius:4px;' >
+  <div style='display: ${isActive ? "inline-block" : "none"} ;border:1px solid rgba(4,108,249,1);border-radius:4px;' >
       <div style='font-size:12px;display:flex;background-color:${isActive ? "rgba(4,108,249,1)" : "#2C5081"};color:white;'>
           <div style='padding:5px 0px;margin-left:15px;width:70px;'>更新时间</div>
       </div>

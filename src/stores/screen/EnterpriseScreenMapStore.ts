@@ -326,7 +326,7 @@ export class EnterpriseScreenMapStore {
 
     this.curSiteIndex = index;
     this.overlays = [];
-    this.SiteRuntimePmDateForMap.filter((v, i) => i == index).forEach((v, i) => {
+    this.SiteRuntimePmDateForMap.forEach((v, i) => {
       const myCompOverlay = new ComplexCustomOverlay(v.position, v, i, this);
       this.overlays.push(myCompOverlay);
       this.map?.addOverlay(myCompOverlay);
@@ -344,7 +344,6 @@ export class EnterpriseScreenMapStore {
       });
     }, 5000);
   }
-
 
   // 设置
   @observable modalVisibility = false;
