@@ -30,18 +30,20 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
       <div style='font-size:12px;display:flex;background-color:${isActive ? "rgba(4,108,249,1)" : "#2C5081"};color:white;'>
           <div style='padding:5px 0px;margin-left:15px;width:70px;'>更新时间</div>
       </div>
-  <div style='overflow-y: auto;overflow-x: hidden;height:104px;background-color:${isActive ? "#1D4476" : "#5B666C"};' class='cell-area'>
+  <div style='overflow-y: auto;overflow-x: hidden;height:150px;background-color:${isActive ? "#1D4476" : "#5B666C"};' class='cell-area'>
   `;
   for (let x of this._obj.children) {
     cells =
       cells +
-      `<div style='border-bottom: 1px solid rgba(255,255,255, 0.5);padding:2px 15px;font-size:12px;display:flex;align-items:flex-end;opacity:0.9;color:rgba(4,249,204,1);'>
-                            <div style=';width:70px;'>
-                            <div style='color:white'>${x.collectDate}</div>
-                            <div>${x.name}</div>
-                            </div>
-                            <div>${utils.number.toPrecision(x.value)} ${x.unit}</div>
-                        </div>`;
+      `<div style='border-bottom: 1px solid rgba(255,255,255, 0.5);padding:2px 15px;font-size:12px;align-items:flex-end;opacity:0.9;color:rgba(4,249,204,1);'>
+      <div style='color:white'>${x.collectDate}</div>
+      <div style='display:flex'>
+      <div style=';width:70px;'>
+      <div>${x.name}</div>
+      </div>
+      <div>${utils.number.toPrecision(x.value)} ${x.unit}</div>
+      </div>
+      </div>`;
   }
   cells = cells + `</div></div></div>`;
   div.innerHTML = cells;

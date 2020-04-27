@@ -35,7 +35,7 @@ export const Sewage24HourChart = () => {
     }, 1000);
   }, []);
   return useObserver(() => (
-    <div className="screenTable pb-4" style={{marginTop:14, height:292}}>
+    <div className="screenTable pb-4" style={{ marginTop: 14, height: 292 }}>
       <div className="tableTitle flex justify-between items-center">
         <img src="/images/left.png" className="img" />
         <div>污水排放浓度24小时趋势</div>
@@ -158,14 +158,23 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
     series: data.pms.map((item, index) => ({
       name: item.pmName,
       data: utils.array.sliceArray(
-        item.datas.map((i) => ({
-          symbolSize: item.upperLimit && i.collectValue > item.upperLimit ? 12 : 0,
-          value: Number(i.collectValueDe),
-          valueRaw: i.collectValue,
-          valueIn: i.collectValueIn,
-          limit: item.upperLimit,
-          unit: i.unit,
-        })),
+        item.datas.map((i) => {
+          const isUpperlimit = item.upperLimit && i.collectValue > item.upperLimit;
+
+          return {
+            symbolSize: isUpperlimit ? 12 : 0,
+            value: Number(i.collectValueDe),
+            valueRaw: i.collectValue,
+            valueIn: i.collectValueIn,
+            limit: item.upperLimit,
+            unit: i.unit,
+            itemStyle: {
+              normal: {
+                color: isUpperlimit ? "red" : constant.seriesColors[index],
+              },
+            },
+          };
+        }),
         dataIndex,
         count
       ),

@@ -59,7 +59,7 @@ export class EnterpriseScreenMapStore {
       text: v.siteName,
       // update: "15:30:30",
       position: new BMapGL.Point(v.longitude, v.latitude),
-      children: v.pmInfos?.map((pmInfo) => ({
+      children: v.pmInfos?.filter(i => Number(i.collectValue) > 0).map((pmInfo) => ({
         name: pmInfo.pmName,
         value: pmInfo.collectValue,
         unit: pmInfo.unit,
