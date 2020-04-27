@@ -49,6 +49,7 @@ export interface PMValue {
 export interface SitePMValue {
   pmName: string;
   pmCode: string;
+  collectDate: string;
   collectValue: string;
   collectValueDe: string;
   collectValueIn: string;
