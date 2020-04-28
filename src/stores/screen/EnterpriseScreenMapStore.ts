@@ -59,11 +59,12 @@ export class EnterpriseScreenMapStore {
       text: v.siteName,
       // update: "15:30:30",
       position: new BMapGL.Point(v.longitude, v.latitude),
-      children: v.pmInfos?.map((pmInfo) => ({
+      children: v.pmInfos?.filter(i => Number(i.collectValue) > 0).map((pmInfo) => ({
         name: pmInfo.pmName,
         value: pmInfo.collectValue,
         unit: pmInfo.unit,
         limit: pmInfo.limit,
+        collectDate: pmInfo.collectDate,
       })),
     }));
   }
@@ -303,7 +304,7 @@ export class EnterpriseScreenMapStore {
       if (!this.map) return;
       this.addpoints({ index: 0 }); //添加站点覆盖物
       this.play();
-    }, 100);
+    }, 1000);
   }
 
   @observable curSiteRuntimeData: Array<DailySewage> = [];
@@ -311,7 +312,6 @@ export class EnterpriseScreenMapStore {
   @action.bound
   async addpoints({ index, update }: { index: number; update?: boolean }) {
     if (!this.map) return;
-    console.log({ index });
 
     if (update) {
       const nextSite = this.SiteRuntimePmDate[index];
@@ -336,12 +336,27 @@ export class EnterpriseScreenMapStore {
   @action.bound
   play() {
     clearInterval(this.playTimer);
+    this.playInterval();
     this.playTimer = setInterval(async () => {
       if (!this.map) clearInterval(this.playTimer);
-      this.addpoints({
-        index: this.curSiteIndex >= this.SiteRuntimePmDateForMap.length - 1 ? 0 : this.curSiteIndex + 1,
-        update: true,
-      });
+      this.playInterval();
     }, 5000);
+  }
+
+  @action.bound
+  playInterval() {
+    this.addpoints({
+      index: this.curSiteIndex >= this.SiteRuntimePmDateForMap.length - 1 ? 0 : this.curSiteIndex + 1,
+      update: true,
+    });
+  }
+
+  // 设置
+  @observable modalVisibility = false;
+  @observable modalShowType = 1;
+  @action.bound
+  toggleModal(type: number, value?: boolean) {
+    this.modalVisibility = value ? value : !this.modalVisibility;
+    this.modalShowType = type;
   }
 }

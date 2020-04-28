@@ -29,6 +29,9 @@ export const ParkPage = observer(() => {
   }));
 
   useEffect(() => {
+    park.query.parkName = '';
+    park.query.current = 1;
+    park.query.pageSize = 10;
     park.getParkList();
   }, []);
 

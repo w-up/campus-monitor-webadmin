@@ -20,6 +20,10 @@ export const Roles = Form.create()(observer((props: any) => {
   } = role;
 
   useEffect(() => {
+    role.query.name = '';
+    role.query.size = 0;
+    role.query.current = 1;
+    role.query.status = 0;
     role.getRoleList();
   }, []);
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { useObserver, useLocalStore, observer } from "mobx-react-lite";
-import { Spin, Card, Form, Input, Button, Breadcrumb } from "antd";
+import { Spin, Card, Form, Input, Button, Breadcrumb, message } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { toJS } from 'mobx';
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
@@ -103,9 +103,10 @@ export const EnterpriseEditPage = Form.create()(observer(({ form }: any) => {
               { validator: (rule, value = '', callback) => {
                 if (!value) {
                   callback();
-                } else if (value.match(/[^_IOZSVa-z\W]{2}\d{6}[^_IOZSVa-z\W]{10}/g)) {
+                } else if (value.match(/^[^_IOZSVa-z\W]{2}\d{6}[^_IOZSVa-z\W]{10}$/g)) {
                   callback();
                 } else {
+                  message.error({ content: '企业统一社会信用代码格式错误', key: 'companyCode', duration: 2 });
                   callback('企业统一社会信用代码格式错误');
                 }
               } },
@@ -120,6 +121,7 @@ export const EnterpriseEditPage = Form.create()(observer(({ form }: any) => {
                 if (strlen(value) < 60) {
                   callback();
                 } else {
+                  message.error({ content: '企业名称长度超过限制', key: 'companyName', duration: 2 });
                   callback('企业名称长度超过限制');
                 }
               } },

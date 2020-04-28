@@ -78,7 +78,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean 
           // y:"-10px",
         },
         grid: {
-          top: "25%",
+          top: "20%",
           left: "4%",
           right: "2%",
           bottom: "0%",
@@ -100,7 +100,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean 
             color: "rgba(136,168,197,0.5)",
             align: "center",
             verticalAlign: "middle",
-            padding: [5, 0, 15, 20],
+            padding: [5, 0, 10, 20],
           },
           type: "value",
           min: 0,
@@ -126,14 +126,22 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean 
         series: props.datas.map((item, index) => ({
           name: item.pmName,
           type: "line",
-          data: item.datas?.map((i) => ({
-            symbolSize: item.upperLimit && i.collectValue > item.upperLimit ? 12 : 6,
-            value: Number(i.collectValueDe),
-            valueRaw: i.collectValue,
-            valueIn: i.collectValueIn,
-            limit: item.upperLimit,
-            unit: i.unit,
-          })),
+          data: item.datas?.map((i) => {
+            const isUpperlimit = item.upperLimit && i.collectValue > item.upperLimit;
+            return {
+              symbolSize: isUpperlimit ? 12 : 0,
+              value: i.collectValueDe ? Number(i.collectValueDe) : null,
+              valueRaw: i.collectValue,
+              valueIn: i.collectValueIn,
+              limit: item.upperLimit,
+              unit: i.unit,
+              itemStyle: {
+                normal: {
+                  color: isUpperlimit ? "red" : constant.seriesColors[index],
+                },
+              },
+            };
+          }),
           markLine: {
             symbol: "none",
             lineStyle: {
@@ -181,7 +189,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean 
   }, []);
   return useObserver(() => (
     <div>
-      <ReactEcharts ref={mapRef} option={store.options} style={{ width: "100%" }} />
+      <ReactEcharts ref={mapRef} option={store.options} style={{ width: "100%", height: "252px" }} />
     </div>
   ));
 };

@@ -21,13 +21,15 @@ export const SewageTableDynamic = () => {
           }
         });
       });
-      return _.chunk<any>(datas, 6);
-    }
+      return _.chunk<any>(datas, 4);
+    },
+    carouselProviderPlay: enterpriseScreenMap.SiteRuntimePmDate.length>1?true:false
   }));
 
   return useObserver(() => (
-    <div className="topRight screenTable flex-1">
+    <div className="topRight screenTable">
       <div className="tableTitle text-center">污水排放情况（实时）</div>
+      <div className="table-title-more" onClick={e => enterpriseScreenMap.toggleModal(2)}>详情 ></div>
       <div className="box">
         <div className="tabTitle">
           <div>站点名称</div>
@@ -36,7 +38,7 @@ export const SewageTableDynamic = () => {
           <div>限值</div>
           {false && <div>超标率</div>}
         </div>
-        <CarouselProvider naturalSlideWidth={100} isPlaying naturalSlideHeight={80} totalSlides={enterpriseScreenMap.SiteRuntimePmDate.length}>
+        <CarouselProvider naturalSlideWidth={100} dragEnabled={store.carouselProviderPlay} naturalSlideHeight={42} totalSlides={enterpriseScreenMap.SiteRuntimePmDate.length}>
           <Slider>
             {store.SiteRuntimePmDate.map((site, index) => {
               return (

@@ -23,7 +23,7 @@ export class ConfigStore {
     const pmTypes = {};
     const pmCodes = {};
     let allPmCodes = [] as any;
-    result.data.results.forEach(i => {
+    result.data.results.forEach((i) => {
       const { id, label, pms } = i;
       pmTypes[id] = { id, label };
       pmCodes[id] = pms;
@@ -37,24 +37,24 @@ export class ConfigStore {
   @observable sysParams = {
     qyjsc_refresh_period: {
       paramIntro: "企业驾驶舱刷新频率（单位/分钟）",
-      paramValue: "4"
+      paramValue: "4",
     },
     yqjsc_refresh_period: {
       paramIntro: "园区驾驶舱刷新频率（单位/分钟）",
-      paramValue: "1"
+      paramValue: "1",
     },
     lxwr_period: {
       paramIntro: "判断连续污染的时间间隔（单位/分钟）",
-      paramValue: "3"
+      paramValue: "3",
     },
     point_size: {
       paramIntro: "污染分布方块大小（20~40）",
-      paramValue: "20"
+      paramValue: "20",
     },
     bottom_color: {
       paramIntro: "污染分布园区填充色（16进制值）",
-      paramValue: "#00FF00"
-    }
+      paramValue: "#00FF00",
+    },
   };
 
   enterpriseTimer: any = null;
@@ -70,17 +70,10 @@ export class ConfigStore {
       pageNo: 1,
       pageSize: 10,
       paramName: "",
-      size: 20
+      size: 20,
     });
     if (res.data?.records) {
       this.sysParams = _.keyBy(res.data?.records, "paramCode") as any;
     }
-    this.enterpriseTimer = setInterval(() => {
-      store.screen.enterpriseScreenMap.reload();
-    }, Math.max(Number(this.sysParams.qyjsc_refresh_period.paramValue), 1) * 1000 * 60);
-
-    this.parkTimer = setInterval(() => {
-      store.screen.parkScreenMap.reload();
-    }, Math.max(Number(this.sysParams.yqjsc_refresh_period.paramValue), 1) * 1000 * 60);
   }
 }

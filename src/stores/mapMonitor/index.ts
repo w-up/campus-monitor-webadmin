@@ -144,6 +144,7 @@ export class MapMonitorStore {
 
   @action.bound
   async setCurrentRuntimeSite(siteId) {
+    this.siteData = null;
     this.curSiteId = siteId;
     const res = await api.MapMonitor.getSiteMonitorDataById({ siteId });
     if (res.data) {

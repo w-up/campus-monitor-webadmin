@@ -283,12 +283,12 @@ export const MyEnterprisePage = Form.create()(
       // const param = getFieldValue("factoryInfo");
       validateFields(['factoryInfo'], async (err, param) => {
         if (err) {
-          message.error('请输入所有必填项');
+          message.error({ content: '请输入所有必填项', key: 'factoryInfo', duration: 2 });
           return;
         }
 
         if (!scope || scope.length === 0) {
-          message.error('请输入厂区范围');
+          message.error({ content: '请输入厂区范围', key: 'scope.length', duration: 2 });
           return;
         }
 
@@ -356,7 +356,7 @@ export const MyEnterprisePage = Form.create()(
         width: 300,
       },
       {
-        title: "因子分类",
+        title: "监测分类",
         dataIndex: "belongChildType",
         width: 300,
         render: (text: any, record: any, index) => {

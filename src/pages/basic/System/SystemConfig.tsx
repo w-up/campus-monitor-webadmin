@@ -39,6 +39,9 @@ export const SystemConfigration = Form.create()(observer((props: any) => {
 
 
   useEffect(() => {
+    systemConfig.query.paramName = '';
+    systemConfig.query.current = 1;
+    systemConfig.query.pageSize = 10;
     systemConfig.getSysParamList();
   }, []);
 

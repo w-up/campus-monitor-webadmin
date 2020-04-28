@@ -46,6 +46,12 @@ svg {
 .screenPage {
   background: #1e2538;
   font-family: "Microsoft Yahei", sans-serif;
+  .screen-title-text-size {
+    font-size: 28px;
+  }
+  .screen-top-height {
+    height: 105px;
+  }
 
   .groundImg {
     position: absolute;
@@ -119,6 +125,16 @@ svg {
     width: 100%;
     //min-width: 320px;
     border: 1px solid #2e3b61;
+    position: relative;
+    .table-title-more {
+      cursor: pointer;
+      position: absolute;
+      color: #0564e6;
+      font-size: 12px;
+      top: 12px;
+      right: 0;
+      margin-right: 40px;
+    }
   }
 
   .screenCenterTable {
@@ -161,6 +177,7 @@ svg {
 
   .topLeft,
   .topRight {
+    height: 292px;
     .tabTitle {
       line-height: 40px;
       display: flex;
@@ -182,9 +199,26 @@ svg {
 
   .tableTitle {
     color: $screen-text-color-2;
-    padding: 9px 0px;
+    font-size: 18px;
+    line-height: 40px;
     background-image: url("/images/title.png");
     font-weight: 700;
+  }
+
+  .ant-modal-content {
+    height: 581px;
+    background-image: url("/images/modal-bg.png");
+    background-size: cover;
+    background-color: transparent;
+    .ant-modal-body {
+      position: relative;
+      padding: 30px 80px;
+      .screen-modal-title {
+        color: #55b7fe;
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
   }
 }
 
@@ -301,11 +335,11 @@ svg {
   }
   .shape-bg {
     position: absolute;
-    width: 230px;
-    height: 40px;
+    width: 170px;
+    height: 48px;
     background: url("/images/combined_sp.png") no-repeat;
     background-size: contain;
-    line-height: 35px;
+    line-height: 30px;
     text-align: center;
     margin-left: 40px;
   }
@@ -316,6 +350,7 @@ svg {
     -webkit-background-size: contain;
     background-size: contain;
     text-align: center;
+    height: 80px;
 
     & > div {
       margin: auto 0;
@@ -373,7 +408,7 @@ svg {
   }
 }
 
-@media screen and (min-width: 2265px) {
+@media screen and (min-width: 1920px) {
   .screenPage .header-bg {
     height: 150px;
     line-height: 90px;
@@ -893,4 +928,33 @@ svg {
   .ant-notification-notice-with-icon .ant-notification-notice-description {
     margin-left: 0;
   }
+  -moz-box-shadow: -5px 1px 3px #a30b3d; /* 老的 Firefox */
+  box-shadow: -5px 1px 3px #a30b3d;
+}
+.ant-notification-notice-close {
+  color: white;
+}
+
+/*滚动条凹槽的颜色，还可以设置边框属性 */
+*::-webkit-scrollbar-track-piece {
+  background-color: transparent;
+  -webkit-border-radius: 1em;
+  -moz-border-radius: 1em;
+  border-radius: 1em;
+}
+/*滚动条的宽度*/
+*::-webkit-scrollbar {
+  width: 4px;
+}
+/*滚动条的设置*/
+*::-webkit-scrollbar-thumb {
+  background-color: #425bd6;
+  background-clip: padding-box;
+  -webkit-border-radius: 1em;
+  -moz-border-radius: 1em;
+  border-radius: 1em;
+}
+/*滚动条鼠标移上去*/
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #bbb;
 }

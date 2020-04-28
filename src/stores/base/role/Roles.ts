@@ -59,6 +59,7 @@ export class Roles {
 
     try {
       await POST('/role/deleteRoles', { ids });
+      message.success('删除成功');
       await this.getRoleList();
     } catch {
 

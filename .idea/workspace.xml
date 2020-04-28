@@ -3,11 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0b5aa787-9ba3-4839-bcb1-9b38c1c54b5a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/ParkScreen/left/FocusStationTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/ParkScreen/left/FocusStationTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/ParkScreen/left/TopTenMonitorTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/ParkScreen/left/TopTenMonitorTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/SewageWaterTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/SewageWaterTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/WasteGasTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/WasteGasTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/type.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,15 +43,15 @@
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages/basic" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/public/images" />
       <recent name="$PROJECT_DIR$/src/pages/basic" />
       <recent name="$PROJECT_DIR$/src/pages/screen/ParkScreen/left" />
       <recent name="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top" />
       <recent name="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/center" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/pages/basic" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -103,7 +99,12 @@
       <workItem from="1586581801623" duration="9099000" />
       <workItem from="1586865770473" duration="1035000" />
       <workItem from="1586924153870" duration="4240000" />
-      <workItem from="1587104945932" duration="1594000" />
+      <workItem from="1587104945932" duration="13685000" />
+      <workItem from="1587473625977" duration="1462000" />
+      <workItem from="1587787464628" duration="5976000" />
+      <workItem from="1587800078986" duration="9504000" />
+      <workItem from="1587952246128" duration="366000" />
+      <workItem from="1587958155175" duration="883000" />
     </task>
     <servers />
   </component>
@@ -131,17 +132,22 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1418" height="216" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1586757812602" />
-    <state x="409" y="93" key="RollbackChangesDialog" timestamp="1586933202623">
+    <state x="409" y="93" key="RollbackChangesDialog" timestamp="1587189219808">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="409" y="93" key="RollbackChangesDialog/0.23.1440.877@0.23.1440.877" timestamp="1586933202623" />
+    <state x="409" y="93" key="RollbackChangesDialog/0.23.1440.877@0.23.1440.877" timestamp="1587189219808" />
     <state x="271" y="89" key="SettingsEditor" timestamp="1585736320388">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="271" y="89" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1585736320388" />
-    <state x="383" y="196" width="674" height="676" key="search.everywhere.popup" timestamp="1586494426138">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="242" y="57" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1587822938059">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="242" y="57" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.1440.877@0.23.1440.877" timestamp="1587822938059" />
+    <state x="383" y="214" width="674" height="659" key="search.everywhere.popup" timestamp="1587186955932">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="383" y="196" width="674" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1586494426138" />
+    <state x="383" y="214" width="674" height="659" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1587186955932" />
   </component>
 </project>

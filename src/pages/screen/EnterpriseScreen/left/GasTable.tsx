@@ -22,13 +22,14 @@ export const GasTable = () => {
           }
         });
       });
-      return _.chunk<any>(datas, 8);
+      return _.chunk<any>(datas, 10);
     }
   }));
 
   return useObserver(() => (
     <div className="topLeft screenTable flex-1">
       <div className="tableTitle text-center">气体排放情况（实时）</div>
+      <div className="table-title-more" onClick={e => enterpriseScreenMap.toggleModal(1)}>详情 ></div>
       <div className="box">
         <div className="tabTitle">
           <div>站点名称</div>
@@ -62,7 +63,7 @@ export const GasTable = () => {
               );
             })}
           </Slider>
-          <DotGroup className="text-center">
+          <DotGroup className="text-center bottom-0">
             {store.SiteRuntimePmDate.map((site, index) => {
               return <Dot slide={index} className="text-white sliderDotButton" children="" />;
             })}
