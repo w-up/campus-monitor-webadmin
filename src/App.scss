@@ -916,23 +916,24 @@ svg {
   border-radius: 50%;
   display: inline-block;
 }
-
-.ant-notification {
-  margin-right: 0;
-  bottom: 0 !important;
-  .ant-notification-notice {
-    height: calc(100vh - 64px);
-    margin-bottom: 0;
-    padding: 16px 0px 16px 24px;
+.alertScreen {
+  .ant-notification {
+    margin-right: 0;
+    bottom: 0 !important;
+    .ant-notification-notice {
+      height: calc(100vh - 64px);
+      margin-bottom: 0;
+      padding: 16px 0px 16px 24px;
+    }
+    .ant-notification-notice-with-icon .ant-notification-notice-description {
+      margin-left: 0;
+    }
+    -moz-box-shadow: -5px 1px 3px #a30b3d; /* 老的 Firefox */
+    box-shadow: -5px 1px 3px #a30b3d;
   }
-  .ant-notification-notice-with-icon .ant-notification-notice-description {
-    margin-left: 0;
+  .ant-notification-notice-close {
+    color: white;
   }
-  -moz-box-shadow: -5px 1px 3px #a30b3d; /* 老的 Firefox */
-  box-shadow: -5px 1px 3px #a30b3d;
-}
-.ant-notification-notice-close {
-  color: white;
 }
 
 /*滚动条凹槽的颜色，还可以设置边框属性 */
