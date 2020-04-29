@@ -1,6 +1,6 @@
 import { action, observable, computed } from "mobx";
 import api from "services";
-import { notification } from "antd";
+import { message } from "antd";
 import { allSiteRes, Tree, ConcernSiteData, AllParkData, PMValue } from "../../type";
 import { _ } from "utils/lodash";
 import * as geolib from "geolib";
@@ -241,7 +241,7 @@ export class ParkScreenMapStore {
   @action.bound
   async saveSelectedFactory() {
     await api.Other.setSelectedPark({ parkId: this.currentPark });
-    notification.success({ message: "更新成功" });
+    message.success( "更新成功");
     this.toggleBox();
     this.reload();
   }
@@ -251,7 +251,7 @@ export class ParkScreenMapStore {
   @action.bound
   async saveSelectedSites(siteIds: string[]) {
     await api.Other.addConcernSite({ parkId: this.currentPark, siteIds });
-    notification.success({ message: "更新成功" });
+    message.success( "更新成功");
     this.toggleBox();
     this.reload();
   }
