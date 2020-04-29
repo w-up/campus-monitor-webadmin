@@ -323,14 +323,15 @@ export const AlertSettingPage = Form.create()(
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="因子名称">
                     {getFieldDecorator("setForm.pmName", { initialValue: "", rules: [{ required: false }] })(
-                      <Select showSearch placeholder="请选择" size="small">
-                        <Option value="">不限</Option>
-                        {pollutionPmList.map((item) => (
-                          <Option key={item.pmName} value={item.pmName}>
-                            {item.pmName}
-                          </Option>
-                        ))}
-                      </Select>
+                      // <Select showSearch placeholder="请选择" size="small">
+                      //   <Option value="">不限</Option>
+                      //   {pollutionPmList.map((item) => (
+                      //     <Option key={item.pmName} value={item.pmName}>
+                      //       {item.pmName}
+                      //     </Option>
+                      //   ))}
+                      // </Select>
+                      <Input size="small" placeholder="请输入" />
                     )}
                   </Form.Item>
 
@@ -477,7 +478,7 @@ export const AlertSettingPage = Form.create()(
                       )}
                     </Form.Item>
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="因子分类">
-                      {getFieldDecorator("editForm.jcTypeIds", { initialValue: [], rules: [{ required: true }] })(
+                      {getFieldDecorator("editForm.jcTypeIds", { initialValue: [], rules: [{ required: true, message: '请选择因子分类' }] })(
                         <Checkbox.Group style={{ width: "100%" }}>
                           <Row>
                             {typeList.map((item) => (
@@ -492,7 +493,7 @@ export const AlertSettingPage = Form.create()(
                       )}
                     </Form.Item>
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="因子名称">
-                      {getFieldDecorator("editForm.pmCode", { initialValue: "", rules: [{ required: true }] })(
+                      {getFieldDecorator("editForm.pmCode", { initialValue: "", rules: [{ required: true, message: '请选择因子名称' }] })(
                         <Select placeholder="请选择" size="small">
                           {pollutionPmList.map((item) => (
                             <Option key={item.pmCode} value={item.pmCode}>
@@ -503,7 +504,7 @@ export const AlertSettingPage = Form.create()(
                       )}
                     </Form.Item>
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="告警等级">
-                      {getFieldDecorator("editForm.warnLevel", { initialValue: 1, rules: [{ required: true }] })(
+                      {getFieldDecorator("editForm.warnLevel", { initialValue: 1, rules: [{ required: true, message: '请选择告警等级' }] })(
                         <Select placeholder="请选择" size="small">
                           <Option value={1}>中度</Option>
                           <Option value={2}>重度</Option>
@@ -549,7 +550,7 @@ export const AlertSettingPage = Form.create()(
                       )}
                     </Form.Item>
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测对象">
-                      {getFieldDecorator("editDeviceForm.parkOrCompanyId", { initialValue: "", rules: [{ required: true }] })(
+                      {getFieldDecorator("editDeviceForm.parkOrCompanyId", { initialValue: "", rules: [{ required: true, message: '请选择监测对象' }] })(
                         <Select placeholder="请选择" size="small">
                           {getFieldValue("editDeviceForm.type") == 0 &&
                             parkList.map((item) => (

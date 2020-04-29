@@ -79,7 +79,7 @@ export const UserInfoEdit = Form.create()(
 
             {auth.user?.type !== 2 && auth.user?.type !== 3 && (
               <Form.Item label="所属园区/企业">
-                <Input disabled value={auth.user?.parkOrEnterpriseId} />
+                <Input disabled value={auth.porc?.name} />
               </Form.Item>
             )}
 
