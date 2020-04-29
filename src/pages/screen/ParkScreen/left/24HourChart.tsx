@@ -2,8 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
 import ReactEcharts from "echarts-for-react";
 import { useStore } from "stores";
-import { utils } from "utils";
-import { ParkScreenMap } from "../Map";
+import echarts from "echarts"
 
 export const ParkScreen24HourChart = () => {
   const chartRef = useRef<any>();
@@ -128,12 +127,21 @@ export const ParkScreen24HourChart = () => {
                 },
               },
             },
+            areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgba(60,141,124,1)'
+                }, {
+                    offset: 1,
+                    color: 'rgba(60,141,124,0.3)'
+                }])
+            },
             markLine: {
               symbol: "none",
               lineStyle: {
                 normal: {
                   type: "solid",
-                  color: "red",
+                  color: "#b57c2e",
                 },
               },
               data: parkScreenMap.dailyData.upperLimit
