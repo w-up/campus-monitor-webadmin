@@ -43,7 +43,7 @@ export const WasteGasTable = () => {
             {parkScreenMap.waterData.map(item => {
               return (
                 <div className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"}>
-                  <div>{item.collectDate}</div>
+                  <div title={item.collectDate}>{item.collectDate}</div>
                   <div>{item.factoryName}</div>
                   <div>{item.pmName}</div>
                   <div>
