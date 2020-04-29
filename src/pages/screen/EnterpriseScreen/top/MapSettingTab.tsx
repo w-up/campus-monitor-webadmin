@@ -1,6 +1,6 @@
 import React from "react";
 import {useLocalStore, useObserver} from "mobx-react-lite";
-import {Form, Icon, Button} from "antd";
+import {Form, Icon, Button, message} from "antd";
 import {WrappedFormUtils} from "antd/lib/form/Form";
 import Input from "antd/lib/input";
 import Upload from "antd/lib/upload";
@@ -52,6 +52,10 @@ export const MapSettingTab = Form.create()(({form}: { form: WrappedFormUtils }) 
       enterpriseScreenMap.curMapConfig.picUrl = base64;
     },
     beforeUpload: file => {
+      const isLt2M = file.size / 1024 / 1024 < 5;
+      if (!isLt2M) {
+        message.error('图片大小不能超过5M!');
+      }
       return false;
     },
     handleSubmit: e => {
