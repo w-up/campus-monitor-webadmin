@@ -80,7 +80,7 @@ export const DynamicSourceMap = () => {
           dynamicSource.curDynamicSourceWindRose?.valueList?.map((item, index) => (
             <CustomOverlay position={{ lng: Number(item.lng), lat: Number(item.lat) }} key={index}>
               <div style={{ background: "rgba(32,26,68,0.7)", padding: "10px" }}>
-                <PolarRadialChart data={item.roseData.directionWithValue} />
+                <PolarRadialChart data={item.roseData} />
               </div>
             </CustomOverlay>
           ))}

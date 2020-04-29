@@ -103,11 +103,7 @@ export class DynamicSourceStore {
         device_id: string;
         lat: string;
         lng: string;
-        roseData: {
-          directionWithValue: Array<string>;
-          value: Array<string>;
-          wind_direction: Array<string>;
-        };
+        roseData: Array<string>
       }>;
     }>;
     timer: any;
