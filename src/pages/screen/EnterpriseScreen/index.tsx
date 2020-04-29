@@ -95,7 +95,6 @@ export const EnterpriseScreenPage = () => {
               <div>检测物质</div>
               <div>监测数值</div>
               <div>限值</div>
-              <div>超标率(%)</div>
             </div>
             {
               <CarouselProvider naturalSlideWidth={100} isPlaying naturalSlideHeight={50} totalSlides={store.SiteRuntimePmDate(enterpriseScreenMap.modalShowType).length}>
@@ -114,7 +113,6 @@ export const EnterpriseScreenPage = () => {
                                 <span>{utils.number.toPrecision(item.collectValue)}</span>
                               </div>
                               <div>{item.limit}</div>
-                              <div>{item.overRate}</div>
                             </div>
                           );
                         })}
