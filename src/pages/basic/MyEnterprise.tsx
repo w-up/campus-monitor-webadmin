@@ -629,7 +629,7 @@ export const MyEnterprisePage = Form.create()(
                 <Form layout="horizontal">
                   <Card
                     bordered
-                    title="编辑厂区"
+                    title={factoryInfo.id ? "编辑厂区" : "新增厂区"}
                     extra={
                       factoryInfoEditable ? (
                         <Row>
