@@ -111,7 +111,7 @@ export const DataReplenish = Form.create()(observer(({ form, history }: any) => 
 
 
               <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="监测设备" >
-                {getFieldDecorator("deviceCode", { initialValue: '', rules: [{ required: true }] })(
+                {getFieldDecorator("deviceCode", { initialValue: '', rules: [{ required: true, message: '请选择监测设备' }] })(
                   <Select onChange={replenish.getPm} placeholder="请选择" size="small">
                     {deviceList.map(item => <Option key={item.deviceCode} value={item.deviceCode}>{item.deviceName}</Option>)}
                     {/* <Option value="">不限</Option> */}
@@ -120,7 +120,7 @@ export const DataReplenish = Form.create()(observer(({ form, history }: any) => 
               </Form.Item>
 
               <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="补传原因" >
-                {getFieldDecorator("reason", { initialValue: '', rules: [{ required: true }] })(
+                {getFieldDecorator("reason", { initialValue: '', rules: [{ required: true, message: '请填写补传原因' }] })(
                   <Input.TextArea placeholder="请填写补传原因" />
                 )}
               </Form.Item>
@@ -139,7 +139,7 @@ export const DataReplenish = Form.create()(observer(({ form, history }: any) => 
                     <Divider orientation="left">测量数据</Divider>
 
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="补测设备" >
-                      {getFieldDecorator("addDeviceName", { initialValue: '', rules: [{ required: true }] })(
+                      {getFieldDecorator("addDeviceName", { initialValue: '', rules: [{ required: true, message: '请填写补测设备' }] })(
                         // <Select placeholder="请选择" size="small">
                         //   {addDeviceList.map(item => <Option key={item.siteId} value={item.siteId}>{item.siteName}</Option>)}
                         // </Select>
@@ -148,7 +148,7 @@ export const DataReplenish = Form.create()(observer(({ form, history }: any) => 
                     </Form.Item>
 
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="补测时间" >
-                      {getFieldDecorator("collectDate", { initialValue: '', rules: [{ required: true }] })(
+                      {getFieldDecorator("collectDate", { initialValue: '', rules: [{ required: true, message: '请填写补测时间' }] })(
                         <DatePicker showTime size="small" />
                       )}
                     </Form.Item>

@@ -82,7 +82,7 @@ export const ReportPage = Form.create()(
           cardExtra = moment(getFieldValue("collectDate")).format("YYYY-MM-DD");
           break;
         case 2:
-          cardExtra = moment(getFieldValue("collectDate")).format("YYYY-MM");
+          cardExtra = `${moment(getFieldValue("collectDate")).format("YYYY-MM")}月`;
           break;
         case 3:
           cardExtra = moment(getFieldValue("collectDate")).format("YYYY");
@@ -91,7 +91,7 @@ export const ReportPage = Form.create()(
           cardExtra = moment(getFieldValue("collectDate")).format("w");
           break;
         case 5:
-          cardExtra = moment(getFieldValue("collectDate")).format("Q");
+          cardExtra = `${moment(getFieldValue("collectDate")).format("Q")}季度`;
           break;
       }
     }

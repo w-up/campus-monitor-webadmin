@@ -91,7 +91,7 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
           )}
           <Form.Item label="登录名">
             {getFieldDecorator("username", { initialValue: username, rules: [{ required: true, message: '请输入登录名' }] })(
-              <Input disabled={!!id} placeholder="请输入登录名" />
+              <Input autoComplete="off" disabled={!!id} placeholder="请输入登录名" />
             )}
           </Form.Item>
 

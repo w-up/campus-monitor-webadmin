@@ -21,6 +21,7 @@ export class AuthStore {
   @observable token = window.localStorage.getItem("token");
   @observable user: User | null = user ? JSON.parse(user) : null;
   @observable codes: string[] = codes ? JSON.parse(codes) : [];
+  @observable porc: any = {};
 
   @action.bound
   SetData(data: Partial<AuthStore>) {

@@ -71,10 +71,10 @@ export const LoginPage = Form.create()(({ form }: { form: WrappedFormUtils }) =>
                     valuePropName: "checked",
                     initialValue: false,
                   })(<Checkbox className="login-form-forgot">忘记密码</Checkbox>)}
-                  <a className="recontact" style={{ visibility: getFieldValue("forget") ? "visible" : "hidden" }}>
+                  <span className="recontact" style={{ visibility: getFieldValue("forget") ? "visible" : "hidden" }}>
                     <Icon type="exclamation-circle" />
                     请重新联系管理员修改密码！
-                  </a>
+                  </span>
                   <Button htmlType="submit" className="login-form-button">
                     登录
                   </Button>
