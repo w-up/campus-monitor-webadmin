@@ -90,7 +90,6 @@ export const AlertManagePage = Form.create()(
     const columns: any = [
       [
         {
-          title: "告警对象",
           dataIndex: "warnObj",
           key: "warnObj",
           width: 150,
@@ -203,7 +202,6 @@ export const AlertManagePage = Form.create()(
       ],
       [
         {
-          title: "告警对象",
           dataIndex: "warnObj",
           key: "warnObj",
           width: 150,
@@ -304,7 +302,6 @@ export const AlertManagePage = Form.create()(
       ],
       [
         {
-          title: "告警对象",
           dataIndex: "warnObj",
           key: "warnObj",
           width: 150,
