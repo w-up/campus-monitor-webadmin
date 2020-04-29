@@ -9,12 +9,6 @@ export const AlertItem = ({ item, onUpdate }: { item: AlarmInfo; onUpdate?: Func
   return useObserver(() => (
     <Card className="w-full text-white" bordered={false} style={{ background: "#2E3549", marginTop: 20, color: "white" }}>
       <Row className="alertCardRow border-b py-2" style={{borderColor:"#383F52"}}>
-        <Col span={6}>告警对象:</Col>
-        <Col className="text-left" span={14} offset={4}>
-          {item.warnTarget}
-        </Col>
-      </Row>
-      <Row className="alertCardRow border-b py-2" style={{borderColor:"#383F52"}}>
         <Col span={6}>因子分类:</Col>
         <Col className="text-left" span={14} offset={4}>
           {item.monitorType}
