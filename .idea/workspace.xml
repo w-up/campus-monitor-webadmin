@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0b5aa787-9ba3-4839-bcb1-9b38c1c54b5a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/screen/ParkScreenMapStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/screen/ParkScreenMapStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/MapSettingTab.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/MapSettingTab.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/SewageWaterTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/SewageWaterTable.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +107,8 @@
       <workItem from="1587800078986" duration="9504000" />
       <workItem from="1587952246128" duration="366000" />
       <workItem from="1587958155175" duration="1284000" />
-      <workItem from="1588124414967" duration="2312000" />
+      <workItem from="1588124414967" duration="4996000" />
+      <workItem from="1588234765155" duration="237000" />
     </task>
     <servers />
   </component>
@@ -146,10 +148,20 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="242" y="57" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.1440.877@0.23.1440.877" timestamp="1587822938059" />
-    <state x="383" y="214" width="674" height="659" key="search.everywhere.popup" timestamp="1587186955932">
+    <state x="383" y="214" width="674" height="659" key="search.everywhere.popup" timestamp="1588127564379">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="383" y="196" width="674" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1586494426138" />
-    <state x="383" y="214" width="674" height="659" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1587186955932" />
+    <state x="383" y="214" width="674" height="659" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1588127564379" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/MapSettingTab.tsx</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
