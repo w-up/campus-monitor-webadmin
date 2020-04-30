@@ -79,6 +79,11 @@ export class ParkScreenMapStore {
     selected: boolean;
   }> = [] as any;
 
+  @computed
+  get curSelectedPark() {
+    return this.allParks.find((i) => i.selected);
+  }
+
   // 初始化
   @action.bound
   async init() {
@@ -241,7 +246,7 @@ export class ParkScreenMapStore {
   @action.bound
   async saveSelectedFactory() {
     await api.Other.setSelectedPark({ parkId: this.currentPark });
-    message.success( "更新成功");
+    message.success("更新成功");
     this.toggleBox();
     this.reload();
   }
@@ -251,7 +256,7 @@ export class ParkScreenMapStore {
   @action.bound
   async saveSelectedSites(siteIds: string[]) {
     await api.Other.addConcernSite({ parkId: this.currentPark, siteIds });
-    message.success( "更新成功");
+    message.success("更新成功");
     this.toggleBox();
     this.reload();
   }

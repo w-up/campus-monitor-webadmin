@@ -176,7 +176,7 @@ export class MapMonitorStore {
 
   @action.bound
   async loadPark() {
-    const [parkRes] = await Promise.all([api.MapMonitor.getParkList()]);
+    const [parkRes] = await Promise.all([api.MapMonitor.getParkListByUser()]);
     this.parks = parkRes.data;
     // this.factories = factoryRes.data;
     // this.pmcodes = pmCodesRes.data;
