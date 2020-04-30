@@ -14,8 +14,8 @@ export const ScreenTopSetting = () => {
   const store = useLocalStore(() => ({
     expandedKeys: [],
     autoExpandParent: true,
-    get finalSelectSite(){
-      return parkScreenMap.selectedSites.filter((i) => !i.includes("-"))
+    get finalSelectSite() {
+      return parkScreenMap.selectedSites.filter((i) => !i.includes("-"));
     },
     async saveSelectedSites() {
       parkScreenMap.saveSelectedSites(this.finalSelectSite);
@@ -45,7 +45,7 @@ export const ScreenTopSetting = () => {
   return useObserver(() => (
     <div className="head-center">
       <div className="text-center primary-text-color text-2xl font-bold relative">
-        <span className="screenTitleGradient">{parkScreenMap.allParkMapData.parkName}污染源实时监测</span>
+        <span className="screenTitleGradient">{parkScreenMap.curSelectedPark?.parkName}污染源实时监测</span>
         <Icon onClick={() => parkScreenMap.toggleBox()} className="text-lg absolute ml-6 cursor-pointer z-50" style={{ top: "10px" }} type="setting" theme="filled" />
         <div className="absolute screenSetting z-50" style={{ width: 300, display: parkScreenMap.boxDisplay ? "block" : "none" }}>
           <div className="setting-box-header text-center">
@@ -70,7 +70,7 @@ export const ScreenTopSetting = () => {
                   </Tree>
                 </Scrollbars>
                 <div className="setting-box-footer p-2">
-                  <Button type="primary" size="default" onClick={store.saveSelectedSites}  disabled={store.finalSelectSite.length <=0}>
+                  <Button type="primary" size="default" onClick={store.saveSelectedSites} disabled={store.finalSelectSite.length <= 0}>
                     确定
                   </Button>
                   <Button className="ml-4" type="default" size="default" onClick={(e) => parkScreenMap.toggleBox()}>
