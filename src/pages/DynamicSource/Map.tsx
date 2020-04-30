@@ -21,7 +21,7 @@ export const DynamicSourceMap = () => {
     <APILoader akay={config.baiduMapApiKey}>
       <Map
         onTilesLoaded={dynamicSource.onMapUpdate}
-        onClick={dynamicSource.onMapClick}
+        onClick={(e) => dynamicSource.setCurPoint({ ...e.point, siteName: null })}
         zoom={dynamicSource.zoom}
         center={dynamicSource.center}
         enableScrollWheelZoom
@@ -54,15 +54,23 @@ export const DynamicSourceMap = () => {
         {dynamicSource.curParkData?.map((park) =>
           park.siteDatas?.map((item, index) => (
             <CustomOverlay position={{ lng: Number(item.gpsX), lat: Number(item.gpsY) }} key={index} visiable={dynamicSource.zoom > 17}>
-              {item.siteIcon && (
-                <div>
+              {item.siteIcon && item.isSensitivePoint == 1 && (
+                <div style={{ margin: "-50% 0 0  -50%" }} onClick={() => dynamicSource.setCurPoint({ lng: Number(item.gpsX), lat: Number(item.gpsY), siteName: item.siteName })}>
                   <img style={{ maxWidth: "55px", height: "55px" }} src={require(`../../assets/img/site${item.siteIcon}.png`)} />
-                  {false && item.collectValue && <div className="number">{item.collectValue}</div>}
-                  <div className="site-point">{`敏感点${index}`}</div>
+                  <div className="site-point">{item.siteName == dynamicSource.curPoint.siteName ? "选中的污染点" : item.siteName}</div>
                 </div>
               )}
             </CustomOverlay>
           ))
+        )}
+        {!dynamicSource.curPoint.siteName && dynamicSource.curPoint.lat !== 0 && (
+          <CustomOverlay position={{ lng: dynamicSource.curPoint.lng, lat: dynamicSource.curPoint.lat }} visiable={dynamicSource.zoom > 17}>
+            <div style={{ margin: "-50% 0 0  -50%" }}>
+              <img style={{ maxWidth: "55px", height: "55px" }} src={require(`../../assets/img/site1.png`)} />
+              <div className="site-point">选中的污染点</div>
+            </div>
+            )}
+          </CustomOverlay>
         )}
 
         {dynamicSource.computeType == "1" &&
