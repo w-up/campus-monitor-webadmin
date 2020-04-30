@@ -110,6 +110,7 @@ export interface ConcernSiteData {
   factoryId?: any;
   siteIcon: number;
   siteName: string;
+  isSensitivePoint: number;
   device_code: string;
   collectValue: string;
   collectValueDe: string;

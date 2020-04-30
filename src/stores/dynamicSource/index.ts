@@ -29,9 +29,14 @@ export class DynamicSourceStore {
     await this.loadParkData();
   }
 
-  @observable curPoint = {
+  @observable curPoint: {
+    lng: number;
+    lat: number;
+    siteName: null | string;
+  } = {
     lng: 0,
     lat: 0,
+    siteName: null,
   };
 
   @observable currentPark = "0";
@@ -103,7 +108,7 @@ export class DynamicSourceStore {
         device_id: string;
         lat: string;
         lng: string;
-        roseData: Array<string>
+        roseData: Array<string>;
       }>;
     }>;
     timer: any;
@@ -233,8 +238,7 @@ export class DynamicSourceStore {
   }
 
   @action.bound
-  onMapClick(e) {
-    const point = e.point;
+  setCurPoint(point: DynamicSourceStore["curPoint"]) {
     this.curPoint = point;
   }
 

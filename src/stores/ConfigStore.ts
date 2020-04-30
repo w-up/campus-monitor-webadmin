@@ -23,15 +23,17 @@ export class ConfigStore {
     const pmTypes = {};
     const pmCodes = {};
     let allPmCodes = [] as any;
-    result.data.results.forEach((i) => {
-      const { id, label, pms } = i;
-      pmTypes[id] = { id, label };
-      pmCodes[id] = pms;
-      allPmCodes = [...allPmCodes, ...pms];
-    });
-    this.pmCodes = pmCodes;
-    this.pmTypes = pmTypes;
-    this.allPmCodes = allPmCodes;
+    if (result.data) {
+      result.data.results.forEach((i) => {
+        const { id, label, pms } = i;
+        pmTypes[id] = { id, label };
+        pmCodes[id] = pms;
+        allPmCodes = [...allPmCodes, ...pms];
+      });
+      this.pmCodes = pmCodes;
+      this.pmTypes = pmTypes;
+      this.allPmCodes = allPmCodes;
+    }
   }
 
   @observable sysParams = {
