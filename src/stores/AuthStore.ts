@@ -1,6 +1,7 @@
 import { action, observable } from "mobx";
 import api from "services";
 import { GET } from "../utils/request";
+import { store } from "./index";
 
 const user = window.localStorage.getItem("user");
 const codes = window.localStorage.getItem("codes");
@@ -63,6 +64,7 @@ export class AuthStore {
   async logout() {
     this.token = null;
     window.localStorage.clear();
+    store.ws.close();
   }
 
   @action.bound

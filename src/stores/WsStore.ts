@@ -17,6 +17,9 @@ export class WsStore {
       });
     });
   }
+  close() {
+    this.ws?.close();
+  }
   sendMessage(data) {
     this.ws?.send(data);
   }

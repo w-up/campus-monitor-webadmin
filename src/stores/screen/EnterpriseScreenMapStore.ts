@@ -41,6 +41,16 @@ export class EnterpriseScreenMapStore {
   @action.bound
   async reload() {
     if (!store.auth.token) return;
+    this.dailySewage = {
+      pms: [],
+      dates: [],
+    };
+    this.curSiteRuntimeData = [];
+    this.HoursSewage = {
+      pms: [],
+      dates: [],
+    };
+    this.dailyGas = [];
     this.init();
   }
 
@@ -59,13 +69,15 @@ export class EnterpriseScreenMapStore {
       text: v.siteName,
       // update: "15:30:30",
       position: new BMapGL.Point(v.longitude, v.latitude),
-      children: v.pmInfos?.filter(i => Number(i.collectValue) > 0).map((pmInfo) => ({
-        name: pmInfo.pmName,
-        value: pmInfo.collectValue,
-        unit: pmInfo.unit,
-        limit: pmInfo.limit,
-        collectDate: pmInfo.collectDate,
-      })),
+      children: v.pmInfos
+        ?.filter((i) => Number(i.collectValue) > 0)
+        .map((pmInfo) => ({
+          name: pmInfo.pmName,
+          value: pmInfo.collectValue,
+          unit: pmInfo.unit,
+          limit: pmInfo.limit,
+          collectDate: pmInfo.collectDate,
+        })),
     }));
   }
   @action.bound
