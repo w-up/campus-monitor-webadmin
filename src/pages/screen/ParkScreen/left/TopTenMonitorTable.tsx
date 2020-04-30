@@ -39,7 +39,7 @@ export const TopTenMonitorTable = () => {
                   {page.map((item) => {
                     return (
                       <div className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"} onClick={(e) => parkScreenMap.setCurrentSite(item.siteId)}>
-                        <div>{item.collectDate}</div>
+                        <div title={item.collectDate}>{item.collectDate}</div>
                         <div>{item.siteName}</div>
                         <div>
                           <span>{utils.number.toPrecision(item.collectValue)}</span>

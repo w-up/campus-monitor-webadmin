@@ -21,7 +21,7 @@ export const ParkScreenMap = () => {
   }, []);
 
   return useObserver(() => (
-    <div style={{ width: "100%", height: "50vh" }}>
+    <div style={{ width: "100%", height: "50%" }}>
       <APILoader akay={config.baiduMapApiKey}>
         <Map onTilesLoaded={parkScreenMap.onMapUpdate} enableScrollWheelZoom onZoomEnd={(e) => (parkScreenMap.zoom = e.target.getZoom())}>
           <IPolygon
