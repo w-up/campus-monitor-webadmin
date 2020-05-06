@@ -8,15 +8,6 @@ import { toJS } from "mobx";
 const { Option } = Select;
 const { TabPane } = Tabs;
 
-
-const pagination = {
-  showSizeChanger: true,
-  showQuickJumper: true,
-  showTotal: (total) => {
-    return '共 ' + total + ' 条记录'
-  },
-};
-
 export const DataManagePage = Form.create()(observer(({ form, history }: any) => {
 
   const {
@@ -26,7 +17,7 @@ export const DataManagePage = Form.create()(observer(({ form, history }: any) =>
   const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields } = form;
 
 
-  const { loading, dataSource, parkTree, ptList, deviceList, deleteById, query } = manage;
+  const { loading, dataSource, parkTree, ptList, deviceList, deleteById, query, total, paginationChange } = manage;
 
 
   const columns = [
@@ -149,6 +140,19 @@ export const DataManagePage = Form.create()(observer(({ form, history }: any) =>
       manage.getCheckDataList(values);
     });
   }
+
+  const pagination = {
+    current: query.current,
+    pageSize: query.pageSize,
+    total,
+    showSizeChanger: true,
+    showQuickJumper: true,
+    showTotal: (total) => {
+      return '共 ' + total + ' 条记录'
+    },
+    onChange: paginationChange,
+    onShowSizeChange: paginationChange,
+  };
 
   return (
     <div className="managePage">

@@ -3,6 +3,8 @@ import { observer, useObserver } from "mobx-react-lite";
 import { Breadcrumb, Button, Card, Form, Input, Radio, Select, Spin, Avatar, message } from "antd";
 import { useHistory, useLocation, Link } from "react-router-dom";
 import { useStore } from "../../../stores";
+import { globalConfig } from "../../../config";
+
 const { Option } = Select;
 
 const formItemLayout = {
@@ -62,7 +64,7 @@ export const UserInfoEdit = Form.create()(
         </div>
         <Card>
           <div className="flex justify-center items-center mb-10 flex-col">
-            <Avatar src={auth.user?.pic} size={150} icon="user" />
+            <Avatar src={`${globalConfig.apiEndpoint}${auth.user?.pic}`} size={150} icon="user" />
             <Link className="mt-4" to="/edit-avatar">
               更换头像
             </Link>
@@ -74,7 +76,7 @@ export const UserInfoEdit = Form.create()(
 
             <Input hidden />
             <Form.Item label="登录账号">
-              <Input value="" placeholder="请输入登录名" disabled />
+              <Input value={auth.user?.username} placeholder="请输入登录名" disabled />
             </Form.Item>
 
             {auth.user?.type !== 2 && auth.user?.type !== 3 && (

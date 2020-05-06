@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { observer, useObserver, useLocalStore } from "mobx-react-lite";
-import { Breadcrumb, Button, Card, Form, Input, Radio, Select, Spin, Avatar, Upload, Icon } from "antd";
+import { message, Breadcrumb, Button, Card, Form, Input, Radio, Select, Spin, Avatar, Upload, Icon } from "antd";
 import { useHistory, useLocation, Link } from "react-router-dom";
 import { useStore } from "../../../stores";
 import { POST } from "../../../utils/request";
@@ -9,6 +9,8 @@ import http from "../../../utils/request";
 export const UserAvatarEdit = Form.create()(
   observer(({ form }: any) => {
     const { auth } = useStore();
+    const history = useHistory();
+
     const store = useLocalStore(() => ({
       previewVisible: false,
       previewImage: "" as any,
@@ -41,11 +43,17 @@ export const UserAvatarEdit = Form.create()(
         return false;
       },
       async updateAvatar() {
-        const res = await http({
+        const res: any = await http({
           method: "POST",
           url: "/user/updatePic",
           data: this.imgFormData,
         });
+        if (res.code === 20000) {
+          message.success('上传成功');
+          history.goBack();
+        } else {
+          message.error('上传失败');
+        }
       },
     }));
 
