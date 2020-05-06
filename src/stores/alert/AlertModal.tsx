@@ -77,7 +77,7 @@ export class AlertModal {
       duration: 0,
       key: "0",
       description: (
-        <Scrollbars style={{ height: "100vh" }}>
+        <Scrollbars style={{ height: "80vh", zIndex: 10000 }}>
           <div className="text-white pr-4" style={{ background: "#0d142f" }}>
             {this.alerts.map((i, index) => (
               <AlertItem item={i} key={index}></AlertItem>

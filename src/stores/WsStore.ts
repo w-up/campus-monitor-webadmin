@@ -6,8 +6,8 @@ import { store } from "./index";
 export class WsStore {
   ws: WebSocketAsPromised | null = null;
   init() {
-    // this.ws = new WebSocketAsPromised(globalConfig.wsEndpoint + `${store.auth.user?.id}`);
-    this.ws = new WebSocketAsPromised(globalConfig.wsEndpoint + 23);
+    this.ws = new WebSocketAsPromised(globalConfig.wsEndpoint + `${store.auth.user?.id}`);
+    // this.ws = new WebSocketAsPromised(globalConfig.wsEndpoint + 23);
 
     this.ws.open().then(() => {
       console.log("ws connected.");
