@@ -23,7 +23,7 @@ export class ConfigStore {
     const pmTypes = {};
     const pmCodes = {};
     let allPmCodes = [] as any;
-    if (result.data) {
+    if (result && result.data) {
       result.data.results.forEach((i) => {
         const { id, label, pms } = i;
         pmTypes[id] = { id, label };
