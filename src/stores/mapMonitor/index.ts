@@ -126,7 +126,7 @@ export class MapMonitorStore {
     const result = await api.MapMonitor.confirmAlarmInfoById({ alarmId: alarmId, isFromPopup: 1 });
     if (result) {
       message.success("处理成功");
-      this.loadAlarms();
+      // this.loadAlarms();
     }
   }
 
