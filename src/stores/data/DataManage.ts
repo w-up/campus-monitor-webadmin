@@ -17,6 +17,17 @@ export class DataManage {
   @observable total: number = 0;
 
   @action.bound
+  paginationChange(page, pageSize) {
+    console.log(page, pageSize);
+    this.query = {
+      ...this.query,
+      current: page,
+      pageSize,
+    };
+    this.getCheckDataList(this.query);
+  }
+
+  @action.bound
   async getCheckDataList(param) {
     Object.keys(param).forEach((key) => {
       if (!param[key]) {
@@ -44,7 +55,12 @@ export class DataManage {
       this.query.pageSize = data.size;
       this.query.current = data.current;
       this.dataSource = data.records;
-    } catch {}
+    } catch {
+      this.total = 0;
+      this.query.pageSize = 10;
+      this.query.current = 1;
+      this.dataSource = [];
+    }
 
     this.loading = false;
   }

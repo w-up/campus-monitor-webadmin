@@ -82,7 +82,7 @@ export const MyEnterprisePage = Form.create()(
       onTreeItemSelect,
       enterpriseInfo,
       factoryInfo,
-      selectedEnterprise,
+      selectedEnterprise = {},
       doSubmitEnterpriseInfo,
       companyNatureType,
       industryType,
@@ -341,6 +341,7 @@ export const MyEnterprisePage = Form.create()(
 
         await addDeviceSite(deviceSiteInfo);
         setEditDeviceSiteModalVisible(false);
+        myEnterprise.deviceSiteInfo = {};
       });
     };
 
@@ -564,7 +565,7 @@ export const MyEnterprisePage = Form.create()(
                           {getFieldDecorator("companyNatureId", { initialValue: companyNatureId, rules: [{ required: true }] })(
                             <Select disabled={!enterpriseInfoEditable} placeholder="">
                               {companyNatureType.map((item) => (
-                                <Option value={item.id}>{item.dictName}</Option>
+                                <Option key={item.id} value={item.id}>{item.dictName}</Option>
                               ))}
                             </Select>
                           )}

@@ -138,7 +138,9 @@ export const EnterpriseEditPage = Form.create()(observer(({ form }: any) => {
             {getFieldDecorator("remark", { initialValue: remark, rules: [
               { required: false },
               { validator: (rule, value = '', callback) => {
-                if (strlen(value) < 200) {
+                if (!value) {
+                  callback();
+                } else if (strlen(value) < 200) {
                   callback();
                 } else {
                   callback('描述长度超过限制');

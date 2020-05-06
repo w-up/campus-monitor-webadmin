@@ -460,7 +460,7 @@ export const AlertSettingPage = Form.create()(
                       )}
                     </Form.Item>
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测对象">
-                      {getFieldDecorator("editForm.parkOrCompanyId", { initialValue: "", rules: [{ required: false }] })(
+                      {getFieldDecorator("editForm.parkOrCompanyId", { initialValue: "", rules: [{ required: true, message: '请选择监测对象' }] })(
                         <Select placeholder="请选择" size="small">
                           {getFieldValue("editForm.type") == 0 &&
                             parkList.map((item) => (
