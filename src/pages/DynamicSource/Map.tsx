@@ -57,7 +57,7 @@ export const DynamicSourceMap = () => {
               {item.siteIcon && item.isSensitivePoint == 1 && (
                 <div style={{ margin: "-50% 0 0  -50%" }} onClick={() => dynamicSource.setCurPoint({ lng: Number(item.gpsX), lat: Number(item.gpsY), siteName: item.siteName })}>
                   <img style={{ maxWidth: "55px", height: "55px" }} src={require(`../../assets/img/site${item.siteIcon}.png`)} />
-                  <div className="site-point">{item.siteName == dynamicSource.curPoint.siteName ? "选中的污染点" : item.siteName}</div>
+                  <div className="site-point">{item.siteName == dynamicSource.curPoint.siteName ? "选中敏感点" : item.siteName}</div>
                 </div>
               )}
             </CustomOverlay>
@@ -67,9 +67,8 @@ export const DynamicSourceMap = () => {
           <CustomOverlay position={{ lng: dynamicSource.curPoint.lng, lat: dynamicSource.curPoint.lat }} visiable={dynamicSource.zoom > 17}>
             <div style={{ margin: "-50% 0 0  -50%" }}>
               <img style={{ maxWidth: "55px", height: "55px" }} src={require(`../../assets/img/site1.png`)} />
-              <div className="site-point">选中的污染点</div>
+              <div className="site-point">选中敏感点</div>
             </div>
-            )}
           </CustomOverlay>
         )}
 
