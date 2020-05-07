@@ -21,12 +21,13 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
   this._map = map;
   var div = document.createElement("div");
   div.style.display = "inline-block";
-  let cells = `<div style='width:250px;'>
-  <div style='display:inline-block'>
+
+  let cells = `<div style='width:250px; display: flex'>
+  <div style='display:inline-block;z-index: 9'>
       <div style='width:40px;height:15px;background:${isActive ? "rgba(5,100,230,1)" : "#5A6C77"};border:1px solid rgba(4,249,204,1);color:white;border-radius:2px;'>${this._obj.text}</div>
       <img style='width:40px;height:55px;' src='${isActive ? icon : iconActive}'/>
   </div>
-  <div style='display:inline-block;visibility: ${isActive ? "inherit" : "hidden"};border:1px solid rgba(4,108,249,1);border-radius:4px;' >
+  <div style='display:inline-block;visibility: ${isActive ? "inherit" : "hidden"};border:1px solid rgba(4,108,249,1);border-radius:4px; z-index: 10' >
       <div style='font-size:12px;display:flex;background-color:${isActive ? "rgba(4,108,249,1)" : "#2C5081"};color:white;'>
           <div style='padding:5px 0px;margin-left:15px;width:70px;'>更新时间</div>
       </div>
@@ -48,8 +49,9 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
   cells = cells + `</div></div></div>`;
   div.innerHTML = cells;
 
-  div.onmouseover = () => {
+  div.onmouseenter = () => {
     if (!this._store.activeFlag) return;
+    console.log(123);
     this._store.activeFlag = false; // 轮播标识 关闭
     this._store.addpoints({ index: _index }); //鼠标悬浮是 重新渲染
     // }

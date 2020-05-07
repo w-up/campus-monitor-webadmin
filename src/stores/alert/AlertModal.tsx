@@ -60,6 +60,9 @@ export class AlertModal {
     if (messageType == "1") {
       this.showAlert();
     } else if (messageType == "2") {
+      if (!data) {
+        notification.close("0");
+      }
       if (this.visible) {
         this.showAlert();
       }
