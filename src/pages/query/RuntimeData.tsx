@@ -107,7 +107,7 @@ export const RuntimeDataPage = Form.create()(
       }
     };
 
-    const allChecked = getFieldValue("pmCodeList") && getFieldValue("pmCodeList").length === pmCodeList.length;
+    const allChecked = getFieldValue("pmCodeList") && getFieldValue("pmCodeList").length > 0 && getFieldValue("pmCodeList").length === pmCodeList.length;
 
     const onSiteSelectAll = (e) => {
       const { checked } = e.target;

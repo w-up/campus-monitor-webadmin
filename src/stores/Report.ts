@@ -443,6 +443,10 @@ export class Report {
               return [day, heatMap[item][month][day]]
             });
           });
+          if (Object.keys(heatMap[item]).length < 3) {
+            delete option.calendar[2];
+            delete option.series[2];
+          }
           this.heatOptions.push(option);
         });
       }

@@ -103,6 +103,8 @@ export const ReportPage = Form.create()(
 
     const [dateOpen, setDateOpen] = useState(false);
 
+    console.log('heatOptions', toJS(heatOptions));
+
     return (
       <div className="reportPage">
         <Spin spinning={loading}>
@@ -329,7 +331,7 @@ export const ReportPage = Form.create()(
                   <Col span={24} style={{ marginBottom: "10px" }}>
                     {heatOptions.map((option) => {
                       return (
-                        <Card bordered size="small" title={`${option.series[0].name}污染物按季排放情况`} extra={`第${cardExtra}季度`}>
+                        <Card bordered size="small" title={`${option.series[0].name}污染物按季排放情况`} extra={`第${cardExtra}`}>
                           <ReactEcharts
                             //@ts-ignore
                             option={toJS(option)}

@@ -5,7 +5,7 @@ import { useStore } from "../../stores/index";
 import { toJS } from "mobx";
 
 
-import { Spin, Upload, Card, Row, Col, Form, Button, Select, Tabs, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal } from 'antd';
+import { Spin, Upload, Card, Row, Col, Form, Button, Select, Tabs, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal, message } from 'antd';
 const { Option } = Select;
 const { TabPane } = Tabs;
 
@@ -60,8 +60,8 @@ export const DataReplenish = Form.create()(observer(({ form, history }: any) => 
         return;
       }
       await replenish.insertData(values);
+      message.success('补录成功');
       history.goBack();
-
     });
   }
 
