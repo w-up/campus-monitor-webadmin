@@ -37,6 +37,10 @@ export const UserInfoEdit = Form.create()(
 
     const { auth } = useStore();
 
+    useEffect(() => {
+      auth.getAuthUser();
+    }, []);
+
     const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields } = form;
 
     const doSubmit = (e) => {
@@ -47,8 +51,9 @@ export const UserInfoEdit = Form.create()(
           return;
         }
         await auth.updateUser(values);
-        message.success('保存成功');
-        history.goBack();
+        message.success('保存成功', () => {
+          history.goBack();
+        });
       });
     };
 
