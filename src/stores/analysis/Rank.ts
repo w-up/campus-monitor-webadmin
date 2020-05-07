@@ -15,6 +15,9 @@ export class Rank {
     tooltip: {
       trigger: "axis",
     },
+    grid: {
+      left: '10%',
+    },
     backgroundColor: "#f0f0f0",
     toolbox: {
       show: true,

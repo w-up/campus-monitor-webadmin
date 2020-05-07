@@ -84,8 +84,8 @@ export const AlertManagePage = Form.create()(
       }
     };
 
-    const allPmChecked = getFieldValue("pmList") && getFieldValue("pmList").length === pmCodeList.length;
-    const allFactoryChecked = getFieldValue("factoryIds") && getFieldValue("factoryIds").length === factoryList.length;
+    const allPmChecked = getFieldValue("pmList") && getFieldValue("pmList").length > 0 && getFieldValue("pmList").length === pmCodeList.length;
+    const allFactoryChecked = getFieldValue("factoryIds") && getFieldValue("factoryIds").length > 0 && getFieldValue("factoryIds").length === factoryList.length;
 
     const columns: any = [
       [
@@ -100,7 +100,7 @@ export const AlertManagePage = Form.create()(
           dataIndex: "warnTime",
           key: "warnTime",
           width: 200,
-          render: (val) => moment(val).format("YYYY-MM-DD hh:mm:ss"),
+          render: (val) => moment(val).format("YYYY-MM-DD HH:mm:ss"),
         },
         {
           title: "因子分类",
@@ -212,7 +212,7 @@ export const AlertManagePage = Form.create()(
           dataIndex: "warnTime",
           key: "warnTime",
           width: 200,
-          render: (val) => moment(val).format("YYYY-MM-DD hh:mm:ss"),
+          render: (val) => moment(val).format("YYYY-MM-DD HH:mm:ss"),
         },
         {
           title: "因子分类",
@@ -312,7 +312,7 @@ export const AlertManagePage = Form.create()(
           dataIndex: "warnTime",
           key: "warnTime",
           width: 200,
-          render: (val) => moment(val).format("YYYY-MM-DD hh:mm:ss"),
+          render: (val) => moment(val).format("YYYY-MM-DD HH:mm:ss"),
         },
         {
           title: "因子分类",

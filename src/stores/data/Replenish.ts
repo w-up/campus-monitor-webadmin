@@ -77,31 +77,26 @@ export class Replenish {
     this.loading = true;
     param.collectDate = moment(param.collectDate).format('YYYY-MM-DD HH:mm:ss');
 
-    try {
-      param.list = Object.keys(param.pmList).filter(key => param.pmList[key]).map(key => ({
-        pmCode: key,
-        pmUnit: this.pmList.find(v => v.pmCode === key).pmUnit,
-        collectValue: param.pmList[key],
-      }));
-      param.list = JSON.stringify(param.list);
-      delete param.pmList;
+    param.list = Object.keys(param.pmList).filter(key => param.pmList[key]).map(key => ({
+      pmCode: key,
+      pmUnit: this.pmList.find(v => v.pmCode === key).pmUnit,
+      collectValue: param.pmList[key],
+    }));
+    param.list = JSON.stringify(param.list);
+    delete param.pmList;
 
-      const imagefile: any = document.querySelector('#file');
-      if (imagefile.files.length > 0) {
-        param.pic = imagefile.files[0];
-      }
-
-      let formData = new FormData();
-
-      Object.keys(param).forEach(key => {
-        formData.append(key, param[key]);
-      });
-
-      await FORM_POST('/dataAdd/insert', formData);
-
-    } catch {
-
+    const imagefile: any = document.querySelector('#file');
+    if (imagefile.files.length > 0) {
+      param.pic = imagefile.files[0];
     }
+
+    let formData = new FormData();
+
+    Object.keys(param).forEach(key => {
+      formData.append(key, param[key]);
+    });
+
+    await FORM_POST('/dataAdd/insert', formData);
 
     this.loading = false;
 

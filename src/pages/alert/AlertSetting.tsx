@@ -542,7 +542,7 @@ export const AlertSettingPage = Form.create()(
                 {!getFieldValue("editDeviceForm.id") ? (
                   <Row gutter={6}>
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测对象类型">
-                      {getFieldDecorator("editDeviceForm.type", { initialValue: 1, rules: [{ required: true }] })(
+                      {getFieldDecorator("editDeviceForm.type", { initialValue: 1, rules: [{ required: true, message: '请选择监测对象类型' }] })(
                         <Select placeholder="请选择" size="small">
                           <Option value={0}>园区</Option>
                           <Option value={1}>企业</Option>
