@@ -1,7 +1,7 @@
 import { action, observable, computed } from "mobx";
 import api from "services";
 import { message } from "antd";
-import { allSiteRes, Tree, ConcernSiteData, AllParkData, PMValue } from "../../type";
+import { allSiteRes, Tree, ConcernSiteData, AllParkData, PMValue, PMCode } from "../../type";
 import { _ } from "utils/lodash";
 import * as geolib from "geolib";
 import { utils } from "../../utils/index";
@@ -92,6 +92,7 @@ export class ParkScreenMapStore {
       api.DeviceData.getFactoryPMByParkId({ type: "2" }),
       api.DeviceSite.getAllSitesByParkId(),
       api.Park.getAllParksSelect(),
+      this.loadPmCode(),
     ]);
 
     if (this.currentPmCode) {
@@ -140,6 +141,35 @@ export class ParkScreenMapStore {
       }
     });
   }
+
+  @observable pmTypes: { [key: string]: { id: string; label: string } } = {};
+  @observable pmCodes: { [key: string]: PMCode[] } = {};
+  @observable allPmCodes: Array<PMCode> = [];
+
+  // pmcode
+  @action.bound
+  async loadPmCode() {
+    const result = await api.PmCode.getAllPMTypeAndCode();
+    const pmTypes = {};
+    const pmCodes = {};
+    let allPmCodes = [] as any;
+    if (result && result.data) {
+      result.data.results.forEach((i) => {
+        const { id, label, pms } = i;
+        pmTypes[id] = { id, label };
+        pmCodes[id] = pms;
+        allPmCodes = [...allPmCodes, ...pms];
+      });
+      this.pmCodes = pmCodes;
+      this.pmTypes = pmTypes;
+      this.allPmCodes = allPmCodes;
+      this.currentPmType = Object.values(this.pmTypes)[0].id;
+      this.currentPmCode = this.currentPmcodes[0]?.pmCode;
+
+      this.loadConcernSiteData(this.currentPmCode);
+    }
+  }
+
   @action.bound
   reload() {
     if (!store.auth.token) return;
@@ -182,15 +212,15 @@ export class ParkScreenMapStore {
 
   @computed
   get curPmValue() {
-    return store.config.allPmCodes.find((i) => i.pmCode == this.currentPmCode);
+    return this.allPmCodes.find((i) => i.pmCode == this.currentPmCode);
   }
 
   @computed
   get currentPmcodes() {
-    if (this.currentPmType == "0") {
-      return store.config.allPmCodes || [];
+    if (this.currentPmType == "") {
+      return this.allPmCodes || [];
     } else {
-      return store.config.pmCodes[this.currentPmType] || [];
+      return this.pmCodes[this.currentPmType] || [];
     }
   }
 

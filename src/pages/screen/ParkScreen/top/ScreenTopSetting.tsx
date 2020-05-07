@@ -8,6 +8,7 @@ export const ScreenTopSetting = () => {
   const { TabPane } = Tabs;
   const { TreeNode } = Tree;
   const {
+    auth,
     screen: { parkScreenMap },
   } = useStore();
 
@@ -78,23 +79,25 @@ export const ScreenTopSetting = () => {
                   </Button>
                 </div>
               </TabPane>
-              <TabPane tab="园区切换" key="2">
-                <Scrollbars style={{ height: 230 }}>
-                  <Radio.Group value={parkScreenMap.currentPark} onChange={(e) => parkScreenMap.selectFactory(e.target.value)}>
-                    {parkScreenMap.allParks.map((item) => {
-                      return <Radio value={item.id}>{item.parkName}</Radio>;
-                    })}
-                  </Radio.Group>
-                </Scrollbars>
-                <div className="setting-box-footer p-2">
-                  <Button type="primary" size="default" onClick={parkScreenMap.saveSelectedFactory}>
-                    确定
-                  </Button>
-                  <Button className="ml-4" type="default" size="default" onClick={(e) => parkScreenMap.toggleBox()}>
-                    取消
-                  </Button>
-                </div>
-              </TabPane>
+              {auth.user?.type == 2 && (
+                <TabPane tab="园区切换" key="2">
+                  <Scrollbars style={{ height: 230 }}>
+                    <Radio.Group value={parkScreenMap.currentPark} onChange={(e) => parkScreenMap.selectFactory(e.target.value)}>
+                      {parkScreenMap.allParks.map((item) => {
+                        return <Radio value={item.id}>{item.parkName}</Radio>;
+                      })}
+                    </Radio.Group>
+                  </Scrollbars>
+                  <div className="setting-box-footer p-2">
+                    <Button type="primary" size="default" onClick={parkScreenMap.saveSelectedFactory}>
+                      确定
+                    </Button>
+                    <Button className="ml-4" type="default" size="default" onClick={(e) => parkScreenMap.toggleBox()}>
+                      取消
+                    </Button>
+                  </div>
+                </TabPane>
+              )}
             </Tabs>
           </div>
         </div>

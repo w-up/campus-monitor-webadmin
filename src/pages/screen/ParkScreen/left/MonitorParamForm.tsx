@@ -12,7 +12,6 @@ import { Moment } from "../../../../utils/moment-util";
 export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtils }) => {
   const { getFieldDecorator } = form;
   const {
-    config,
     screen: { parkScreenMap },
   } = useStore();
 
@@ -53,28 +52,32 @@ export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtil
     <div className="runtim-monitor screenFormStyle primary-text-color pr-6">
       <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
         <Spin spinning={store.loading}>
-          <Form.Item label="因子分类">
-            {getFieldDecorator("type", { initialValue: parkScreenMap.currentPmType, rules: [{ required: true, message: "请选择因子分类" }] })(
-              <Select onChange={parkScreenMap.setCurrentPmType} getPopupContainer={(e: any) => e.parentNode}>
-                {Object.values(config.pmTypes).map((item, index) => (
-                  <Select.Option value={item.id} key={index}>
-                    {item.label}
-                  </Select.Option>
-                ))}
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item label="监测因子">
-            {getFieldDecorator("pmCode", { initialValue: parkScreenMap.currentPmCode, rules: [{ required: true, message: "请选择监测因子" }] })(
-              <Select onChange={parkScreenMap.setCurrentPmCode} getPopupContainer={(e: any) => e.parentNode}>
-                {parkScreenMap.currentPmcodes.map((item, index) => (
-                  <Select.Option value={item.pmCode} key={index}>
-                    {item.pmName}
-                  </Select.Option>
-                ))}
-              </Select>
-            )}
-          </Form.Item>
+          {parkScreenMap.currentPmCode && (
+            <Form.Item label="因子分类">
+              {getFieldDecorator("type", { initialValue: parkScreenMap.currentPmType, rules: [{ required: true, message: "请选择因子分类" }] })(
+                <Select onChange={parkScreenMap.setCurrentPmType} getPopupContainer={(e: any) => e.parentNode}>
+                  {Object.values(parkScreenMap.pmTypes).map((item, index) => (
+                    <Select.Option value={item.id} key={index}>
+                      {item.label}
+                    </Select.Option>
+                  ))}
+                </Select>
+              )}
+            </Form.Item>
+          )}
+          {parkScreenMap.currentPmcodes.length > 0 && (
+            <Form.Item label="监测因子">
+              {getFieldDecorator("pmCode", { initialValue: parkScreenMap.currentPmcodes[0]?.pmCode, rules: [{ required: true, message: "请选择监测因子" }] })(
+                <Select onChange={parkScreenMap.setCurrentPmCode} getPopupContainer={(e: any) => e.parentNode}>
+                  {parkScreenMap.currentPmcodes.map((item, index) => (
+                    <Select.Option value={item.pmCode} key={index}>
+                      {item.pmName}
+                    </Select.Option>
+                  ))}
+                </Select>
+              )}
+            </Form.Item>
+          )}
           <div className="flex justify-between">
             <div className="primary-text-color flex items-center text-ellipsis">
               <Icon type="clock-circle" theme="filled" />
