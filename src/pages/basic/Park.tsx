@@ -9,7 +9,7 @@ import { DrawBaiduMap } from "../../components/DrawBaiduMap";
 export const ParkPage = observer(() => {
   const {
     base: { park },
-    map: { drawMap }
+    map: { drawMap },
   } = useStore();
 
   const { loading, dataSource, query, selectedRowKeys, total, onSelectChange, paginationChange, deletePark, handleSearchSubmit, handleSearchChange, handleSearchReset, resetSelectedRowKeys } = park;
@@ -22,14 +22,14 @@ export const ParkPage = observer(() => {
       this.showMap = true;
       drawMap
         .init({
-          editType: "view"
+          editType: "view",
         })
         .setPathsByScope(data.scope);
-    }
+    },
   }));
 
   useEffect(() => {
-    park.query.parkName = '';
+    park.query.parkName = "";
     park.query.current = 1;
     park.query.pageSize = 10;
     park.getParkList();
@@ -37,14 +37,14 @@ export const ParkPage = observer(() => {
 
   console.log("dataSource", toJS(dataSource));
 
-  const handleSearch = e => {
+  const handleSearch = (e) => {
     e.preventDefault();
     park.getParkList({ current: 1, pageNo: 1 });
   };
 
   const rowSelection = {
     selectedRowKeys,
-    onChange: onSelectChange
+    onChange: onSelectChange,
   };
 
   const pagination = {
@@ -53,14 +53,14 @@ export const ParkPage = observer(() => {
     total,
     showSizeChanger: true,
     showQuickJumper: true,
-    showTotal: total => {
+    showTotal: (total) => {
       return "共 " + total + " 条记录";
     },
     onChange: paginationChange,
-    onShowSizeChange: paginationChange
+    onShowSizeChange: paginationChange,
   };
 
-  const clickDeletePark = item => {
+  const clickDeletePark = (item) => {
     console.log(item);
     Modal.confirm({
       title: "删除确认",
@@ -72,7 +72,7 @@ export const ParkPage = observer(() => {
         } catch {
           message.error("删除失败");
         }
-      }
+      },
     });
   };
 
@@ -94,7 +94,7 @@ export const ParkPage = observer(() => {
         } catch {
           message.error("删除失败");
         }
-      }
+      },
     });
   };
 
@@ -102,12 +102,12 @@ export const ParkPage = observer(() => {
     {
       title: "园区代码",
       dataIndex: "parkNo",
-      width: 200
+      width: 200,
     },
     {
       title: "园区名称",
       dataIndex: "parkName",
-      width: 200
+      width: 200,
     },
     // {
     //   title: "描述",
@@ -117,19 +117,19 @@ export const ParkPage = observer(() => {
     {
       title: "联络人",
       dataIndex: "contactPerson",
-      width: 200
+      width: 200,
     },
     {
       title: "邮箱",
       dataIndex: "email",
-      width: 300
+      width: 300,
     },
     {
       title: "园区范围",
       width: 100,
       render: (text, record) => {
-        return <a onClick={e => store.showDrawMap(record)}>查看</a>;
-      }
+        return <a onClick={(e) => store.showDrawMap(record)}>查看</a>;
+      },
     },
     {
       title: "创建时间",
@@ -148,8 +148,8 @@ export const ParkPage = observer(() => {
             <Link to={{ pathname: `/base/park-edit/${park.id}`, state: { park } }}>修改</Link>
           </span>
         );
-      }
-    }
+      },
+    },
   ];
 
   const selectMsg = (num: number) => {
@@ -179,8 +179,12 @@ export const ParkPage = observer(() => {
                   <Input placeholder="请输入" value={query.parkName} onChange={handleSearchChange} />
                 </Form.Item>
                 <Form.Item>
-                  <Button type="primary" htmlType="submit">查询</Button>
-                  <Button style={{ marginLeft: 5 }} onClick={handleSearchReset}>重置</Button>
+                  <Button type="primary" htmlType="submit">
+                    查询
+                  </Button>
+                  <Button style={{ marginLeft: 5 }} onClick={handleSearchReset}>
+                    重置
+                  </Button>
                 </Form.Item>
               </Col>
               <Col span={8} style={{ textAlign: "right" }}>
@@ -188,7 +192,7 @@ export const ParkPage = observer(() => {
                   <Button type="primary">
                     <Link to="/base/park-edit">新建</Link>
                   </Button>
-                  <Button style={{ marginLeft: 5 }} onClick={onBatchDeletePark} >
+                  <Button style={{ marginLeft: 5 }} onClick={onBatchDeletePark}>
                     批量删除
                   </Button>
                 </Form.Item>
@@ -196,24 +200,24 @@ export const ParkPage = observer(() => {
             </Form>
           </Row>
 
-          {!!selectedRowKeys.length &&
-          <Row style={{ marginTop: 20, marginBottom: 10 }}>
-            <Alert message={selectMsg(selectedRowKeys.length)} type="info" showIcon />
-          </Row>
-          }
+          {!!selectedRowKeys.length && (
+            <Row style={{ marginTop: 20, marginBottom: 10 }}>
+              <Alert message={selectMsg(selectedRowKeys.length)} type="info" showIcon />
+            </Row>
+          )}
 
           <Divider />
           <Row>
             <Table rowKey="id" bordered size="small" rowSelection={rowSelection} columns={columns} dataSource={toJS(dataSource)} pagination={pagination} />
           </Row>
         </Card>
-        <Modal title="地图绘制" visible={store.showMap} onOk={e => (store.showMap = false)} onCancel={e => (store.showMap = false)} width={800}>
-          <div style={{ width: "100%", height: "400px" }}>
-            <DrawBaiduMap />
-          </div>
+        <Modal title="地图绘制" visible={store.showMap} onOk={(e) => (store.showMap = false)} onCancel={(e) => (store.showMap = false)} width={800}>
+          <div style={{ width: "100%", height: "400px" }}>{store.showMap && <DrawBaiduMap />}</div>
         </Modal>
       </Spin>
-      <div className="fixed bottom-0 text-center pb-1" style={{ width:"calc(100% - 200px)", color:"#88a8c5"}}>版权所有: 武汉三藏科技有限责任公司</div>
+      <div className="fixed bottom-0 text-center pb-1" style={{ width: "calc(100% - 200px)", color: "#88a8c5" }}>
+        版权所有: 武汉三藏科技有限责任公司
+      </div>
     </div>
   );
 });

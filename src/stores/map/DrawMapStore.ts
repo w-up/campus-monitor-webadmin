@@ -4,7 +4,7 @@ import { ParkEdit } from "../base/ParkEdit";
 export class DrawMapStore {
   @observable center = { lng: 120.983642, lat: 31.36556 };
   @observable zoom = 17;
-  @observable map: any = null;
+  @observable map: BMap.Map | any = null;
   @observable paths = [[]] as Array<Array<{ lng: number; lat: number }>>;
   @observable editType = "add" as "view" | "add" | "edit";
   @observable count = 0;
@@ -17,6 +17,7 @@ export class DrawMapStore {
 
   @action.bound
   reset(data: Partial<DrawMapStore> = {}) {
+    this.map?.clearOverlays();
     Object.assign(this, {
       map: null,
       zoom: 17,
@@ -52,14 +53,17 @@ export class DrawMapStore {
   @action.bound
   setPathsByScope(scope: ParkEdit["scope"]) {
     this.paths = [scope.map((i) => ({ lng: Number(i.longitude), lat: Number(i.latitude) }))];
+    console.log(this.map);
     if (!this.map) return;
     this.autoCenterAndZoom();
   }
 
   @action.bound
   autoCenterAndZoom() {
-    let mapViewObj = this.map.getViewport(this.paths[0], {});
-    this.map.centerAndZoom(mapViewObj.center, mapViewObj.zoom);
+    let mapViewObj = this.map?.getViewport(this.paths[0], {});
+    if (!mapViewObj) return;
+    console.log(this.paths.slice(), mapViewObj);
+    this.map?.centerAndZoom(mapViewObj?.center, mapViewObj?.zoom);
   }
 
   @action.bound
