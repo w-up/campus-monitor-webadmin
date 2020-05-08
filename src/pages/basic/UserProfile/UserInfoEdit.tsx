@@ -4,6 +4,7 @@ import { Breadcrumb, Button, Card, Form, Input, Radio, Select, Spin, Avatar, mes
 import { useHistory, useLocation, Link } from "react-router-dom";
 import { useStore } from "../../../stores";
 import { globalConfig } from "../../../config";
+import { toJS } from "mobx";
 
 const { Option } = Select;
 
@@ -56,6 +57,8 @@ export const UserInfoEdit = Form.create()(
         });
       });
     };
+
+    console.log('auth', toJS(auth))
 
     return (
       <div>

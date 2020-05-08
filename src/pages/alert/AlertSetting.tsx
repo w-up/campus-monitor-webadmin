@@ -11,6 +11,7 @@ export const AlertSettingPage = Form.create()(
   observer(({ form }: any) => {
     const {
       alert: { alertSetting },
+      auth,
     } = useStore();
 
     const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields, resetFields } = form;
@@ -451,32 +452,36 @@ export const AlertSettingPage = Form.create()(
 
                 {!getFieldValue("editForm.id") ? (
                   <Row gutter={6}>
-                    <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测对象类型">
-                      {getFieldDecorator("editForm.type", { initialValue: 1, rules: [{ required: false }] })(
-                        <Select onChange={() => setFieldsValue({ "editForm.parkOrCompanyId": '' })} placeholder="请选择" size="small">
-                          <Option value={0}>园区</Option>
-                          <Option value={1}>企业</Option>
-                        </Select>
-                      )}
-                    </Form.Item>
-                    <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测对象">
-                      {getFieldDecorator("editForm.parkOrCompanyId", { initialValue: "", rules: [{ required: true, message: '请选择监测对象' }] })(
-                        <Select placeholder="请选择" size="small">
-                          {getFieldValue("editForm.type") == 0 &&
-                            parkList.map((item) => (
-                              <Option key={item.id} value={item.id}>
-                                {item.parkName}
-                              </Option>
-                            ))}
-                          {getFieldValue("editForm.type") == 1 &&
-                            companyList.map((item) => (
-                              <Option key={item.id} value={item.id}>
-                                {item.companyName}
-                              </Option>
-                            ))}
-                        </Select>
-                      )}
-                    </Form.Item>
+                    {auth.user?.type == 2 &&
+                    <Row>
+                      <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测对象类型">
+                        {getFieldDecorator("editForm.type", { initialValue: 1, rules: [{ required: false }] })(
+                          <Select onChange={() => setFieldsValue({ "editForm.parkOrCompanyId": '' })} placeholder="请选择" size="small">
+                            <Option value={0}>园区</Option>
+                            <Option value={1}>企业</Option>
+                          </Select>
+                        )}
+                      </Form.Item>
+                      <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测对象">
+                        {getFieldDecorator("editForm.parkOrCompanyId", { initialValue: "", rules: [{ required: true, message: '请选择监测对象' }] })(
+                          <Select placeholder="请选择" size="small">
+                            {getFieldValue("editForm.type") == 0 &&
+                              parkList.map((item) => (
+                                <Option key={item.id} value={item.id}>
+                                  {item.parkName}
+                                </Option>
+                              ))}
+                            {getFieldValue("editForm.type") == 1 &&
+                              companyList.map((item) => (
+                                <Option key={item.id} value={item.id}>
+                                  {item.companyName}
+                                </Option>
+                              ))}
+                          </Select>
+                        )}
+                      </Form.Item>
+                    </Row>
+                    }
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="因子分类">
                       {getFieldDecorator("editForm.jcTypeIds", { initialValue: [], rules: [{ required: true, message: '请选择因子分类' }] })(
                         <Checkbox.Group style={{ width: "100%" }}>
@@ -541,32 +546,36 @@ export const AlertSettingPage = Form.create()(
 
                 {!getFieldValue("editDeviceForm.id") ? (
                   <Row gutter={6}>
-                    <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测对象类型">
-                      {getFieldDecorator("editDeviceForm.type", { initialValue: 1, rules: [{ required: true, message: '请选择监测对象类型' }] })(
-                        <Select placeholder="请选择" size="small">
-                          <Option value={0}>园区</Option>
-                          <Option value={1}>企业</Option>
-                        </Select>
-                      )}
-                    </Form.Item>
-                    <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测对象">
-                      {getFieldDecorator("editDeviceForm.parkOrCompanyId", { initialValue: "", rules: [{ required: true, message: '请选择监测对象' }] })(
-                        <Select placeholder="请选择" size="small">
-                          {getFieldValue("editDeviceForm.type") == 0 &&
-                            parkList.map((item) => (
-                              <Option key={item.id} value={item.id}>
-                                {item.parkName}
-                              </Option>
-                            ))}
-                          {getFieldValue("editDeviceForm.type") == 1 &&
-                            companyList.map((item) => (
-                              <Option key={item.id} value={item.id}>
-                                {item.companyName}
-                              </Option>
-                            ))}
-                        </Select>
-                      )}
-                    </Form.Item>
+                    {auth.user?.type == 2 &&
+                      <Row>
+                        <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测对象类型">
+                          {getFieldDecorator("editDeviceForm.type", { initialValue: 1, rules: [{ required: true, message: '请选择监测对象类型' }] })(
+                            <Select placeholder="请选择" size="small">
+                              <Option value={0}>园区</Option>
+                              <Option value={1}>企业</Option>
+                            </Select>
+                          )}
+                        </Form.Item>
+                        <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测对象">
+                          {getFieldDecorator("editDeviceForm.parkOrCompanyId", { initialValue: "", rules: [{ required: true, message: '请选择监测对象' }] })(
+                            <Select placeholder="请选择" size="small">
+                              {getFieldValue("editDeviceForm.type") == 0 &&
+                                parkList.map((item) => (
+                                  <Option key={item.id} value={item.id}>
+                                    {item.parkName}
+                                  </Option>
+                                ))}
+                              {getFieldValue("editDeviceForm.type") == 1 &&
+                                companyList.map((item) => (
+                                  <Option key={item.id} value={item.id}>
+                                    {item.companyName}
+                                  </Option>
+                                ))}
+                            </Select>
+                          )}
+                        </Form.Item>
+                      </Row>
+                    }
                   </Row>
                 ) : (
                   <Row>

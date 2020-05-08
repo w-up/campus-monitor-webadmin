@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { message, Spin, Card, Row, Col, Form, Button, Select, Tabs, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal } from 'antd';
 import { useStore } from "../../stores/index";
 import { toJS } from "mobx";
+import { globalConfig } from "../../config";
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -57,7 +58,10 @@ export const DataManagePage = Form.create()(observer(({ form, history }: any) =>
       dataIndex: 'pic',
       key: 'pic',
       render: (val) => {
-        return <a href={val} target="_blank">下载</a>
+        if (val) {
+          return <a download href={`${globalConfig.apiEndpoint}${val}`} target="_blank">下载</a>
+        }
+        return <span>无附件</span>
       },
     },
     {

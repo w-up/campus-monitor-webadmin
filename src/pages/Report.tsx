@@ -76,22 +76,28 @@ export const ReportPage = Form.create()(
     }
 
     let cardExtra = "";
+    let reportName = "";
     if (getFieldValue("collectDate")) {
       switch (getFieldValue("timeCycle")) {
         case 1:
           cardExtra = moment(getFieldValue("collectDate")).format("YYYY-MM-DD");
+          reportName = '日报';
           break;
         case 2:
           cardExtra = `${moment(getFieldValue("collectDate")).format("YYYY-MM")}月`;
+          reportName = '月报';
           break;
         case 3:
           cardExtra = moment(getFieldValue("collectDate")).format("YYYY");
+          reportName = '年报';
           break;
         case 4:
           cardExtra = moment(getFieldValue("collectDate")).format("w");
+          reportName = '周报';
           break;
         case 5:
           cardExtra = `${moment(getFieldValue("collectDate")).format("Q")}季度`;
+          reportName = '季报';
           break;
       }
     }
@@ -257,7 +263,7 @@ export const ReportPage = Form.create()(
             <Col span={18}>
               <Row gutter={6}>
                 <Col span={24} style={{ marginBottom: "10px" }}>
-                  <Card bordered size="small" title={`${cardTitle}监测数据`} extra={cardExtra}>
+                  <Card bordered size="small" title={`${cardTitle}监测数据${reportName}`} extra={cardExtra}>
                     <Table bordered size="small" scroll={{ x: 800 }} pagination={false} columns={toJS(tableColumn)} dataSource={toJS(tableData)} />
                   </Card>
                 </Col>

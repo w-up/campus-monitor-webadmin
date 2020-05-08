@@ -16,7 +16,10 @@ export class Rank {
       trigger: "axis",
     },
     grid: {
-      left: '10%',
+      left: '25%',
+      // right: '20%',
+      // top: '20%',
+      // bottom: '20%',
     },
     backgroundColor: "#f0f0f0",
     toolbox: {
