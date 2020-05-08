@@ -806,7 +806,10 @@ export const MyEnterprisePage = Form.create()(
                       </Card>
                     )}
 
-                    <Modal title="" visible={editDeviceSiteModalVisible} onOk={handleDeviceSiteSubmit} onCancel={() => setEditDeviceSiteModalVisible(false)} width={800}>
+                    <Modal title="" visible={editDeviceSiteModalVisible} onOk={handleDeviceSiteSubmit} onCancel={() => {
+                      setEditDeviceSiteModalVisible(false);
+                      myEnterprise.deviceSiteInfo = {};
+                    }} width={800}>
                       {getFieldDecorator("deviceSiteInfo.id", { initialValue: deviceSiteInfo.id, rules: [{ required: false }] })(<Input hidden placeholder="请输入站点ID" />)}
                       <Descriptions title="站点信息" size="small" bordered>
                         <Descriptions.Item label={<Row>厂区名称<span style={{ color: 'red' }}>*</span></Row>} span={1.5}>

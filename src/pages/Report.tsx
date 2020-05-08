@@ -258,7 +258,7 @@ export const ReportPage = Form.create()(
               <Row gutter={6}>
                 <Col span={24} style={{ marginBottom: "10px" }}>
                   <Card bordered size="small" title={`${cardTitle}监测数据`} extra={cardExtra}>
-                    <Table bordered size="small" scroll={{ x: 800, y: 600 }} pagination={false} columns={toJS(tableColumn)} dataSource={toJS(tableData)} />
+                    <Table bordered size="small" scroll={{ x: 800 }} pagination={false} columns={toJS(tableColumn)} dataSource={toJS(tableData)} />
                   </Card>
                 </Col>
 
