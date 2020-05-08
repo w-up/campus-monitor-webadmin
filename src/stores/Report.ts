@@ -386,7 +386,7 @@ export class Report {
         Object.keys(rankData).forEach((item: any) => {
           const option: any = { ...defaultYearOption };
           option.series[0].name = item;
-          option.yAxis.data = Object.keys(rankData[item]);
+          option.yAxis.data = Object.keys(rankData[item]).map(v => v + '月');
           option.series[0].data = Object.values(rankData[item]);
           this.yearOptions.push(option);
         });

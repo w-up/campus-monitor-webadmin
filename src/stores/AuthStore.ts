@@ -49,12 +49,13 @@ export class AuthStore {
     if (!this.token) return;
     const res = await GET("/getUserInfo");
     if (res && res.data) {
-      const { token, user, codes } = res.data;
+      const { token, user, codes, porc } = res.data;
       window.localStorage.setItem("user", JSON.stringify(user));
       window.localStorage.setItem("codes", JSON.stringify(codes));
       Object.assign(this, {
         token,
         user,
+        porc,
         codes,
       });
     }

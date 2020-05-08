@@ -32,6 +32,7 @@ export class DataManage {
     Object.keys(param).forEach((key) => {
       if (!param[key]) {
         delete param[key];
+        delete this.query[key];
       }
     });
     this.query = {

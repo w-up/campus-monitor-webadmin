@@ -59,9 +59,18 @@ export const DataReplenish = Form.create()(observer(({ form, history }: any) => 
       if (err) {
         return;
       }
-      await replenish.insertData(values);
-      message.success('补录成功');
-      history.goBack();
+
+      replenish.loading = true;
+
+      try {
+        await replenish.insertData(values);
+        message.success('补录成功');
+        history.goBack();
+      } catch {
+
+      }
+      replenish.loading = false;
+      
     });
   }
 

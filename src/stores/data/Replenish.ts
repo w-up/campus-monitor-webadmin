@@ -74,7 +74,6 @@ export class Replenish {
 
   @action.bound
   async insertData(param) {
-    this.loading = true;
     param.collectDate = moment(param.collectDate).format('YYYY-MM-DD HH:mm:ss');
 
     param.list = Object.keys(param.pmList).filter(key => param.pmList[key]).map(key => ({
@@ -97,8 +96,6 @@ export class Replenish {
     });
 
     await FORM_POST('/dataAdd/insert', formData);
-
-    this.loading = false;
 
   }
 

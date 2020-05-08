@@ -83,7 +83,12 @@ export class DataAudit {
         this.query.current = data.current;
         this.dataSource = data.records;
       }
-    } catch {}
+    } catch {
+      this.total = 0;
+      this.query.pageSize = 10;
+      this.query.current = 1;
+      this.dataSource = [];
+    }
 
     this.loading = false;
   }

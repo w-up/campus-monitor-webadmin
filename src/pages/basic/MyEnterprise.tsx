@@ -22,30 +22,43 @@ const deviceListColumns = [
     width: 300,
   },
   {
-    title: "设备类型",
-    dataIndex: "deviceModelName",
-    width: 300,
-  },
-  {
-    title: "设备厂商",
+    title: "设备用途",
     dataIndex: "manufacturerName",
-    width: 300,
-  },
-  {
-    title: "负责人",
-    dataIndex: "chargerName",
-    width: 200,
-  },
-  {
-    title: "负责人电话",
-    dataIndex: "phone",
-    width: 300,
-  },
-  {
-    title: "负责人邮箱",
-    dataIndex: "email",
     width: 400,
   },
+  {
+    title: "监测因子",
+    dataIndex: "pmList",
+    width: 500,
+    render: val => {
+      return val.map(v => v.pmName).join(',');
+    },
+  },
+  // {
+  //   title: "设备类型",
+  //   dataIndex: "deviceModelName",
+  //   width: 300,
+  // },
+  // {
+  //   title: "设备厂商",
+  //   dataIndex: "manufacturerName",
+  //   width: 300,
+  // },
+  // {
+  //   title: "负责人",
+  //   dataIndex: "chargerName",
+  //   width: 200,
+  // },
+  // {
+  //   title: "负责人电话",
+  //   dataIndex: "phone",
+  //   width: 300,
+  // },
+  // {
+  //   title: "负责人邮箱",
+  //   dataIndex: "email",
+  //   width: 400,
+  // },
 ];
 
 export const MyEnterprisePage = Form.create()(
@@ -133,6 +146,9 @@ export const MyEnterprisePage = Form.create()(
     }, []);
 
     const firstLevelClick = async (selectedKeys) => {
+      if (!selectedKeys[0]) {
+        return;
+      }
       await onTreeItemSelect(selectedKeys);
       setEnterpriseInfoVisible(true);
       setFactoryInfoVisible(false);
@@ -146,6 +162,9 @@ export const MyEnterprisePage = Form.create()(
     };
 
     const secondLevelClick = async (selectedKeys) => {
+      if (!selectedKeys[0]) {
+        return;
+      }
       let parentKey = "";
       treeData.some((item) => {
         if (item.children.some((v) => v.id === selectedKeys[0])) {
@@ -176,6 +195,10 @@ export const MyEnterprisePage = Form.create()(
     };
 
     const thirdLevelClick = async (selectedKeys) => {
+      if (!selectedKeys[0]) {
+        return;
+      }
+      // myEnterprise.loading = true;
       let parentKey = "";
       treeData.some((item) => {
         if (item.children.some((v) => v.children.some((k) => k.id === selectedKeys[0]))) {
@@ -197,15 +220,20 @@ export const MyEnterprisePage = Form.create()(
           return true;
         }
       });
+
       setDeviceSiteInfo(info);
       await getDeviceList();
       console.log(toJS(deviceSiteListInfo));
       console.log(toJS(selectedKeys));
       setEditFactoryModalVisible(false);
       setDeviceListModalVisible(true);
+      // myEnterprise.loading = false;
     };
 
     const forthLevelClick = async (selectedKeys) => {
+      if (!selectedKeys[0]) {
+        return;
+      }
       let parentKey = "";
       treeData.some((item) => {
         if (item.children.some((v) => v.children.some((k) => k.children.some((l) => l.id === selectedRowKeys[0])))) {
@@ -446,6 +474,7 @@ export const MyEnterprisePage = Form.create()(
               onClick={() => {
                 setFactoryInfo(record);
                 setFactoryInfoVisible(true);
+                setFactoryInfoEditable(true);
                 setEnterpriseInfoVisible(false);
                 setDeviceSiteInfoVisible(false);
               }}
@@ -641,6 +670,8 @@ export const MyEnterprisePage = Form.create()(
                           <Button
                             onClick={() => {
                               setFactoryInfoEditable(false);
+                              setEnterpriseInfoVisible(true);
+                              setFactoryInfoVisible(false);
                             }}
                           >
                             取消

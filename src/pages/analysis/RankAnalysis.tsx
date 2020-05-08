@@ -18,13 +18,43 @@ const columns = [
     key: "rankNum",
     render: (val, record, index) => index + 1,
   },
+  // {
+  //   title: "监测类型",
+  //   dataIndex: "jcType",
+  //   key: "jcType",
+  // },
+  {
+    title: "区域",
+    dataIndex: "areaName",
+    key: "areaName",
+  },
+  {
+    title: "排放率",
+    dataIndex: "sumValue",
+    key: "sumValue",
+  },
+  {
+    title: "贡献率",
+    key: "rateNum",
+    dataIndex: "rateNum",
+    render: val => `${(val * 100).toFixed(2)}%`,
+  },
+];
+
+const columns2 = [
+  {
+    title: "排名",
+    dataIndex: "rankNum",
+    key: "rankNum",
+    render: (val, record, index) => index + 1,
+  },
   {
     title: "监测类型",
     dataIndex: "jcType",
     key: "jcType",
   },
   {
-    title: "区域",
+    title: "站点",
     dataIndex: "areaName",
     key: "areaName",
   },
@@ -277,8 +307,8 @@ export const RankAnalysisPage = Form.create()(
                       </Card>
                     </Col>
                     <Col span={24} style={{ marginBottom: "10px" }}>
-                      <Card bordered size="small" title="区域排放量排名">
-                        <Table bordered size="small" pagination={false} columns={columns} dataSource={toJS(dataSource2)} />
+                      <Card bordered size="small" title="站点排放量排名">
+                        <Table bordered size="small" pagination={false} columns={columns2} dataSource={toJS(dataSource2)} />
                       </Card>
                     </Col>
                   </Row>
