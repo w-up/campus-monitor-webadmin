@@ -39,6 +39,7 @@ export const MapMonitorPage = () => {
       <div style={{ width: "70%" }}>
         <MapMonitorMap />
       </div>
+      <div className="copyright fixed bottom-0 w-full text-center pb-1" style={{color:"#88a8c5"}}>版权所有: 武汉三藏科技有限责任公司</div>
     </div>
   ));
 };
