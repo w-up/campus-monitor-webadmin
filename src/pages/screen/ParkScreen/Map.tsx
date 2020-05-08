@@ -71,7 +71,7 @@ export const ParkScreenMap = () => {
           })}
           {parkScreenMap.allParkMapData?.siteDatas?.map((item, index) => (
             <CustomOverlay position={{ lng: Number(item.gpsX), lat: Number(item.gpsY) }} key={index} visiable={parkScreenMap.zoom > 17}>
-              <div>
+              <div onClick={(e) => parkScreenMap.setCurrentSite(item.siteId)}>
                 {Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? (
                   <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../../assets/red.png")} />
                 ) : (

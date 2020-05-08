@@ -256,6 +256,12 @@ export class ParkScreenMapStore {
     if (!this.currentSiteId) return;
     const result = await api.DeviceData.get24HourDatas({ pmCode: this.currentPmCode, siteId: this.currentSiteId });
     if (result.data) {
+      this.dailyData = {
+        siteId: "",
+        points: [],
+        unit: "",
+        upperLimit: "",
+      };
       this.dailyData = result.data;
     }
   }
