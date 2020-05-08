@@ -6,7 +6,7 @@ import { utils } from "../../../../utils/index";
 
 export const WasteGasTable = () => {
   const {
-    screen: { parkScreenMap }
+    screen: { parkScreenMap },
   } = useStore();
 
   const store = useLocalStore(() => ({
@@ -22,25 +22,25 @@ export const WasteGasTable = () => {
       { region: "CB废水", wu: "PH", data: "52.7mg/m³", maxNum: "200" },
       { region: "B废水", wu: "流量", data: "12.2mg/m³", maxNum: "100" },
       { region: "B废水", wu: "COD", data: "12.2mg/m³", maxNum: "100" },
-      { region: "B废水", wu: "PH", data: "52.7mg/m³", maxNum: "200" }
-    ]
+      { region: "B废水", wu: "PH", data: "52.7mg/m³", maxNum: "200" },
+    ],
   }));
 
   return useObserver(() => (
     <div className="topRight mt-4 screenTable">
       <div className="pt-4 px-4">
-        <div className="tableTitle text-left pb-2">重点污染物—废水</div>
+        <div className="tableTitle text-left pb-2">重点监测数值—废水</div>
       </div>
       <div className="px-4">
         <div className="tabTitle">
           <div>采集时间</div>
           <div>区域</div>
-          <div>污染物</div>
-          <div>浓度值</div>
+          <div>监测数值</div>
+          <div>限值</div>
         </div>
         <div className="scroll-bar-color">
           <Scrollbars style={{ height: 250 }}>
-            {parkScreenMap.waterData.map(item => {
+            {parkScreenMap.waterData.map((item) => {
               return (
                 <div className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"}>
                   <div title={item.collectDate}>{item.collectDate}</div>
