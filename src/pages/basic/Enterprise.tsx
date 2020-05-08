@@ -139,11 +139,11 @@ export const EnterprisePage = observer(() => {
       <div>已选择 <a>{num}</a> 项 <a onClick={resetSelectedRowKeys}>清空</a></div>
     )
   }
-  
+
   const goPage = ()=> {
     console.log('submit click')
   }
-  
+
   return (
     <div className="enterprisePage">
       <Spin spinning={loading}>
@@ -181,7 +181,7 @@ export const EnterprisePage = observer(() => {
             <Alert message={selectMsg(selectedRowKeys.length)} type="info" showIcon />
           </Row>
           }
-          
+
           <Divider />
 
           <Row>
@@ -189,6 +189,7 @@ export const EnterprisePage = observer(() => {
           </Row>
         </Card>
       </Spin>
+      <div className="fixed bottom-0 text-center pb-1" style={{ width:"calc(100% - 200px)", color:"#88a8c5"}}>版权所有: 武汉三藏科技有限责任公司</div>
     </div>
   );
 });

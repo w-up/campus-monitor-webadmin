@@ -74,7 +74,7 @@ export const SystemConfigration = Form.create()(observer((props: any) => {
                 <Form.Item label="参数说明">
                   <Input placeholder="请输入" value={query.paramName} onChange={handleSearchChange} />
                 </Form.Item>
-                
+
                 <Form.Item>
                   <Button type="primary" htmlType="submit">查询</Button>
                   <Button style={{ marginLeft: 5}} onClick={handleSearchReset}>重置</Button>
@@ -124,7 +124,7 @@ export const SystemConfigration = Form.create()(observer((props: any) => {
                     } else {
                       return text;
                     }
-                    
+
                   }}
                 />
                 <Table.Column
@@ -143,6 +143,7 @@ export const SystemConfigration = Form.create()(observer((props: any) => {
           </Row>
         </Card>
       </Spin>
+      <div className="fixed bottom-0 text-center pb-1" style={{ width:"calc(100% - 200px)", color:"#88a8c5", zIndex:9999}}>版权所有: 武汉三藏科技有限责任公司</div>
     </div>
  );
 }));

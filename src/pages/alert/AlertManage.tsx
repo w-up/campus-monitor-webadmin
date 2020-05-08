@@ -429,6 +429,7 @@ export const AlertManagePage = Form.create()(
 
     return (
       <div className="alertPage">
+        <div className="fixed bottom-0 text-center pb-1" style={{ width:"calc(100% - 200px)", color:"#88a8c5", zIndex:9999}}>版权所有: 武汉三藏科技有限责任公司</div>
         <Spin spinning={loading}>
           <div style={{ background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px" }}>
             <Breadcrumb>
