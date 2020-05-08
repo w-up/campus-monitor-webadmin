@@ -201,7 +201,7 @@ export const ParkPage = observer(() => {
             <Alert message={selectMsg(selectedRowKeys.length)} type="info" showIcon />
           </Row>
           }
-          
+
           <Divider />
           <Row>
             <Table rowKey="id" bordered size="small" rowSelection={rowSelection} columns={columns} dataSource={toJS(dataSource)} pagination={pagination} />
@@ -213,6 +213,7 @@ export const ParkPage = observer(() => {
           </div>
         </Modal>
       </Spin>
+      <div className="fixed bottom-0 text-center pb-1" style={{ width:"calc(100% - 200px)", color:"#88a8c5"}}>版权所有: 武汉三藏科技有限责任公司</div>
     </div>
   );
 });

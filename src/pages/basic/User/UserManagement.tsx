@@ -224,7 +224,8 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
           </Row>
         </Card>
       </Spin>
+      <div className="fixed bottom-0 text-center pb-1" style={{ width:"calc(100% - 200px)", color:"#88a8c5", zIndex:9999}}>版权所有: 武汉三藏科技有限责任公司</div>
     </div>
-    
+
   )
 }));

@@ -93,7 +93,7 @@ export const DataAuditPage = Form.create()(observer(({ form }: any) => {
     audit.getAllSitesTree();
     audit.getCheckData(query);
   }, []);
-  
+
   let factoryList: any = [];
   if (parkTree.length) {
     if (getFieldValue('parkId')) {
@@ -177,7 +177,7 @@ export const DataAuditPage = Form.create()(observer(({ form }: any) => {
                     </Select>
                   )}
                 </Form.Item>
-                
+
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测站点" >
                   {getFieldDecorator("siteId", { initialValue: query.siteId, rules: [{ required: false }] })(
                     <Select placeholder="请选择" size="small">
@@ -218,6 +218,7 @@ export const DataAuditPage = Form.create()(observer(({ form }: any) => {
         </Row>
 
       </Spin>
+      <div className="fixed bottom-0 text-center pb-1" style={{ width:"calc(100% - 200px)", color:"#88a8c5", zIndex:9999}}>版权所有: 武汉三藏科技有限责任公司</div>
     </div>
   );
 }));

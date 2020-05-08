@@ -48,7 +48,7 @@ export const ParkScreenPage = () => {
       </div>
       <div ref={fullScreenRef} className="flex flex-col w-full h-full p-4" style={{ backgroundColor: "#061630" }}>
         <ScreenTop />
-        <div className="screenContent flex-1 flex mt-4" style={{ height: "calc(100vh - 214px)" }}>
+        <div className="screenContent flex-1 flex mt-4" style={{ height: "calc(100vh - 210px)" }}>
           <div className="leftContent flex w-9/12 p-4">
             <span className="corner cornerTl" />
             <span className="corner cornerTr" />
@@ -99,6 +99,7 @@ export const ParkScreenPage = () => {
             </div>
           </div>
         </div>
+        <div className="copyright fixed bottom-0 w-full text-center pb-1" style={{color:"#88a8c5"}}>版权所有: 武汉三藏科技有限责任公司</div>
       </div>
     </div>
   ));
