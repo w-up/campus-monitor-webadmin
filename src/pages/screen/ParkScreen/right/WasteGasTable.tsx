@@ -38,7 +38,7 @@ export const WasteGasTable = () => {
           <div>污染物</div>
           <div>浓度值</div>
         </div>
-        <div>
+        <div className="scroll-bar-color">
           <Scrollbars style={{ height: 250 }}>
             {parkScreenMap.waterData.map(item => {
               return (

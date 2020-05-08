@@ -41,8 +41,8 @@ export const SewageWaterTable = () => {
           <div>污染物</div>
           <div>浓度值</div>
         </div>
-        <div>
-          <Scrollbars style={{ backgroundColor: "rgb(255,255,255,0.4)", height: 250 }}>
+        <div className="scroll-bar-color">
+          <Scrollbars style={{height: 250 }}>
             {parkScreenMap.gasData.map(item => {
               return (
                 <div className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"}>
