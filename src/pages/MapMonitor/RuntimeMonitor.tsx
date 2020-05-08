@@ -155,6 +155,9 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
       {mapMonitor.siteData && (
         <div className="monitor-row-panel pl-4 pt-4 pb-4">
           <Scrollbars style={{ height: "calc(100vh - 64px)" }}>
+            <div style={{ position: "absolute", right: 20, top: "-5px" }} onClick={(e) => (mapMonitor.siteData = null)}>
+              <Button icon="close-circle" shape="circle" style={{ background: "transparent", border: "none", color: "white" }}></Button>
+            </div>
             <div className="flex justify-between items-center mt-4 mr-4">
               <div className="primary-button-text-dark text-lg">
                 <span>{mapMonitor.siteData?.siteName}</span>
