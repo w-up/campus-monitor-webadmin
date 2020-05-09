@@ -22,7 +22,7 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
   var div = document.createElement("div");
   div.style.display = "inline-block";
 
-  let cells = `<div style='width:250px; display: flex'>
+  let cells = `<div style='width:250px; display: flex;flex-direction: row-reverse;'>
   <div style='display:inline-block;z-index: 9'>
       <div style='width:40px;height:15px;background:${isActive ? "rgba(5,100,230,1)" : "#5A6C77"};border:1px solid rgba(4,249,204,1);color:white;border-radius:2px;'>${this._obj.text}</div>
       <img style='width:40px;height:55px;' src='${isActive ? icon : iconActive}'/>
@@ -36,7 +36,7 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
   for (let x of this._obj.children) {
     cells =
       cells +
-      `<div style='border-bottom: 1px solid rgba(255,255,255, 0.5);padding:2px 15px;font-size:12px;align-items:flex-end;opacity:0.9;color:rgba(4,249,204,1);'>
+      `<div style='border-bottom: 1px solid rgba(255,255,255, 0.5);padding:2px 15px 2px 5px;font-size:12px;align-items:flex-end;opacity:0.9;color:rgba(4,249,204,1);'>
       <div style='color:white'>${x.collectDate}</div>
       <div style='display:flex'>
       <div style=';width:70px;'>
