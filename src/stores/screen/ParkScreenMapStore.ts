@@ -255,13 +255,13 @@ export class ParkScreenMapStore {
   async loadDadilyData() {
     if (!this.currentSiteId) return;
     const result = await api.DeviceData.get24HourDatas({ pmCode: this.currentPmCode, siteId: this.currentSiteId });
+    this.dailyData = {
+      siteId: "",
+      points: [],
+      unit: "",
+      upperLimit: "",
+    };
     if (result.data) {
-      this.dailyData = {
-        siteId: "",
-        points: [],
-        unit: "",
-        upperLimit: "",
-      };
       this.dailyData = result.data;
     }
   }
