@@ -1,5 +1,5 @@
 import { action, observable } from "mobx";
-import { GET, POST } from "../../utils/request";
+import { GET, POST, FORM_POST } from "../../utils/request";
 import { store } from "../index";
 import moment from "moment";
 import { globalConfig } from "../../config";
@@ -79,56 +79,23 @@ export class HistoryData {
   @action.bound
   async exportDatas() {
     this.loading = true;
+
     try {
-      // let f = document.createElement("form");
-      // f.setAttribute('method',"post");
-      // f.setAttribute('action',`${globalConfig.apiEndpoint}/device-data-history/exportHistoryDatas`);
-
-      // let endTimeInput = document.createElement("input");
-      // endTimeInput.setAttribute('type',"text");
-      // endTimeInput.setAttribute('name',"endTime");
-      // endTimeInput.value = this.query.endTime;
-      // f.appendChild(endTimeInput);
-
-      // let startTimeInput = document.createElement("input");
-      // startTimeInput.setAttribute('type',"text");
-      // startTimeInput.setAttribute('name',"startTime");
-      // startTimeInput.value = this.query.startTime;
-      // f.appendChild(startTimeInput);
-
-      // let siteIdInput = document.createElement("input");
-      // siteIdInput.setAttribute('type',"text");
-      // siteIdInput.setAttribute('name',"siteId");
-      // siteIdInput.value = this.query.siteId;
-      // f.appendChild(siteIdInput);
-
-      // this.query.pmCodeList.forEach(val => {
-      //   let pmCodeInput = document.createElement("input");
-      //   pmCodeInput.setAttribute('type',"text");
-      //   pmCodeInput.setAttribute('name',"pmCodeList[]");
-      //   pmCodeInput.value = val;
-      //   f.appendChild(pmCodeInput);
-      // });
-
-      // document.getElementsByTagName('body')[0].appendChild(f);
-
-      // f.submit();
-
-      const { headers, data }: any = await POST("/device-data-history/exportHistoryDatas", {
-        ...this.query,
-      });
-
-      const type = headers["content-type"];
+      const response: any = await FORM_POST('/device-data-history/exportHistoryDatas', { ...this.query });
+      const { headers, data } = response;
+      const type = headers['content-type']
       const file = new Blob([data], { type });
       const url = window.URL.createObjectURL(file);
-      const link = document.createElement("a");
+      const link = document.createElement('a');
       link.href = url;
-      link.setAttribute("download", "file.xls");
+      link.setAttribute('download', '导出数据.xls');
       document.body.appendChild(link);
       link.click();
       link.remove();
-    } catch {}
 
+    } catch {
+
+    }
     this.loading = false;
   }
 }

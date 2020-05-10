@@ -62,6 +62,10 @@ export class Rank {
       // data: ['行业1', '行业2', '行业3']
     },
     backgroundColor: "#f0f0f0",
+    tooltip: {
+      trigger: 'item',
+      formatter: '{a} <br/>{b} : {c} ({d}%)'
+    },
     toolbox: {
       show: true,
       feature: {
@@ -110,6 +114,12 @@ export class Rank {
     tooltip: {
       trigger: "axis",
     },
+    grid: {
+      left: '25%',
+      // right: '20%',
+      // top: '20%',
+      // bottom: '20%',
+    },
     backgroundColor: "#f0f0f0",
     toolbox: {
       show: true,
@@ -151,6 +161,10 @@ export class Rank {
       // data: ['行业1', '行业2', '行业3']
     },
     backgroundColor: "#f0f0f0",
+    tooltip: {
+      trigger: 'item',
+      formatter: '{a} <br/>{b} : {c} ({d}%)'
+    },
     toolbox: {
       show: true,
       feature: {

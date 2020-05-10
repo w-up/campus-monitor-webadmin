@@ -17,6 +17,10 @@ export class Comparison {
       // data: ['行业1', '行业2', '行业3']
     },
     backgroundColor: "#f0f0f0",
+    tooltip: {
+      trigger: 'item',
+      formatter: '{a} <br/>{b} : {c} ({d}%)'
+    },
     toolbox: {
       show: true,
       feature: {
@@ -44,10 +48,11 @@ export class Comparison {
         itemStyle: {
           normal: {
             label: {
-              position: "inner",
+              // position: "inner",
+              formatter: '{a} {b} \r\n {c} ({d}%)',
             },
             labelLine: {
-              show: false,
+              show: true,
             },
           },
         },
@@ -68,10 +73,11 @@ export class Comparison {
         itemStyle: {
           normal: {
             label: {
-              position: "inner",
+              // position: "inner",
+              formatter: '{a} {b} \r\n {c} ({d}%)',
             },
             labelLine: {
-              show: false,
+              show: true,
             },
           },
         },
@@ -92,6 +98,10 @@ export class Comparison {
       // data: ['行业1', '行业2', '行业3']
     },
     backgroundColor: "#f0f0f0",
+    tooltip: {
+      trigger: 'item',
+      formatter: '{a} <br/>{b} : {c} ({d}%)'
+    },
     toolbox: {
       show: true,
       feature: {
@@ -111,18 +121,18 @@ export class Comparison {
         name: "",
         type: "pie",
         selectedMode: "single",
-        radius: [0, 140],
-
+        radius: [0, 80],
         funnelAlign: "right",
         max: 1548,
 
         itemStyle: {
           normal: {
             label: {
-              position: "inner",
+              // position: "inner",
+              formatter: '{a} {b} \r\n {c} ({d}%)',
             },
             labelLine: {
-              show: false,
+              show: true,
             },
           },
         },
@@ -219,7 +229,17 @@ export class Comparison {
   @action.bound
   async getStatisAnalisis(param) {
     this.loading = true;
-    param.collectDate = moment(param.collectDate).format("YYYY-MM-DD");
+    switch (param.timeCycle) {
+      case 1:
+        param.collectDate = moment(param.collectDate).format("YYYY-MM-DD");
+        break;
+      case 2:
+        param.collectDate = moment(param.collectDate).format("YYYY-MM");
+        break;
+      case 3:
+        param.collectDate = moment(param.collectDate).format("YYYY");
+        break;
+    }
 
     try {
       const { data }: any = await POST("/device-data-history/getStatisAnalisis", { ...param });

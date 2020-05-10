@@ -45,7 +45,7 @@ export class DataAudit {
   }
 
   @action.bound
-  async getCheckData(param) {
+  async getCheckData(param: any) {
     Object.keys(param).forEach((key) => {
       if (!param[key]) {
         delete param[key];
@@ -53,9 +53,14 @@ export class DataAudit {
       }
     });
 
-    if (param.timeRange) {
+    if (param.timeRange && param.timeRange.length > 0) {
       param.start = moment(param.timeRange[0]).format("YYYY-MM-DD HH:mm:ss");
       param.end = moment(param.timeRange[1]).format("YYYY-MM-DD HH:mm:ss");
+    } else {
+      delete param.start;
+      delete this.query.start;
+      delete param.end;
+      delete this.query.end;
     }
 
     this.loading = true;
