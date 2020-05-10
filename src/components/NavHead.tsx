@@ -13,7 +13,8 @@ export const NavHead = () => {
   const store = useLocalStore(() => ({
     async logout() {
       await auth.logout();
-      history.replace("/login");
+      // history.replace("/login");
+      window.location.href = "/login";
     },
   }));
   const userMenu = (

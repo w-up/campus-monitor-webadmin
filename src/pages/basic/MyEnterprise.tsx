@@ -22,7 +22,7 @@ const deviceListColumns = [
     width: 300,
   },
   {
-    title: "设备用途",
+    title: "设备厂商",
     dataIndex: "manufacturerName",
     width: 400,
   },
@@ -149,16 +149,22 @@ export const MyEnterprisePage = Form.create()(
       if (!selectedKeys[0]) {
         return;
       }
-      await onTreeItemSelect(selectedKeys);
-      setEnterpriseInfoVisible(true);
-      setFactoryInfoVisible(false);
-      setDeviceSiteInfoVisible(false);
 
-      setFieldsValue({ enterpriseInfoEditable: false });
-      setEditFactoryModalVisible(false);
-      setDeviceListModalVisible(false);
-      setDeviceInfoVisible(false);
-      setDeviceSiteInfo({});
+      myEnterprise.loading = true;
+      try {
+        await onTreeItemSelect(selectedKeys);
+        setEnterpriseInfoVisible(true);
+        setFactoryInfoVisible(false);
+        setDeviceSiteInfoVisible(false);
+  
+        setFieldsValue({ enterpriseInfoEditable: false });
+        setEditFactoryModalVisible(false);
+        setDeviceListModalVisible(false);
+        setDeviceInfoVisible(false);
+        setDeviceSiteInfo({});
+      } catch {
+      }
+      myEnterprise.loading = false;
     };
 
     const secondLevelClick = async (selectedKeys) => {
@@ -172,26 +178,31 @@ export const MyEnterprisePage = Form.create()(
           return true;
         }
       });
-      await onTreeItemSelect([parentKey]);
-      setEnterpriseInfoVisible(false);
-      setFactoryInfoVisible(true);
-      setDeviceSiteInfoVisible(false);
-      setDeviceInfoVisible(false);
+      myEnterprise.loading = true;
+      try {
+        await onTreeItemSelect([parentKey]);
+        setEnterpriseInfoVisible(false);
+        setFactoryInfoVisible(true);
+        setDeviceSiteInfoVisible(false);
+        setDeviceInfoVisible(false);
 
-      setFieldsValue({ enterpriseInfoEditable: false });
-      setDeviceListModalVisible(false);
-      let info: any = {};
-      factoryListInfo.data.some((v) => {
-        if (v.id === selectedKeys[0]) {
-          info = { ...v };
-          return true;
-        }
-      });
-      setFactoryInfo(info);
-      setEditFactoryModalVisible(true);
-      setDeviceListModalVisible(true);
-      setDeviceSiteInfo({});
-      await getDeviceSiteList();
+        setFieldsValue({ enterpriseInfoEditable: false });
+        setDeviceListModalVisible(false);
+        let info: any = {};
+        factoryListInfo.data.some((v) => {
+          if (v.id === selectedKeys[0]) {
+            info = { ...v };
+            return true;
+          }
+        });
+        setFactoryInfo(info);
+        setEditFactoryModalVisible(true);
+        setDeviceListModalVisible(true);
+        setDeviceSiteInfo({});
+        await getDeviceSiteList();
+      } catch {
+      }
+      myEnterprise.loading = false;
     };
 
     const thirdLevelClick = async (selectedKeys) => {
@@ -206,28 +217,33 @@ export const MyEnterprisePage = Form.create()(
           return true;
         }
       });
-      await onTreeItemSelect([parentKey]);
-      setEnterpriseInfoVisible(false);
-      setFactoryInfoVisible(false);
-      setDeviceSiteInfoVisible(true);
-      setDeviceInfoVisible(false);
+      myEnterprise.loading = true;
+      try {
+        await onTreeItemSelect([parentKey]);
+        setEnterpriseInfoVisible(false);
+        setFactoryInfoVisible(false);
+        setDeviceSiteInfoVisible(true);
+        setDeviceInfoVisible(false);
 
-      setFieldsValue({ enterpriseInfoEditable: false });
-      let info: any = {};
-      deviceSiteListInfo.data.some((v) => {
-        if (v.id === selectedKeys[0]) {
-          info = { ...v };
-          return true;
-        }
-      });
+        setFieldsValue({ enterpriseInfoEditable: false });
+        let info: any = {};
+        deviceSiteListInfo.data.some((v) => {
+          if (v.id === selectedKeys[0]) {
+            info = { ...v };
+            return true;
+          }
+        });
 
-      setDeviceSiteInfo(info);
-      await getDeviceList();
-      console.log(toJS(deviceSiteListInfo));
-      console.log(toJS(selectedKeys));
-      setEditFactoryModalVisible(false);
-      setDeviceListModalVisible(true);
-      // myEnterprise.loading = false;
+        setDeviceSiteInfo(info);
+        await getDeviceList();
+        console.log(toJS(deviceSiteListInfo));
+        console.log(toJS(selectedKeys));
+        setEditFactoryModalVisible(false);
+        setDeviceListModalVisible(true);
+      } catch {
+
+      }
+      myEnterprise.loading = false;
     };
 
     const forthLevelClick = async (selectedKeys) => {
@@ -241,17 +257,23 @@ export const MyEnterprisePage = Form.create()(
           return true;
         }
       });
-      await onTreeItemSelect([parentKey]);
-      setEnterpriseInfoVisible(false);
-      setFactoryInfoVisible(false);
-      setDeviceSiteInfoVisible(false);
-      setDeviceInfoVisible(true);
+      myEnterprise.loading = true;
+      try {
+        await onTreeItemSelect([parentKey]);
+        setEnterpriseInfoVisible(false);
+        setFactoryInfoVisible(false);
+        setDeviceSiteInfoVisible(false);
+        setDeviceInfoVisible(true);
 
-      setFieldsValue({ enterpriseInfoEditable: false });
+        setFieldsValue({ enterpriseInfoEditable: false });
 
-      await getDeviceInfo(selectedKeys[0]);
-      setEditFactoryModalVisible(false);
-      setDeviceListModalVisible(false);
+        await getDeviceInfo(selectedKeys[0]);
+        setEditFactoryModalVisible(false);
+        setDeviceListModalVisible(false);
+      } catch {
+
+      }
+      myEnterprise.loading = false;
     };
 
     const handleTreeItemSelect = async (selectedKeys, e) => {
@@ -524,14 +546,16 @@ export const MyEnterprisePage = Form.create()(
                     onSelect={handleTreeItemSelect}
                     onExpand={(keys, e) => {
                       setTreeExpandedKeys(keys as any);
-                      handleTreeItemSelect(keys.slice(-1), e);
+                      if (e.expanded) {
+                        handleTreeItemSelect(keys.slice(-1), e);
+                      }
                     }}
                     filterTreeNode={(node) => {
                       return (treeExpandedKeys as any).includes(node.props.eventKey);
                     }}
                     expandedKeys={treeExpandedKeys}
                     treeData={toJS(treeData)}
-                    autoExpandParent={true}
+                    autoExpandParent={false}
                   />
                 </div>
               </Card>

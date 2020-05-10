@@ -58,6 +58,21 @@ export const ComparisonAnalysisPage = Form.create()(
 
     const [dateOpen, setDateOpen] = useState(false);
 
+    let cardExtra = "";
+    if (getFieldValue("collectDate")) {
+      switch (getFieldValue("timeCycle")) {
+        case 1:
+          cardExtra = moment(getFieldValue("collectDate")).format("YYYY-MM-DD");
+          break;
+        case 2:
+          cardExtra = `${moment(getFieldValue("collectDate")).format("YYYY-MM")}月`;
+          break;
+        case 3:
+          cardExtra = moment(getFieldValue("collectDate")).format("YYYY");
+          break;
+      }
+    }
+
     return (
       <div className="comparisonPage">
         <Spin spinning={loading}>
@@ -203,7 +218,7 @@ export const ComparisonAnalysisPage = Form.create()(
             <Col span={18}>
               <Row gutter={6}>
                 <Col span={12} style={{ marginBottom: "10px" }}>
-                  <Card bordered size="small" title="各行业排放贡献率" extra="2019-10-24">
+                  <Card bordered size="small" title="各行业排放贡献率" extra={cardExtra}>
                     <ReactEcharts
                       //@ts-ignore
                       option={toJS(option1)}
@@ -213,7 +228,7 @@ export const ComparisonAnalysisPage = Form.create()(
                   </Card>
                 </Col>
                 <Col span={12} style={{ marginBottom: "10px" }}>
-                  <Card bordered size="small" title="区域排放贡献率" extra="2019-10-24">
+                  <Card bordered size="small" title="区域排放贡献率" extra={cardExtra}>
                     <ReactEcharts
                       //@ts-ignore
                       option={toJS(option2)}
@@ -223,7 +238,7 @@ export const ComparisonAnalysisPage = Form.create()(
                   </Card>
                 </Col>
                 <Col span={24} style={{ marginBottom: "10px" }}>
-                  <Card bordered size="small" title="区域排放趋势对比" extra="2019-10-24">
+                  <Card bordered size="small" title="区域排放趋势对比" extra={cardExtra}>
                     <ReactEcharts
                       //@ts-ignore
                       option={toJS(option3)}

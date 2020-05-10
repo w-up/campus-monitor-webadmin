@@ -273,6 +273,7 @@ export const ReportPage = Form.create()(
                     <Card bordered size="small" title={`${pmCardTitle}污染物排放浓度${timeCycleArr[getFieldValue("timeCycle") - 1]}趋势图`} extra={cardExtra}>
                       <ReactEcharts
                         //@ts-ignore
+                        key={JSON.stringify(chartOption)}
                         option={toJS(chartOption)}
                         ref={chart3}
                         style={{ height: "360px" }}
@@ -289,6 +290,7 @@ export const ReportPage = Form.create()(
                           <Card bordered size="small" title={`${option.series[0].name}按月排放浓度趋势图`} extra={cardExtra}>
                             <ReactEcharts
                               //@ts-ignore
+                              key={JSON.stringify(option)}
                               option={toJS(option)}
                               // style={{ height: '360px' }}
                             />
@@ -307,6 +309,7 @@ export const ReportPage = Form.create()(
                           <Card bordered size="small" title={`${option.series[0].name}各月份报警次数排行榜`} extra={cardExtra}>
                             <ReactEcharts
                               //@ts-ignore
+                              key={JSON.stringify(option)}
                               option={toJS(option)}
                               // style={{ height: '360px' }}
                             />
@@ -324,6 +327,7 @@ export const ReportPage = Form.create()(
                         <Card bordered size="small" title={`${option.series[0].name}污染物按周排放情况`} extra={`第${cardExtra}周`}>
                           <ReactEcharts
                             //@ts-ignore
+                            key={JSON.stringify(option)}
                             option={toJS(option)}
                             style={{ height: "360px" }}
                           />
@@ -340,6 +344,7 @@ export const ReportPage = Form.create()(
                         <Card bordered size="small" title={`${option.series[0].name}污染物按季排放情况`} extra={`第${cardExtra}`}>
                           <ReactEcharts
                             //@ts-ignore
+                            key={JSON.stringify(option)}
                             option={toJS(option)}
                             style={{ height: "360px" }}
                           />

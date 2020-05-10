@@ -1,5 +1,5 @@
 import { action, observable } from "mobx";
-import { GET, POST } from "../utils/request";
+import { GET, POST, FORM_POST } from "../utils/request";
 import Mock, { Random } from 'mockjs';
 import moment from 'moment';
 
@@ -327,7 +327,7 @@ export class Report {
         data = res;
       }
 
-      const { tableHeaderData, tableData, trendData, heatMap, rankData, upperThreshold } = data;
+      const { tableHeaderData, tableData, trendData, trendDatas, heatMap, rankData, upperThreshold } = data;
       if (param.timeCycle === 3) {
         const [header, ...innerData] = tableData;
         const column = header.map((title, index) => {
@@ -368,8 +368,9 @@ export class Report {
 
 
       // 折线图 天
-      if (param.timeCycle === 1 && trendData) {
+      if (param.timeCycle === 1 && trendData && trendDatas) {
         this.chartOption.legend.data = Object.keys(trendData);
+        // this.chartOption.legend.data = trendDatas.map((v: any) => v.);
         this.chartOption.xAxis.data = Object.keys(Object.values(trendData)[0] as any);
         const series: any = [];
         Object.keys(trendData).forEach(name => {
@@ -462,16 +463,18 @@ export class Report {
     this.loading = true;
     param.collectDate = moment(param.collectDate).format('YYYY-MM-DD');
     try {
-      const { headers, data }: any = await POST('/device-data-history/exportStatisReport', param);
+      const response: any = await FORM_POST('/device-data-history/exportStatisReport', param);
+      const { headers, data } = response;
       const type = headers['content-type']
       const file = new Blob([data], { type });
       const url = window.URL.createObjectURL(file);
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'file.xls');
+      link.setAttribute('download', '导出数据.xls');
       document.body.appendChild(link);
       link.click();
       link.remove();
+
     } catch {
 
     }

@@ -28,7 +28,7 @@ http.interceptors.response.use(
   (response) => {
     try {
       const res = response.data;
-      if (typeof res !== "object") {
+      if (typeof res !== "object" || res instanceof ArrayBuffer) {
         return response;
       }
 
@@ -36,6 +36,7 @@ http.interceptors.response.use(
         return store.auth.logout();
       }
       if (res.msg !== "success") {
+        debugger
         message.error({ content: res.msg, key: 'global-message-error', duration: 2 });
         return Promise.reject(response);
       } else {
@@ -62,7 +63,12 @@ export function POST(url, paramsOrData?) {
 }
 
 export function FORM_POST(url, paramsOrData?) {
-  return http({ method: "POST", headers: { "Content-Type": "multipart/form-data" }, url, data: paramsOrData });
+  return http({
+    method: "POST",
+    responseType: 'arraybuffer',
+    url, 
+    data: paramsOrData
+  })
 }
 
 export default http;

@@ -169,7 +169,7 @@ export const AlertSettingPage = Form.create()(
         width: 100,
       },
       {
-        title: "因子分类名称",
+        title: "监测类型名称",
         width: 100,
         dataIndex: "jcTypes",
         key: "jcTypes",
@@ -183,7 +183,10 @@ export const AlertSettingPage = Form.create()(
         dataIndex: "pmName",
         key: "pmName",
         render: (val, record) => {
-          return `${val}(${record.pmUnit})`;
+          if (record.pmUnit) {
+            return `${val}(${record.pmUnit})`;
+          }
+          return val;
         },
       },
       {
@@ -301,7 +304,7 @@ export const AlertSettingPage = Form.create()(
                 <Form onSubmit={doSubmit} style={{ display: currentTab == "2" ? "none" : "block" }}>
                   {getFieldDecorator("setForm.current", { initialValue: 1, rules: [{ required: false }] })(<Input hidden />)}
 
-                  <Divider orientation="left">因子分类</Divider>
+                  <Divider orientation="left">监测类型名称</Divider>
                   <Checkbox style={{ fontSize: "10px" }} checked={allTypeChecked} onChange={onTypeSelectAll}>
                     全选
                   </Checkbox>
@@ -482,8 +485,8 @@ export const AlertSettingPage = Form.create()(
                       </Form.Item>
                     </Row>
                     }
-                    <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="因子分类">
-                      {getFieldDecorator("editForm.jcTypeIds", { initialValue: [], rules: [{ required: true, message: '请选择因子分类' }] })(
+                    <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测类型名称">
+                      {getFieldDecorator("editForm.jcTypeIds", { initialValue: [], rules: [{ required: true, message: '请选择监测类型名称' }] })(
                         <Checkbox.Group style={{ width: "100%" }}>
                           <Row>
                             {typeList.map((item) => (
