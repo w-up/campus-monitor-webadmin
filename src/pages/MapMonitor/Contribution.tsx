@@ -130,7 +130,7 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
       <Spin spinning={store.loading}>
         <Form {...store.formItemLayout} onSubmit={store.handleSubmit} key="Contribution">
           <Form.Item label="选择园区">
-            {getFieldDecorator("parkId", { initialValue: "0", rules: [{ required: true }] })(
+            {getFieldDecorator("parkId", { initialValue: mapMonitor.currentPark, rules: [{ required: true }] })(
               <Select onChange={store.selectPark}>
                 <Select.Option value="0">全部</Select.Option>
                 {mapMonitor.parks.map((item, index) => (

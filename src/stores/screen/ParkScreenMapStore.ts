@@ -179,6 +179,8 @@ export class ParkScreenMapStore {
   // 监测面板
   @observable currentPmCode = "";
   @observable currentPmType = "";
+  @observable _currentPmCode = "";
+  @observable _currentPmType = "";
   @observable allConcernSiteData: Array<ConcernSiteData> = [];
   @observable allParkMapData: AllParkData = {
     parkId: "",
@@ -214,6 +216,10 @@ export class ParkScreenMapStore {
   get curPmValue() {
     return this.allPmCodes.find((i) => i.pmCode == this.currentPmCode);
   }
+  @computed
+  get _curPmValue() {
+    return this.allPmCodes.find((i) => i.pmCode == this._currentPmCode);
+  }
 
   @computed
   get currentPmcodes() {
@@ -240,6 +246,7 @@ export class ParkScreenMapStore {
   @action.bound
   async loadConcernSiteData(pmCode: string) {
     this.currentPmCode = pmCode;
+    this._currentPmCode = this.currentPmCode;
     const [convernData, parkMapData] = await Promise.all([api.DeviceData.getConcernSiteData({ pmCode }), api.DeviceData.getParkMapData({ pmCode })]);
     Object.assign(this, {
       allConcernSiteData: convernData.data,

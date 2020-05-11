@@ -80,7 +80,9 @@ export const EnterpriseScreenPage = () => {
             </div>
           </div>
         </div>
-        <div className="copyright fixed bottom-0 w-full text-center pb-1" style={{color:"#88a8c5"}}>版权所有: 武汉三藏科技有限责任公司</div>
+        <div className="copyright fixed bottom-0 w-full text-center pb-1" style={{ color: "#88a8c5" }}>
+          版权所有: 武汉三藏科技有限责任公司
+        </div>
         <Modal width={956} getContainer={false} visible={enterpriseScreenMap.modalVisibility} footer={null} closable={false}>
           <div className="screen-modal-title text-white">
             {enterpriseScreenMap.modalShowType == 1 ? "气体排放情况（实时）详情" : "污水排放情况（实时）详情"}
@@ -111,7 +113,7 @@ export const EnterpriseScreenPage = () => {
                               <div>{item.siteName}</div>
                               <div>{item.pmName}</div>
                               <div>
-                                <span>{utils.number.toPrecision(item.collectValue)}</span>
+                                <span>{item.collectValue}</span>
                               </div>
                               <div>{item.limit}</div>
                               <div>{item.overRate}</div>

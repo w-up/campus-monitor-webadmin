@@ -6,7 +6,7 @@ import { utils } from "../../../../utils/index";
 
 export const SewageWaterTable = () => {
   const {
-    screen: { parkScreenMap }
+    screen: { parkScreenMap },
   } = useStore();
 
   const store = useLocalStore(() => ({
@@ -22,8 +22,8 @@ export const SewageWaterTable = () => {
       { region: "CB化工", wu: "二氧化硫", data: "52.7mg/m³", maxNum: "200" },
       { region: "B化工", wu: "一氧化碳", data: "12.2mg/m³", maxNum: "100" },
       { region: "B化工", wu: "氮氧化物", data: "12.2mg/m³", maxNum: "100" },
-      { region: "B化工", wu: "氮氧化物", data: "52.7mg/m³", maxNum: "200" }
-    ]
+      { region: "B化工", wu: "氮氧化物", data: "52.7mg/m³", maxNum: "200" },
+    ],
   }));
 
   return useObserver(() => (
@@ -42,15 +42,15 @@ export const SewageWaterTable = () => {
           <div>浓度值</div>
         </div>
         <div className="scroll-bar-color">
-          <Scrollbars style={{height: 250 }}>
-            {parkScreenMap.gasData.map(item => {
+          <Scrollbars style={{ height: 250 }}>
+            {parkScreenMap.gasData.map((item) => {
               return (
                 <div className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"}>
                   <div title={item.collectDate}>{item.collectDate}</div>
                   <div>{item.factoryName}</div>
                   <div>{item.pmName}</div>
                   <div>
-                    <span>{utils.number.toPrecision(item.collectValue)}</span>
+                    <span>{item.collectValue}</span>
                   </div>
                 </div>
               );

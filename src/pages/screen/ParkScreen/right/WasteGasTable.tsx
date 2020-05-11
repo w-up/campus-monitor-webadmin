@@ -47,7 +47,7 @@ export const WasteGasTable = () => {
                   <div>{item.factoryName}</div>
                   <div>{item.pmName}</div>
                   <div>
-                    <span>{utils.number.toPrecision(item.collectValue)}</span>
+                    <span>{item.collectValue}</span>
                   </div>
                 </div>
               );

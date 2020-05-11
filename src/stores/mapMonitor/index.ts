@@ -169,7 +169,13 @@ export class MapMonitorStore {
   @action.bound
   async loadPark() {
     const [parkRes] = await Promise.all([api.MapMonitor.getParkListByUser()]);
-    this.parks = parkRes.data;
+    if (parkRes.data) {
+      this.parks = parkRes.data;
+      if (this.currentPark == "0") {
+        this.currentPark = this.parks[0].id;
+      }
+    }
+
     // this.factories = factoryRes.data;
     // this.pmcodes = pmCodesRes.data;
     // this.currentPmCode = this.pmcodes[0].pmCode;
@@ -184,7 +190,12 @@ export class MapMonitorStore {
     const result = await api.MapMonitor.getFactoryList({
       parkId: Number(parkId),
     });
-    this.factories = result.data;
+    if (result.data) {
+      this.factories = result.data;
+      if (this.currentFactory == "0") {
+        this.currentFactory = this.factories[0].id;
+      }
+    }
   }
 
   async loadPmCodes({ factoryId = this.currentFactory }: { factoryId?: any }) {

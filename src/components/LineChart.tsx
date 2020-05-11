@@ -6,7 +6,7 @@ import { utils } from "utils";
 import { DailySewage } from "../type";
 import { useEffect, useMemo } from "react";
 
-export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean }) => {
+export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean; precision?: boolean }) => {
   const mapRef = React.useRef<any>();
   const store = useLocalStore(() => ({
     dataIndex: 0,
@@ -56,7 +56,9 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean 
             <div style="display:flex;align-items: center;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px; ${limit && valueRaw > limit ? "color:red;" : ""}">${value ? `${value}*${valueIn} ${unit}` : ""}</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px; ${limit && valueRaw > limit ? "color:red;" : ""}">${
+                  props.precision ? (value ? `${value}*${valueIn} ${unit}` : "") : value || ""
+                }</div>
           </div>
           `;
               }
@@ -103,8 +105,8 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean 
             padding: [5, 0, 10, 20],
           },
           type: "value",
-          min: 0,
-          max: 10,
+          // min: 0,
+          // max: 10,
           splitNumber: 3,
           axisLabel: {
             textStyle: {
@@ -130,7 +132,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean 
             const isUpperlimit = item.upperLimit && i.collectValue > item.upperLimit;
             return {
               symbolSize: isUpperlimit ? 12 : 0,
-              value: i.collectValueDe ? Number(i.collectValueDe) : null,
+              value: i.collectValue ? Number(i.collectValue) : null,
               valueRaw: i.collectValue,
               valueIn: i.collectValueIn,
               limit: item.upperLimit,
