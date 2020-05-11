@@ -52,7 +52,9 @@ export class DynamicSourceStore {
   @action.bound
   async loadPark() {
     const [parkRes] = await Promise.all([api.MapMonitor.getParkListByUser(), this.loadPmCodes({})]);
-    this.parks = parkRes.data;
+    if (parkRes.data) {
+      this.parks = parkRes.data;
+    }
   }
 
   async loadPmCodes({ parkId = this.currentPark }: { parkId?: any }) {
@@ -73,6 +75,10 @@ export class DynamicSourceStore {
     const result = await api.MapMonitor.getMapInfoByPmCodeAndParkId({ parkId: Number(parkId), pmCode: this.currentPmCode });
     if (result.data) {
       this.curParkData = result.data;
+      const site = this.curParkData[0]?.siteDatas[0];
+      if (!this.curPoint.siteName && !!site) {
+        this.setCurPoint({ lng: Number(site.gpsX), lat: Number(site.gpsY), siteName: "null" });
+      }
       this.updateMap();
     }
   }
@@ -180,61 +186,6 @@ export class DynamicSourceStore {
     if (!this.map || !this.curParkData[0]) return;
     let mapViewObj = this.map.getViewport(utils.array.formatToLatLngShort(this.curParkData[0].parkPoints), {});
     this.map.centerAndZoom(mapViewObj.center, mapViewObj.zoom);
-  }
-
-  addArrow(polyline, length, angleValue) {
-    //繪制箭頭的函數
-    var linePoint = polyline.getPath(); //線的坐標串
-    var arrowCount = linePoint.length;
-    for (var i = 1; i < arrowCount; i++) {
-      //在拐點處繪制箭頭
-      var pixelStart = this.map.pointToPixel(linePoint[i - 1]);
-      var pixelEnd = this.map.pointToPixel(linePoint[i]);
-      var angle = angleValue; //箭頭和主線的夾角
-      var r = length; // r/Math.sin(angle)代表箭頭長度
-      var delta = 0; //主線斜率，垂直時無斜率
-      var param = 0; //代碼簡潔考慮
-      var pixelTemX, pixelTemY; //臨時點坐標
-      var pixelX, pixelY, pixelX1, pixelY1; //箭頭兩個點
-      if (pixelEnd.x - pixelStart.x == 0) {
-        //斜率不存在是時
-        pixelTemX = pixelEnd.x;
-        if (pixelEnd.y > pixelStart.y) {
-          pixelTemY = pixelEnd.y - r;
-        } else {
-          pixelTemY = pixelEnd.y + r;
-        }
-        //已知直角三角形兩個點坐標及其中一個角，求另外一個點坐標算法
-        pixelX = pixelTemX - r * Math.tan(angle);
-        pixelX1 = pixelTemX + r * Math.tan(angle);
-        pixelY = pixelY1 = pixelTemY;
-      } //斜率存在時
-      else {
-        delta = (pixelEnd.y - pixelStart.y) / (pixelEnd.x - pixelStart.x);
-        param = Math.sqrt(delta * delta + 1);
-
-        if (pixelEnd.x - pixelStart.x < 0) {
-          //第二、三象限
-          pixelTemX = pixelEnd.x + r / param;
-          pixelTemY = pixelEnd.y + (delta * r) / param;
-        } //第一、四象限
-        else {
-          pixelTemX = pixelEnd.x - r / param;
-          pixelTemY = pixelEnd.y - (delta * r) / param;
-        }
-        //已知直角三角形兩個點坐標及其中一個角，求另外一個點坐標算法
-        pixelX = pixelTemX + (Math.tan(angle) * r * delta) / param;
-        pixelY = pixelTemY - (Math.tan(angle) * r) / param;
-
-        pixelX1 = pixelTemX - (Math.tan(angle) * r * delta) / param;
-        pixelY1 = pixelTemY + (Math.tan(angle) * r) / param;
-      }
-      var pointArrow = this.map.pixelToPoint(new BMap.Pixel(pixelX, pixelY));
-      var pointArrow1 = this.map.pixelToPoint(new BMap.Pixel(pixelX1, pixelY1));
-      var Arrow = new BMap.Polyline([pointArrow, linePoint[i], pointArrow1], { strokeColor: "blue", strokeWeight: 4, strokeOpacity: 1 });
-      this.map.addOverlay(Arrow);
-      this.arrows.push(Arrow);
-    }
   }
 
   @action.bound
