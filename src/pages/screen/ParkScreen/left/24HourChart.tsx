@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useObserver, useLocalStore } from "mobx-react-lite";
 import ReactEcharts from "echarts-for-react";
 import { useStore } from "stores";
-import echarts from "echarts"
+import echarts from "echarts";
 
 export const ParkScreen24HourChart = () => {
   const chartRef = useRef<any>();
@@ -54,7 +54,7 @@ export const ParkScreen24HourChart = () => {
               if (valueRaw > 0) {
                 showHtml += `
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px;${limit && valueRaw > limit ? "color:red;" : ""}">${value ? `${value}*${valueIn} ${unit}` : ""}</div>`;
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px;${limit && valueRaw > limit ? "color:red;" : ""}">${valueRaw}</div>`;
               }
             }
 
@@ -110,10 +110,10 @@ export const ParkScreen24HourChart = () => {
         },
         series: [
           {
-            name: parkScreenMap.curPmValue?.pmName,
+            name: parkScreenMap._curPmValue?.pmName,
             type: "line",
             data: parkScreenMap.dailyData.points.map((i) => ({
-              value: Number(i.collectValueDe),
+              value: i.collectValue,
               valueRaw: i.collectValue,
               valueIn: i.collectValueIn,
               limit: parkScreenMap.dailyData.upperLimit,
@@ -128,13 +128,16 @@ export const ParkScreen24HourChart = () => {
               },
             },
             areaStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                    offset: 0,
-                    color: 'rgba(60,141,124,1)'
-                }, {
-                    offset: 1,
-                    color: 'rgba(60,141,124,0.3)'
-                }])
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: "rgba(60,141,124,1)",
+                },
+                {
+                  offset: 1,
+                  color: "rgba(60,141,124,0.3)",
+                },
+              ]),
             },
             markLine: {
               symbol: "none",

@@ -113,7 +113,7 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
             <div style="display:flex;align-items: center">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px;${limit && valueRaw > limit ? "color:red;" : ""}">${value ? `${value}*${valueIn} ${unit}` : ""}</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px;${limit && valueRaw > limit ? "color:red;" : ""}">${value || ""}</div>
           </div>
           `;
           }
@@ -121,7 +121,7 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
         return `<div class="tableFloat text-left primary-text-dark">
                     <div>${text} 日均</div>
                     <div class="primary-text-dark">${option.title.text}</div>
-                    <div class="primary-red">日均值上限：${utils.number.toPrecision(limit)}</div>
+                    <div class="primary-red">日均值上限：${limit}</div>
                     <div style="color:#88A8C5;font-size:10px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
                     ${showHtml}
             </div></div></div>`;

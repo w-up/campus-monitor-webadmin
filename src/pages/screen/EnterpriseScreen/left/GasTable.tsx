@@ -8,28 +8,30 @@ import { utils } from "../../../../utils/index";
 
 export const GasTable = () => {
   const {
-    screen: { enterpriseScreenMap }
+    screen: { enterpriseScreenMap },
   } = useStore();
 
   const store = useLocalStore(() => ({
     get SiteRuntimePmDate() {
       let datas = [] as any;
-      enterpriseScreenMap.SiteRuntimePmDate.forEach(site => {
+      enterpriseScreenMap.SiteRuntimePmDate.forEach((site) => {
         if (!site.pmInfos) return;
-        site.pmInfos.forEach(i => {
+        site.pmInfos.forEach((i) => {
           if (i.pmType == 1) {
             datas.push({ ...i, siteName: site.siteName });
           }
         });
       });
       return _.chunk<any>(datas, 10);
-    }
+    },
   }));
 
   return useObserver(() => (
     <div className="topLeft screenTable flex-1">
       <div className="tableTitle text-center">气体排放情况（实时）</div>
-      <div className="table-title-more" onClick={e => enterpriseScreenMap.toggleModal(1)}>详情 ></div>
+      <div className="table-title-more" onClick={(e) => enterpriseScreenMap.toggleModal(1)}>
+        详情 >
+      </div>
       <div className="box">
         <div className="tabTitle">
           <div>站点名称</div>
@@ -43,16 +45,14 @@ export const GasTable = () => {
             {store.SiteRuntimePmDate.map((site, index) => {
               return (
                 <Slide index={index}>
-                  {site.map(item => {
+                  {site.map((item) => {
                     if (item.pmType !== 1) return;
                     return (
-                      <div className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle" }>
+                      <div className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"}>
                         <div>{item.siteName}</div>
                         <div>{item.pmName}</div>
                         <div>
-                          <span>
-                            {utils.number.toPrecision(item.collectValue)}
-                          </span>
+                          <span>{item.collectValue}</span>
                         </div>
                         <div>{item.limit}</div>
                         {false && <div>{item.overRate}</div>}

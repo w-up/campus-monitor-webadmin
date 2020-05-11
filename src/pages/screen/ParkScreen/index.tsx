@@ -83,7 +83,7 @@ export const ParkScreenPage = () => {
                 </div>
               </div>
               <div className="text-white shape-bg">
-                {parkScreenMap.currentSite?.siteName} {parkScreenMap.currentPmCode !== "0" && `-${parkScreenMap.currentPmCode}`}
+                {parkScreenMap.currentSite?.siteName} {parkScreenMap._currentPmCode !== "0" && `-${parkScreenMap._currentPmCode}`}
               </div>
               <ParkScreen24HourChart />
             </div>
@@ -99,7 +99,9 @@ export const ParkScreenPage = () => {
             </div>
           </div>
         </div>
-        <div className="copyright fixed bottom-0 w-full text-center pb-1" style={{color:"#88a8c5"}}>版权所有: 武汉三藏科技有限责任公司</div>
+        <div className="copyright fixed bottom-0 w-full text-center pb-1" style={{ color: "#88a8c5" }}>
+          版权所有: 武汉三藏科技有限责任公司
+        </div>
       </div>
     </div>
   ));

@@ -79,7 +79,7 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
       <Spin spinning={store.loading}>
         <Form {...store.formItemLayout} onSubmit={store.handleSubmit} key="PollutionDistribution">
           <Form.Item label="选择园区">
-            {getFieldDecorator("parkId", { initialValue: "0", rules: [{ required: true }] })(
+            {getFieldDecorator("parkId", { initialValue: mapMonitor.currentPark, rules: [{ required: true }] })(
               <Select onChange={mapMonitor.selectPark}>
                 <Select.Option value="0">全部</Select.Option>
                 {mapMonitor.parks.map((item, index) => (
@@ -103,7 +103,7 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
             )}
           </Form.Item>
           <Form.Item label="起始时间">
-            {getFieldDecorator("timeStart", { initialValue: moment().subtract(1, "day"), rules: [{ required: true }] })(
+            {getFieldDecorator("timeStart", { initialValue: moment().subtract(1, "week"), rules: [{ required: true }] })(
               <DatePicker allowClear={false} className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />
             )}
           </Form.Item>

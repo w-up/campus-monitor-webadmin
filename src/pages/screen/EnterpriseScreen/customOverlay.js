@@ -42,7 +42,7 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
       <div style=';width:70px;'>
       <div>${x.name}</div>
       </div>
-      <div>${utils.number.toPrecision(x.value)} ${x.unit}</div>
+      <div>${x.value}</div>
       </div>
       </div>`;
   }

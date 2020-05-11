@@ -45,7 +45,7 @@ export const TopTenMonitorTable = () => {
                         <div title={item.collectDate}>{item.collectDate}</div>
                         <div>{item.siteName}</div>
                         <div>
-                          <span>{utils.number.toPrecision(item.collectValue)}</span>
+                          <span>{item.collectValue}</span>
                         </div>
                         <div>{item.limit}</div>
                       </div>
