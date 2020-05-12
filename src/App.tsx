@@ -41,42 +41,36 @@ const App = (props) => {
     return auth.token ? (
       <Router>
         <Layout>
-          <Scrollbars style={{ height: "100vh" }}>
-            <NavHead />
-            {/* <Layout.Sider collapsible collapsed={menu.collapsed} onCollapse={menu.toggleCollapsed} style={{ borderTop: "1px solid #00B1FF" }}>
+          <NavHead />
+          {/* <Layout.Sider collapsible collapsed={menu.collapsed} onCollapse={menu.toggleCollapsed} style={{ borderTop: "1px solid #00B1FF" }}>
           <NavMenu></NavMenu>
         </Layout.Sider> */}
-            <Layout style={{ marginTop: 64 }}>
-              <Layout.Sider
-                style={{
-                  height: "calc(100vh - 64px)",
-                  position: "fixed",
-                  left: 0,
-                }}
-                trigger={null}
-                collapsible
-                collapsed={menu.collapsed}
-              >
-                <Scrollbars style={{ height: "100vh" }}>
-                  <NavMenu />
-                </Scrollbars>
-              </Layout.Sider>
-              <Layout.Content style={{ marginLeft: menu.collapsed ? 80 : 200 }}>
-                <Scrollbars style={{ height: "calc(100vh - 64px)" }}>
-                  <Switch>
-                    <Route path="/base" component={Basic} />
-                    <Route path="/user" component={User} />
-                    <Route path="/system" component={System} />
-                    <Route path="/profile" component={UserInfoEdit} />
-                    <Route path="/edit-password" component={UserPasswordEdit} />
-                    <Route path="/edit-avatar" component={UserAvatarEdit} />
+          <Layout style={{ marginTop: 64 }}>
+            <Layout.Sider
+              style={{
+                height: "calc(100vh - 64px)",
+                position: "fixed",
+                left: 0,
+              }}
+              trigger={null}
+              collapsible
+              collapsed={menu.collapsed}
+            >
+              <NavMenu />
+            </Layout.Sider>
+            <Layout.Content style={{ marginLeft: menu.collapsed ? 80 : 200 }}>
+              <Switch>
+                <Route path="/base" component={Basic} />
+                <Route path="/user" component={User} />
+                <Route path="/system" component={System} />
+                <Route path="/profile" component={UserInfoEdit} />
+                <Route path="/edit-password" component={UserPasswordEdit} />
+                <Route path="/edit-avatar" component={UserAvatarEdit} />
 
-                    {renderRoute(menu.menus)}
-                  </Switch>
-                </Scrollbars>
-              </Layout.Content>
-            </Layout>
-          </Scrollbars>
+                {renderRoute(menu.menus)}
+              </Switch>
+            </Layout.Content>
+          </Layout>
         </Layout>
       </Router>
     ) : (
