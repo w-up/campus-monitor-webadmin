@@ -171,16 +171,20 @@ export const MyEnterprisePage = Form.create()(
       if (!selectedKeys[0]) {
         return;
       }
-      let parentKey = "";
+      
+      myEnterprise.loading = true;
+      let firstParentKey = "";
       treeData.some((item) => {
         if (item.children.some((v) => v.id === selectedKeys[0])) {
-          parentKey = item.id;
+          firstParentKey = item.id;
           return true;
         }
       });
-      myEnterprise.loading = true;
+
+      await firstLevelClick([firstParentKey]);
+
       try {
-        await onTreeItemSelect([parentKey]);
+        // await onTreeItemSelect([parentKey]);
         setEnterpriseInfoVisible(false);
         setFactoryInfoVisible(true);
         setDeviceSiteInfoVisible(false);
@@ -209,17 +213,33 @@ export const MyEnterprisePage = Form.create()(
       if (!selectedKeys[0]) {
         return;
       }
-      // myEnterprise.loading = true;
-      let parentKey = "";
+      
+      myEnterprise.loading = true;
+
+      let secondParentKey = "";
       treeData.some((item) => {
-        if (item.children.some((v) => v.children.some((k) => k.id === selectedKeys[0]))) {
-          parentKey = item.id;
+        let tmp;
+        if (item.children.some((v) => {
+          tmp = v;
+          return v.children.some((k) => k.id === selectedKeys[0]);
+        })) {
+          secondParentKey = tmp.id;
           return true;
         }
       });
-      myEnterprise.loading = true;
+      let firstParentKey = "";
+      treeData.some((item) => {
+        if (item.children.some((v) => v.id === secondParentKey)) {
+          firstParentKey = item.id;
+          return true;
+        }
+      });
+
+      await firstLevelClick([firstParentKey]);
+      await secondLevelClick([secondParentKey]);
+
       try {
-        await onTreeItemSelect([parentKey]);
+        // await onTreeItemSelect([parentKey]);
         setEnterpriseInfoVisible(false);
         setFactoryInfoVisible(false);
         setDeviceSiteInfoVisible(true);
@@ -250,16 +270,43 @@ export const MyEnterprisePage = Form.create()(
       if (!selectedKeys[0]) {
         return;
       }
-      let parentKey = "";
+      let thirdParentKey = "";
       treeData.some((item) => {
-        if (item.children.some((v) => v.children.some((k) => k.children.some((l) => l.id === selectedRowKeys[0])))) {
-          parentKey = item.id;
+        let tmp;
+        if (item.children.some((v) => v.children.some((k: any) => {
+          tmp = k;
+          return k.children.some((l) => l.id === selectedRowKeys[0]);
+        }))) {
+          thirdParentKey = tmp.id;
+          return true;
+        }
+      });
+      let secondParentKey = "";
+      treeData.some((item) => {
+        let tmp;
+        if (item.children.some((v: any) => {
+          tmp = v;
+          return v.children.some((k) => k.id === thirdParentKey);
+        })) {
+          secondParentKey = tmp.id;
+          return true;
+        }
+      });
+      let firstParentKey = "";
+      treeData.some((item) => {
+        if (item.children.some((v) => v.id === secondParentKey)) {
+          firstParentKey = item.id;
           return true;
         }
       });
       myEnterprise.loading = true;
+
+      await firstLevelClick([firstParentKey]);
+      await secondLevelClick([secondParentKey]);
+      await thirdLevelClick([thirdParentKey]);
+
       try {
-        await onTreeItemSelect([parentKey]);
+        // await onTreeItemSelect([parentKey]);
         setEnterpriseInfoVisible(false);
         setFactoryInfoVisible(false);
         setDeviceSiteInfoVisible(false);

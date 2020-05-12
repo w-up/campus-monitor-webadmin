@@ -895,6 +895,9 @@ svg {
 .rolesPage,
 .systemConfigPage,
 .enterprisePage {
+  .ant-spin-blur {
+    opacity: 0.1;
+  }
   .ant-table * {
     font-size: 12px !important;
   }

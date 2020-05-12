@@ -26,7 +26,7 @@ export class Rank {
       show: true,
       feature: {
         mark: { show: true },
-        dataView: { show: true, readOnly: false },
+        // dataView: { show: true, readOnly: false },
         magicType: { show: true, type: ["line", "bar"] },
         restore: { show: true },
         saveAsImage: { show: true },
@@ -70,7 +70,7 @@ export class Rank {
       show: true,
       feature: {
         mark: { show: true },
-        dataView: { show: true, readOnly: false },
+        // dataView: { show: true, readOnly: false },
         magicType: {
           show: true,
           type: ["pie", "funnel"],
@@ -125,7 +125,7 @@ export class Rank {
       show: true,
       feature: {
         mark: { show: true },
-        dataView: { show: true, readOnly: false },
+        // dataView: { show: true, readOnly: false },
         magicType: { show: true, type: ["line", "bar"] },
         restore: { show: true },
         saveAsImage: { show: true },
@@ -169,7 +169,7 @@ export class Rank {
       show: true,
       feature: {
         mark: { show: true },
-        dataView: { show: true, readOnly: false },
+        // dataView: { show: true, readOnly: false },
         magicType: {
           show: true,
           type: ["pie", "funnel"],

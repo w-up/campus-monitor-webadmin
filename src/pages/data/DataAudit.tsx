@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 import { useStore } from "../../stores/index";
 import { toJS } from "mobx";
+import { globalConfig } from "../../config";
 
 import { Spin, Card, Row, Col, Form, Button, Select, Tabs, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal } from 'antd';
 const { Option } = Select;
@@ -52,7 +53,12 @@ const columns = [
     dataIndex: 'pic',
     key: 'pic',
     width: 50,
-    render: val => <a href={val} target="_blank">下载</a>,
+    render: (val) => {
+      if (val) {
+        return <a download="" href={`${globalConfig.apiEndpoint}${val}`} target="_blank">下载</a>
+      }
+      return <span>无附件</span>
+    },
   },
   {
     title: '状态',

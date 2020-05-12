@@ -148,7 +148,7 @@ export const RuntimeDataPage = Form.create()(
                   }
                 >
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="选择园区">
-                    {getFieldDecorator("parkId", { initialValue: "", rules: [{ required: true, message: '请选择园区' }] })(
+                    {getFieldDecorator("parkId", { initialValue: parkTree && parkTree[0] && parkTree[0].parkId, rules: [{ required: true, message: '请选择园区' }] })(
                       <Select onChange={() => setFieldsValue({ factoryId: "" })} placeholder="请选择" size="small">
                         {parkTree.map((item) => (
                           <Option key={item.parkId} value={item.parkId}>
@@ -159,7 +159,7 @@ export const RuntimeDataPage = Form.create()(
                     )}
                   </Form.Item>
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测区域">
-                    {getFieldDecorator("factoryId", { initialValue: "", rules: [{ required: true, message: '请选择监测区域' }] })(
+                    {getFieldDecorator("factoryId", { initialValue: factoryList && factoryList[0] && factoryList[0].factoryId, rules: [{ required: true, message: '请选择监测区域' }] })(
                       <Select placeholder="请选择" size="small">
                         {factoryList.map((item) => (
                           <Option key={item.factoryId} value={item.factoryId}>
@@ -195,7 +195,7 @@ export const RuntimeDataPage = Form.create()(
                   )}
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="因子分类">
-                    {getFieldDecorator("ptId", { initialValue: "", rules: [{ required: true, message: '请选择因子分类' }] })(
+                    {getFieldDecorator("ptId", { initialValue: ptList && ptList[0] && ptList[0].id, rules: [{ required: true, message: '请选择因子分类' }] })(
                       <Select placeholder="请选择" size="small">
                         {ptList.map((item) => (
                           <Option key={item.id} value={item.id}>

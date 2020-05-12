@@ -80,14 +80,14 @@ export class DataAudit {
     delete newParam.timeRange;
 
     try {
-      if (newParam.parkId) {
+      // if (newParam.parkId) {
         const { data }: any = await POST("/dataAdd/getCheckData", newParam);
 
         this.total = data.total;
         this.query.pageSize = data.size;
         this.query.current = data.current;
         this.dataSource = data.records;
-      }
+      // }
     } catch {
       this.total = 0;
       this.query.pageSize = 10;
