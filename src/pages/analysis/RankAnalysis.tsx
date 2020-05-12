@@ -141,7 +141,7 @@ export const RankAnalysisPage = Form.create()(
                   </Form.Item> */}
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计区域">
-                    {getFieldDecorator("parkId", { initialValue: "", rules: [{ required: true, message: '请选择统计区域' }] })(
+                    {getFieldDecorator("parkId", { initialValue: parkTree && parkTree[0] && parkTree[0].parkId, rules: [{ required: true, message: '请选择统计区域' }] })(
                       <Select onChange={() => setFieldsValue({ factoryId: "" })} placeholder="请选择" size="small">
                         {parkTree?.map((item) => (
                           <Option key={item.parkId} value={item.parkId}>
@@ -153,7 +153,7 @@ export const RankAnalysisPage = Form.create()(
                   </Form.Item>
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="因子分类">
-                    {getFieldDecorator("ptId", { initialValue: "", rules: [{ required: true, message: '请选择因子分类' }] })(
+                    {getFieldDecorator("ptId", { initialValue: ptList && ptList[0] && ptList[0].id, rules: [{ required: true, message: '请选择因子分类' }] })(
                       <Select placeholder="请选择" size="small">
                         {ptList.map((item) => (
                           <Option key={item.id} value={item.id}>
@@ -165,7 +165,7 @@ export const RankAnalysisPage = Form.create()(
                   </Form.Item>
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="监测因子">
-                    {getFieldDecorator("pmCode", { initialValue: "", rules: [{ required: true, message: '请选择监测因子' }] })(
+                    {getFieldDecorator("pmCode", { initialValue: pmCodeList && pmCodeList[0] && pmCodeList[0].pmCode, rules: [{ required: true, message: '请选择监测因子' }] })(
                       <Select placeholder="请选择" size="small">
                         {pmCodeList.map((item) => (
                           <Option key={item.pmCode} value={item.pmCode}>
@@ -196,19 +196,19 @@ export const RankAnalysisPage = Form.create()(
 
                   {getFieldValue("timeCycle") === 1 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true, message: '请选择统计时间' }] })(
+                      {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: '请选择统计时间' }] })(
                         <DatePicker allowClear={false} format="YYYY-MM-DD" style={{ width: "100%" }} size="small" />
                       )}
                     </Form.Item>
                   )}
                   {getFieldValue("timeCycle") === 2 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true, message: '请选择统计时间' }] })(<MonthPicker allowClear={false} format="YYYY-MM" style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: '请选择统计时间' }] })(<MonthPicker allowClear={false} format="YYYY-MM" style={{ width: "100%" }} size="small" />)}
                     </Form.Item>
                   )}
                   {getFieldValue("timeCycle") === 3 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true, message: '请选择统计时间' }] })(<DatePicker allowClear={false} onPanelChange={(val: any) => {
+                      {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: '请选择统计时间' }] })(<DatePicker allowClear={false} onPanelChange={(val: any) => {
                         setFieldsValue({ collectDate: moment(val).startOf('year') });
                         setDateOpen(false);
                       }} open={dateOpen} onOpenChange={setDateOpen} mode="year" format="YYYY" style={{ width: "100%" }} size="small" />)}

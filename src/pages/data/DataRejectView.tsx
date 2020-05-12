@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite";
 import { toJS } from 'mobx';
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import { useStore } from "../../stores/index";
+import { globalConfig } from "../../config";
 import { Descriptions, Card, Row, Col, Form, Button, Select, Tabs, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal } from 'antd';
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -52,7 +53,14 @@ export const DataRejectView = observer(() => {
 
             <Descriptions size="small" title="备注说明" layout="horizontal" bordered>
               <Descriptions.Item span={3} label="操作说明">{reason}</Descriptions.Item>
-              <Descriptions.Item span={3} label="附件"><a target="blank" href={pic}>点击下载</a></Descriptions.Item>
+              <Descriptions.Item span={3} label="附件">
+                {
+                  pic ?
+                  <a download="" href={`${globalConfig.apiEndpoint}${pic}`} target="_blank">点击下载</a>
+                  :
+                  <span>无附件</span>
+                }
+              </Descriptions.Item>
             </Descriptions>
 
             <Divider />

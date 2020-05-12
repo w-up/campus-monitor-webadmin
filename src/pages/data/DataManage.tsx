@@ -59,7 +59,7 @@ export const DataManagePage = Form.create()(observer(({ form, history }: any) =>
       key: 'pic',
       render: (val) => {
         if (val) {
-          return <a download href={`${globalConfig.apiEndpoint}${val}`} target="_blank">下载</a>
+          return <a download="" href={`${globalConfig.apiEndpoint}${val}`} target="_blank">下载</a>
         }
         return <span>无附件</span>
       },
