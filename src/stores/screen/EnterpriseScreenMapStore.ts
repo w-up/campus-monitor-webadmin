@@ -31,11 +31,7 @@ export class EnterpriseScreenMapStore {
   @action.bound
   async init() {
     this.boxDisplay = false;
-    await Promise.all([this.loadAllFactory(), this.loadMapConfig(), this.loadAllPmCode()]);
-    await this.loadSiteRuntimePmData();
-    await this.loadDailySewage();
-    await this.loadDailyGas();
-    await this.loadHoursSewage();
+    await Promise.all([this.loadAllFactory(), this.loadMapConfig(), this.loadAllPmCode(), this.loadSiteRuntimePmData(), this.loadDailySewage(), this.loadDailyGas(), this.loadHoursSewage()]);
   }
 
   @action.bound
