@@ -24,7 +24,7 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
 
   let cells = `<div style='width:250px; display: flex;flex-direction: row-reverse;'>
   <div style='display:inline-block;z-index: 9'>
-      <div style='width:40px;height:15px;background:${isActive ? "rgba(5,100,230,1)" : "#5A6C77"};border:1px solid rgba(4,249,204,1);color:white;border-radius:2px;'>${this._obj.text}</div>
+      <div style='height:15px;background:${isActive ? "rgba(5,100,230,1)" : "#5A6C77"};border:1px solid rgba(4,249,204,1);color:white;border-radius:2px;'>${this._obj.text}</div>
       <img style='width:40px;height:55px;' src='${isActive ? icon : iconActive}'/>
   </div>
   <div style='display:inline-block;visibility: ${isActive ? "inherit" : "hidden"};border:1px solid rgba(4,108,249,1);border-radius:4px; z-index: 10' >
