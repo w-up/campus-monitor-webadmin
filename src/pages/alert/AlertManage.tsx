@@ -450,7 +450,7 @@ export const AlertManagePage = Form.create()(
                   </Checkbox>
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="">
-                    {getFieldDecorator("factoryIds", { initialValue: [], rules: [{ required: false }] })(
+                    {getFieldDecorator("factoryIds", { initialValue: factoryList && factoryList.map(v => v.id), rules: [{ required: false }] })(
                       <Checkbox.Group style={{ width: "100%" }}>
                         <Row gutter={4}>
                           {factoryList.map((item) => (
@@ -480,7 +480,7 @@ export const AlertManagePage = Form.create()(
                         全选
                       </Checkbox>
                       <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="">
-                        {getFieldDecorator("pmList", { initialValue: [], rules: [{ required: false }] })(
+                        {getFieldDecorator("pmList", { initialValue: pmCodeList && pmCodeList.map(v => v.pmCode), rules: [{ required: false }] })(
                           <Checkbox.Group style={{ width: "100%" }}>
                             <Row>
                               {pmCodeList.map((item) => (

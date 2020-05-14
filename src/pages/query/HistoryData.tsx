@@ -174,7 +174,7 @@ export const HistoryDataPage = Form.create()(
                         全选
                       </Checkbox>
                       <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="">
-                        {getFieldDecorator("pmCodeList", { initialValue: [], rules: [{ required: true, message: '请选择监测因子' }] })(
+                        {getFieldDecorator("pmCodeList", { initialValue: pmCodeList && pmCodeList.map(v => v.pmCode), rules: [{ required: true, message: '请选择监测因子' }] })(
                           <Checkbox.Group style={{ width: "100%" }}>
                             <Row>
                               {pmCodeList.map((item) => (

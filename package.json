@@ -12,6 +12,7 @@
     "antd": "^3.26.11",
     "axios": "^0.19.2",
     "axios-hooks": "^1.9.0",
+    "core-js": "2.5.7",
     "echarts": "^4.6.0",
     "echarts-for-react": "^2.0.15-beta.1",
     "geolib": "^3.2.1",

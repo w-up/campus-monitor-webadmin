@@ -177,7 +177,7 @@ export const RuntimeDataPage = Form.create()(
                         全选
                       </Checkbox>
                       <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="">
-                        {getFieldDecorator("siteIdList", { initialValue: [], rules: [{ required: true, message: '请选择站点' }] })(
+                        {getFieldDecorator("siteIdList", { initialValue: siteList && siteList.map(v => v.siteId), rules: [{ required: true, message: '请选择站点' }] })(
                           <Checkbox.Group style={{ width: "100%" }}>
                             <Row gutter={4}>
                               {siteList.map((item) => (
@@ -212,7 +212,7 @@ export const RuntimeDataPage = Form.create()(
                         全选
                       </Checkbox>
                       <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="">
-                        {getFieldDecorator("pmCodeList", { initialValue: [], rules: [{ required: true, message: '请选择监测因子' }] })(
+                        {getFieldDecorator("pmCodeList", { initialValue: pmCodeList && pmCodeList.map(v => v.pmCode), rules: [{ required: true, message: '请选择监测因子' }] })(
                           <Checkbox.Group style={{ width: "100%" }}>
                             <Row>
                               {pmCodeList.map((item) => (

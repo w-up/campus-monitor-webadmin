@@ -310,7 +310,7 @@ export const AlertSettingPage = Form.create()(
                   </Checkbox>
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="">
-                    {getFieldDecorator("setForm.jcTypes", { initialValue: [], rules: [{ required: false }] })(
+                    {getFieldDecorator("setForm.jcTypes", { initialValue: typeList && typeList.map(v => v.dictCode), rules: [{ required: false }] })(
                       <Checkbox.Group style={{ width: "100%" }}>
                         <Row>
                           {typeList.map((item) => (

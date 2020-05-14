@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 import { useStore } from "../../stores/index";
@@ -73,6 +73,8 @@ export const DataReplenish = Form.create()(observer(({ form, history }: any) => 
       
     });
   }
+
+  const [imagePath, setImagePath] = useState('');
 
   return (
     <div className="replenishPage">
@@ -189,7 +191,16 @@ export const DataReplenish = Form.create()(observer(({ form, history }: any) => 
                       )} */}
 
                       <form id="formElem">
-                        <input style={{ width: '100%', height: '25px', lineHeight: '25px', background: 'white', border: '1px solid #ccc' }} type="file" name="pic" id="file" />
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <button style={{ height: '25px', padding: '0 20px', lineHeight: '25px', background: 'white', border: '1px solid #ccc' }} onClick={(e) => {
+                            e.preventDefault();
+                            document.getElementById('file')?.click();
+                          }}>上传</button>
+                          <input value={imagePath} style={{ flexGrow: 1, marginLeft: '10px' }} type="text" />
+                        </div>
+                        <input onChange={(e) => {
+                          setImagePath(e.currentTarget.value);
+                        }} style={{ display: 'none' }} type="file" name="pic" id="file" />
                       </form>
 
                     </Form.Item>
