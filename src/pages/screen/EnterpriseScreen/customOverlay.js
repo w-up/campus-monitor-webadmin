@@ -22,7 +22,7 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
   var div = document.createElement("div");
   div.style.display = "inline-block";
 
-  let cells = `<div style='width:250px; display: flex;flex-direction: row-reverse;'>
+  let cells = `<div style='width:300px; display: flex;flex-direction: row-reverse;'>
   <div style='display:inline-block;z-index: 9'>
       <div style='height:15px;background:${isActive ? "rgba(5,100,230,1)" : "#5A6C77"};border:1px solid rgba(4,249,204,1);color:white;border-radius:2px;'>${this._obj.text}</div>
       <img style='width:40px;height:55px;' src='${isActive ? icon : iconActive}'/>
@@ -31,7 +31,7 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
       <div style='font-size:12px;display:flex;background-color:${isActive ? "rgba(4,108,249,1)" : "#2C5081"};color:white;'>
           <div style='padding:5px 0px;margin-left:15px;width:70px;'>更新时间</div>
       </div>
-  <div style='overflow-y: auto;overflow-x: hidden;height:150px;background-color:${isActive ? "#1D4476" : "#5B666C"};' class='cell-area'>
+  <div class="scroll-1" style='overflow-y: auto;overflow-x: hidden;height:150px;background-color:${isActive ? "#1D4476" : "#5B666C"};' class='cell-area'>
   `;
   for (let x of this._obj.children) {
     cells =
@@ -42,7 +42,7 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
       <div style=';width:70px;'>
       <div>${x.name}</div>
       </div>
-      <div>${x.value}</div>
+      <div>${x.value} ${x.unit}</div>
       </div>
       </div>`;
   }
