@@ -99,6 +99,11 @@ export class MapMonitorStore {
     return this.pmcodes.find((i) => i.pmCode == this.currentPmCode);
   }
 
+  @computed
+  get currentParkData() {
+    return this.parks.find((i) => i.id === this.currentPark);
+  }
+
   @observable parks: Array<Park> = [];
   @observable factories: Array<Factory> = [];
   @observable pmcodes: Array<PMCode> = [];
@@ -262,19 +267,6 @@ export class MapMonitorStore {
       this.togglePlayPollution(false);
     }
     this.fillPollution();
-    // this.mapvLayer.update({
-    //   animation: {
-    //     size: Math.random() * 40,
-    //     type: "time", // 按时间展示动画
-    //     stepsRange: {
-    //       // 动画时间范围,time字段中值
-    //       start: this.currentTime,
-    //       end: this.currentTime
-    //     },
-    //     trails: 10, // 时间动画的拖尾大小
-    //     duration: 5 // 单个动画的时间，单位秒
-    //   }
-    // });
   }
 
   @computed
@@ -291,61 +283,7 @@ export class MapMonitorStore {
   fillPollution() {
     this.clearOverlay();
     if (!this.curPollutionData) return;
-    let data = [] as any;
-
-    this.curPollutionData.pmValues.forEach((pmValue) => {
-      data.push({
-        geometry: {
-          type: "Point",
-          coordinates: [pmValue.longitude, pmValue.latitude],
-        },
-        count: Number(pmValue.specificValue) * 100,
-      });
-      // });
-
-      // i.pmValues.forEach((pmValue, pmIndex) => {
-      //   data.push({
-      //     geometry: {
-      //       type: "Point",
-      //       coordinates: [Number(i.longitude) - 0.0005 + Math.random() * 0.001, Number(i.latitude) - 0.0005 + Math.random() * 0.001]
-      //     },
-      //     count: Math.random() * 1000,
-      //     time: pmIndex
-      //   });
-      // });
-    });
-    this.mapvLayer = new mapv.baiduMapLayer(this.map, new mapv.DataSet(data), {
-      size: store.config.sysParams.point_size.paramValue,
-      // gradient: { 0.25: "rgb(0,0,255)", 0.55: "rgb(0,255,0)", 0.85: "yellow", 1.0: "rgb(255,0,0)" },
-      gradient: { 0.16: "rgb(0,255,0)", 0.33: "yellow", 0.5: "#ef8432", 0.666: "rgb(255,0,0)", 1: "#8b1b4a" },
-      unit: "m",
-      lineWidth: 0,
-      globalCompositeOperation: "lighter",
-      globalAlpha: 1,
-      // max: 1,
-      // range: [0, 100], // 过滤显示数据范围
-      minOpacity: 1, // 热力图透明度
-      maxOpacity: 1,
-      // label: {
-      //   show: true,
-      //   fillStyle: "white"
-      //   // shadowColor: 'yellow',
-      //   // font: '20px Arial',
-      //   // shadowBlur: 10,
-      // },
-      draw: "grid",
-      // animation: {
-      //   type: "time", // 按时间展示动画
-      //   stepsRange: {
-      //     // 动画时间范围,time字段中值
-      //     start: 0,
-      //     end: this.maxTime
-      //   },
-      //   trails: 10, // 时间动画的拖尾大小
-      //   duration: 5 // 单个动画的时间，单位秒
-      // }
-    });
-    this.curOverlays.push(this.mapvLayer);
+    console.log(this.polltionDatas);
   }
 
   @action.bound
@@ -359,9 +297,33 @@ export class MapMonitorStore {
 
   @action.bound
   updateMap() {
-    if (!this.map || !this.curParkData[0]) return;
-    let mapViewObj = this.map.getViewport(utils.array.formatToLatLngShort(this.curParkData[0].parkPoints), {});
-    this.map.centerAndZoom(mapViewObj.center, mapViewObj.zoom);
+    const [curParkdata] = this.curParkData;
+    if (this.map) {
+      if (!curParkdata) return;
+      let mapViewObj = this.map.getViewport(utils.array.formatToLatLngShort(curParkdata.parkPoints), {});
+      this.map.centerAndZoom(mapViewObj.center, mapViewObj.zoom);
+    }
+    const krigingMap = store.map.krigingMap;
+    if (krigingMap.map) {
+      const center = this.currentParkData?.center;
+      if (!center) return;
+      krigingMap.handleParkChange({ parkCenter: center });
+      let coord: any = [[]];
+      let lngs: any = [];
+      let lats: any = [];
+      curParkdata.parkPoints.forEach((i) => {
+        coord[0].push([Number(i.longitude), Number(i.latitude)]);
+        lngs.push(Number(i.longitude));
+        lats.push(Number(i.latitude));
+      });
+      console.log({ coord, lngs, lats });
+      krigingMap.trainAndReDrawKriging({
+        coord,
+        lats,
+        lngs,
+        values: [0, 100, 200, 400],
+      });
+    }
   }
 
   @action.bound
@@ -370,6 +332,7 @@ export class MapMonitorStore {
       this.map = e.currentTarget;
       //@ts-ignore
       this.map.setMapStyle({ features: [], style: "midnight" });
+      console.log(123);
 
       // this.fillPollution();
       this.updateMap();

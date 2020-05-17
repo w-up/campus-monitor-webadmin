@@ -33,6 +33,7 @@ import { Report } from "./Report";
 import { RootStore } from "./RootStore";
 import { WsStore } from "./WsStore";
 import { AlertModal } from "./alert/AlertModal";
+import { KrigingMapStore } from './mapMonitor/krigingMap';
 
 export const store = {
   ws: new WsStore(),
@@ -44,6 +45,7 @@ export const store = {
   dynamicSource: new DynamicSourceStore(),
   map: {
     drawMap: new DrawMapStore(),
+    krigingMap: new KrigingMapStore()
   },
   screen: {
     parkScreenMap: new ParkScreenMapStore(),

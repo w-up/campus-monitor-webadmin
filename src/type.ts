@@ -8,6 +8,7 @@ export interface Park {
   createUser?: any;
   modifyTime: string;
   modifyUser?: any;
+  center?: string[];
   isDelete: number;
 }
 

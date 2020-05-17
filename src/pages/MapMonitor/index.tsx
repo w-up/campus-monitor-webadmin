@@ -9,6 +9,7 @@ import { Trending } from "./Trending";
 import { Contribution } from "./Contribution";
 import { MonitorAlert } from "./MonitorAlert";
 import { useStore } from "../../stores/index";
+import { KrigingMap } from "./KrigingMap";
 
 export const MapMonitorPage = () => {
   const { mapMonitor } = useStore();
@@ -16,8 +17,8 @@ export const MapMonitorPage = () => {
     mapMonitor.init();
   }, []);
   return useObserver(() => (
-    <div className="mapmonitor-page flex" style={{ width: "100vw",backgroundColor: "#061630" }}>
-      <div style={{ width: "25%", height: "calc(100vh - 64px)"}}>
+    <div className="mapmonitor-page flex" style={{ width: "100vw", backgroundColor: "#061630" }}>
+      <div style={{ width: "25%", height: "calc(100vh - 64px)" }}>
         <Tabs type="card" size="large" defaultActiveKey={mapMonitor.currentTabKey} onChange={mapMonitor.selectTab}>
           <Tabs.TabPane key="1" tab={<Icon type="area-chart" />}>
             <RuntimeMonitor />
@@ -36,10 +37,10 @@ export const MapMonitorPage = () => {
           </Tabs.TabPane>
         </Tabs>
       </div>
-      <div style={{ width: "70%" }}>
-        <MapMonitorMap />
+      <div style={{ width: "70%" }}>{mapMonitor.currentTabKey !== "2" ? <MapMonitorMap /> : <KrigingMap />}</div>
+      <div className="copyright fixed bottom-0 w-full text-center pb-1" style={{ color: "#88a8c5" }}>
+        版权所有: 武汉三藏科技有限责任公司
       </div>
-      <div className="copyright fixed bottom-0 w-full text-center pb-1" style={{color:"#88a8c5"}}>版权所有: 武汉三藏科技有限责任公司</div>
     </div>
   ));
 };

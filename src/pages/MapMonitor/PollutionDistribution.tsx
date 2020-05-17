@@ -7,6 +7,7 @@ import api from "services";
 import { PMCode } from "../../type";
 import moment from "moment";
 import Progress from "antd/lib/progress";
+import { useEffect } from "react";
 
 export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFormUtils }) => {
   const { getFieldDecorator } = form;
