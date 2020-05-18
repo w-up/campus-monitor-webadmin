@@ -304,7 +304,7 @@ export class MapMonitorStore {
       this.map.centerAndZoom(mapViewObj.center, mapViewObj.zoom);
     }
     const krigingMap = store.map.krigingMap;
-    if (krigingMap.map) {
+    if (krigingMap.map && curParkdata) {
       const center = this.currentParkData?.center;
       if (!center) return;
       krigingMap.handleParkChange({ parkCenter: center });

@@ -180,8 +180,6 @@ export const ParkScreen24HourChart = () => {
   }, []);
 
   return useObserver(() => (
-    <div style={{ height: "40%" }}>
-      <ReactEcharts ref={chartRef} option={store.option} style={{ width: "100%", height: "100%" }} />
-    </div>
+    <div style={{ height: "40%" }}>{parkScreenMap.dailyData.points.length > 0 && <ReactEcharts ref={chartRef} option={store.option} style={{ width: "100%", height: "100%" }} />}</div>
   ));
 };
