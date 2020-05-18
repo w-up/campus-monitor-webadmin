@@ -8,6 +8,7 @@ import { PMCode } from "../../type";
 import moment from "moment";
 import Progress from "antd/lib/progress";
 import { useEffect } from "react";
+import times from "lodash/times";
 
 export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFormUtils }) => {
   const { getFieldDecorator } = form;
@@ -103,12 +104,12 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
           </Form.Item>
           <Form.Item label="起始时间">
             {getFieldDecorator("timeStart", { initialValue: moment().subtract(1, "week"), rules: [{ required: true }] })(
-              <DatePicker allowClear={false} className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />
+              <DatePicker allowClear={false} className="w-full" showTime={{ format: "HH" }} format="YYYY-MM-DD HH" />
             )}
           </Form.Item>
           <Form.Item label="终止时间">
             {getFieldDecorator("timeEnd", { initialValue: moment(), rules: [{ required: true, message: "请选择终止时间" }] })(
-              <DatePicker allowClear={false} className="w-full" showTime format="YYYY-MM-DD HH:mm:ss" />
+              <DatePicker allowClear={false} className="w-full" showTime={{ format: "HH" }} format="YYYY-MM-DD HH" />
             )}
           </Form.Item>
 
@@ -124,7 +125,7 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
         <div className="text-white">播放污染情况变化</div>
         <div className="primary-text-color justify-end flex items-center ">
           <Icon type="clock-circle" theme="filled" />
-          <span className="ml-2 text-sm">2020-01-03 15:00:00</span>
+          <span className="ml-2 text-sm">{mapMonitor.polltionDatas.times[mapMonitor.currentTime]}</span>
         </div>
         <div className="stat-panel p-2 text-white flex items-center mt-2">
           <div onClick={(e) => mapMonitor.togglePlayPollution()}>

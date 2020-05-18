@@ -1,4 +1,4 @@
-import { action, observable, computed } from "mobx";
+import { action, observable, computed, toJS } from "mobx";
 import api from "services";
 import { Park, Factory, PMCode, PMValue, AlarmInfo, AllParkData, PollutionData, SiteData } from "../../type";
 import * as mapv from "mapv";
@@ -162,9 +162,9 @@ export class MapMonitorStore {
   }
 
   @action.bound
-  async loadParkData({ parkId, pmCode }: { parkId?: string; pmCode?: string } = { parkId: this.currentPark, pmCode: this.currentPmCode }) {
+  async loadParkData({ parkId, pmCode }: { parkId: string; pmCode?: string } = { parkId: this.currentPark, pmCode: this.currentPmCode }) {
     // if (this.map) { this.map.clearOverlays() }
-    const result = await api.MapMonitor.getMapInfoByPmCodeAndParkId({ parkId: Number(parkId), pmCode: this.currentPmCode });
+    const result = await api.MapMonitor.getMapInfoByPmCodeAndParkId({ parkId, pmCode: this.currentPmCode });
     if (result.data) {
       this.curParkData = result.data;
       this.updateMap();
@@ -192,8 +192,9 @@ export class MapMonitorStore {
   }
 
   async loadFactories({ parkId = this.currentPark }: { parkId?: any }) {
+    console.log({ parkId });
     const result = await api.MapMonitor.getFactoryList({
-      parkId: Number(parkId),
+      parkId,
     });
     if (result.data) {
       this.factories = result.data;
@@ -226,7 +227,15 @@ export class MapMonitorStore {
   }
 
   // 污染分布
-  @observable polltionDatas: Array<PollutionData> = [];
+  @observable polltionDatas: PollutionData = {
+    center: [],
+    colors: [],
+    coord: [],
+    lats: [],
+    lngs: [],
+    times: [],
+    values: [],
+  };
   @observable currentTime = 0;
   @observable mapvLayer = null as any;
   @action.bound
@@ -258,7 +267,7 @@ export class MapMonitorStore {
 
   @action.bound
   setCurrentTime(val: number, opt?: { stop: boolean }) {
-    if (val >= this.polltionDatas[0]?.pmValues.length) {
+    if (val >= this.polltionDatas.times.length) {
       this.currentTime = 0;
     } else {
       this.currentTime = val;
@@ -271,19 +280,16 @@ export class MapMonitorStore {
 
   @computed
   get maxTime() {
-    return this.polltionDatas[0]?.pmValues.length;
-  }
-
-  @computed
-  get curPollutionData() {
-    return this.polltionDatas[this.currentTime];
+    return this.polltionDatas.times.length;
   }
 
   @action.bound
   fillPollution() {
     this.clearOverlay();
-    if (!this.curPollutionData) return;
-    console.log(this.polltionDatas);
+    if (!this.polltionDatas) return;
+    const { center, colors, coord, lats, lngs, times, values } = toJS(this.polltionDatas);
+    console.log(center);
+    store.map.krigingMap.trainAndReDrawKriging({ coord, lats: lats[this.currentTime], lngs: lngs[this.currentTime], values: values[this.currentTime], colors: colors[this.currentTime] });
   }
 
   @action.bound
@@ -308,21 +314,21 @@ export class MapMonitorStore {
       const center = this.currentParkData?.center;
       if (!center) return;
       krigingMap.handleParkChange({ parkCenter: center });
-      let coord: any = [[]];
-      let lngs: any = [];
-      let lats: any = [];
-      curParkdata.parkPoints.forEach((i) => {
-        coord[0].push([Number(i.longitude), Number(i.latitude)]);
-        lngs.push(Number(i.longitude));
-        lats.push(Number(i.latitude));
-      });
-      console.log({ coord, lngs, lats });
-      krigingMap.trainAndReDrawKriging({
-        coord,
-        lats,
-        lngs,
-        values: [0, 100, 200, 400],
-      });
+      // let coord: any = [[]];
+      // let lngs: any = [];
+      // let lats: any = [];
+      // curParkdata.parkPoints.forEach((i) => {
+      //   coord[0].push([Number(i.longitude), Number(i.latitude)]);
+      //   lngs.push(Number(i.longitude));
+      //   lats.push(Number(i.latitude));
+      // });
+      // console.log({ coord, lngs, lats });
+      // krigingMap.trainAndReDrawKriging({
+      //   coord,
+      //   lats,
+      //   lngs,
+      //   values: [0, 100, 200, 400],
+      // });
     }
   }
 

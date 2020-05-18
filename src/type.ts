@@ -230,12 +230,13 @@ export type AlarmInfo = {
 };
 
 export type PollutionData = {
-  statisticalTime: string;
-  pmValues: Array<{
-    longitude: string;
-    latitude: string;
-    specificValue: string;
-  }>;
+  center: string[];
+  colors: string[][];
+  coord: string[][][];
+  lats: string[][];
+  lngs: string[][];
+  times: string[];
+  values: string[][];
 };
 
 export type DynamicSourceData = {

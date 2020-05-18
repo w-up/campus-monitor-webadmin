@@ -71,8 +71,8 @@ export class DynamicSourceStore {
   }
 
   @action.bound
-  async loadParkData({ parkId, pmCode }: { parkId?: string; pmCode?: string } = { parkId: this.currentPark, pmCode: this.currentPmCode }) {
-    const result = await api.MapMonitor.getMapInfoByPmCodeAndParkId({ parkId: Number(parkId), pmCode: this.currentPmCode });
+  async loadParkData({ parkId, pmCode }: { parkId: string; pmCode?: string } = { parkId: this.currentPark, pmCode: this.currentPmCode }) {
+    const result = await api.MapMonitor.getMapInfoByPmCodeAndParkId({ parkId, pmCode: this.currentPmCode });
     if (result.data) {
       this.curParkData = result.data;
       const site = this.curParkData[0]?.siteDatas[0];
