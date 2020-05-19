@@ -809,7 +809,7 @@ export const MyEnterprisePage = Form.create()(
                     <Card title={<Row>厂区范围</Row>} bordered size="small">
                       {getFieldDecorator("scopeType", { initialValue: "location", rules: [{ required: false }] })(
                         <Radio.Group disabled={!factoryInfoEditable}>
-                          <Radio value="map">地图绘制</Radio>
+                          <Radio value="map" onClick={e => drawMap.setPathsByScope(scope)}>地图绘制</Radio>
                           <Radio value="location">输入经纬度</Radio>
                         </Radio.Group>
                       )}
