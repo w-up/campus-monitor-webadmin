@@ -103,7 +103,7 @@ export const AlertManagePage = Form.create()(
           render: (val) => moment(val).format("YYYY-MM-DD HH:mm:ss"),
         },
         {
-          title: "因子分类",
+          title: "检测类型",
           dataIndex: "jcType",
           key: "jcType",
           width: 100,
@@ -121,7 +121,7 @@ export const AlertManagePage = Form.create()(
           width: 100,
         },
         {
-          title: "告警等级",
+          title: "设备名称",
           dataIndex: "warnLevel",
           key: "warnLevel",
           width: 80,
@@ -215,7 +215,7 @@ export const AlertManagePage = Form.create()(
           render: (val) => moment(val).format("YYYY-MM-DD HH:mm:ss"),
         },
         {
-          title: "因子分类",
+          title: "检测类型",
           dataIndex: "jcType",
           key: "jcType",
           width: 100,
@@ -233,7 +233,7 @@ export const AlertManagePage = Form.create()(
           width: 100,
         },
         {
-          title: "告警等级",
+          title: "设备名称",
           dataIndex: "warnLevel",
           key: "warnLevel",
           width: 80,
@@ -315,7 +315,7 @@ export const AlertManagePage = Form.create()(
           render: (val) => moment(val).format("YYYY-MM-DD HH:mm:ss"),
         },
         {
-          title: "因子分类",
+          title: "检测类型",
           dataIndex: "jcType",
           key: "jcType",
           width: 100,
@@ -429,7 +429,9 @@ export const AlertManagePage = Form.create()(
 
     return (
       <div className="alertPage">
-        <div className="fixed bottom-0 text-center pb-1" style={{ width:"calc(100% - 200px)", color:"#88a8c5", zIndex:9999}}>版权所有: 武汉三藏科技有限责任公司</div>
+        <div className="fixed bottom-0 text-center pb-1" style={{ width: "calc(100% - 200px)", color: "#88a8c5", zIndex: 9999 }}>
+          版权所有: 武汉三藏科技有限责任公司
+        </div>
         <Spin spinning={loading}>
           <div style={{ background: "#fff", marginBottom: 20, border: "1px solid #e8e8e8", borderLeft: 0, borderRight: 0, padding: "20px" }}>
             <Breadcrumb>
@@ -450,7 +452,7 @@ export const AlertManagePage = Form.create()(
                   </Checkbox>
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="">
-                    {getFieldDecorator("factoryIds", { initialValue: factoryList && factoryList.map(v => v.id), rules: [{ required: false }] })(
+                    {getFieldDecorator("factoryIds", { initialValue: factoryList && factoryList.map((v) => v.id), rules: [{ required: false }] })(
                       <Checkbox.Group style={{ width: "100%" }}>
                         <Row gutter={4}>
                           {factoryList.map((item) => (
@@ -480,7 +482,7 @@ export const AlertManagePage = Form.create()(
                         全选
                       </Checkbox>
                       <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="">
-                        {getFieldDecorator("pmList", { initialValue: pmCodeList && pmCodeList.map(v => v.pmCode), rules: [{ required: false }] })(
+                        {getFieldDecorator("pmList", { initialValue: pmCodeList && pmCodeList.map((v) => v.pmCode), rules: [{ required: false }] })(
                           <Checkbox.Group style={{ width: "100%" }}>
                             <Row>
                               {pmCodeList.map((item) => (

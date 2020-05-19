@@ -60,7 +60,7 @@ export const HistoryDataPage = Form.create()(
       historyData.total = 0;
       historyData.columns = [];
       historyData.dataList = [];
-    }
+    };
 
     const doSubmit = (e) => {
       e.preventDefault();
@@ -124,7 +124,7 @@ export const HistoryDataPage = Form.create()(
                   }
                 >
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="选择园区">
-                    {getFieldDecorator("parkId", { initialValue: parkTree && parkTree[0] && parkTree[0].parkId, rules: [{ required: true, message: '请选择园区' }] })(
+                    {getFieldDecorator("parkId", { initialValue: parkTree && parkTree[0] && parkTree[0].parkId, rules: [{ required: true, message: "请选择园区" }] })(
                       <Select onChange={() => setFieldsValue({ factoryId: "" })} placeholder="请选择" size="small">
                         {parkTree.map((item) => (
                           <Option key={item.parkId} value={item.parkId}>
@@ -135,7 +135,7 @@ export const HistoryDataPage = Form.create()(
                     )}
                   </Form.Item>
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测区域">
-                    {getFieldDecorator("factoryId", { initialValue: factoryList && factoryList[0] && factoryList[0].factoryId, rules: [{ required: true, message: '请选择监测区域' }] })(
+                    {getFieldDecorator("factoryId", { initialValue: factoryList && factoryList[0] && factoryList[0].factoryId, rules: [{ required: true, message: "请选择监测区域" }] })(
                       <Select placeholder="请选择" size="small">
                         {factoryList.map((item) => (
                           <Option key={item.factoryId} value={item.factoryId}>
@@ -146,7 +146,7 @@ export const HistoryDataPage = Form.create()(
                     )}
                   </Form.Item>
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="站点名称">
-                    {getFieldDecorator("siteId", { initialValue: siteList && siteList[0] && siteList[0].siteId, rules: [{ required: true, message: '请选择站点名称' }] })(
+                    {getFieldDecorator("siteId", { initialValue: siteList && siteList[0] && siteList[0].siteId, rules: [{ required: true, message: "请选择站点名称" }] })(
                       <Select placeholder="请选择" size="small">
                         {siteList.map((item) => (
                           <Option key={item.siteId} value={item.siteId}>
@@ -156,8 +156,8 @@ export const HistoryDataPage = Form.create()(
                       </Select>
                     )}
                   </Form.Item>
-                  <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="因子分类">
-                    {getFieldDecorator("ptId", { initialValue: ptList && ptList[0] && ptList[0].id, rules: [{ required: true, message: '请选择因子分类' }] })(
+                  <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测类型">
+                    {getFieldDecorator("ptId", { initialValue: ptList && ptList[0] && ptList[0].id, rules: [{ required: true, message: "请选择监测类型" }] })(
                       <Select placeholder="请选择" size="small">
                         {ptList.map((item) => (
                           <Option key={item.id} value={item.id}>
@@ -169,12 +169,14 @@ export const HistoryDataPage = Form.create()(
                   </Form.Item>
                   {!!getFieldValue("ptId") && (
                     <Row>
-                      <Divider orientation="left"><span style={{ color: 'red' }}>*</span> 监测因子</Divider>
+                      <Divider orientation="left">
+                        <span style={{ color: "red" }}>*</span> 监测因子
+                      </Divider>
                       <Checkbox style={{ fontSize: "10px" }} checked={allChecked} onChange={onSelectAll}>
                         全选
                       </Checkbox>
                       <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="">
-                        {getFieldDecorator("pmCodeList", { initialValue: pmCodeList && pmCodeList.map(v => v.pmCode), rules: [{ required: true, message: '请选择监测因子' }] })(
+                        {getFieldDecorator("pmCodeList", { initialValue: pmCodeList && pmCodeList.map((v) => v.pmCode), rules: [{ required: true, message: "请选择监测因子" }] })(
                           <Checkbox.Group style={{ width: "100%" }}>
                             <Row>
                               {pmCodeList.map((item) => (
@@ -190,9 +192,11 @@ export const HistoryDataPage = Form.create()(
                       </Form.Item>
                     </Row>
                   )}
-                  <Divider orientation="left"><span style={{ color: 'red' }}>*</span> 起止时间</Divider>
+                  <Divider orientation="left">
+                    <span style={{ color: "red" }}>*</span> 起止时间
+                  </Divider>
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="">
-                    {getFieldDecorator("timeRange", { initialValue: [moment().subtract(1, "weeks"), moment()], rules: [{ required: true, message: '请选择起止时间' }] })(<RangePicker />)}
+                    {getFieldDecorator("timeRange", { initialValue: [moment().subtract(1, "weeks"), moment()], rules: [{ required: true, message: "请选择起止时间" }] })(<RangePicker />)}
                   </Form.Item>
 
                   <Button type="primary" htmlType="submit" block>
@@ -218,7 +222,9 @@ export const HistoryDataPage = Form.create()(
             </Col>
           </Row>
         </Spin>
-        <div className="fixed bottom-0 text-center pb-1" style={{ width:"calc(100% - 200px)", color:"#88a8c5", zIndex:9999}}>版权所有: 武汉三藏科技有限责任公司</div>
+        <div className="fixed bottom-0 text-center pb-1" style={{ width: "calc(100% - 200px)", color: "#88a8c5", zIndex: 9999 }}>
+          版权所有: 武汉三藏科技有限责任公司
+        </div>
       </div>
     );
   })

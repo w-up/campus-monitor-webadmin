@@ -6,9 +6,11 @@ import kriging from "../../pages/MapMonitor/kriging";
 import ImageLayer from "ol/layer/Image";
 import ImageCanvasSource from "ol/source/ImageCanvas";
 import { message } from "antd";
+import { store } from "../index";
+import { Overlay } from "ol";
 
 export class KrigingMapStore {
-  @observable map: any = {};
+  @observable map: any = null;
   @observable timer = null;
   @observable onPlay = false;
   @observable index = 0;
@@ -46,6 +48,30 @@ export class KrigingMapStore {
   @computed get extent() {
     let extent = [this.center[0] - 0.005, this.center[1] - 0.005, this.center[0] + 0.005, this.center[1] + 0.005];
     return extent;
+  }
+
+  @action.bound
+  renderSite() {
+    if (!this.map) return;
+    this.map.getOverlays().forEach((i) => this.map.removeOverlay(i));
+    store.mapMonitor.curParkData.forEach((park) => {
+      park.siteDatas.forEach((site) => {
+        //@ts-ignore
+        const position = transform([site.gpsX, site.gpsY], "BD:09", "EPSG:3857");
+        const element = document.createElement("div");
+        element.innerHTML = `
+       <div>
+        <img style="maxWidth:40px;height:40px" src=${Number(site.limit) && Number(site.collectValue) > Number(site.limit) ? require("../../assets/red.png") : require("../../assets/green.png")} />
+        <div class="number">${site.collectValue || 0}</div>
+       </div>
+       `;
+        const overlay = new Overlay({
+          position,
+          element,
+        });
+        this.map.addOverlay(overlay);
+      });
+    });
   }
 
   @action.bound

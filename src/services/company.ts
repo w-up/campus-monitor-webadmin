@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 
+ * @Descripttion:
  * @Author: shenchuanrun
  * @Date: 2020-03-03 14:18:27
  * @LastEditors: shenchuanrun
@@ -7,8 +7,8 @@
  */
 import { GET } from "../utils/request";
 
-export default{
-  getCompanyBusinessInfoById(data: { companyId: number }) {
-    return GET('/company-business-info/getCompanyBusinessInfoById', data)
-  }
-}
+export default {
+  getCompanyBusinessInfoById(data: { companyId: string }) {
+    return GET("/company-business-info/getCompanyBusinessInfoById", data);
+  },
+};

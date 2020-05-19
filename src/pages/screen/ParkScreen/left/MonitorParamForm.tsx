@@ -53,8 +53,8 @@ export const MonitorParamForm = Form.create()(({ form }: { form: WrappedFormUtil
       <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
         <Spin spinning={store.loading}>
           {parkScreenMap.currentPmCode && (
-            <Form.Item label="因子分类">
-              {getFieldDecorator("type", { initialValue: parkScreenMap.currentPmType, rules: [{ required: true, message: "请选择因子分类" }] })(
+            <Form.Item label="监测类型">
+              {getFieldDecorator("type", { initialValue: parkScreenMap.currentPmType, rules: [{ required: true, message: "请选择监测类型" }] })(
                 <Select onChange={parkScreenMap.setCurrentPmType} getPopupContainer={(e: any) => e.parentNode}>
                   {Object.values(parkScreenMap.pmTypes).map((item, index) => (
                     <Select.Option value={item.id} key={index}>

@@ -187,7 +187,7 @@ export class MapMonitorStore {
   }
   @action.bound
   async loadSitePmValueList() {
-    const result = await api.MapMonitor.getSitePmValueList({ pmCode: this.currentPmCode, parkId: Number(this.currentPark), factoryId: Number(this.currentFactory) });
+    const result = await api.MapMonitor.getSitePmValueList({ pmCode: this.currentPmCode, parkId: this.currentPark, factoryId: this.currentFactory });
     this.pmValues = result.data;
   }
 
@@ -207,7 +207,7 @@ export class MapMonitorStore {
   async loadPmCodes({ factoryId = this.currentFactory }: { factoryId?: any }) {
     const res = await api.MapMonitor.getPmCodeList({
       parkId: this.currentPark,
-      factoryId: Number(factoryId),
+      factoryId,
     });
     if (res) {
       this.pmcodes = res.data;
@@ -246,9 +246,11 @@ export class MapMonitorStore {
       timeStart: moment(timeStart).format("YYYY-MM-DD HH"),
       timeEnd: moment(timeEnd).format("YYYY-MM-DD HH"),
     });
-    if (res.data) {
+    if (res.data?.times) {
       this.polltionDatas = res.data;
-      this.setCurrentTime(0);
+      setTimeout(() => {
+        this.setCurrentTime(0);
+      }, 1000);
     }
   }
 
@@ -280,7 +282,7 @@ export class MapMonitorStore {
 
   @computed
   get maxTime() {
-    return this.polltionDatas.times.length;
+    return this.polltionDatas.times?.length;
   }
 
   @action.bound
@@ -288,7 +290,7 @@ export class MapMonitorStore {
     this.clearOverlay();
     if (!this.polltionDatas) return;
     const { center, colors, coord, lats, lngs, times, values } = toJS(this.polltionDatas);
-    console.log(center);
+    console.log(coord);
     store.map.krigingMap.trainAndReDrawKriging({ coord, lats: lats[this.currentTime], lngs: lngs[this.currentTime], values: values[this.currentTime], colors: colors[this.currentTime] });
   }
 
@@ -314,6 +316,7 @@ export class MapMonitorStore {
       const center = this.currentParkData?.center;
       if (!center) return;
       krigingMap.handleParkChange({ parkCenter: center });
+      krigingMap.renderSite();
       // let coord: any = [[]];
       // let lngs: any = [];
       // let lats: any = [];

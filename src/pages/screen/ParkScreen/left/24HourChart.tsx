@@ -185,7 +185,7 @@ export const ParkScreen24HourChart = () => {
         <ReactEcharts ref={chartRef} option={store.option} style={{ width: "100%", height: "100%" }} />
       ) : (
         <div className="w-full h-full flex justify-center items-center primary-text-color">
-          <div style={{ padding: "30px 0px", background: "#284070", borderRadius: "5px" }}>暂无数据</div>
+          <div style={{ padding: "30px 50px", background: "#284070", borderRadius: "5px" }}>暂无数据</div>
         </div>
       )}
     </div>

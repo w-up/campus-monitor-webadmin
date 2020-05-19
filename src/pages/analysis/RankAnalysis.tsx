@@ -37,7 +37,7 @@ const columns = [
     title: "贡献率",
     key: "rateNum",
     dataIndex: "rateNum",
-    render: val => `${(val * 100).toFixed(2)}%`,
+    render: (val) => `${(val * 100).toFixed(2)}%`,
   },
 ];
 
@@ -67,7 +67,7 @@ const columns2 = [
     title: "贡献率",
     key: "rateNum",
     dataIndex: "rateNum",
-    render: val => `${(val * 100).toFixed(2)}%`,
+    render: (val) => `${(val * 100).toFixed(2)}%`,
   },
 ];
 
@@ -141,7 +141,7 @@ export const RankAnalysisPage = Form.create()(
                   </Form.Item> */}
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计区域">
-                    {getFieldDecorator("parkId", { initialValue: parkTree && parkTree[0] && parkTree[0].parkId, rules: [{ required: true, message: '请选择统计区域' }] })(
+                    {getFieldDecorator("parkId", { initialValue: parkTree && parkTree[0] && parkTree[0].parkId, rules: [{ required: true, message: "请选择统计区域" }] })(
                       <Select onChange={() => setFieldsValue({ factoryId: "" })} placeholder="请选择" size="small">
                         {parkTree?.map((item) => (
                           <Option key={item.parkId} value={item.parkId}>
@@ -152,8 +152,8 @@ export const RankAnalysisPage = Form.create()(
                     )}
                   </Form.Item>
 
-                  <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="因子分类">
-                    {getFieldDecorator("ptId", { initialValue: ptList && ptList[0] && ptList[0].id, rules: [{ required: true, message: '请选择因子分类' }] })(
+                  <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="监测类型">
+                    {getFieldDecorator("ptId", { initialValue: ptList && ptList[0] && ptList[0].id, rules: [{ required: true, message: "请选择监测类型" }] })(
                       <Select placeholder="请选择" size="small">
                         {ptList.map((item) => (
                           <Option key={item.id} value={item.id}>
@@ -165,7 +165,7 @@ export const RankAnalysisPage = Form.create()(
                   </Form.Item>
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="监测因子">
-                    {getFieldDecorator("pmCode", { initialValue: pmCodeList && pmCodeList[0] && pmCodeList[0].pmCode, rules: [{ required: true, message: '请选择监测因子' }] })(
+                    {getFieldDecorator("pmCode", { initialValue: pmCodeList && pmCodeList[0] && pmCodeList[0].pmCode, rules: [{ required: true, message: "请选择监测因子" }] })(
                       <Select placeholder="请选择" size="small">
                         {pmCodeList.map((item) => (
                           <Option key={item.pmCode} value={item.pmCode}>
@@ -179,7 +179,7 @@ export const RankAnalysisPage = Form.create()(
                   <Divider orientation="left">时间</Divider>
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计周期">
-                    {getFieldDecorator("timeCycle", { initialValue: 1, rules: [{ required: true, message: '请选择统计周期' }] })(
+                    {getFieldDecorator("timeCycle", { initialValue: 1, rules: [{ required: true, message: "请选择统计周期" }] })(
                       <Radio.Group style={{ width: "100%" }} size="small" buttonStyle="solid">
                         <Radio.Button value={1} style={{ width: "33%", textAlign: "center" }}>
                           日
@@ -196,41 +196,58 @@ export const RankAnalysisPage = Form.create()(
 
                   {getFieldValue("timeCycle") === 1 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: '请选择统计时间' }] })(
+                      {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: "请选择统计时间" }] })(
                         <DatePicker allowClear={false} format="YYYY-MM-DD" style={{ width: "100%" }} size="small" />
                       )}
                     </Form.Item>
                   )}
                   {getFieldValue("timeCycle") === 2 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: '请选择统计时间' }] })(<MonthPicker allowClear={false} format="YYYY-MM" style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: "请选择统计时间" }] })(
+                        <MonthPicker allowClear={false} format="YYYY-MM" style={{ width: "100%" }} size="small" />
+                      )}
                     </Form.Item>
                   )}
                   {getFieldValue("timeCycle") === 3 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: '请选择统计时间' }] })(<DatePicker allowClear={false} onPanelChange={(val: any) => {
-                        setFieldsValue({ collectDate: moment(val).startOf('year') });
-                        setDateOpen(false);
-                      }} open={dateOpen} onOpenChange={setDateOpen} mode="year" format="YYYY" style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: "请选择统计时间" }] })(
+                        <DatePicker
+                          allowClear={false}
+                          onPanelChange={(val: any) => {
+                            setFieldsValue({ collectDate: moment(val).startOf("year") });
+                            setDateOpen(false);
+                          }}
+                          open={dateOpen}
+                          onOpenChange={setDateOpen}
+                          mode="year"
+                          format="YYYY"
+                          style={{ width: "100%" }}
+                          size="small"
+                        />
+                      )}
                     </Form.Item>
                   )}
 
                   {getFieldValue("timeCycle") === 4 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true, message: '请选择统计时间' }] })(<WeekPicker allowClear={false} style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true, message: "请选择统计时间" }] })(
+                        <WeekPicker allowClear={false} style={{ width: "100%" }} size="small" />
+                      )}
                     </Form.Item>
                   )}
 
                   {getFieldValue("timeCycle") === 5 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true, message: '请选择统计时间' }] })(<DatePicker allowClear={false} format="Q" style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: "", rules: [{ required: true, message: "请选择统计时间" }] })(
+                        <DatePicker allowClear={false} format="Q" style={{ width: "100%" }} size="small" />
+                      )}
                     </Form.Item>
                   )}
 
                   <Divider orientation="left"></Divider>
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="排名方式">
-                    {getFieldDecorator("rankType", { initialValue: 1, rules: [{ required: true, message: '请选择排名方式' }] })(
+                    {getFieldDecorator("rankType", { initialValue: 1, rules: [{ required: true, message: "请选择排名方式" }] })(
                       <Radio.Group style={{ width: "100%" }} size="small" buttonStyle="solid">
                         <Radio.Button style={{ width: "33%", textAlign: "center" }} value={1}>
                           前十
@@ -316,7 +333,9 @@ export const RankAnalysisPage = Form.create()(
               </Tabs>
             </Col>
           </Row>
-          <div className="fixed bottom-0 text-center pb-1" style={{ width:"calc(100% - 200px)", color:"#88a8c5", zIndex:9999}}>版权所有: 武汉三藏科技有限责任公司</div>
+          <div className="fixed bottom-0 text-center pb-1" style={{ width: "calc(100% - 200px)", color: "#88a8c5", zIndex: 9999 }}>
+            版权所有: 武汉三藏科技有限责任公司
+          </div>
         </Spin>
       </div>
     );

@@ -8,8 +8,16 @@ export const AlertItem = ({ item, onUpdate }: { item: AlarmInfo; onUpdate?: Func
   const { mapMonitor } = useStore();
   return useObserver(() => (
     <Card className="w-full text-white" bordered={false} style={{ background: "#2E3549", marginTop: 20, color: "white" }}>
+      {item.warnLevel && (
+        <Row className="alertCardRow border-b py-2" style={{ borderColor: "#383F52" }}>
+          <Col span={6}>告警对象:</Col>
+          <Col className="text-left" span={14} offset={4}>
+            {item.warnLevel}
+          </Col>
+        </Row>
+      )}
       <Row className="alertCardRow border-b py-2" style={{ borderColor: "#383F52" }}>
-        <Col span={6}>因子分类:</Col>
+        <Col span={6}>监测类型:</Col>
         <Col className="text-left" span={14} offset={4}>
           {item.monitorType}
         </Col>
@@ -26,21 +34,12 @@ export const AlertItem = ({ item, onUpdate }: { item: AlarmInfo; onUpdate?: Func
           {item.warnName}
         </Col>
       </Row>
-      {item.deviceName ? (
-        <Row className="alertCardRow border-b py-2" style={{ borderColor: "#383F52" }}>
-          <Col span={6}>设备名称:</Col>
-          <Col className="text-left" span={14} offset={4}>
-            {item.deviceName}
-          </Col>
-        </Row>
-      ) : (
-        <Row className="alertCardRow border-b py-2" style={{ borderColor: "#383F52" }}>
-          <Col span={6}>告警等级:</Col>
-          <Col className="text-left" span={14} offset={4}>
-            {item.warnLevel}
-          </Col>
-        </Row>
-      )}
+      <Row className="alertCardRow border-b py-2" style={{ borderColor: "#383F52" }}>
+        <Col span={6}>设备名称:</Col>
+        <Col className="text-left" span={14} offset={4}>
+          {item.deviceName}
+        </Col>
+      </Row>
       <Row className="alertCardRow border-b py-2" style={{ borderColor: "#383F52" }}>
         <Col span={6}>告警时间:</Col>
         <Col className="text-left" span={14} offset={4}>

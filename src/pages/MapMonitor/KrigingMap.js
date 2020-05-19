@@ -4,7 +4,7 @@ import { observer, useObserver } from "mobx-react";
 import "ol/ol.css";
 import Map from "ol/Map";
 import View from "ol/View";
-import { Tile } from "ol/layer";
+import { Tile, Image } from "ol/layer";
 import { XYZ, TileImage } from "ol/source";
 import TileGrid from "ol/tilegrid/TileGrid";
 import { defaults, MousePosition } from "ol/control";
@@ -30,6 +30,7 @@ import ImageCanvasSource from "ol/source/ImageCanvas";
 import coordtransform from "coordtransform";
 import kriging from "./kriging";
 import { useStore } from "stores";
+import ImageState from "ol/ImageState";
 
 const BMap = window.BMap;
 
@@ -43,6 +44,7 @@ export const KrigingMap = () => {
     //初始化地图,地图中心按需求传递
     initmap(pageStore.center);
     mapMonitor.updateMap();
+    pageStore.renderSite();
     clearInterval(pageStore.timer);
   }, []);
 
@@ -396,6 +398,7 @@ export const KrigingMap = () => {
 					})
 				])*/
     });
+
     //鼠标移入地图变手
     pageStore.map.on("pointermove", function (e) {
       var pixel = pageStore.map.getEventPixel(e.originalEvent);

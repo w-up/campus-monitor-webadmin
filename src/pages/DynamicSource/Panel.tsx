@@ -44,7 +44,7 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
           console.log("Received values of form: ", values);
           const { parkId: _parkId, endTime: _endTime, pmCode, startTime: _startTime } = values;
           const { lat, lng } = dynamicSource.curPoint;
-          const parkId = Number(_parkId);
+          const parkId = _parkId;
           const startTime = moment(_startTime).format("YYYY-MM-DD HH");
           const endTime = moment(_endTime).format("YYYY-MM-DD HH");
           try {
@@ -165,7 +165,7 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
             )}
           </Form.Item>
           <Form.Item label="终止时间">
-            {getFieldDecorator("endTime", { initialValue: store.endTime, rules: [{ required: true, message: '请选择终止时间' }] })(
+            {getFieldDecorator("endTime", { initialValue: store.endTime, rules: [{ required: true, message: "请选择终止时间" }] })(
               <DatePicker allowClear={false} disabledDate={store.disabledEndDate} className="w-full" onChange={(val) => (store.endTime = val)} showTime={{ format: "HH" }} format="YYYY-MM-DD HH" />
             )}
           </Form.Item>

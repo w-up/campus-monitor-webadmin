@@ -1,19 +1,19 @@
 import { GET, POST } from "../utils/request";
 
 export default {
-  confirmAlarmInfoByIdxxx(data: { alarmId: number; companyId?: number; unitId?: number; userId?: number; username?: string }) {
+  confirmAlarmInfoByIdxxx(data: { alarmId: number; companyId?: string; unitId?: number; userId?: number; username?: string }) {
     return GET("/mapMonitor/getMapConfigLogin", data);
   },
   getDynamicSourceByPmCodeAndParkId(data: {}) {
     return POST("/mapMonitor/getDynamicSourceByPmCodeAndParkId", data);
   },
-  getEmissionsContributionByPmCodeAndParkId(data: { parkId: number; pmCode: string; rankingType: number; statisticalTime: string; statisticalType: number }) {
+  getEmissionsContributionByPmCodeAndParkId(data: { parkId: string; pmCode: string; rankingType: number; statisticalTime: string; statisticalType: number }) {
     return POST("/mapMonitor/getEmissionsContributionByPmCodeAndParkId", data);
   },
-  getFactoryEmissionsTrendByPmCode(data: { factoryId: number; pmCode: string; type: number; statisticalTime: string }) {
+  getFactoryEmissionsTrendByPmCode(data: { factoryId: string; pmCode: string; type: number; statisticalTime: string }) {
     return POST("/mapMonitor/getFactoryEmissionsTrendByPmCode", data);
   },
-  getPollutantDistributionByPmCode(data: { parkId: number; pmCode: string; timeStart: string; timeEnd: string }) {
+  getPollutantDistributionByPmCode(data: { parkId: string; pmCode: string; timeStart: string; timeEnd: string }) {
     return POST("/mapMonitor/getPollutantDistributionByParkIdAndPmCode", data);
   },
   getParkList() {
@@ -25,13 +25,13 @@ export default {
   getPmCodeListAll() {
     return GET("mapMonitor/getPmCodeListAll");
   },
-  getFactoryList(data: { parkId: number }) {
+  getFactoryList(data: { parkId: string }) {
     return GET("/mapMonitor/getFactoryList", data);
   },
-  getPmCodeList(data: { factoryId: number; parkId: string }) {
+  getPmCodeList(data: { factoryId: string; parkId: string }) {
     return GET("/mapMonitor/getPmCodeList", data);
   },
-  getSitePmValueList(data: { pmCode: string; parkId: number; factoryId: number }) {
+  getSitePmValueList(data: { pmCode: string; parkId: string; factoryId: string }) {
     return POST("/mapMonitor/getSitePmValueList", data);
   },
   getSiteMonitorDataById(data: { siteId: string }) {
@@ -51,13 +51,13 @@ export default {
   getMapInfoByPmCodeAndParkId(data: { parkId: string; pmCode: string }) {
     return POST("/mapMonitor/getMapInfoByPmCodeAndParkId", data);
   },
-  getDynamicSourceContribution(data: { endTime: string; lng: number; lat: number; parkId: number; pmCode: string; startTime: string }) {
+  getDynamicSourceContribution(data: { endTime: string; lng: number; lat: number; parkId: string; pmCode: string; startTime: string }) {
     return POST("/mapMonitor/getDynamicSourceContribution", data);
   },
-  getDynamicSourceWindRose(data: { endTime: string; parkId: number; pmCode: string; startTime: string }) {
+  getDynamicSourceWindRose(data: { endTime: string; parkId: string; pmCode: string; startTime: string }) {
     return POST("/mapMonitor/getDynamicSourceWindRose", data);
   },
-  getDynamicSourceTraceSource(data: { endTime: string; parkId: number; pmCode: string; startTime: string }) {
+  getDynamicSourceTraceSource(data: { endTime: string; parkId: string; pmCode: string; startTime: string }) {
     return POST("/mapMonitor/getDynamicSourceTraceSource", data);
   },
   getParkListByUser() {

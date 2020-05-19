@@ -19,7 +19,7 @@ export default {
   getAllPMDataLogin() {
     return GET("/device-data/getAllPMDataLogin");
   },
-  getAllPM24HourDatasBySiteId(data: { siteId: number }) {
+  getAllPM24HourDatasBySiteId(data: { siteId: string }) {
     return POST("/device-data-history/getAllPM24HourDatasBySiteId", data);
   },
   getAllPM24HourDatasLogin(data: { pmType: number }) {
@@ -30,5 +30,5 @@ export default {
   },
   getAllSitesPM7DayDatasByFactoryId(data: { pmType: number }) {
     return POST("/device-data-history/getAllSitesPM7DayDatasByFactoryId", data);
-  }
+  },
 };

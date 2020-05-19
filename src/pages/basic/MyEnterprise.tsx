@@ -931,9 +931,9 @@ export const MyEnterprisePage = Form.create()(
                         <Descriptions.Item label="站点名称" span={1.5}>
                           {getFieldDecorator("deviceSiteInfo.siteName", { initialValue: deviceSiteInfo.siteName, rules: [{ required: false }] })(<Input disabled placeholder="请输入站点名称" />)}
                         </Descriptions.Item>
-                        <Descriptions.Item label="因子分类" span={1.5}>
+                        <Descriptions.Item label="监测类型" span={1.5}>
                           {getFieldDecorator("deviceSiteInfo.belongChildType", { initialValue: deviceSiteInfo.belongChildType, rules: [{ required: false }] })(
-                            <Select disabled style={{ width: "100%" }} placeholder="请输入因子分类">
+                            <Select disabled style={{ width: "100%" }} placeholder="请输入监测类型">
                               {belongChildTypeList.map((item) => (
                                 <Option value={item.dictCode}>{item.dictName}</Option>
                               ))}
@@ -967,7 +967,7 @@ export const MyEnterprisePage = Form.create()(
                       <Descriptions.Item label="站点名称" span={1.5}>
                         {deviceSiteInfo.siteName}
                       </Descriptions.Item>
-                      <Descriptions.Item label="因子分类" span={1.5}>
+                      <Descriptions.Item label="监测类型" span={1.5}>
                         {belongChildTypeList.map((item) => {
                           if (item.dictCode === deviceSiteInfo.belongChildType) {
                             return item.dictName;
