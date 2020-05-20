@@ -60,7 +60,10 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
       
       userEdit.loading = true;
       try {
-        await userEdit.doSaveUser(values);
+        await userEdit.doSaveUser({
+          ...values,
+          username: values.__username,
+        });
         history.replace("/user/userlist");
       } catch {
 
@@ -90,7 +93,7 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
             <Input hidden placeholder="请输入ID" />
           )}
           <Form.Item label="登录名">
-            {getFieldDecorator("username", { initialValue: username, rules: [{ required: true, message: '请输入登录名' }] })(
+            {getFieldDecorator("__username", { initialValue: username, rules: [{ required: true, message: '请输入登录名' }] })(
               <Input autoComplete="off" disabled={!!id} placeholder="请输入登录名" />
             )}
           </Form.Item>

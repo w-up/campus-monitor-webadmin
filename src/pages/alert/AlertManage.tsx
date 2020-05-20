@@ -14,7 +14,7 @@ export const AlertManagePage = Form.create()(
       alert: { alertManage },
     } = useStore();
 
-    const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields } = form;
+    const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields, resetFields } = form;
 
     const { loading, parkTree, ptList, tableData, factoryList } = alertManage;
 
@@ -44,7 +44,13 @@ export const AlertManagePage = Form.create()(
     const changeTab = (index) => {
       setFieldsValue({
         warnType: Number(index),
+        factoryIds: [],
+        pmList: [],
+        mins: '',
+        status: '',
+        timeRange: '',
       });
+
     };
 
     const doSubmit = (e) => {
@@ -90,6 +96,7 @@ export const AlertManagePage = Form.create()(
     const columns: any = [
       [
         {
+          title: "监测对象",
           dataIndex: "warnObj",
           key: "warnObj",
           width: 150,
@@ -103,7 +110,7 @@ export const AlertManagePage = Form.create()(
           render: (val) => moment(val).format("YYYY-MM-DD HH:mm:ss"),
         },
         {
-          title: "检测类型",
+          title: "监测类型",
           dataIndex: "jcType",
           key: "jcType",
           width: 100,
@@ -202,6 +209,7 @@ export const AlertManagePage = Form.create()(
       ],
       [
         {
+          title: "监测对象",
           dataIndex: "warnObj",
           key: "warnObj",
           width: 150,
@@ -215,7 +223,7 @@ export const AlertManagePage = Form.create()(
           render: (val) => moment(val).format("YYYY-MM-DD HH:mm:ss"),
         },
         {
-          title: "检测类型",
+          title: "监测类型",
           dataIndex: "jcType",
           key: "jcType",
           width: 100,
@@ -302,6 +310,7 @@ export const AlertManagePage = Form.create()(
       ],
       [
         {
+          title: "监测对象",
           dataIndex: "warnObj",
           key: "warnObj",
           width: 150,
@@ -315,7 +324,7 @@ export const AlertManagePage = Form.create()(
           render: (val) => moment(val).format("YYYY-MM-DD HH:mm:ss"),
         },
         {
-          title: "检测类型",
+          title: "监测类型",
           dataIndex: "jcType",
           key: "jcType",
           width: 100,

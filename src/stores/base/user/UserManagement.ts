@@ -104,9 +104,9 @@ export class UserManagement {
         ...param,
       });
   
-      this.query.total = data.total;
-      this.query.pageSize = data.size;
-      this.query.current = data.current;
+      this.query.total = Number(data.total);
+      this.query.pageSize = Number(data.size);
+      this.query.current = Number(data.current);
       this.userList = data.records;
     } catch {
 
