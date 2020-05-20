@@ -78,7 +78,7 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
       options: [
         { label: "贡献率", value: "1" },
         { label: "源方向", value: "2" },
-        { label: "原位置和浓度", value: "3" },
+        { label: "源位置和浓度", value: "3" },
       ],
     },
     monitorPanel: {

@@ -30,7 +30,7 @@ export const MapMonitorMap = () => {
               strokeStyle="dashed"
               strokeWeight={2}
               fillOpacity={1}
-              fillColor={mapMonitor.currentTabKey == "2" ? config.sysParams.bottom_color.paramValue : ""}
+              fillColor={""}
             ></IPolygon>
           );
         })}
