@@ -1,4 +1,4 @@
-import { observable, action } from "mobx";
+import { observable, action, toJS } from 'mobx';
 import { ParkEdit } from "../base/ParkEdit";
 
 export class DrawMapStore {
@@ -62,7 +62,7 @@ export class DrawMapStore {
   autoCenterAndZoom() {
     let mapViewObj = this.map?.getViewport(this.paths[0], {});
     if (!mapViewObj) return;
-    console.log(this.paths.slice(), mapViewObj);
+    console.log(toJS(this.paths), mapViewObj);
     this.map?.centerAndZoom(mapViewObj?.center, mapViewObj?.zoom);
   }
 

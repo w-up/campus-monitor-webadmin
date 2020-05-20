@@ -828,7 +828,7 @@ export const MyEnterprisePage = Form.create()(
                         width={800}
                       >
                         <div style={{ width: "100%", height: "400px" }}>
-                          <DrawBaiduMap />
+                        {getFieldValue("scopeType") === "map" && <DrawBaiduMap />}
                         </div>
                       </Modal>
 
