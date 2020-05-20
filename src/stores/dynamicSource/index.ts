@@ -59,7 +59,7 @@ export class DynamicSourceStore {
 
   async loadPmCodes({ parkId = this.currentPark }: { parkId?: any }) {
     const res = await api.MapMonitor.getPmCodeList({
-      factoryId: 0,
+      factoryId: '0',
       parkId,
     });
     if (res.data) {

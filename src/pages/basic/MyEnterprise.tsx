@@ -904,7 +904,7 @@ export const MyEnterprisePage = Form.create()(
                           </Row>
                         }
                       >
-                        <Table size="small" rowKey="key" bordered columns={deviceSiteListcolumns} dataSource={toJS(deviceSiteListInfo.data) || []} />
+                        <Table size="small" rowKey="key" pagination={false} bordered columns={deviceSiteListcolumns} dataSource={toJS(deviceSiteListInfo.data) || []} />
                       </Card>
                     )}
 
@@ -985,7 +985,7 @@ export const MyEnterprisePage = Form.create()(
                   </Card>
                   <Divider />
                   <Card bordered title="设备信息">
-                    <Table size="small" rowKey="key" bordered columns={deviceListColumns} dataSource={toJS(deviceListInfo.data) || []} />
+                    <Table size="small" rowKey="key" pagination={false} bordered columns={deviceListColumns} dataSource={toJS(deviceListInfo.data) || []} />
                   </Card>
                 </Row>
               )}

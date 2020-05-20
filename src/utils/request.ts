@@ -14,7 +14,7 @@ Axios.defaults.withCredentials = true;
 
 let http = Axios.create({
   baseURL: globalConfig.apiEndpoint,
-  timeout: 60 * 1000,
+  timeout: 60 * 1000 * 10,
 });
 
 http.interceptors.request.use(async (config) => {

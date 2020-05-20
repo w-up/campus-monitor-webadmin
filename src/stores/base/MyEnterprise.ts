@@ -220,7 +220,7 @@ export class MyEnterprise {
 
   @action.bound
   async getDeviceSiteList() {
-    const { data }: any = await POST("/device-site/getSiteListPage", { factoryId: this.factoryInfo.id });
+    const { data }: any = await POST("/device-site/getSiteListPage", { factoryId: this.factoryInfo.id, size: 9999, pageSize: 9999 });
     this.deviceSiteListInfo.data = data.records || [];
     this.deviceSiteListInfo.total = data.total;
     this.deviceSiteListInfo.pageSize = data.size;
@@ -229,7 +229,7 @@ export class MyEnterprise {
 
   @action.bound
   async getDeviceList() {
-    const { data }: any = await POST("/device/getDeviceListPage", { siteId: this.deviceSiteInfo.id });
+    const { data }: any = await POST("/device/getDeviceListPage", { siteId: this.deviceSiteInfo.id, size: 9999, pageSize: 9999 });
     this.deviceListInfo.data = data.records || [];
     this.deviceListInfo.total = data.total;
     this.deviceListInfo.pageSize = data.size;
@@ -239,7 +239,7 @@ export class MyEnterprise {
   @action.bound
   async getFactoryList() {
     if (this.selectedEnterprise.id) {
-      const { data }: any = await POST("/factory/getFactoryListPage", { companyId: this.selectedEnterprise.id });
+      const { data }: any = await POST("/factory/getFactoryListPage", { companyId: this.selectedEnterprise.id, size: 9999, pageSize: 9999 });
       this.factoryListInfo.data = data.records || [];
       this.factoryListInfo.total = data.total;
       this.factoryListInfo.pageSize = data.size;
