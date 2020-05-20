@@ -52,7 +52,7 @@ export const AlertItem = ({ item, onUpdate }: { item: AlarmInfo; onUpdate?: Func
           {item.totalTime}
         </Col>
       </Row>}
-      {item.pmValue  && <Row className="alertCardRow border-b py-2" style={{ borderColor: "#383F52" }}>
+      {!item.deviceName  && <Row className="alertCardRow border-b py-2" style={{ borderColor: "#383F52" }}>
         <Col span={6}>平均浓度:</Col>
         <Col className="text-left" span={14} offset={4}>
           {item.pmValue || "-"}
