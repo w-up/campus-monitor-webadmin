@@ -49,14 +49,14 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
               //名称
               var text = params[i].axisValue;
               //值
-              var { valueRaw, valueIn, value, limit, unit } = params[i].data;
+              var { value, valueIn, value, limit, unit } = params[i].data;
 
-              if (valueRaw > 0) {
+              if (value > 0) {
                 showHtml += `
             <div style="display:flex;align-items: center;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px; ${limit && valueRaw > limit ? "color:red;" : ""}">${
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px; ${limit && value > limit ? "color:red;" : ""}">${
                   props.precision ? (value ? `${value}*${valueIn} ${unit}` : "") : value || ""
                 }</div>
           </div>
@@ -130,10 +130,10 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
           type: "line",
           data: item.datas?.map((i) => {
             const isUpperlimit = item.upperLimit && i.collectValue > item.upperLimit;
+
             return {
               symbolSize: isUpperlimit ? 12 : 0,
-              value: i.collectValue ? Number(i.collectValue) : null,
-              valueRaw: i.collectValue,
+              value: i.collectValue,
               valueIn: i.collectValueIn,
               limit: item.upperLimit,
               unit: i.unit,
@@ -178,6 +178,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
       setInterval(() => {
         store.dataIndex >= store.maxDataIndex ? (store.dataIndex = 0) : store.dataIndex++;
         const mapInst = mapRef.current?.getEchartsInstance();
+
         if (mapInst) {
           mapInst.dispatchAction({
             type: "showTip",

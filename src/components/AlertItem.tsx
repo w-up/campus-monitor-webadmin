@@ -22,6 +22,12 @@ export const AlertItem = ({ item, onUpdate }: { item: AlarmInfo; onUpdate?: Func
           {item.monitorType}
         </Col>
       </Row>}
+      {item.warnLevel && <Row className="alertCardRow border-b py-2" style={{ borderColor: "#383F52" }}>
+        <Col span={6}>告警等级:</Col>
+        <Col className="text-left" span={14} offset={4}>
+          {item.warnLevel}
+        </Col>
+      </Row>}
       {item.siteName && <Row className="alertCardRow border-b py-2" style={{ borderColor: "#383F52" }}>
         <Col span={6}>站点名称:</Col>
         <Col className="text-left" span={14} offset={4}>

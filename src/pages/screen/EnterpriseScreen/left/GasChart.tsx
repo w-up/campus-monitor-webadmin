@@ -162,8 +162,8 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
     yAxis: {
       name: "日均值",
       type: "value",
-      min: 0,
-      max: 10,
+      // min: 0,
+      // max: 10,
       splitNumber: 3,
       nameTextStyle: {
         color: "rgba(136,168,197,0.5)",
@@ -193,14 +193,22 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
     series: [
       ...site.sites.map((item, index) => ({
         name: item.siteName,
-        data: item.datas.map((i) => ({
-          symbolSize: i.collectValue > site.upperLimit ? 12 : 0,
-          value: i.collectValueDe ? Number(i.collectValueDe) : null,
+        data: item.datas.map((i) => {
+          const isUpperlimit = site.upperLimit && i.collectValue > site.upperLimit;
+          
+          return {
+          symbolSize: isUpperlimit ? 12 : 0,
+           value: i.collectValue ? Number(i.collectValue) : null,
           valueRaw: i.collectValue,
           valueIn: i.collectValueIn,
           limit: site.upperLimit,
           unit: i.unit,
-        })),
+          itemStyle: {
+            normal: {
+              color: isUpperlimit ? "red" : constant.seriesColors[index],
+            },
+          },
+        }}),
         type: "line",
         itemStyle: {
           normal: {

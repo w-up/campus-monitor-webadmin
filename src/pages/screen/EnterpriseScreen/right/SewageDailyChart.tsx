@@ -17,7 +17,7 @@ export const SewageDailyChart = () => {
         <img src="/images/right1.png" className="img" />
       </div>
       <div style={{ width: "100%", height: "252px", paddingTop: 15 }}>
-        {enterpriseScreenMap.dailySewage.pms.length > 0 && <LineChart animate datas={enterpriseScreenMap.dailySewage.pms} precision={true} />}
+        {enterpriseScreenMap.dailySewage.pms.length > 0 && <LineChart animate datas={enterpriseScreenMap.dailySewage.pms} precision />}
       </div>
     </div>
   ));

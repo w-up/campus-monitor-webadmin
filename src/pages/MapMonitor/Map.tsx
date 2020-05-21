@@ -40,7 +40,7 @@ export const MapMonitorMap = () => {
             return (
               <IPolygon
                 updateable
-                visiable={mapMonitor.currentTabKey != "2"}
+                // visiable={mapMonitor.currentTabKey != "2"}
                 path={utils.array.formatToLatLngShort(item.factoryPoints)}
                 key={index}
                 strokeStyle="solid"

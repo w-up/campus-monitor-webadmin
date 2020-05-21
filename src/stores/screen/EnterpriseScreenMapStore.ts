@@ -1,4 +1,4 @@
-import { action, observable, computed } from "mobx";
+import { action, observable, computed, toJS } from 'mobx';
 import { ComplexCustomOverlay } from "../../pages/screen/EnterpriseScreen/customOverlay";
 import api from "services";
 import { SitlePMData, DailySewage } from "../../type";
@@ -325,7 +325,9 @@ export class EnterpriseScreenMapStore {
       const nextSite = this.SiteRuntimePmDate[index];
       if (nextSite) {
         const res = await api.DeviceData.getAllPM24HourDatasBySiteId({ siteId: nextSite.siteId });
-        this.curSiteRuntimeData = res.data.pms || [];
+        if(res.data?.pms){
+          this.curSiteRuntimeData = res.data.pms.filter(i => i.datas[0]?.collectValue !==null)
+        }
       }
     }
     for (let x in this.overlays) {

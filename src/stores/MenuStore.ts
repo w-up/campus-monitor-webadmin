@@ -130,7 +130,7 @@ export class MenuStore {
     },
     {
       icon: "dashboard",
-      title: "动态朔源",
+      title: "动态溯源",
       path: "/dynamic",
       code: "dynamic:manage",
       component: DynamicSourcePage,

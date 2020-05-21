@@ -117,7 +117,7 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
     <div className="runtim-monitor px-4 mt-4">
       <div className="text-lg text-white mb-4 flex items-center">
         <Icon type="caret-right" theme="filled" className="primary-text-color" />
-        <span className="ml-2">动态朔源</span>
+        <span className="ml-2">动态溯源</span>
       </div>
       <Spin spinning={store.loading}>
         <Form {...store.formItemLayout} onSubmit={store.handleSubmit}>
