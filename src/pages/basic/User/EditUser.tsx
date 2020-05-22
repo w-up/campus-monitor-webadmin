@@ -88,6 +88,9 @@ export const EditUser = Form.create()(observer(({ form }: any) => {
         </Breadcrumb>
       </div>
       <Card>
+        <input type="text" name="hidden1" style={{ width: 0, height: 0 }} />
+        <input type="password" name="hidden2" style={{ width: 0, height: 0 }} />
+
         <Form {...formItemLayout} onSubmit={doSubmit}>
           {getFieldDecorator("id", { initialValue: id, rules: [{ required: false }] })(
             <Input hidden placeholder="请输入ID" />

@@ -96,11 +96,11 @@ export const AlertManagePage = Form.create()(
     const columns: any = [
       [
         {
-          title: "监测对象",
+          title: "告警对象",
           dataIndex: "warnObj",
           key: "warnObj",
           width: 150,
-          fixed: "left",
+          // fixed: "left",
         },
         {
           title: "告警时间",
@@ -128,7 +128,7 @@ export const AlertManagePage = Form.create()(
           width: 100,
         },
         {
-          title: "设备名称",
+          title: "告警等级",
           dataIndex: "warnLevel",
           key: "warnLevel",
           width: 80,
@@ -209,11 +209,11 @@ export const AlertManagePage = Form.create()(
       ],
       [
         {
-          title: "监测对象",
+          title: "告警对象",
           dataIndex: "warnObj",
           key: "warnObj",
           width: 150,
-          fixed: "left",
+          // fixed: "left",
         },
         {
           title: "告警时间",
@@ -241,7 +241,7 @@ export const AlertManagePage = Form.create()(
           width: 100,
         },
         {
-          title: "设备名称",
+          title: "告警等级",
           dataIndex: "warnLevel",
           key: "warnLevel",
           width: 80,
@@ -310,11 +310,11 @@ export const AlertManagePage = Form.create()(
       ],
       [
         {
-          title: "监测对象",
+          title: "告警对象",
           dataIndex: "warnObj",
           key: "warnObj",
           width: 150,
-          fixed: "left",
+          // fixed: "left",
         },
         {
           title: "告警时间",
