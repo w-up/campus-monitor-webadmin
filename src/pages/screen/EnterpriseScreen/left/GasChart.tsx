@@ -140,6 +140,7 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
         y: 0,
         itemHeight: 2,
         itemWidth: 20,
+        padding: [5, 0, 0, 40]
       },
     ],
     grid: {
