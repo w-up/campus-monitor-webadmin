@@ -31,6 +31,27 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
     user.getUsers();
   }, []);
 
+  const onBatchDeleteUser = () => {
+    const selectedRows = toJS(selectedRowKeys);
+    if (selectedRows.length === 0) {
+      message.warning("请勾选要删除的用户");
+      return;
+    }
+    const ids = selectedRowKeys;
+    Modal.confirm({
+      title: "删除确认",
+      content: `确定删除这${ids.length}个用户吗？`,
+      async onOk() {
+        try {
+          await deleteUser(ids);
+          resetSelectedRowKeys();
+        } catch {
+          message.error("删除失败");
+        }
+      },
+    });
+  };
+
   const columns = useLocalStore(() => ([
     {
       title: '登录名',
@@ -204,7 +225,7 @@ export const UserManagementPage = Form.create()(observer((props: any) => {
               <Col span={8} style={{ textAlign: "right" }}>
                 <Form.Item>
                   <Button type="primary" onClick={() => props.history.push('/user/user-edit')}>新建</Button>
-                  {/* <Button style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button> */}
+                  <Button style={{ marginLeft: 5 }} onClick={onBatchDeleteUser}>批量删除</Button>
                   <Button style={{ marginLeft: 5 }} onClick={handleResetPasswrod}>密码重置</Button>
                 </Form.Item>
               </Col>

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useObserver, useLocalStore, observer } from "mobx-react-lite";
-import { Alert, Row, Col, Spin, Card, Form, Button, Input, Select, Table, Badge, Divider, Breadcrumb, Modal, Tree } from 'antd'
+import { message, Alert, Row, Col, Spin, Card, Form, Button, Input, Select, Table, Badge, Divider, Breadcrumb, Modal, Tree } from 'antd'
 import { Link } from "react-router-dom";
 import { useStore } from "../../../stores/index";
 import { toJS } from "mobx";
@@ -26,6 +26,27 @@ export const Roles = Form.create()(observer((props: any) => {
     role.query.status = 0;
     role.getRoleList();
   }, []);
+
+  const onBatchDeleteRole = () => {
+    const selectedRows = toJS(selectedRowKeys);
+    if (selectedRows.length === 0) {
+      message.warning("请勾选要删除的角色");
+      return;
+    }
+    const ids = selectedRowKeys;
+    Modal.confirm({
+      title: "删除确认",
+      content: `确定删除这${ids.length}个角色吗？`,
+      async onOk() {
+        try {
+          await role.deleteRole(ids);
+          resetSelectedRowKeys();
+        } catch {
+          message.error("删除失败");
+        }
+      },
+    });
+  };
 
   const columns = [
     {
@@ -90,6 +111,15 @@ export const Roles = Form.create()(observer((props: any) => {
     }
   ];
 
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+    getCheckboxProps: record => ({
+      disabled: record.status !== 0,
+      name: record.name,
+    }),
+  };
+
   const handleSearch = e => {
     e.preventDefault();
     role.getRoleList({ current: 1, pageNo: 1 });
@@ -148,7 +178,7 @@ export const Roles = Form.create()(observer((props: any) => {
               <Col span={8} style={{ textAlign: "right" }}>
                 <Form.Item>
                   <Button type="primary" onClick={() => props.history.push('/user/role-edit')}>新建</Button>
-                  {/* <Button style={{ marginLeft: 5, marginRight: 5 }}>批量删除</Button> */}
+                  <Button style={{ marginLeft: 5, marginRight: 5 }} onClick={onBatchDeleteRole}>批量删除</Button>
                 </Form.Item>
               </Col>
             </Form>
@@ -163,7 +193,7 @@ export const Roles = Form.create()(observer((props: any) => {
           <Divider />
 
           <Row>
-            <Table bordered size="small" rowKey="id" pagination={pagination} columns={columns} dataSource={toJS(roleList)} />
+            <Table bordered size="small" rowKey="id" pagination={pagination} rowSelection={rowSelection} columns={columns} dataSource={toJS(roleList)} />
           </Row>
         </Card>
       </Spin>
