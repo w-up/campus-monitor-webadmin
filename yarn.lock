@@ -7566,10 +7566,10 @@ mobx-react@^6.1.7:
   dependencies:
     mobx-react-lite "^1.4.2"
 
-mobx@^5.15.4:
-  version "5.15.4"
-  resolved "https://registry.npm.taobao.org/mobx/download/mobx-5.15.4.tgz#9da1a84e97ba624622f4e55a0bf3300fb931c2ab"
-  integrity sha1-naGoTpe6YkYi9OVaC/MwD7kxwqs=
+mobx@4:
+  version "4.15.4"
+  resolved "https://registry.npm.taobao.org/mobx/download/mobx-4.15.4.tgz#644eac80bdd15793855194e764c475041101b406"
+  integrity sha1-ZE6sgL3RV5OFUZTnZMR1BBEBtAY=
 
 mockjs@^1.1.0:
   version "1.1.0"

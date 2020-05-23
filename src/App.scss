@@ -44,6 +44,7 @@ svg {
 }
 
 .screenPage {
+  min-height: calc(100vh-200px);
   background: #1e2538;
   font-family: "Microsoft Yahei", sans-serif;
 
