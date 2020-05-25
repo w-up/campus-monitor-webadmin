@@ -12,7 +12,7 @@ export const TopTenMonitorTable = () => {
 
   const store = useLocalStore(() => ({
     get topTenMonitorData() {
-      return _.chunk(parkScreenMap.allParkMapData.siteDatas, 6);
+      return parkScreenMap.allParkMapData.siteDatas.slice(0,10)
     },
   }));
 
@@ -31,36 +31,19 @@ export const TopTenMonitorTable = () => {
           <div>监测数值</div>
           <div>限值</div>
         </div>
-        <CarouselProvider naturalSlideWidth={100} naturalSlideHeight={60} isPlaying interval={5000} totalSlides={store.topTenMonitorData.length}>
-          <Slider>
-            {store.topTenMonitorData.map((page, index) => {
-              return (
-                <Slide index={index}>
-                  {page.map((item) => {
-                    return (
-                      <div
-                        className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"}
-                        onClick={(e) => parkScreenMap.setCurrentSite(item.siteId)}
-                      >
-                        <div title={item.collectDate}>{item.collectDate}</div>
-                        <div>{item.siteName}</div>
-                        <div>
-                          <span>{item.collectValue}</span>
-                        </div>
-                        <div>{item.limit}</div>
-                      </div>
-                    );
-                  })}
-                </Slide>
-              );
-            })}
-          </Slider>
-          <DotGroup className="text-center">
-            {store.topTenMonitorData.map((item, index) => (
-              <Dot slide={index} className="text-white sliderDotButton" children={""} />
-            ))}
-          </DotGroup>
-        </CarouselProvider>
+        <div>
+        {store.topTenMonitorData.map((item,index) => <div
+          className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"}
+          onClick={(e) => parkScreenMap.setCurrentSite(item.siteId)}
+        >
+          <div title={item.collectDate}>{item.collectDate}</div>
+          <div>{item.siteName}</div>
+          <div>
+            <span>{item.collectValue}</span>
+          </div>
+          <div>{item.limit}</div>
+        </div>)}
+        </div>
       </div>
     </div>
   ));
