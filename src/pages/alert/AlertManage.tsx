@@ -44,12 +44,17 @@ export const AlertManagePage = Form.create()(
     const changeTab = (index) => {
       setFieldsValue({
         warnType: Number(index),
-        factoryIds: [],
-        pmList: [],
-        mins: '',
-        status: '',
-        timeRange: '',
       });
+
+      setTimeout(() => {
+        setFieldsValue({
+          factoryIds: [],
+          pmList: [],
+          mins: '',
+          status: '',
+          timeRange: '',
+        });
+      }, 500);
 
     };
 

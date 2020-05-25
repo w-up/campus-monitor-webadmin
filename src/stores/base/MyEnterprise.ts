@@ -106,6 +106,10 @@ export class MyEnterprise {
     this.treeData.some((item) => {
       if (item.id === selectedKeys[0]) {
         this.selectedEnterprise = item;
+        this.factoryListInfo.size = 10;
+        this.factoryListInfo.pageSize = 10;
+        this.factoryListInfo.current = 1;
+        this.factoryListInfo.pageNo = 1;
         return true;
       }
       return false;
@@ -161,6 +165,10 @@ export class MyEnterprise {
 
     if (!this.selectedEnterprise.id) {
       this.selectedEnterprise = this.treeData[0];
+      this.factoryListInfo.size = 10;
+      this.factoryListInfo.pageSize = 10;
+      this.factoryListInfo.current = 1;
+      this.factoryListInfo.pageNo = 1;
     }
     await this.getCompanyInfo();
     await this.getFactoryList();
@@ -189,6 +197,10 @@ export class MyEnterprise {
   @action.bound
   setFactoryInfo(data) {
     this.factoryInfo = data;
+    this.deviceSiteListInfo.pageSize = 10;
+    this.deviceSiteListInfo.size = 10;
+    this.deviceSiteListInfo.current = 1;
+    this.deviceSiteListInfo.pageNo = 1;
   }
 
   @action.bound
@@ -204,7 +216,13 @@ export class MyEnterprise {
 
   @action.bound
   setDeviceSiteInfo(info) {
-    this.deviceSiteInfo = { ...info };
+    this.deviceSiteInfo = {
+      ...info,
+      size: 0,
+      pageSize: 10,
+      current: 1,
+      pageNo: 1,
+    };
   }
 
   @action.bound
@@ -215,12 +233,36 @@ export class MyEnterprise {
       message.error("获取站点信息失败");
       return;
     }
-    this.deviceSiteInfo = { ...this.deviceSiteInfo, ...data };
+    this.deviceSiteInfo = {
+      ...this.deviceSiteInfo,
+      ...data,
+      size: 0,
+      pageSize: 10,
+      current: 1,
+      pageNo: 1,
+    };
+  }
+
+  @action.bound
+  deviceSiteListPaginationChange(page, pageSize) {
+    console.log(page, pageSize);
+    this.deviceSiteListInfo = {
+      ...this.deviceSiteListInfo,
+      current: page,
+      pageSize,
+    };
+    this.getDeviceSiteList();
   }
 
   @action.bound
   async getDeviceSiteList() {
-    const { data }: any = await POST("/device-site/getSiteListPage", { factoryId: this.factoryInfo.id, size: 9999, pageSize: 9999 });
+    const { data }: any = await POST("/device-site/getSiteListPage", {
+      factoryId: this.factoryInfo.id,
+      size: this.deviceSiteListInfo.pageSize,
+      pageSize: this.deviceSiteListInfo.pageSize,
+      current: this.deviceSiteListInfo.current,
+      pageNo: this.deviceSiteListInfo.current,
+    });
     this.deviceSiteListInfo.data = data.records || [];
     this.deviceSiteListInfo.total = data.total;
     this.deviceSiteListInfo.pageSize = data.size;
@@ -228,18 +270,52 @@ export class MyEnterprise {
   }
 
   @action.bound
+  deviceListPaginationChange(page, pageSize) {
+    console.log(page, pageSize);
+    this.deviceListInfo = {
+      ...this.deviceListInfo,
+      current: page,
+      pageSize,
+    };
+    this.getDeviceList();
+  }
+
+  @action.bound
   async getDeviceList() {
-    const { data }: any = await POST("/device/getDeviceListPage", { siteId: this.deviceSiteInfo.id, size: 9999, pageSize: 9999 });
+    const { data }: any = await POST("/device/getDeviceListPage", {
+      siteId: this.deviceSiteInfo.id,
+      size: this.deviceListInfo.pageSize,
+      pageSize: this.deviceListInfo.pageSize,
+      current: this.deviceListInfo.current,
+      pageNo: this.deviceListInfo.current,
+    });
     this.deviceListInfo.data = data.records || [];
     this.deviceListInfo.total = data.total;
     this.deviceListInfo.pageSize = data.size;
-    this.deviceSiteListInfo.current = data.current;
+    this.deviceListInfo.current = data.current;
+  }
+
+  @action.bound
+  factoryListPaginationChange(page, pageSize) {
+    console.log(page, pageSize);
+    this.factoryListInfo = {
+      ...this.factoryListInfo,
+      current: page,
+      pageSize,
+    };
+    this.getFactoryList();
   }
 
   @action.bound
   async getFactoryList() {
     if (this.selectedEnterprise.id) {
-      const { data }: any = await POST("/factory/getFactoryListPage", { companyId: this.selectedEnterprise.id, size: 9999, pageSize: 9999 });
+      const { data }: any = await POST("/factory/getFactoryListPage", {
+        companyId: this.selectedEnterprise.id,
+        size: this.factoryListInfo.pageSize,
+        pageSize: this.factoryListInfo.pageSize,
+        current: this.factoryListInfo.current,
+        pageNo: this.factoryListInfo.current,
+      });
       this.factoryListInfo.data = data.records || [];
       this.factoryListInfo.total = data.total;
       this.factoryListInfo.pageSize = data.size;

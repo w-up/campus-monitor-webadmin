@@ -76,17 +76,20 @@ export const MyEnterprisePage = Form.create()(
       saveFactory,
       parkList,
       factoryListInfo,
+      factoryListPaginationChange,
       deleteFactory,
       setFactoryInfo,
       deviceSiteInfo,
       getDeviceSiteList,
       deviceSiteListInfo,
+      deviceSiteListPaginationChange,
       belongChildTypeList,
       getDeviceSiteInfo,
       addDeviceSite,
       deleteDeviceSite,
       setDeviceSiteInfo,
       deviceListInfo,
+      deviceListPaginationChange,
       getDeviceList,
       setDeviceInfo,
       deviceInfo,
@@ -577,6 +580,45 @@ export const MyEnterprisePage = Form.create()(
       setTreeExpandedKeys(expandedKeys);
     };
 
+    const deviceSiteListPagination = {
+      current: deviceSiteListInfo.current,
+      pageSize: deviceSiteListInfo.pageSize,
+      total: deviceSiteListInfo.total,
+      showSizeChanger: true,
+      showQuickJumper: true,
+      showTotal: (total) => {
+        return "共 " + total + " 条记录";
+      },
+      onChange: deviceSiteListPaginationChange,
+      onShowSizeChange: deviceSiteListPaginationChange,
+    };
+
+    const deviceListPagination = {
+      current: deviceListInfo.current,
+      pageSize: deviceListInfo.pageSize,
+      total: deviceListInfo.total,
+      showSizeChanger: true,
+      showQuickJumper: true,
+      showTotal: (total) => {
+        return "共 " + total + " 条记录";
+      },
+      onChange: deviceListPaginationChange,
+      onShowSizeChange: deviceListPaginationChange,
+    };
+
+    const factoryListPagination = {
+      current: factoryListInfo.current,
+      pageSize: factoryListInfo.pageSize,
+      total: factoryListInfo.total,
+      showSizeChanger: true,
+      showQuickJumper: true,
+      showTotal: (total) => {
+        return "共 " + total + " 条记录";
+      },
+      onChange: factoryListPaginationChange,
+      onShowSizeChange: factoryListPaginationChange,
+    };
+
     return (
       <div className="myEnterprisePage">
         <Spin spinning={loading}>
@@ -721,7 +763,7 @@ export const MyEnterprisePage = Form.create()(
                       </Row>
                     }
                   >
-                    <Table size="small" rowKey="key" bordered columns={columns} dataSource={toJS(factoryListInfo.data) || []} />
+                    <Table size="small" rowKey="key" pagination={factoryListPagination} bordered columns={columns} dataSource={toJS(factoryListInfo.data) || []} />
                   </Card>
                 </Card>
               )}
@@ -904,7 +946,7 @@ export const MyEnterprisePage = Form.create()(
                           </Row>
                         }
                       >
-                        <Table size="small" rowKey="key" pagination={false} bordered columns={deviceSiteListcolumns} dataSource={toJS(deviceSiteListInfo.data) || []} />
+                        <Table size="small" rowKey="key" pagination={deviceSiteListPagination} bordered columns={deviceSiteListcolumns} dataSource={toJS(deviceSiteListInfo.data) || []} />
                       </Card>
                     )}
 
@@ -985,7 +1027,7 @@ export const MyEnterprisePage = Form.create()(
                   </Card>
                   <Divider />
                   <Card bordered title="设备信息">
-                    <Table size="small" rowKey="key" pagination={false} bordered columns={deviceListColumns} dataSource={toJS(deviceListInfo.data) || []} />
+                    <Table size="small" rowKey="key" pagination={deviceListPagination} bordered columns={deviceListColumns} dataSource={toJS(deviceListInfo.data) || []} />
                   </Card>
                 </Row>
               )}

@@ -80,17 +80,20 @@ export const UserPasswordEdit = Form.create()(observer(({form}: {form: WrappedFo
         </Breadcrumb>
       </div>
       <Card>
+        <input type="text" name="hidden1" style={{ width: 0, height: 0 }} />
+        <input type="password" name="hidden2" style={{ width: 0, height: 0 }} />
+
         <Form {...formItemLayout} onSubmit={doSubmit}>
 
           <Form.Item label="原密码">
             {getFieldDecorator("password", {initialValue: null, rules: [{required: true, message: "请输入原密码"}]})(
-              <Input.Password placeholder="原登录密码"/>
+              <Input.Password autoComplete="off" placeholder="原登录密码"/>
             )}
           </Form.Item>
 
           <Form.Item label="新密码">
             {getFieldDecorator("newPassword", {initialValue: null, rules: [{required: true, message: "请输入新的密码"}]})(
-              <Input.Password placeholder="新的登录密码"/>
+              <Input.Password autoComplete="off" placeholder="新的登录密码"/>
             )}
           </Form.Item>
 
@@ -103,7 +106,7 @@ export const UserPasswordEdit = Form.create()(observer(({form}: {form: WrappedFo
                 validator: compareToFirstPassword,
               }]
             })(
-              <Input.Password placeholder="确认新的密码"/>
+              <Input.Password autoComplete="off" placeholder="确认新的密码"/>
             )}
           </Form.Item>
 
