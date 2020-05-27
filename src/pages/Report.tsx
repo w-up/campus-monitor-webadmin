@@ -211,18 +211,24 @@ export const ReportPage = Form.create()(
                   {getFieldValue("timeCycle") === 1 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
                       {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: '请选择统计周期' }] })(
-                        <DatePicker format="YYYY-MM-DD" style={{ width: "100%" }} size="small" allowClear={false} />
+                        <DatePicker format="YYYY-MM-DD" style={{ width: "100%" }} disabledDate={current => {
+                          return !!(current && current >= moment().subtract(0, "days"));
+                        }} size="small" allowClear={false} />
                       )}
                     </Form.Item>
                   )}
                   {getFieldValue("timeCycle") === 2 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: '请选择统计周期' }] })(<MonthPicker format="YYYY-MM" style={{ width: "100%" }} size="small" allowClear={false} />)}
+                      {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: '请选择统计周期' }] })(<MonthPicker format="YYYY-MM" disabledDate={current => {
+                          return !!(current && current >= moment().subtract(0, "days"));
+                        }} style={{ width: "100%" }} size="small" allowClear={false} />)}
                     </Form.Item>
                   )}
                   {getFieldValue("timeCycle") === 3 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: '请选择统计周期' }] })(<DatePicker format="YYYY" onPanelChange={(val: any) => {
+                      {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: '请选择统计周期' }] })(<DatePicker format="YYYY" disabledDate={current => {
+                          return !!(current && current >= moment().subtrsact(0, "days"));
+                        }} onPanelChange={(val: any) => {
                         setFieldsValue({ collectDate: moment(val).startOf('year') });
                         setDateOpen(false);
                       }} open={dateOpen} onOpenChange={setDateOpen} mode={"year" as any} style={{ width: "100%" }} size="small" allowClear={false} />)}
@@ -231,13 +237,17 @@ export const ReportPage = Form.create()(
 
                   {getFieldValue("timeCycle") === 4 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: moment().subtract(1, "weeks"), rules: [{ required: true, message: '请选择统计周期' }] })(<WeekPicker style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: moment().subtract(1, "weeks"), rules: [{ required: true, message: '请选择统计周期' }] })(<WeekPicker style={{ width: "100%" }} disabledDate={current => {
+                          return !!(current && current >= moment().subtract(0, "days"));
+                        }} size="small" />)}
                     </Form.Item>
                   )}
 
                   {getFieldValue("timeCycle") === 5 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: '请选择统计周期' }] })(<DatePicker format="YYYY-Q" style={{ width: "100%" }} size="small" />)}
+                      {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: '请选择统计周期' }] })(<DatePicker disabledDate={current => {
+                          return !!(current && current >= moment().subtract(0, "days"));
+                        }} format="YYYY-Q" style={{ width: "100%" }} size="small" />)}
                     </Form.Item>
                   )}
 

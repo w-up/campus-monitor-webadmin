@@ -29,7 +29,7 @@ const columns = [
     key: "areaName",
   },
   {
-    title: "排放率",
+    title: "排放量",
     dataIndex: "sumValue",
     key: "sumValue",
   },
@@ -59,7 +59,7 @@ const columns2 = [
     key: "areaName",
   },
   {
-    title: "排放率",
+    title: "排放量",
     dataIndex: "sumValue",
     key: "sumValue",
   },

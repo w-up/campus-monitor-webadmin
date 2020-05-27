@@ -51,7 +51,15 @@ export const HistoryDataPage = Form.create()(
     }
 
     const doResetFields = () => {
-      resetFields();
+      // resetFields();
+      setFieldsValue({
+        parkId: '',
+        factoryId: '',
+        ptId: '',
+        siteId: '',
+        pmCodeList: [],
+        timeRange: [],
+      });
       historyData.query = {
         current: 1,
         pageSize: 10,

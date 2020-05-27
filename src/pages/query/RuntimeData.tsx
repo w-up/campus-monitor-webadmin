@@ -83,7 +83,14 @@ export const RuntimeDataPage = Form.create()(
     };
 
     const doResetFields = () => {
-      resetFields();
+      // resetFields();
+      setFieldsValue({
+        parkId: '',
+        factoryId: '',
+        siteIdList: [],
+        ptId: '',
+        pmCodeList: [],
+      });
       runTimeData.query = {
         current: 1,
         pageSize: 10,
