@@ -1,5 +1,6 @@
-import { observable, action, toJS } from 'mobx';
+import { observable, action, toJS } from "mobx";
 import { ParkEdit } from "../base/ParkEdit";
+import { notification } from "antd";
 
 export class DrawMapStore {
   @observable center = { lng: 120.983642, lat: 31.36556 };
@@ -95,11 +96,13 @@ export class DrawMapStore {
     if (this.editType !== "add") {
       return;
     }
-    console.log(456);
     const paths = this.paths;
     !paths.length && paths.push([]);
     paths[paths.length - 1].push(e.point);
     this.count++;
+    notification.info({
+      message: `请双击绘制点${paths[paths.length - 1].length}`,
+    });
   }
 
   @action.bound

@@ -211,7 +211,7 @@ export const ParkPage = observer(() => {
             <Table rowKey="id" bordered size="small" rowSelection={rowSelection} columns={columns} dataSource={toJS(dataSource)} pagination={pagination} />
           </Row>
         </Card>
-        <Modal title="地图绘制" visible={store.showMap} onOk={(e) => (store.showMap = false)} onCancel={(e) => (store.showMap = false)} width={800}>
+        <Modal title="地图绘制(请鼠标双击绘制地图区域)" visible={store.showMap} onOk={(e) => (store.showMap = false)} onCancel={(e) => (store.showMap = false)} width={800}>
           <div style={{ width: "100%", height: "400px" }}>{store.showMap && <DrawBaiduMap />}</div>
         </Modal>
       </Spin>

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useObserver } from "mobx-react-lite";
 import { useStore } from "../stores/index";
-import { APILoader, Map, Polygon, Control } from "@uiw/react-baidu-map";
+import { APILoader, Map, Polygon, Control, CustomOverlay } from "@uiw/react-baidu-map";
 import { Button, Radio, Input } from "antd";
 import { IPolygon } from "./Polygon/index";
 import Search from "antd/lib/input/Search";
@@ -47,6 +47,18 @@ export const DrawBaiduMap = () => {
               }}
             />
           ))}
+          {drawMap.paths.slice().map((item, index) => {
+            return item.map((path, index2) => {
+              console.log(123, index);
+              return (
+                <CustomOverlay key={index} position={{ lng: path.lng, lat: path.lat }}>
+                  <div className="point-num" style={{ color: "#00FF66", fontSize: "14px", width: "100px", userSelect: "none", position: "absolute", bottom: "-20px", left: "20px" }}>
+                    点{index2}
+                  </div>
+                </CustomOverlay>
+              );
+            });
+          })}
           {drawMap.editType !== "view" && (
             <Control>
               <div>
