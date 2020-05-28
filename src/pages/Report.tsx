@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { toJS } from "mobx";
 import moment from "moment";
 
-import { Checkbox, Card, Row, Col, Form, Button, Select, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal, Spin } from "antd";
+import { Checkbox, Card, Row, Col, Form, Button, Select, Input, DatePicker, Radio, Table, Badge, Divider, Breadcrumb, Alert, Modal, Spin, message } from "antd";
 const { Option } = Select;
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
@@ -226,9 +226,11 @@ export const ReportPage = Form.create()(
                   )}
                   {getFieldValue("timeCycle") === 3 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
-                      {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: '请选择统计周期' }] })(<DatePicker format="YYYY" disabledDate={current => {
-                          return !!(current && current >= moment().subtract(0, "days"));
-                        }} onPanelChange={(val: any) => {
+                      {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: '请选择统计周期' }] })(<DatePicker format="YYYY" onPanelChange={(val: any) => {
+                        if (moment(val).valueOf() > moment().valueOf()) {
+                          message.error(`选择的年份不可大于${moment().format('YYYY')}`);
+                          return;
+                        }
                         setFieldsValue({ collectDate: moment(val).startOf('year') });
                         setDateOpen(false);
                       }} open={dateOpen} onOpenChange={setDateOpen} mode={"year" as any} style={{ width: "100%" }} size="small" allowClear={false} />)}

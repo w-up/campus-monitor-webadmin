@@ -101,7 +101,7 @@ export const DataView = Form.create()(observer(({ form }: any) => {
                 {(getFieldValue('status') == 2 || status != '待审核') &&
                   <Descriptions.Item span={3} label="审核意见">
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="" >
-                      {getFieldDecorator("refuseReason", { initialValue: refuseReason, rules: [{ required: true }] })(
+                      {getFieldDecorator("refuseReason", { initialValue: refuseReason, rules: [{ required: true, message: '请输入审核意见' }] })(
                         <Input.TextArea disabled={status != '待审核'} />
                       )}
                     </Form.Item>

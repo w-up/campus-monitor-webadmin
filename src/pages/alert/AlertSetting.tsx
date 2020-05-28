@@ -190,7 +190,7 @@ export const AlertSettingPage = Form.create()(
         },
       },
       {
-        title: "设备名称",
+        title: "告警等级",
         width: 100,
         dataIndex: "warnLevel",
         key: "warnLevel",
@@ -339,7 +339,7 @@ export const AlertSettingPage = Form.create()(
                     )}
                   </Form.Item>
 
-                  <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="设备名称">
+                  <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="告警等级">
                     {getFieldDecorator("setForm.warnLevelList", { initialValue: [], rules: [{ required: false }] })(
                       <Select mode="multiple" placeholder="请选择" size="small">
                         <Option value={1}>中度</Option>
@@ -511,8 +511,8 @@ export const AlertSettingPage = Form.create()(
                         </Select>
                       )}
                     </Form.Item>
-                    <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="设备名称">
-                      {getFieldDecorator("editForm.warnLevel", { initialValue: 1, rules: [{ required: true, message: "请选择设备名称" }] })(
+                    <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="告警等级">
+                      {getFieldDecorator("editForm.warnLevel", { initialValue: 1, rules: [{ required: true, message: "请选择告警等级" }] })(
                         <Select placeholder="请选择" size="small">
                           <Option value={1}>中度</Option>
                           <Option value={2}>重度</Option>

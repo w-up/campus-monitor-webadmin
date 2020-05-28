@@ -68,6 +68,12 @@ export const DataManagePage = Form.create()(observer(({ form, history }: any) =>
       title: '状态',
       key: 'status',
       dataIndex: 'status',
+      render: (val) => {
+        if (val === '审核不通过') {
+          return <span style={{ color: 'red' }}>{val}</span>;
+        }
+      return <span>{val}</span>;
+      },
     },
     {
       title: '操作',
