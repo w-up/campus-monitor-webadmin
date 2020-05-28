@@ -129,7 +129,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
         yAxis: [
           {
             type: "value",
-            name: "排放量",
+            name: "排放量(kg)",
             // min: 0,
             // max: 250,
             // interval: 50,
@@ -152,7 +152,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           },
           {
             type: "value",
-            name: "温度",
+            name: "平均浓度(ug/m3)",
             // min: 0,
             // max: 25,
             // interval: 5,
@@ -419,6 +419,9 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
       {store.siteData && (
         <div className="monitor-row-panel p-4">
           <Scrollbars style={{ height: "calc(100vh - 64px)" }}>
+            <div style={{ position: "absolute", right: 20, top: "0" }} onClick={(e) => (store.siteData = null)}>
+              <Button icon="close" shape="circle" style={{ background: "transparent", border: "none", color: "#6b6b6e" }}></Button>
+            </div>
             <div className="primary-button-text-dark text-xl mt-8">{mapMonitor.curentFactorData?.factoryName}</div>
 
             <div className="stat-panel text-white mt-8 p-4">
