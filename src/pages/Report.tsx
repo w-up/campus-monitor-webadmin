@@ -227,7 +227,7 @@ export const ReportPage = Form.create()(
                   {getFieldValue("timeCycle") === 3 && (
                     <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="统计时间">
                       {getFieldDecorator("collectDate", { initialValue: moment(), rules: [{ required: true, message: '请选择统计周期' }] })(<DatePicker format="YYYY" disabledDate={current => {
-                          return !!(current && current >= moment().subtrsact(0, "days"));
+                          return !!(current && current >= moment().subtract(0, "days"));
                         }} onPanelChange={(val: any) => {
                         setFieldsValue({ collectDate: moment(val).startOf('year') });
                         setDateOpen(false);
