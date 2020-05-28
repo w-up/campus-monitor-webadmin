@@ -243,18 +243,41 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
 
       {dynamicSource.computeType == "1" && dynamicSource.curDynamicSourceContribution && (
         <div className="monitor-row-panel p-4 ">
+          <div
+            style={{ position: "absolute", right: 20, top: "0" }}
+            onClick={(e) =>
+              (dynamicSource.DynamicSourceContribution = {
+                index: 0,
+                data: [],
+                timer: 0,
+              })
+            }
+          >
+            <Button icon="close" shape="circle" style={{ background: "transparent", border: "none", color: "#6b6b6e" }}></Button>
+          </div>
           <div className="primary-button-text-dark text-lg">计算结果</div>
           <div className="primary-button-text-dark text-sm mt-2"> 时间: {dynamicSource.curDynamicSourceContribution.datetime}</div>
 
           <Table className="monitor-table mt-10" {...store.monitorPanel.table} pagination={false} />
           <div>
-            <div className="primary-text-color mt-10 text-center">园区TVOCs排放贡献率</div>
             <PieChart showLegend={false} pieRadius="80%" data={dynamicSource.curDynamicSourceContribution.valueList.map((i) => ({ key: i.siteName, value: i.value }))} />
           </div>
         </div>
       )}
       {dynamicSource.computeType == "3" && dynamicSource.curDynamicSourceTraceSource && (
         <div className="monitor-row-panel p-4 ">
+          <div
+            style={{ position: "absolute", right: 20, top: "0" }}
+            onClick={(e) =>
+              (dynamicSource.DynamicSourceTraceSource = {
+                index: 0,
+                data: [],
+                timer: 0,
+              })
+            }
+          >
+            <Button icon="close" shape="circle" style={{ background: "transparent", border: "none", color: "#6b6b6e" }}></Button>
+          </div>
           <div className="primary-button-text-dark text-lg">计算结果</div>
           <div className="primary-button-text-dark text-sm mt-2"> 时间: {dynamicSource.curDynamicSourceTraceSource.datetime}</div>
           {dynamicSource.curDynamicSourceTraceSource?.valueList.map((item, index) => (

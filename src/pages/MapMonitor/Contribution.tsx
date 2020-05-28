@@ -90,7 +90,19 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
           orient: "vertical",
           bottom: "0",
           left: "40%",
-          data: this.siteData?.map((i) => i.factoryName),
+          formatter: function (name) {
+            let data: any = store.options.series[0].data;
+            let total = 0;
+            let tarValue = 0;
+            for (let i = 0, l = data.length; i < l; i++) {
+              total += data[i].value;
+              if (data[i].name == name) {
+                tarValue = data[i].value;
+              }
+            }
+            let p = ((tarValue / total) * 100).toFixed(2);
+            return name + " " + " " + p + "%";
+          },
         },
         series: [
           {
@@ -100,7 +112,8 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
             center: ["50%", "30%"],
             labelLine: {
               normal: {
-                show: false,
+                formatter: "{b}:{c}: ({d}%)",
+                // show: false,
               },
             },
             data: this.siteData?.map((i) => ({
@@ -143,7 +156,7 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
           </Form.Item>
           <Form.Item label="监测因子">
             {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
-              <Select>
+              <Select onChange={mapMonitor.selectPmcode}>
                 <Select.Option value="0">全部</Select.Option>
                 {store.pmcodes.map((item, index) => (
                   <Select.Option value={item.pmCode} key={index}>
@@ -197,7 +210,7 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
 
       {store.siteData && (
         <div>
-          <div className="primary-text-color mt-10 text-center">园区TVOCs排放贡献率</div>
+          <div className="primary-text-color mt-10 text-center">园区{mapMonitor.currentPmCode}排放贡献率</div>
           <div className="mt-4">
             <ReactEcharts option={store.options} style={{ width: "100%", height: "350px" }} />
           </div>
