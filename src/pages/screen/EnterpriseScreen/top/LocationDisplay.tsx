@@ -37,8 +37,24 @@ export const LocationDisplay = () => {
     async weatherBasic() {
       const res = await this.heWeatherApiReq("https://free-api.heweather.net/s6/weather/now");
       if (res) {
-        this.city = res.basic.location;
-        this.parent_city = res.basic.parent_city;
+        var BMap = window.BMap;
+        var geolocation = new BMap.Geolocation();
+        var gc = new BMap.Geocoder();
+        const that = this;
+        geolocation.getCurrentPosition(function (r) {
+          //@ts-ignore
+          if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+            var pt = r.point;
+            gc.getLocation(pt, function (rs) {
+              var addComp = rs.addressComponents;
+              var province = addComp.province;
+              var city = addComp.city;
+              var area = addComp.district;
+              that.parent_city = city;
+              that.city = area;
+            });
+          }
+        });
         this.temp = res.now.tmp;
         this.weather = res.now.cond_txt;
       }
@@ -63,8 +79,8 @@ export const LocationDisplay = () => {
       <div className="head-right text-center font-bold flex flex-row justify-end items-center">
         <div className="px-2 flex flex-row">
           <Icon style={{ marginTop: 4, marginRight: 4 }} type="environment" theme="filled" />
-          <span>{store.city}</span>
-          <div className="ml-4">{store.parent_city}</div>
+          <div>{store.parent_city}</div>
+          <span className="ml-4">{store.city}</span>
         </div>
         <div className="px-2 text-white px-6 py-1 rounded mx-2" style={{ background: store.airColor(store.aqi) }}>
           {store.air}

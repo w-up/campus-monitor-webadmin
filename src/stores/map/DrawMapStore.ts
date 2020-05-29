@@ -13,6 +13,7 @@ export class DrawMapStore {
   @action.bound
   init(data: Partial<DrawMapStore> = {}) {
     Object.assign(this, { ...data });
+    this.getCurLocation();
     return this;
   }
 
