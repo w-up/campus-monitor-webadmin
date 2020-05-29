@@ -29,6 +29,26 @@ export const utils = {
       };
     },
   },
+  colors: {
+    getPollutionColor(val) {
+      if (val <= 50) {
+        return { r: 0, g: 228, b: 0 };
+      }
+      if (val <= 100) {
+        return { r: 255, g: 255, b: 0 };
+      }
+      if (val <= 150) {
+        return { r: 255, g: 126, b: 0 };
+      }
+      if (val <= 200) {
+        return { r: 255, g: 0, b: 0 };
+      }
+      if (val <= 300) {
+        return { r: 153, g: 0, b: 76 };
+      }
+      return { r: 126, g: 0, b: 35 };
+    },
+  },
   array: {
     formatToLatLngLong(arr) {
       if (!arr) return [];
