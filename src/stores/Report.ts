@@ -461,7 +461,25 @@ export class Report {
   @action.bound
   async exportStatisReport(param) {
     this.loading = true;
-    param.collectDate = moment(param.collectDate).format('YYYY-MM-DD');
+
+    switch (param.timeCycle) {
+      case 1:
+        param.collectDate = moment(param.collectDate).format('YYYY-MM-DD');
+        break;
+      case 2:
+        param.collectDate = moment(param.collectDate).format('YYYY-MM');
+        break;
+      case 3:
+        param.collectDate = moment(param.collectDate).format('YYYY');
+        break;
+      case 4:
+        param.collectDate = moment(param.collectDate).format('YYYY-WW');
+        break;
+      case 5:
+        param.collectDate = moment(param.collectDate).format('YYYY-Q');
+        break;
+    }
+
     try {
       const response: any = await FORM_POST('/device-data-history/exportStatisReport', param);
       const { headers, data } = response;
