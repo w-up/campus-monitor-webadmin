@@ -48,6 +48,14 @@ export class MyEnterprise {
   @observable deviceSiteInfo: any = {};
   @observable deviceInfo: any = {};
 
+  @observable factoryListSelectedRowKeys: any = [];
+
+  @action.bound
+  onFactoryListSelectChange(selectedRowKeys) {
+    console.log("selectedRowKeys changed: ", selectedRowKeys);
+    this.factoryListSelectedRowKeys = selectedRowKeys;
+  }
+
   @action.bound
   onSelectChange(selectedRowKeys) {
     console.log("selectedRowKeys changed: ", selectedRowKeys);

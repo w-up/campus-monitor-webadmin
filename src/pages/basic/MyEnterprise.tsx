@@ -119,6 +119,8 @@ export const MyEnterprisePage = Form.create()(
       scopeNameInput,
       longitudeInput,
       latitudeInput,
+      factoryListSelectedRowKeys,
+      onFactoryListSelectChange,
     } = myEnterprise;
 
     const {
@@ -619,6 +621,35 @@ export const MyEnterprisePage = Form.create()(
       onShowSizeChange: factoryListPaginationChange,
     };
 
+    const factoryListRowSelection = {
+      selectedRowKeys: factoryListSelectedRowKeys,
+      onChange: onFactoryListSelectChange,
+    };
+
+    const onBatchDeleteFactoryList = () => {
+      const selectedRows = toJS(factoryListSelectedRowKeys);
+      if (selectedRows.length === 0) {
+        message.warning("请勾选要删除的厂区");
+        return;
+      }
+
+      const ids = selectedRows;
+
+      Modal.confirm({
+        title: "删除确认",
+        content: `确定删除这${ids.length}个厂区吗？`,
+        async onOk() {
+          try {
+            await deleteFactory([ ...ids ]);
+            message.success("删除成功");
+            await myEnterprise.getTree();
+          } catch {
+            message.error("删除失败");
+          }
+        },
+      });
+    }
+
     return (
       <div className="myEnterprisePage">
         <Spin spinning={loading}>
@@ -755,8 +786,8 @@ export const MyEnterprisePage = Form.create()(
                     title="厂区信息"
                     extra={
                       <Row>
-                        {/* <Button icon="delete">删除</Button> */}
-                        {/* <Divider type="vertical" /> */}
+                        <Button onClick={onBatchDeleteFactoryList} icon="delete">批量删除</Button>
+                        <Divider type="vertical" />
                         <Button
                           icon="file-add"
                           onClick={() => {
@@ -773,7 +804,7 @@ export const MyEnterprisePage = Form.create()(
                       </Row>
                     }
                   >
-                    <Table size="small" rowKey="key" pagination={factoryListPagination} bordered columns={columns} dataSource={toJS(factoryListInfo.data) || []} />
+                    <Table size="small" rowKey="id" rowSelection={factoryListRowSelection} pagination={factoryListPagination} bordered columns={columns} dataSource={toJS(factoryListInfo.data) || []} />
                   </Card>
                 </Card>
               )}

@@ -167,7 +167,7 @@ export const RuntimeDataPage = Form.create()(
                   </Form.Item>
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测区域">
                     {getFieldDecorator("factoryId", { initialValue: factoryList && factoryList[0] && factoryList[0].factoryId, rules: [{ required: true, message: "请选择监测区域" }] })(
-                      <Select placeholder="请选择" size="small">
+                      <Select onChange={() => resetFields(['siteIdList'])} placeholder="请选择" size="small">
                         {factoryList.map((item) => (
                           <Option key={item.factoryId} value={item.factoryId}>
                             {item.factoryName}
