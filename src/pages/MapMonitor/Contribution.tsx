@@ -92,6 +92,9 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
           left: "40%",
           formatter: function (name) {
             let data: any = store.options.series[0].data;
+            if (!data || data.length == 0) {
+              return name;
+            }
             let total = 0;
             let tarValue = 0;
             for (let i = 0, l = data.length; i < l; i++) {

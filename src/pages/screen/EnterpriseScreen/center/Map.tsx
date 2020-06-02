@@ -25,8 +25,8 @@ export const EnterpriseMap = () => {
       <span className="corner cornerBl" />
       <span className="corner cornerBr" />
       <div style={{ height: "40vh" }}>
-        <div id="allmap" style={{ height: "30vh", width: "100%" }} />
-        <img className="groundImg" src={utils.img.getImageUrl(enterpriseScreenMap?.curMapConfig?.picUrl)} />
+        <div id="allmap" style={{ height: "40vh", width: "100%" }} />
+        <img className="groundImg" style={{ height: "40vh" }} src={utils.img.getImageUrl(enterpriseScreenMap?.curMapConfig?.picUrl)} />
       </div>
       <div className="my-4 p-2 px-6 mapExplain flex flex-row">
         <div className="primary-text-dark w-2/3">当前厂区：{enterpriseScreenMap.currentFactoryData?.factoryName}</div>

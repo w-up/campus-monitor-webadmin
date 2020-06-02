@@ -55,22 +55,24 @@ export class KrigingMapStore {
     if (!this.map) return;
     this.map.getOverlays().forEach((i) => this.map.removeOverlay(i));
     store.mapMonitor.curParkData.forEach((park) => {
-      park.siteDatas.forEach((site) => {
-        //@ts-ignore
-        const position = transform([site.gpsX, site.gpsY], "BD:09", "EPSG:3857");
-        const element = document.createElement("div");
-        element.innerHTML = `
+      park.siteDatas
+        .filter((i) => i.collectValue && Number(i.collectValue) > 0)
+        .forEach((site) => {
+          //@ts-ignore
+          const position = transform([site.gpsX, site.gpsY], "BD:09", "EPSG:3857");
+          const element = document.createElement("div");
+          element.innerHTML = `
        <div>
         <img style="maxWidth:40px;height:40px" src=${Number(site.limit) && Number(site.collectValue) > Number(site.limit) ? require("../../assets/red.png") : require("../../assets/green.png")} />
         <div class="number">${site.collectValue || 0}</div>
        </div>
        `;
-        const overlay = new Overlay({
-          position,
-          element,
+          const overlay = new Overlay({
+            position,
+            element,
+          });
+          this.map.addOverlay(overlay);
         });
-        this.map.addOverlay(overlay);
-      });
     });
   }
 

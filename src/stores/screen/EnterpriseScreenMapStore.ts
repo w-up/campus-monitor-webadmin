@@ -1,4 +1,4 @@
-import { action, observable, computed, toJS } from 'mobx';
+import { action, observable, computed, toJS } from "mobx";
 import { ComplexCustomOverlay } from "../../pages/screen/EnterpriseScreen/customOverlay";
 import api from "services";
 import { SitlePMData, DailySewage } from "../../type";
@@ -17,7 +17,7 @@ export class EnterpriseScreenMapStore {
   @observable zoom = 20;
   @observable heading = 50.5;
   @observable tilt = 53;
-  @observable overlays = [] as any;
+  overlays = [] as any;
   @observable activeFlag = true;
   @observable curSiteIndex = 0;
 
@@ -161,7 +161,7 @@ export class EnterpriseScreenMapStore {
   @action.bound
   async loadAllFactory() {
     const res = await api.Factory.getAllFactoryLogin();
-    if (res.data) {
+    if (res?.data) {
       this.allfactoriy = res.data;
       this.allfactoriy.forEach((i) => {
         if (i.select) {
@@ -325,11 +325,12 @@ export class EnterpriseScreenMapStore {
       const nextSite = this.SiteRuntimePmDate[index];
       if (nextSite) {
         const res = await api.DeviceData.getAllPM24HourDatasBySiteId({ siteId: nextSite.siteId });
-        if(res.data?.pms){
-          this.curSiteRuntimeData = res.data.pms.filter(i => i.datas[0]?.collectValue !==null)
+        if (res.data?.pms) {
+          this.curSiteRuntimeData = res.data.pms.filter((i) => i.datas[0]?.collectValue !== null);
         }
       }
     }
+    console.log(this.overlays);
     for (let x in this.overlays) {
       this.map?.removeOverlay(this.overlays[x]);
     }

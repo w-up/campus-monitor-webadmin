@@ -324,7 +324,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           },
         },
         series: this.siteData?.siteConcentrationMonitoringTrend.map((item, index) => ({
-          name: item.siteId,
+          name: item.siteName,
           type: "line",
           data: item.pmValues.map((i) => i.avgValue),
           itemStyle: {
@@ -434,27 +434,27 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
             <div className="text-white mt-8">
               <div className="flex justify-between pb-4 px-4" style={{ borderBottom: "1px solid #1bb8a1" }}>
                 <div>历史监测数据</div>
-                <div>同期变化率(2020-01-03)</div>
+                <div>同期变化率 {moment(store.statisticalTime).format("YYYY-MM-DD")}</div>
               </div>
               <div className="flex">
                 <div className="mt-2 px-4" style={{ width: "50%", borderRight: "1px solid white" }}>
                   <div className="flex justify-between my-4">
                     <div>平均浓度</div>
-                    <div className="primary-text-color">{store.siteData.factoryAverageConcentration?.averageConcentration}</div>
+                    <div className="primary-text-color">{store.siteData?.factoryAverageConcentration?.averageConcentration}</div>
                   </div>
                   <div className="flex justify-between my-4">
                     <div>排放限值</div>
-                    <div className="primary-text-color">{store.siteData.pmValueUpperLimit}</div>
+                    <div className="primary-text-color">{store.siteData?.pmValueUpperLimit}</div>
                   </div>
                 </div>
                 <div className="mt-2 px-4" style={{ width: "50%" }}>
                   <div className="flex justify-between my-4">
                     <div>同比</div>
-                    <div className="primary-button-text-dark">{store.siteData.factoryAverageConcentration?.comparedWithLastTime} ↓</div>
+                    <div className="primary-button-text-dark">{store.siteData?.factoryAverageConcentration?.comparedWithLastTime} ↓</div>
                   </div>
                   <div className="flex justify-between my-4">
                     <div>环比</div>
-                    <div className="primary-button-text-dark">{store.siteData.factoryAverageConcentration?.comparedWithLastYear} ↓</div>
+                    <div className="primary-button-text-dark">{store.siteData?.factoryAverageConcentration?.comparedWithLastYear} ↓</div>
                   </div>
                 </div>
               </div>

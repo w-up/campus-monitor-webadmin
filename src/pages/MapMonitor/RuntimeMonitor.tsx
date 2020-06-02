@@ -38,7 +38,7 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
         if (!err) {
           console.log("Received values of form: ", values);
           this.loading = true;
-          this.updateTime = moment().format("YYYY-MM-DD HH:ss");
+          this.updateTime = moment().format("YYYY-MM-DD HH:mm:ss");
           mapMonitor.loadSitePmValueList().finally(() => {
             this.loading = false;
           });
