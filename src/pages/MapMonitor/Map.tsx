@@ -69,20 +69,18 @@ export const MapMonitorMap = () => {
         )}
         {mapMonitor.curParkData &&
           mapMonitor.curParkData.map((park) =>
-            park.siteDatas
-              ?.filter((i) => i.collectValue && Number(i.collectValue) > 0)
-              .map((item, index) => (
-                <CustomOverlay position={{ lng: Number(item.gpsX), lat: Number(item.gpsY) }} key={index} visiable={mapMonitor.zoom > 17}>
-                  <div onClick={(e) => mapMonitor.setCurrentRuntimeSite(item.siteId)}>
-                    {Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? (
-                      <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../assets/red.png")} />
-                    ) : (
-                      <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../assets/green.png")} />
-                    )}
-                    {item.collectValue && <div className="number">{item.collectValue}</div>}
-                  </div>
-                </CustomOverlay>
-              ))
+            park.siteDatas.map((item, index) => (
+              <CustomOverlay position={{ lng: Number(item.gpsX), lat: Number(item.gpsY) }} key={index} visiable={mapMonitor.zoom > 17}>
+                <div onClick={(e) => mapMonitor.setCurrentRuntimeSite(item.siteId)}>
+                  {Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? (
+                    <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../assets/red.png")} />
+                  ) : (
+                    <img style={{ maxWidth: "40px", height: "40px" }} src={require("../../assets/green.png")} />
+                  )}
+                  {item.collectValue && <div className="number">{item.collectValue || ""}</div>}
+                </div>
+              </CustomOverlay>
+            ))
           )}
       </Map>
     </APILoader>
