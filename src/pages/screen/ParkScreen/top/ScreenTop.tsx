@@ -55,26 +55,22 @@ export const ScreenTop = () => {
         var gc = new BMap.Geocoder();
         const that = this;
 
-        geolocation.getCurrentPosition(
-          function (r) {
-            console.log({ r });
-
-            //@ts-ignore
-            if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-              var pt = r.point;
-              gc.getLocation(pt, function (rs) {
-                console.log({ rs });
-                var addComp = rs.addressComponents;
-                var province = addComp.province;
-                var city = addComp.city;
-                var area = addComp.district;
-                that.parent_city = city;
-                that.city = area;
-              });
-            }
-          },
-          { enableHighAccuracy: true }
-        );
+        geolocation.getCurrentPosition(function (r) {
+          console.log({ r });
+          //@ts-ignore
+          if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+            var pt = r.point;
+            gc.getLocation(pt, function (rs) {
+              console.log({ rs });
+              var addComp = rs.addressComponents;
+              var province = addComp.province;
+              var city = addComp.city;
+              var area = addComp.district;
+              that.parent_city = city;
+              that.city = area;
+            });
+          }
+        });
         // this.parent_city = res.basic.parent_city;
         this.temp = res.now.tmp;
         this.weather = res.now.cond_txt;

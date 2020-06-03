@@ -294,6 +294,11 @@ export class EnterpriseScreenMapStore {
     }); // 创建Map实例
     this.map.disableDragging();
     this.map.disableScrollWheelZoom();
+    console.log(this.map);
+    this.map.disableDoubleClickZoom();
+    this.map.disablePinchToZoom();
+    this.map.disableContinuousZoom();
+    this.map.disableDragging();
     this.updateMap();
   }
 
