@@ -37,7 +37,7 @@ const columns = [
     title: "贡献率",
     key: "rateNum",
     dataIndex: "rateNum",
-    render: (val) => `${(val * 100).toFixed(2)}%`,
+    render: (val) => val ? `${(val * 100).toFixed(2)}%` : '0%',
   },
 ];
 

@@ -241,6 +241,8 @@ export class Comparison {
         break;
     }
 
+    param.pmType = param.ptId;
+
     try {
       const { data }: any = await POST("/device-data-history/getStatisAnalisis", { ...param });
       const { professionData, factoryData, trendData } = data;

@@ -121,6 +121,8 @@ export const MyEnterprisePage = Form.create()(
       latitudeInput,
       factoryListSelectedRowKeys,
       onFactoryListSelectChange,
+      deviceSiteListSelectedRowKeys,
+      onDeviceSiteListSelectChange,
     } = myEnterprise;
 
     const {
@@ -650,6 +652,34 @@ export const MyEnterprisePage = Form.create()(
       });
     }
 
+    const deviceSiteListRowSelection = {
+      selectedRowKeys: deviceSiteListSelectedRowKeys,
+      onChange: onDeviceSiteListSelectChange,
+    };
+
+    const onBatchDeleteDeviceSiteList = () => {
+      const selectedRows = toJS(deviceSiteListSelectedRowKeys);
+      if (selectedRows.length === 0) {
+        message.warning("请勾选要删除的站点");
+        return;
+      }
+
+      const ids = selectedRows;
+
+      Modal.confirm({
+        title: "删除确认",
+        content: `确定删除这${ids.length}个站点吗？`,
+        async onOk() {
+          try {
+            await deleteDeviceSite([ ...ids ]);
+            message.success("删除成功");
+          } catch {
+            message.error("删除失败");
+          }
+        },
+      });
+    }
+
     return (
       <div className="myEnterprisePage">
         <Spin spinning={loading}>
@@ -993,8 +1023,8 @@ export const MyEnterprisePage = Form.create()(
                         title="站点信息"
                         extra={
                           <Row>
-                            {/* <Button icon="delete">删除</Button> */}
-                            {/* <Divider type="vertical" /> */}
+                            <Button onClick={onBatchDeleteDeviceSiteList} icon="delete">批量删除</Button>
+                            <Divider type="vertical" />
                             <Button
                               icon="file-add"
                               onClick={() => {
@@ -1008,7 +1038,7 @@ export const MyEnterprisePage = Form.create()(
                           </Row>
                         }
                       >
-                        <Table size="small" rowKey="key" pagination={deviceSiteListPagination} bordered columns={deviceSiteListcolumns} dataSource={toJS(deviceSiteListInfo.data) || []} />
+                        <Table size="small" rowKey="factorySiteId" rowSelection={deviceSiteListRowSelection} pagination={deviceSiteListPagination} bordered columns={deviceSiteListcolumns} dataSource={toJS(deviceSiteListInfo.data) || []} />
                       </Card>
                     )}
 

@@ -331,7 +331,25 @@ export class Report {
       if (param.timeCycle === 3) {
         const [header, ...innerData] = tableData;
         const column = header.map((title, index) => {
-          return { title, dataIndex: index, key: index, width: 100 };
+          if (index === 0) {
+            return { title, dataIndex: index, key: index, width: 100 };
+          }
+          return { title, dataIndex: index, key: index, width: 200, children: [
+            {
+              title: '均值',
+              dataIndex: index,
+              key: index,
+              width: 100,
+              render: str => str ? str.split(',')[0] : '',
+            },
+            {
+              title: '峰值',
+              dataIndex: index,
+              key: index,
+              width: 100,
+              render: str => str ? str.split(',')[1] : '',
+            },
+          ] };
         });
         this.tableColumn = column;
         const table: any = [];

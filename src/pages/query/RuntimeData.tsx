@@ -205,7 +205,7 @@ export const RuntimeDataPage = Form.create()(
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测类型">
                     {getFieldDecorator("ptId", { initialValue: ptList && ptList[0] && ptList[0].id, rules: [{ required: true, message: "请选择监测类型" }] })(
-                      <Select placeholder="请选择" size="small">
+                      <Select onChange={() => resetFields(['pmCodeList'])} placeholder="请选择" size="small">
                         {ptList.map((item) => (
                           <Option key={item.id} value={item.id}>
                             {item.label}
