@@ -225,7 +225,27 @@ export class Rank {
   @action.bound
   async getStatisRank(param) {
     this.loading = true;
-    param.collectDate = moment(param.collectDate).format("YYYY-MM-DD");
+
+    switch (param.timeCycle) {
+      case 1:
+        param.collectDate = moment(param.collectDate).format('YYYY-MM-DD');
+        break;
+      case 2:
+        param.collectDate = moment(param.collectDate).format('YYYY-MM');
+        break;
+      case 3:
+        param.collectDate = moment(param.collectDate).format('YYYY');
+        break;
+      case 4:
+        param.collectDate = moment(param.collectDate).format('YYYY-WW');
+        break;
+      case 5:
+        param.collectDate = moment(param.collectDate).format('YYYY-Q');
+        break;
+    }
+
+    param.pmType = param.ptId;
+    // delete param.ptId;
 
     try {
       const { data }: any = await POST("/device-data-history/getStatisRank", { ...param, detectType: 2 }); // 厂区
@@ -251,7 +271,27 @@ export class Rank {
   @action.bound
   async getStatisAnalisis(param) {
     this.loading = true;
-    param.collectDate = moment(param.collectDate).format("YYYY-MM-DD");
+
+    switch (param.timeCycle) {
+      case 1:
+        param.collectDate = moment(param.collectDate).format('YYYY-MM-DD');
+        break;
+      case 2:
+        param.collectDate = moment(param.collectDate).format('YYYY-MM');
+        break;
+      case 3:
+        param.collectDate = moment(param.collectDate).format('YYYY');
+        break;
+      case 4:
+        param.collectDate = moment(param.collectDate).format('YYYY-WW');
+        break;
+      case 5:
+        param.collectDate = moment(param.collectDate).format('YYYY-Q');
+        break;
+    }
+
+    param.pmType = param.ptId;
+
     try {
       const { data }: any = await POST("/device-data-history/getStatisAnalisis", { ...param });
     } catch {}
