@@ -178,7 +178,7 @@ export const ReportPage = Form.create()(
                         全选
                       </Checkbox>
                       <Form.Item colon={false} labelAlign="left" labelCol={{ span: 0 }} wrapperCol={{ span: 24 }} label="">
-                        {getFieldDecorator("pmCodes", { initialValue: pmCodeList && pmCodeList.map(v => v.pmCode), rules: [{ required: true }] })(
+                        {getFieldDecorator("pmCodes", { initialValue: pmCodeList && pmCodeList.map(v => v.pmCode), rules: [{ required: true, message: '请选择监测因子' }] })(
                           <Checkbox.Group style={{ width: "100%" }}>
                             <Row>
                               {pmCodeList.map((item) => (
