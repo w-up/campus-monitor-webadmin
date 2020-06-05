@@ -28,7 +28,7 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
       <img style='width:40px;height:55px;' src='${isActive ? icon : iconActive}'/>
   </div>
   <div style='display:inline-block;visibility: ${isActive ? "inherit" : "hidden"};border:1px solid rgba(4,108,249,1);border-radius:4px; z-index: 10' >
-      <div style='font-size:12px;display:flex;background-color:${isActive ? "rgba(4,108,249,1)" : "#2C5081"};color:white;'>
+      <div style='font-size:14px;display:flex;background-color:${isActive ? "rgba(4,108,249,1)" : "#2C5081"};color:white;'>
           <div style='padding:5px 0px;margin-left:15px;width:70px;'>更新时间</div>
       </div>
   <div class="scroll-1" style='overflow-y: auto;overflow-x: hidden;height:150px;background-color:${isActive ? "#1D4476" : "#5B666C"};' class='cell-area'>
@@ -36,7 +36,7 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
   for (let x of this._obj.children) {
     cells =
       cells +
-      `<div style='border-bottom: 1px solid rgba(255,255,255, 0.5);padding:2px 15px 2px 5px;font-size:12px;align-items:flex-end;opacity:0.9;color:rgba(4,249,204,1);'>
+      `<div style='border-bottom: 1px solid rgba(255,255,255, 0.5);padding:2px 15px 2px 5px;font-size:14px;align-items:flex-end;opacity:0.9;color:rgba(4,249,204,1);'>
       <div style='color:white'>${x.collectDate}</div>
       <div style='display:flex'>
       <div style=';width:70px;'>

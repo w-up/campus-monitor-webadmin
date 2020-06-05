@@ -1,6 +1,10 @@
 @import "~antd/dist/antd.css";
 @import "./variable.scss";
 
+body {
+  font-size: 16px;
+}
+
 .primary-button-text-dark {
   color: $primary-button-text-dark;
 }
@@ -196,7 +200,7 @@ svg {
       display: flex;
       justify-content: space-around;
       color: #46c6f3;
-      font-size: 14px;
+      font-size: 16px;
       border-bottom: 1px solid rgba(0, 118, 180, 0.3);
       text-align: center;
 
@@ -252,7 +256,7 @@ svg {
   display: flex;
   justify-content: space-around;
   color: #46c6f3;
-  font-size: 14px;
+  font-size: 16px;
   border-bottom: 1px solid rgba(0, 118, 180, 0.3);
   text-align: center;
 
@@ -356,7 +360,7 @@ svg {
   background: #1e2538;
 
   .area {
-    font-size: 14px;
+    font-size: 16px;
     color: #04b2f0;
   }
 
@@ -562,14 +566,14 @@ svg {
     bottom: -20px;
     left: -45px;
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
     color: #92ddda;
     width: 100px;
   }
 
   .point-num {
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
     color: #92ddda;
     width: 100px;
   }
@@ -688,7 +692,7 @@ svg {
   border: 1px solid #2e3b61;
   background: #102245;
   height: 420px;
-  font-size: 14px;
+  font-size: 16px;
   border-radius: 2px;
   color: $primary-white;
   right: 55px;

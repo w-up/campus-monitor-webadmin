@@ -52,7 +52,7 @@ export const DrawBaiduMap = () => {
               console.log(123, index);
               return (
                 <CustomOverlay key={index} position={{ lng: path.lng, lat: path.lat }}>
-                  <div className="point-num" style={{ color: "#00FF66", fontSize: "14px", width: "100px", userSelect: "none", position: "absolute", bottom: "-20px", left: "20px" }}>
+                  <div className="point-num" style={{ color: "#00FF66", fontSize: "16px", width: "100px", userSelect: "none", position: "absolute", bottom: "-20px", left: "20px" }}>
                     点{index2}
                   </div>
                 </CustomOverlay>

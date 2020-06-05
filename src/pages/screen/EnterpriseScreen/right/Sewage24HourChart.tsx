@@ -92,8 +92,8 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
           `;
           }
         }
-        return `<div style="color: #04F9CC;text-align:left;line-height:20px">${text} 日均</div>
-            <div style="color:#88A8C5;text-align:left;font-size:10px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
+        return `<div style="color: #04F9CC;text-align:left;line-height:20px;font-size:14px">${text} 日均</div>
+            <div style="color:#88A8C5;text-align:left;font-size:14px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
             ${showHtml}
             </div>
           </div>`;
