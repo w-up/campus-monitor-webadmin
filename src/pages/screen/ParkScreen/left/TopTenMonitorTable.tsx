@@ -4,6 +4,7 @@ import { CarouselProvider, Dot, DotGroup, Slide, Slider } from "pure-react-carou
 import { useStore } from "../../../../stores/index";
 import { _ } from "utils/lodash";
 import { utils } from "../../../../utils/index";
+import { Scrollbars } from "react-custom-scrollbars";
 
 export const TopTenMonitorTable = () => {
   const {
@@ -12,7 +13,7 @@ export const TopTenMonitorTable = () => {
 
   const store = useLocalStore(() => ({
     get topTenMonitorData() {
-      return parkScreenMap.allParkMapData.siteDatas.slice(0,10)
+      return parkScreenMap.allParkMapData.siteDatas.slice(0, 10);
     },
   }));
 
@@ -32,17 +33,21 @@ export const TopTenMonitorTable = () => {
           <div>限值</div>
         </div>
         <div>
-        {store.topTenMonitorData.map((item,index) => <div
-          className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"}
-          onClick={(e) => parkScreenMap.setCurrentSite(item.siteId)}
-        >
-          <div title={item.collectDate}>{item.collectDate}</div>
-          <div>{item.siteName}</div>
-          <div>
-            <span>{item.collectValue}</span>
-          </div>
-          <div>{item.limit}</div>
-        </div>)}
+          <Scrollbars style={{ height: 350 }}>
+            {store.topTenMonitorData.map((item, index) => (
+              <div
+                className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"}
+                onClick={(e) => parkScreenMap.setCurrentSite(item.siteId)}
+              >
+                <div title={item.collectDate}>{item.collectDate}</div>
+                <div>{item.siteName}</div>
+                <div>
+                  <span>{item.collectValue}</span>
+                </div>
+                <div>{item.limit}</div>
+              </div>
+            ))}
+          </Scrollbars>
         </div>
       </div>
     </div>

@@ -243,6 +243,7 @@ export class EnterpriseScreenMapStore {
   @action.bound
   async loadMapConfig() {
     const result = await api.MapConfig.getMapConfigLogin();
+    if (!result || !result.data) return;
     this.curMapConfig = result.data
       ? result.data
       : {
