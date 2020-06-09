@@ -941,7 +941,7 @@ export const MyEnterprisePage = Form.create()(
                     </Card>
                     <Divider />
                     <Card title={<Row>厂区范围</Row>} bordered size="small">
-                      {getFieldDecorator("scopeType", { initialValue: "map", rules: [{ required: false }] })(
+                      {getFieldDecorator("scopeType", { initialValue: "location", rules: [{ required: false }] })(
                         <Radio.Group disabled={!factoryInfoEditable}>
                           <Radio value="map" onClick={(e) => drawMap.setPathsByScope(scope)}>
                             地图绘制
