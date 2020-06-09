@@ -84,7 +84,7 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
 
           if (valueRaw > 0) {
             showHtml += `
-            <div style="display:flex;align-items: center;">
+            <div style="display:flex;align-items: center;font-size:18px;font-weight:bold;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
             <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px; ${limit && valueRaw > limit ? "color:red;" : ""}">${value ? `${value}*${valueIn} ${unit}` : ""}</div>
@@ -92,8 +92,8 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
           `;
           }
         }
-        return `<div style="color: #04F9CC;text-align:left;line-height:20px;font-size:14px">${text} 日均</div>
-            <div style="color:#88A8C5;text-align:left;font-size:14px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
+        return `<div style="color: #04F9CC;text-align:left;line-height:20px;font-size:18px;font-weight:bold;">${text} 日均</div>
+            <div style="color:#88A8C5;text-align:left;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
             ${showHtml}
             </div>
           </div>`;
@@ -103,8 +103,9 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
     legend: {
       data: data.pms.map((i) => i.pmName),
       textStyle: {
-        fontSize: 10,
+        fontSize: 18,
         color: "#88A8C5", // 图例文字颜色
+        fontWeight: "bold",
       },
       // y:"-10px",
     },
@@ -121,7 +122,8 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
       axisLabel: {
         textStyle: {
           color: "rgba(136,168,197,0.5)",
-          fontSize: "10",
+          fontSize: "18",
+          fontWeight: "bold",
         },
       },
       data: utils.array.sliceArray(data.dates, dataIndex, count),
@@ -141,7 +143,8 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
       axisLabel: {
         textStyle: {
           color: "rgba(136,168,197,0.5)",
-          fontSize: "10",
+          fontSize: "18",
+          fontWeight: "bold",
         },
       },
       //   分割线

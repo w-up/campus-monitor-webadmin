@@ -200,7 +200,8 @@ svg {
       display: flex;
       justify-content: space-around;
       color: #46c6f3;
-      font-size: 16px;
+      font-size: 18px;
+      font-weight: bold;
       border-bottom: 1px solid rgba(0, 118, 180, 0.3);
       text-align: center;
 
@@ -216,7 +217,8 @@ svg {
 
   .tableTitle {
     color: $screen-text-color-2;
-    font-size: 18px;
+    font-size: 24px;
+    font-weight: bold;
     line-height: 40px;
     background-image: url("/images/title.png");
     font-weight: 700;
@@ -256,7 +258,7 @@ svg {
   display: flex;
   justify-content: space-around;
   color: #46c6f3;
-  font-size: 16px;
+  font-size: 24px;
   border-bottom: 1px solid rgba(0, 118, 180, 0.3);
   text-align: center;
 

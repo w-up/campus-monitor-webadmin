@@ -77,7 +77,7 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
       text: site.pmName,
       textStyle: {
         color: "rgba(4,248,204,0.8)",
-        fontSize: "14",
+        fontSize: "18",
       },
       padding: [20, 20, 5, 20],
       margin: [20, 0],
@@ -108,17 +108,17 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
           //值
           var { valueRaw, valueIn, value, limit, unit } = params[i].data;
 
-          if (Number(valueRaw) > 0) {
+          if (value > 0) {
             showHtml += `
-            <div style="display:flex;align-items: center">
+            <div style="display:flex;align-items: center;font-size:18px;font-weight:bold;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px;${limit && valueRaw > limit ? "color:red;" : ""}">${value || ""}</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px;${limit && value > limit ? "color:red;" : ""}">${value || ""}</div>
           </div>
           `;
           }
         }
-        return `<div class="tableFloat text-left primary-text-dark" style="font-size:14px">
+        return `<div class="tableFloat text-left primary-text-dark" style="font-size:18px;font-weight:bold;">
                     <div>${text} 日均</div>
                     <div class="primary-text-dark">${option.title.text}</div>
                     <div class="primary-red">日均值上限：${limit || ""}</div>
@@ -134,13 +134,14 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
         x: "right",
         textStyle: {
           color: "#88A8C5",
-          fontSize: 12,
+          fontSize: 18,
+          fontWeight: "bold",
         },
         icon: "rect",
         y: 0,
         itemHeight: 2,
         itemWidth: 20,
-        padding: [5, 0, 0, 40]
+        padding: [5, 0, 0, 40],
       },
     ],
     grid: {
@@ -155,7 +156,8 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
       axisLabel: {
         textStyle: {
           color: "rgba(136,168,197,0.5)",
-          fontSize: "10",
+          fontSize: "18",
+          fontWeight: "bold",
         },
       },
       data: site.sites[0].datas.map((i) => i.time),
@@ -171,12 +173,15 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
         align: "center",
         verticalAlign: "middle",
         padding: [10, 0, 20, 0],
+        fontSize: 16,
+        fontWeight: "bold",
       },
       nameGap: 15,
       axisLabel: {
         textStyle: {
           color: "rgba(136,168,197,0.5)",
-          fontSize: "10",
+          fontSize: "18",
+          fontWeight: "bold",
         },
         margin: 8,
       },
@@ -196,20 +201,21 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
         name: item.siteName,
         data: item.datas.map((i) => {
           const isUpperlimit = site.upperLimit && i.collectValue > site.upperLimit;
-          
+
           return {
-          symbolSize: isUpperlimit ? 12 : 0,
-           value: i.collectValue ? Number(i.collectValue) : null,
-          valueRaw: i.collectValue,
-          valueIn: i.collectValueIn,
-          limit: site.upperLimit,
-          unit: i.unit,
-          itemStyle: {
-            normal: {
-              color: isUpperlimit ? "red" : constant.seriesColors[index],
+            symbolSize: isUpperlimit ? 12 : 0,
+            value: i.collectValue ? Number(i.collectValue) : null,
+            valueRaw: i.collectValue,
+            valueIn: i.collectValueIn,
+            limit: site.upperLimit,
+            unit: i.unit,
+            itemStyle: {
+              normal: {
+                color: isUpperlimit ? "red" : constant.seriesColors[index],
+              },
             },
-          },
-        }}),
+          };
+        }),
         type: "line",
         itemStyle: {
           normal: {
