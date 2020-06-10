@@ -46,9 +46,9 @@ export const ParkScreenPage = () => {
         <Icon className="text-3xl font-black" type="fullscreen" />
         <span className="ml-2">全屏展示</span>
       </div>
-      <div ref={fullScreenRef} className="flex flex-col w-full h-full p-4" style={{ backgroundColor: "#061630" }}>
+      <div ref={fullScreenRef} className="flex flex-col w-full  p-4" style={{ backgroundColor: "#061630" }}>
         <ScreenTop />
-        <div className="screenContent flex mt-4" style={{ height: "calc(100vh - 140px)" }}>
+        <div className="screenContent flex mt-4">
           <div className="leftContent flex w-9/12 p-4">
             <span className="corner cornerTl" />
             <span className="corner cornerTr" />

@@ -357,7 +357,7 @@ export class EnterpriseScreenMapStore {
     this.playTimer = setInterval(async () => {
       if (!this.map) clearInterval(this.playTimer);
       this.playInterval();
-    }, 5000);
+    }, 50000);
   }
 
   @action.bound

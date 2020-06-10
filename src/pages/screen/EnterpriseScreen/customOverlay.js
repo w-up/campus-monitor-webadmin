@@ -20,14 +20,10 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
 
   this._map = map;
   var div = document.createElement("div");
-  div.style.display = "inline-block";
+  // div.style.display = "inline-block";
 
-  let cells = `<div style='width:300px; display: flex;flex-direction: row-reverse;'>
-  <div style='display:inline-block;z-index: 9'>
-      <div style='height:15px;background:${isActive ? "rgba(5,100,230,1)" : "#5A6C77"};border:1px solid rgba(4,249,204,1);color:white;border-radius:2px;'>${this._obj.text}</div>
-      <img style='width:40px;height:55px;' src='${isActive ? icon : iconActive}'/>
-  </div>
-  <div style='display:inline-block;visibility: ${isActive ? "inherit" : "hidden"};border:1px solid rgba(4,108,249,1);border-radius:4px; z-index: 10' >
+  let cells = `<div  class="map-point-box">
+  <div style='visibility: ${isActive ? "inherit" : "hidden"};border:1px solid rgba(4,108,249,1);border-radius:4px; ' class="map-list" >
       <div style='font-size:18px;display:flex;background-color:${isActive ? "rgba(4,108,249,1)" : "#2C5081"};color:white;'>
           <div style='padding:5px 0px;margin-left:15px;'>更新时间</div>
       </div>
@@ -46,7 +42,14 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
       </div>
       </div>`;
   }
-  cells = cells + `</div></div></div>`;
+  cells =
+    cells +
+    `</div></div>
+    <div class="map-point">
+      <div style='height:15px;background:${isActive ? "rgba(5,100,230,1)" : "#5A6C77"};border:1px solid rgba(4,249,204,1);color:white;border-radius:2px;'>${this._obj.text}</div>
+      <img style='width:40px;height:55px;' src='${isActive ? icon : iconActive}'/>
+  </div>
+  </div>`;
   div.innerHTML = cells;
 
   div.onmouseenter = () => {
@@ -60,7 +63,7 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
   };
   div.style.fontSize = "12px";
   div.style.position = "absolute";
-  div.style.zIndex = 100;
+  // div.style.zIndex = 1000;
   this._store.map.getPanes().labelPane.appendChild(div);
   this._div = div;
   return div;

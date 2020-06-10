@@ -258,7 +258,7 @@ svg {
   display: flex;
   justify-content: space-around;
   color: #46c6f3;
-  font-size: 24px;
+  font-size: 18px;
   border-bottom: 1px solid rgba(0, 118, 180, 0.3);
   text-align: center;
 
@@ -1071,4 +1071,17 @@ svg {
 
 .ant-notification-notice-description {
   margin-left: 0 !important;
+}
+
+.map-point-box {
+  width: 300px;
+  display: flex;
+}
+
+.map-point {
+  z-index: 9;
+}
+
+.map-list {
+  z-index: 10;
 }
