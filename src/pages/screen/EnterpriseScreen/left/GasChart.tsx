@@ -121,7 +121,7 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
         return `<div class="tableFloat text-left primary-text-dark" style="font-size:18px;font-weight:bold;">
                     <div>${text} 日均</div>
                     <div class="primary-text-dark">${option.title.text}</div>
-                    <div class="primary-red">日均值上限：${limit || ""}</div>
+                    <div class="primary-red">上限：${limit || ""}</div>
                     <div style="color:#88A8C5;font-size:10px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
                     ${showHtml}
             </div></div></div>`;
