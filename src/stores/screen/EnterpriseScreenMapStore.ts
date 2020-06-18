@@ -7,6 +7,7 @@ import { message, notification } from "antd";
 import style from "../../common/mapStyle";
 import auth from "services/auth";
 import { store } from "../index";
+import { result } from "lodash";
 
 //@ts-ignore
 const BMapGL = window.BMapGL;
@@ -240,6 +241,7 @@ export class EnterpriseScreenMapStore {
     pic: undefined as FormData | undefined,
     zoom: 15,
   };
+  @observable companyLog = "";
   @action.bound
   async loadMapConfig() {
     const result = await api.MapConfig.getMapConfigLogin();
@@ -255,6 +257,7 @@ export class EnterpriseScreenMapStore {
           pic: undefined as FormData | undefined,
           zoom: 15,
         };
+    this.companyLog = result.data.companyLog;
     this.updateMap({
       center: new BMapGL.Point(this.curMapConfig.longitude, this.curMapConfig.latitude),
       heading: this.curMapConfig.highAngle,

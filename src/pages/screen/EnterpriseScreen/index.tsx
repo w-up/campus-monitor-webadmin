@@ -25,7 +25,7 @@ export const EnterpriseScreenPage = () => {
   const store = useLocalStore(() => ({
     enterpriseTimer: null as any,
     setUpTimer() {
-      if (this.setUpTimer) clearInterval(this.enterpriseTimer);
+      if (this.enterpriseTimer) clearInterval(this.enterpriseTimer);
       this.enterpriseTimer = setInterval(() => {
         enterpriseScreenMap.reload();
       }, Math.max(Number(sysParams.qyjsc_refresh_period.paramValue), 1) * 1000 * 60);

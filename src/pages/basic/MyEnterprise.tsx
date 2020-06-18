@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useObserver, useLocalStore, observer } from "mobx-react-lite";
-import { Tag, message, Cascader, Radio, Select, DatePicker, Input, Form, Icon, Spin, Card, Row, Col, Tree, Descriptions, Button, Table, Divider, InputNumber, Modal } from "antd";
+import { Tag, message, Cascader, Radio, Select, DatePicker, Input, Form, Icon, Spin, Card, Row, Col, Tree, Descriptions, Button, Table, Divider, InputNumber, Modal, Upload } from "antd";
 import Search from "antd/lib/input/Search";
 import { toJS } from "mobx";
 import moment from "moment";
 import { useStore } from "../../stores/index";
 import { DrawBaiduMap } from "../../components/DrawBaiduMap";
+import { globalConfig } from "../../config";
 
 const { Option } = Select;
 const { Column } = Table;
@@ -30,8 +31,8 @@ const deviceListColumns = [
     title: "监测因子",
     dataIndex: "pmList",
     width: 500,
-    render: val => {
-      return val.map(v => v.pmName).join(',');
+    render: (val) => {
+      return val.map((v) => v.pmName).join(",");
     },
   },
   // {
@@ -71,6 +72,7 @@ export const MyEnterprisePage = Form.create()(
 
     const { getFieldDecorator, setFieldsValue, getFieldsValue, getFieldValue, validateFields, resetFields } = form;
 
+    const { auth } = useStore();
     const {
       loading,
       saveFactory,
@@ -163,14 +165,13 @@ export const MyEnterprisePage = Form.create()(
         setEnterpriseInfoVisible(true);
         setFactoryInfoVisible(false);
         setDeviceSiteInfoVisible(false);
-  
+
         setFieldsValue({ enterpriseInfoEditable: false });
         setEditFactoryModalVisible(false);
         setDeviceListModalVisible(false);
         setDeviceInfoVisible(false);
         setDeviceSiteInfo({});
-      } catch {
-      }
+      } catch {}
       myEnterprise.loading = false;
     };
 
@@ -178,7 +179,7 @@ export const MyEnterprisePage = Form.create()(
       if (!selectedKeys[0]) {
         return;
       }
-      
+
       myEnterprise.loading = true;
       let firstParentKey = "";
       treeData.some((item) => {
@@ -211,8 +212,7 @@ export const MyEnterprisePage = Form.create()(
         setDeviceListModalVisible(true);
         setDeviceSiteInfo({});
         await getDeviceSiteList();
-      } catch {
-      }
+      } catch {}
       myEnterprise.loading = false;
     };
 
@@ -220,16 +220,18 @@ export const MyEnterprisePage = Form.create()(
       if (!selectedKeys[0]) {
         return;
       }
-      
+
       myEnterprise.loading = true;
 
       let secondParentKey = "";
       treeData.some((item) => {
         let tmp;
-        if (item.children.some((v) => {
-          tmp = v;
-          return v.children.some((k) => k.id === selectedKeys[0]);
-        })) {
+        if (
+          item.children.some((v) => {
+            tmp = v;
+            return v.children.some((k) => k.id === selectedKeys[0]);
+          })
+        ) {
           secondParentKey = tmp.id;
           return true;
         }
@@ -267,9 +269,7 @@ export const MyEnterprisePage = Form.create()(
         console.log(toJS(selectedKeys));
         setEditFactoryModalVisible(false);
         setDeviceListModalVisible(true);
-      } catch {
-
-      }
+      } catch {}
       myEnterprise.loading = false;
     };
 
@@ -280,10 +280,14 @@ export const MyEnterprisePage = Form.create()(
       let thirdParentKey = "";
       treeData.some((item) => {
         let tmp;
-        if (item.children.some((v) => v.children.some((k: any) => {
-          tmp = k;
-          return k.children.some((l) => l.id === selectedRowKeys[0]);
-        }))) {
+        if (
+          item.children.some((v) =>
+            v.children.some((k: any) => {
+              tmp = k;
+              return k.children.some((l) => l.id === selectedRowKeys[0]);
+            })
+          )
+        ) {
           thirdParentKey = tmp.id;
           return true;
         }
@@ -291,10 +295,12 @@ export const MyEnterprisePage = Form.create()(
       let secondParentKey = "";
       treeData.some((item) => {
         let tmp;
-        if (item.children.some((v: any) => {
-          tmp = v;
-          return v.children.some((k) => k.id === thirdParentKey);
-        })) {
+        if (
+          item.children.some((v: any) => {
+            tmp = v;
+            return v.children.some((k) => k.id === thirdParentKey);
+          })
+        ) {
           secondParentKey = tmp.id;
           return true;
         }
@@ -324,9 +330,7 @@ export const MyEnterprisePage = Form.create()(
         await getDeviceInfo(selectedKeys[0]);
         setEditFactoryModalVisible(false);
         setDeviceListModalVisible(false);
-      } catch {
-
-      }
+      } catch {}
       myEnterprise.loading = false;
     };
 
@@ -356,11 +360,8 @@ export const MyEnterprisePage = Form.create()(
         try {
           await doSubmitEnterpriseInfo(values);
           setFieldsValue({ enterpriseInfoEditable: false });
-        } catch {
-
-        }
+        } catch {}
         myEnterprise.loading = false;
-
       });
     };
 
@@ -385,14 +386,14 @@ export const MyEnterprisePage = Form.create()(
       // }
 
       // const param = getFieldValue("factoryInfo");
-      validateFields(['factoryInfo'], async (err, param) => {
+      validateFields(["factoryInfo"], async (err, param) => {
         if (err) {
-          message.error({ content: '请输入所有必填项', key: 'factoryInfo', duration: 2 });
+          message.error({ content: "请输入所有必填项", key: "factoryInfo", duration: 2 });
           return;
         }
 
         if (!scope || scope.length === 0) {
-          message.error({ content: '请输入厂区范围', key: 'scope.length', duration: 2 });
+          message.error({ content: "请输入厂区范围", key: "scope.length", duration: 2 });
           return;
         }
 
@@ -403,11 +404,9 @@ export const MyEnterprisePage = Form.create()(
           await myEnterprise.getTree();
           setFactoryInfoVisible(false);
           setEnterpriseInfoVisible(true);
-        } catch {
-
-        }
+        } catch {}
         myEnterprise.loading = false;
-      })
+      });
     };
 
     let initialProfessionId: any = [];
@@ -642,7 +641,7 @@ export const MyEnterprisePage = Form.create()(
         content: `确定删除这${ids.length}个厂区吗？`,
         async onOk() {
           try {
-            await deleteFactory([ ...ids ]);
+            await deleteFactory([...ids]);
             message.success("删除成功");
             await myEnterprise.getTree();
           } catch {
@@ -650,7 +649,7 @@ export const MyEnterprisePage = Form.create()(
           }
         },
       });
-    }
+    };
 
     const deviceSiteListRowSelection = {
       selectedRowKeys: deviceSiteListSelectedRowKeys,
@@ -671,14 +670,49 @@ export const MyEnterprisePage = Form.create()(
         content: `确定删除这${ids.length}个站点吗？`,
         async onOk() {
           try {
-            await deleteDeviceSite([ ...ids ]);
+            await deleteDeviceSite([...ids]);
             message.success("删除成功");
           } catch {
             message.error("删除失败");
           }
         },
       });
+    };
+
+    function beforeUpload(file) {
+      const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+      if (!isJpgOrPng) {
+        message.error("只允许上传JPG/PNG文件!");
+      }
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        message.error("图片必须少于2MB!");
+      }
+      return isJpgOrPng && isLt2M;
     }
+
+    const store = useLocalStore(() => ({
+      imageUrl: null,
+      uploadLogoLoading: false,
+      getBase64(img, callback) {
+        const reader = new FileReader();
+        reader.addEventListener("load", () => callback(reader.result));
+        reader.readAsDataURL(img);
+      },
+      onUploadChange(info) {
+        if (info.file.status === "uploading") {
+          return (this.uploadLogoLoading = true);
+        }
+
+        if (info.file.status === "done") {
+          // Get this url from response in real world.
+          this.getBase64(info.file.originFileObj, (imageUrl) => {
+            this.imageUrl = imageUrl;
+            this.uploadLogoLoading = false;
+          });
+        }
+      },
+    }));
 
     return (
       <div className="myEnterprisePage">
@@ -721,6 +755,31 @@ export const MyEnterprisePage = Form.create()(
                     </Col>
                   }
                 >
+                  <div className="flex items-center">
+                    <div className="mr-4">企业LOGO</div>
+                    <div>
+                      <Upload
+                        name="logo"
+                        listType="picture-card"
+                        className="avatar-uploader"
+                        headers={{ Authorization: `Bearer ${auth.token}` }}
+                        data={{ companyId: selectedEnterprise.id }}
+                        showUploadList={false}
+                        action={`${globalConfig.apiEndpoint}/company/editCompanyLogo`}
+                        beforeUpload={beforeUpload}
+                        onChange={store.onUploadChange}
+                      >
+                        {store.imageUrl || enterpriseInfo.companyLogo ? (
+                          <img src={store.imageUrl || enterpriseInfo.companyLogo} alt="avatar" style={{ width: "100%" }} />
+                        ) : (
+                          <div>
+                            <Icon type={store.uploadLogoLoading ? "loading" : "plus"} />
+                            <div className="ant-upload-text">Upload</div>
+                          </div>
+                        )}
+                      </Upload>
+                    </div>
+                  </div>
                   <Form onSubmit={submitEnterpriseInfo}>
                     <Card
                       bordered
@@ -816,7 +875,9 @@ export const MyEnterprisePage = Form.create()(
                     title="厂区信息"
                     extra={
                       <Row>
-                        <Button onClick={onBatchDeleteFactoryList} icon="delete">批量删除</Button>
+                        <Button onClick={onBatchDeleteFactoryList} icon="delete">
+                          批量删除
+                        </Button>
                         <Divider type="vertical" />
                         <Button
                           icon="file-add"
@@ -834,7 +895,15 @@ export const MyEnterprisePage = Form.create()(
                       </Row>
                     }
                   >
-                    <Table size="small" rowKey="id" rowSelection={factoryListRowSelection} pagination={factoryListPagination} bordered columns={columns} dataSource={toJS(factoryListInfo.data) || []} />
+                    <Table
+                      size="small"
+                      rowKey="id"
+                      rowSelection={factoryListRowSelection}
+                      pagination={factoryListPagination}
+                      bordered
+                      columns={columns}
+                      dataSource={toJS(factoryListInfo.data) || []}
+                    />
                   </Card>
                 </Card>
               )}
@@ -1023,7 +1092,9 @@ export const MyEnterprisePage = Form.create()(
                         title="站点信息"
                         extra={
                           <Row>
-                            <Button onClick={onBatchDeleteDeviceSiteList} icon="delete">批量删除</Button>
+                            <Button onClick={onBatchDeleteDeviceSiteList} icon="delete">
+                              批量删除
+                            </Button>
                             <Divider type="vertical" />
                             <Button
                               icon="file-add"
@@ -1038,7 +1109,15 @@ export const MyEnterprisePage = Form.create()(
                           </Row>
                         }
                       >
-                        <Table size="small" rowKey="factorySiteId" rowSelection={deviceSiteListRowSelection} pagination={deviceSiteListPagination} bordered columns={deviceSiteListcolumns} dataSource={toJS(deviceSiteListInfo.data) || []} />
+                        <Table
+                          size="small"
+                          rowKey="factorySiteId"
+                          rowSelection={deviceSiteListRowSelection}
+                          pagination={deviceSiteListPagination}
+                          bordered
+                          columns={deviceSiteListcolumns}
+                          dataSource={toJS(deviceSiteListInfo.data) || []}
+                        />
                       </Card>
                     )}
 

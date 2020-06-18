@@ -25,7 +25,7 @@ export const TopTenMonitorTable = () => {
           <img src="/images/787878.png" className="float-right" />
         </div>
       </div>
-      <div className="">
+      <div style={{ minHeight: "500px" }}>
         <div className="tabTitle">
           <div>采集时间</div>
           <div>区域</div>
@@ -33,21 +33,19 @@ export const TopTenMonitorTable = () => {
           <div>限值</div>
         </div>
         <div>
-          <Scrollbars style={{ height: 350 }}>
-            {store.topTenMonitorData.map((item, index) => (
-              <div
-                className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"}
-                onClick={(e) => parkScreenMap.setCurrentSite(item.siteId)}
-              >
-                <div title={item.collectDate}>{item.collectDate}</div>
-                <div>{item.siteName}</div>
-                <div>
-                  <span>{item.collectValue}</span>
-                </div>
-                <div>{item.limit}</div>
+          {store.topTenMonitorData.map((item, index) => (
+            <div
+              className={Number(item.limit) && Number(item.limit) && Number(item.collectValue) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"}
+              onClick={(e) => parkScreenMap.setCurrentSite(item.siteId)}
+            >
+              <div title={item.collectDate}>{item.collectDate}</div>
+              <div>{item.siteName}</div>
+              <div>
+                <span>{item.collectValue}</span>
               </div>
-            ))}
-          </Scrollbars>
+              <div>{item.limit}</div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

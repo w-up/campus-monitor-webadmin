@@ -68,6 +68,7 @@ const App = (props) => {
                 <Route path="/edit-avatar" component={UserAvatarEdit} />
 
                 {renderRoute(menu.menus)}
+                {auth.codes.includes("mapMonitor:manage") && <Redirect path="/" to={{ pathname: "/map" }} />}
               </Switch>
             </Layout.Content>
           </Layout>
