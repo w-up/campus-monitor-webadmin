@@ -6,7 +6,7 @@ import { POST } from "../utils/request";
 import { _ } from "../utils/lodash";
 import { store } from "./index";
 export class ConfigStore {
-  @observable baiduMapApiKey = "WR0KNr4UYumtXNOM9clX1Il6hHNngdTu";
+  @observable baiduMapApiKey = "qbE6vu9PBxgLfZbNxorWYPHFb9dbiCe3";
 
   @observable pmTypes: { [key: string]: { id: string; label: string } } = {};
   @observable pmCodes: { [key: string]: PMCode[] } = {};
