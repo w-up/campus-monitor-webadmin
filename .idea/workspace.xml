@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0b5aa787-9ba3-4839-bcb1-9b38c1c54b5a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/MapSettingTab.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top/MapSettingTab.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/SewageWaterTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/screen/ParkScreen/right/SewageWaterTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/MenuStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/MenuStore.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +13,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -34,10 +32,11 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js.last.introduce.type" value="LET" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/pages/basic" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/pages/screen/EnterpriseOutScreen" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
@@ -45,15 +44,16 @@
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/pages/basic" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/public/images" />
       <recent name="$PROJECT_DIR$/src/pages/basic" />
       <recent name="$PROJECT_DIR$/src/pages/screen/ParkScreen/left" />
       <recent name="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/top" />
       <recent name="$PROJECT_DIR$/src/pages/screen/EnterpriseScreen/center" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages/screen/EnterpriseOutScreen" />
+      <recent name="$PROJECT_DIR$/src/pages/basic" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -109,6 +109,7 @@
       <workItem from="1587958155175" duration="1284000" />
       <workItem from="1588124414967" duration="4996000" />
       <workItem from="1588234765155" duration="237000" />
+      <workItem from="1592828318645" duration="380000" />
     </task>
     <servers />
   </component>
@@ -148,11 +149,11 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="242" y="57" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.1440.877@0.23.1440.877" timestamp="1587822938059" />
-    <state x="383" y="214" width="674" height="659" key="search.everywhere.popup" timestamp="1588127564379">
+    <state x="383" y="214" width="674" height="659" key="search.everywhere.popup" timestamp="1592818446330">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="383" y="196" width="674" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1586494426138" />
-    <state x="383" y="214" width="674" height="659" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1588127564379" />
+    <state x="383" y="214" width="674" height="659" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1592818446330" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

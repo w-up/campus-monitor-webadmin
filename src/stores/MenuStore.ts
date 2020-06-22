@@ -20,6 +20,7 @@ import { ReportPage } from "../pages/Report";
 import { Basic } from "../pages/basic/Basic";
 import { User } from "../pages/basic/User/User";
 import { DrawBaiduMapExample } from "../pages/examples/DrawBaidumap/index";
+import {EnterpriseScreenOutPage} from "../pages/screen/EnterpriseOutScreen";
 
 export class MenuStore {
   @observable collapsed = false;
@@ -116,6 +117,13 @@ export class MenuStore {
           path: "/screen/park",
           code: "jsc:parkJsc",
           component: ParkScreenPage,
+          children: []
+        },
+        {
+          title: "企业驾驶舱户外",
+          path: "/screen/out",
+          code: "jsc:outJsc",
+          component: EnterpriseScreenOutPage,
           children: []
         }
       ]
