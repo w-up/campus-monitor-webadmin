@@ -5,11 +5,15 @@ import { utils } from "utils";
 const BMapGL = window.BMapGL;
 
 //覆盖物类 加入 obj 站点信息
-export function ComplexCustomOverlay(point, obj, index, store) {
+export function ComplexCustomOverlay(point, obj, index, store, options) {
   this._point = point;
   this._obj = obj;
   this._index = index;
   this._store = store;
+  this._options = {
+    showDetail: true,
+    ...options,
+  };
 }
 
 ComplexCustomOverlay.prototype = new BMapGL.Overlay();
@@ -23,25 +27,27 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
   // div.style.display = "inline-block";
 
   let cells = `<div  class="map-point-box">
-  <div style='visibility: ${isActive ? "inherit" : "hidden"};border:1px solid rgba(4,108,249,1);border-radius:4px; ' class="map-list" >
+  <div style='visibility: ${isActive ? "inherit" : "hidden"};display: ${
+    this._options.showDetail ? "block" : "none"
+  };border:1px solid rgba(4,108,249,1);border-radius:4px;position:absolute;left:-200px' class="map-list" >
       <div style='font-size:18px;display:flex;background-color:${isActive ? "rgba(4,108,249,1)" : "#2C5081"};color:white;'>
           <div style='padding:5px 0px;margin-left:15px;'>更新时间</div>
       </div>
   <div class="scroll-1" style='overflow-y: auto;overflow-x: hidden;height:150px;background-color:${isActive ? "#1D4476" : "#5B666C"};' class='cell-area'>
   `;
-  // for (let x of this._obj.children) {
-  //   cells =
-  //     cells +
-  //     `<div style='border-bottom: 1px solid rgba(255,255,255, 0.5);padding:2px 15px 2px 5px;font-size:18px;align-items:flex-end;opacity:0.9;color:rgba(4,249,204,1);'>
-  //     <div style='color:white'>${x.collectDate}</div>
-  //     <div style='display:flex'>
-  //     <div style=';width:70px;'>
-  //     <div>${x.name}</div>
-  //     </div>
-  //     <div>${x.value}</div>
-  //     </div>
-  //     </div>`;
-  // }
+  for (let x of this._obj.children) {
+    cells =
+      cells +
+      `<div style='border-bottom: 1px solid rgba(255,255,255, 0.5);padding:2px 15px 2px 5px;font-size:18px;align-items:flex-end;opacity:0.9;color:rgba(4,249,204,1);'>
+      <div style='color:white'>${x.collectDate}</div>
+      <div style='display:flex'>
+      <div style=';width:70px;'>
+      <div>${x.name}</div>
+      </div>
+      <div>${x.value}</div>
+      </div>
+      </div>`;
+  }
   cells =
     cells +
     `</div></div>

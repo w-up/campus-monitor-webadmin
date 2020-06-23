@@ -8,6 +8,7 @@ import style from "../../common/mapStyle";
 import auth from "services/auth";
 import { store } from "../index";
 import { result } from "lodash";
+import moment from "moment";
 
 //@ts-ignore
 const BMapGL = window.BMapGL;
@@ -29,13 +30,14 @@ export class EnterpriseOutScreenMapStore {
 
   playTimer?: any;
 
+  //初始化
   @action.bound
   async init() {
     this.boxDisplay = false;
     await Promise.all([
       this.loadAllFactory(),
       this.loadMapConfig(),
-      this.loadAllPmCode(),
+      // this.loadAllPmCode(),
       this.loadSiteRuntimePmData(),
       // this.loadDailySewage(),
       // this.loadDailyGas(),
@@ -85,10 +87,16 @@ export class EnterpriseOutScreenMapStore {
         })),
     }));
   }
+
+  @computed
+  get SiteRuntimePmData() {
+    return this.SiteRuntimePmDateForMap[this.curSiteIndex] || { children: [] };
+  }
   @action.bound
   async loadSiteRuntimePmData() {
     const result = await api.DeviceData.getAllPMDataLogin();
     this.SiteRuntimePmDate = result.data.sites || [];
+    this.addpoints({ index: 0, update: true });
   }
 
   @observable HoursSewage: {
@@ -326,35 +334,34 @@ export class EnterpriseOutScreenMapStore {
     this.map.setTilt(this.heading); //旋转角度
     setTimeout(() => {
       if (!this.map) return;
-      this.addpoints({ index: 0 }); //添加站点覆盖物
+      this.addpoints({ index: 0, update: true }); //添加站点覆盖物
       this.play();
     }, 1000);
   }
 
   @observable curSiteRuntimeData: Array<DailySewage> = [];
-
+  @observable updateTime = "";
   @action.bound
   async addpoints({ index, update }: { index: number; update?: boolean }) {
     if (!this.map) return;
-
     if (update) {
       const nextSite = this.SiteRuntimePmDate[index];
       if (nextSite) {
-        const res = await api.DeviceData.getAllPM24HourDatasBySiteId({ siteId: nextSite.siteId });
+        const res = await api.DeviceData.getAllPM20DayDatasBySiteId({ siteId: nextSite.siteId });
         if (res.data?.pms) {
           this.curSiteRuntimeData = res.data.pms.filter((i) => i.datas[0]?.collectValue !== null);
         }
       }
     }
-    console.log(this.overlays);
     for (let x in this.overlays) {
       this.map?.removeOverlay(this.overlays[x]);
     }
+    this.updateTime = moment().format("YYYY-MM-DD HH:mm:ss");
 
     this.curSiteIndex = index;
     this.overlays = [];
     this.SiteRuntimePmDateForMap.forEach((v, i) => {
-      const myCompOverlay = new ComplexCustomOverlay(v.position, v, i, this);
+      const myCompOverlay = new ComplexCustomOverlay(v.position, v, i, this, { showDetail: false });
       this.overlays.push(myCompOverlay);
       this.map?.addOverlay(myCompOverlay);
     });
@@ -367,7 +374,7 @@ export class EnterpriseOutScreenMapStore {
     this.playTimer = setInterval(async () => {
       if (!this.map) clearInterval(this.playTimer);
       this.playInterval();
-    }, 50000);
+    }, 10000);
   }
 
   @action.bound

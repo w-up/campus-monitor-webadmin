@@ -81,6 +81,7 @@ export class EnterpriseScreenMapStore {
   async loadSiteRuntimePmData() {
     const result = await api.DeviceData.getAllPMDataLogin();
     this.SiteRuntimePmDate = result.data.sites || [];
+    this.addpoints({ index: 0, update: true });
   }
 
   @observable HoursSewage: {
@@ -319,7 +320,7 @@ export class EnterpriseScreenMapStore {
 
     setTimeout(() => {
       if (!this.map) return;
-      this.addpoints({ index: 0 }); //添加站点覆盖物
+      this.addpoints({ index: 0, update: true }); //添加站点覆盖物
       this.play();
     }, 1000);
   }
@@ -347,7 +348,7 @@ export class EnterpriseScreenMapStore {
     this.curSiteIndex = index;
     this.overlays = [];
     this.SiteRuntimePmDateForMap.forEach((v, i) => {
-      const myCompOverlay = new ComplexCustomOverlay(v.position, v, i, this);
+      const myCompOverlay = new ComplexCustomOverlay(v.position, v, i, this, { showDetail: true });
       this.overlays.push(myCompOverlay);
       this.map?.addOverlay(myCompOverlay);
     });
@@ -360,7 +361,7 @@ export class EnterpriseScreenMapStore {
     this.playTimer = setInterval(async () => {
       if (!this.map) clearInterval(this.playTimer);
       this.playInterval();
-    }, 50000);
+    }, 10000);
   }
 
   @action.bound

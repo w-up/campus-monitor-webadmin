@@ -7,7 +7,6 @@ import { utils } from "../../../utils";
 import { _ } from "../../../utils/lodash";
 import { ScreenTop } from "../EnterpriseScreen/top/ScreenTop";
 import { EnterpriseMap } from "../EnterpriseScreen/center/Map";
-import { EnterpriseScreenGroupChart } from "../EnterpriseScreen/center/GroupChart";
 import { SewageTableDynamic } from "../EnterpriseScreen/right/SewageTableDynamic";
 import { CornerTable } from "./right/CornerTable";
 import { LineChart } from "../../../components/LineChart";
@@ -70,9 +69,6 @@ export const EnterpriseScreenOutPage = () => {
                 <div style={{ height: "40vh" }}>
                   <div id="allmap" style={{ height: "40vh", width: "100%" }} />
                   <img className="groundImg" style={{ height: "40vh" }} src={utils.img.getImageUrl(enterpriseScreenMap?.curMapConfig?.picUrl)} />
-                </div>
-                <div>
-                  <EnterpriseScreenGroupChart />
                 </div>
               </div>
               <div style={{ marginTop: 40 }}>{enterpriseScreenMap.curSiteRuntimeData.length > 0 && <LineChart animate datas={enterpriseScreenMap.curSiteRuntimeData}></LineChart>}</div>
