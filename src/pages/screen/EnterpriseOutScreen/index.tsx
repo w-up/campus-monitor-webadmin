@@ -1,22 +1,21 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { useLocalStore, useObserver } from "mobx-react-lite";
 import { Icon, Modal } from "antd";
-import { useEffect } from "react";
 import { useStore } from "../../../stores/index";
 import { CarouselProvider, Dot, DotGroup, Slide, Slider } from "pure-react-carousel";
 import { utils } from "../../../utils";
 import { _ } from "../../../utils/lodash";
-import {ScreenTop} from "../EnterpriseScreen/top/ScreenTop";
-import {EnterpriseMap} from "../EnterpriseScreen/center/Map";
-import {EnterpriseScreenGroupChart} from "../EnterpriseScreen/center/GroupChart";
-import {SewageTableDynamic} from "../EnterpriseScreen/right/SewageTableDynamic";
-import {CornerTable} from "./right/CornerTable";
-import {LineChart} from "../../../components/LineChart";
+import { ScreenTop } from "../EnterpriseScreen/top/ScreenTop";
+import { EnterpriseMap } from "../EnterpriseScreen/center/Map";
+import { EnterpriseScreenGroupChart } from "../EnterpriseScreen/center/GroupChart";
+import { SewageTableDynamic } from "../EnterpriseScreen/right/SewageTableDynamic";
+import { CornerTable } from "./right/CornerTable";
+import { LineChart } from "../../../components/LineChart";
 
 export const EnterpriseScreenOutPage = () => {
   const {
     config: { sysParams },
-    screen: { enterpriseScreenMap },
+    screen: { enterpriseOutScreenMap: enterpriseScreenMap },
   } = useStore();
   const fullScreenRef = useRef<HTMLDivElement>(null);
 
@@ -46,10 +45,13 @@ export const EnterpriseScreenOutPage = () => {
   }));
 
   useEffect(() => {
+    enterpriseScreenMap.initMap();
     enterpriseScreenMap.init();
+
     store.setUpTimer();
     return () => {
       store.clearTimer();
+      enterpriseScreenMap.map = null;
     };
   }, []);
 
@@ -68,6 +70,9 @@ export const EnterpriseScreenOutPage = () => {
                 <div style={{ height: "40vh" }}>
                   <div id="allmap" style={{ height: "40vh", width: "100%" }} />
                   <img className="groundImg" style={{ height: "40vh" }} src={utils.img.getImageUrl(enterpriseScreenMap?.curMapConfig?.picUrl)} />
+                </div>
+                <div>
+                  <EnterpriseScreenGroupChart />
                 </div>
               </div>
               <div style={{ marginTop: 40 }}>{enterpriseScreenMap.curSiteRuntimeData.length > 0 && <LineChart animate datas={enterpriseScreenMap.curSiteRuntimeData}></LineChart>}</div>

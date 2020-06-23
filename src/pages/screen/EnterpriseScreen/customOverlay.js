@@ -29,19 +29,19 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
       </div>
   <div class="scroll-1" style='overflow-y: auto;overflow-x: hidden;height:150px;background-color:${isActive ? "#1D4476" : "#5B666C"};' class='cell-area'>
   `;
-  for (let x of this._obj.children) {
-    cells =
-      cells +
-      `<div style='border-bottom: 1px solid rgba(255,255,255, 0.5);padding:2px 15px 2px 5px;font-size:18px;align-items:flex-end;opacity:0.9;color:rgba(4,249,204,1);'>
-      <div style='color:white'>${x.collectDate}</div>
-      <div style='display:flex'>
-      <div style=';width:70px;'>
-      <div>${x.name}</div>
-      </div>
-      <div>${x.value}</div>
-      </div>
-      </div>`;
-  }
+  // for (let x of this._obj.children) {
+  //   cells =
+  //     cells +
+  //     `<div style='border-bottom: 1px solid rgba(255,255,255, 0.5);padding:2px 15px 2px 5px;font-size:18px;align-items:flex-end;opacity:0.9;color:rgba(4,249,204,1);'>
+  //     <div style='color:white'>${x.collectDate}</div>
+  //     <div style='display:flex'>
+  //     <div style=';width:70px;'>
+  //     <div>${x.name}</div>
+  //     </div>
+  //     <div>${x.value}</div>
+  //     </div>
+  //     </div>`;
+  // }
   cells =
     cells +
     `</div></div>

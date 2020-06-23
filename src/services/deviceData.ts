@@ -25,6 +25,9 @@ export default {
   getAllPM24HourDatasLogin(data: { pmType: number }) {
     return POST("/device-data-history/getAllPM24HourDatasLogin", data);
   },
+  getAllPM20DayDatasBySiteId(data: { siteId: string }) {
+    return POST("/device-data-history/getAllPM20DayDatasBySiteId", data);
+  },
   getAllPM7DayDatasLogin(data: { pmType: number }) {
     return POST("/device-data-history/getAllPM7DayDatasLogin", data);
   },

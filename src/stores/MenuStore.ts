@@ -122,7 +122,7 @@ export class MenuStore {
         {
           title: "企业驾驶舱户外",
           path: "/screen/out",
-          code: "jsc:outJsc",
+          code: "jsc:enterpriseJsc",
           component: EnterpriseScreenOutPage,
           children: []
         }

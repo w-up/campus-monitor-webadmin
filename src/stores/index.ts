@@ -33,7 +33,8 @@ import { Report } from "./Report";
 import { RootStore } from "./RootStore";
 import { WsStore } from "./WsStore";
 import { AlertModal } from "./alert/AlertModal";
-import { KrigingMapStore } from './mapMonitor/krigingMap';
+import { KrigingMapStore } from "./mapMonitor/krigingMap";
+import { EnterpriseOutScreenMapStore } from "./screen/EnterpriseOutScreenMapStore";
 
 export const store = {
   ws: new WsStore(),
@@ -45,11 +46,12 @@ export const store = {
   dynamicSource: new DynamicSourceStore(),
   map: {
     drawMap: new DrawMapStore(),
-    krigingMap: new KrigingMapStore()
+    krigingMap: new KrigingMapStore(),
   },
   screen: {
     parkScreenMap: new ParkScreenMapStore(),
     enterpriseScreenMap: new EnterpriseScreenMapStore(),
+    enterpriseOutScreenMap: new EnterpriseOutScreenMapStore(),
     gasTable: new GasTableStore(),
     sewageTable: new SewageTableStore(),
   },
