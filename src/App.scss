@@ -244,7 +244,7 @@ svg {
 }
 
 .outScreen1280 {
-  height: 720px;
+  min-height: 720px;
   .topRight {
     height: calc(100vh - 100px)!important;
   }
