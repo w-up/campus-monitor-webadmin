@@ -48,7 +48,7 @@ svg {
 }
 
 .screenPage {
-  min-height: calc(100vh-200px);
+  min-height: calc(100vh - 200px);
   background: #1e2538;
   font-family: "Microsoft Yahei", sans-serif;
 
@@ -240,6 +240,13 @@ svg {
         font-weight: bold;
       }
     }
+  }
+}
+
+.outScreen1280 {
+  height: 720px;
+  .topRight {
+    height: calc(100vh - 100px)!important;
   }
 }
 

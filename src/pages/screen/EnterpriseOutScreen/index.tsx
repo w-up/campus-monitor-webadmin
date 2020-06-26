@@ -55,7 +55,7 @@ export const EnterpriseScreenOutPage = () => {
   }, []);
 
   return useObserver(() => (
-    <div className="p-4 screenPage">
+    <div className="p-4 screenPage outScreen1280">
       <div className="text-white pb-4 pl-2 cursor-pointer" style={{ color: "#0DACF2" }} onClick={() => fullScreenRef.current?.requestFullscreen()}>
         <Icon className="text-3xl font-black" type="fullscreen" />
         <span className="ml-2">全屏展示</span>
@@ -71,7 +71,7 @@ export const EnterpriseScreenOutPage = () => {
                   <img className="groundImg" style={{ height: "40vh" }} src={utils.img.getImageUrl(enterpriseScreenMap?.curMapConfig?.picUrl)} />
                 </div>
               </div>
-              <div style={{ marginTop: 40 }}>{enterpriseScreenMap.curSiteRuntimeData.length > 0 && <LineChart animate datas={enterpriseScreenMap.curSiteRuntimeData}></LineChart>}</div>
+              <div style={{ marginTop: 40, minHeight: 100 }}>{enterpriseScreenMap.curSiteRuntimeData.length > 0 && <LineChart animate datas={enterpriseScreenMap.curSiteRuntimeData}></LineChart>}</div>
             </div>
             <div className="w-2/5 pr-4 flex flex-col items-end">
               <CornerTable />
