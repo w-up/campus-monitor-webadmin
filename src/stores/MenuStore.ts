@@ -20,7 +20,7 @@ import { ReportPage } from "../pages/Report";
 import { Basic } from "../pages/basic/Basic";
 import { User } from "../pages/basic/User/User";
 import { DrawBaiduMapExample } from "../pages/examples/DrawBaidumap/index";
-import {EnterpriseScreenOutPage} from "../pages/screen/EnterpriseOutScreen";
+import { EnterpriseScreenOutPage } from "../pages/screen/EnterpriseOutScreen";
 
 export class MenuStore {
   @observable collapsed = false;
@@ -43,23 +43,23 @@ export class MenuStore {
           path: "/base/park",
           code: "base:manage:page",
           component: Basic,
-          children: []
+          children: [],
         },
         {
           title: "企业管理",
           path: "/base/enterprise",
           code: "base:company:page",
           component: Basic,
-          children: []
+          children: [],
         },
         {
           title: "我的企业",
           path: "/base/my-enterprise",
           code: "base:myCompany:page",
           component: MyEnterprisePage,
-          children: []
-        }
-      ]
+          children: [],
+        },
+      ],
     },
     {
       icon: "user",
@@ -73,16 +73,16 @@ export class MenuStore {
           path: "/user/userlist",
           component: User,
           code: "urp:user",
-          children: []
+          children: [],
         },
         {
           title: "角色管理",
           path: "/user/rolelist",
           code: "urp:role",
           component: User,
-          children: []
-        }
-      ]
+          children: [],
+        },
+      ],
     },
     {
       icon: "setting",
@@ -94,9 +94,9 @@ export class MenuStore {
           title: "参数配置",
           code: "manage:param",
           path: "/system/configration",
-          children: []
-        }
-      ]
+          children: [],
+        },
+      ],
     },
     {
       icon: "dashboard",
@@ -110,23 +110,23 @@ export class MenuStore {
           code: "jsc:enterpriseJsc",
           path: "/screen/enterprise",
           component: EnterpriseScreenPage,
-          children: []
+          children: [],
         },
         {
           title: "园区驾驶舱",
           path: "/screen/park",
           code: "jsc:parkJsc",
           component: ParkScreenPage,
-          children: []
+          children: [],
         },
         {
           title: "企业驾驶舱户外",
           path: "/screen/out",
-          code: "jsc:enterpriseJsc",
+          code: "jsc:enterpriseJsc:outdoor",
           component: EnterpriseScreenOutPage,
-          children: []
-        }
-      ]
+          children: [],
+        },
+      ],
     },
     {
       icon: "environment",
@@ -134,7 +134,7 @@ export class MenuStore {
       path: "/map",
       code: "mapMonitor:manage",
       component: MapMonitorPage,
-      children: []
+      children: [],
     },
     {
       icon: "dashboard",
@@ -142,7 +142,7 @@ export class MenuStore {
       path: "/dynamic",
       code: "dynamic:manage",
       component: DynamicSourcePage,
-      children: []
+      children: [],
     },
     {
       icon: "search",
@@ -156,16 +156,16 @@ export class MenuStore {
           path: "/query/runtime",
           code: "dataQuery:liveData",
           component: RuntimeDataPage,
-          children: []
+          children: [],
         },
         {
           title: "历史数据查询",
           path: "/query/history",
           code: "dataQuery:historyData",
           component: HistoryDataPage,
-          children: []
-        }
-      ]
+          children: [],
+        },
+      ],
     },
     {
       icon: "bar-chart",
@@ -179,16 +179,16 @@ export class MenuStore {
           path: "/analysis/rank",
           code: "datahistory:statis:rank",
           component: RankAnalysisPage,
-          children: []
+          children: [],
         },
         {
           title: "对比分析",
           path: "/analysis/comparison",
           code: "datahistory:statis:analisis",
           component: ComparisonAnalysisPage,
-          children: []
-        }
-      ]
+          children: [],
+        },
+      ],
     },
     {
       icon: "info-circle",
@@ -201,16 +201,16 @@ export class MenuStore {
           title: "告警管理",
           code: "warn:manage",
           path: "/alert/manage",
-          component: AlertManagePage
+          component: AlertManagePage,
         },
         {
           title: "告警设置",
           code: "warn:config",
           path: "/alert/setting",
           component: AlertSettingPage,
-          children: []
-        }
-      ]
+          children: [],
+        },
+      ],
     },
     {
       icon: "fund",
@@ -224,30 +224,30 @@ export class MenuStore {
           path: "/data/manage",
           code: "dataAdd:manage:page",
           component: DataManagePage,
-          children: []
+          children: [],
         },
         {
           title: "补录数据",
           path: "/data/manage/replenish",
           isHide: true,
           component: DataReplenish,
-          children: []
+          children: [],
         },
         {
           title: "审核页面",
           path: "/data/manage/view/:id",
           isHide: true,
           component: DataView,
-          children: []
+          children: [],
         },
         {
           title: "数据审核",
           path: "/data/audit",
           code: "dataAdd:check:page",
           component: DataAuditPage,
-          children: []
-        }
-      ]
+          children: [],
+        },
+      ],
     },
     {
       icon: "area-chart",
@@ -255,7 +255,7 @@ export class MenuStore {
       path: "/report",
       component: ReportPage,
       code: "datahistory:statisreport",
-      children: []
+      children: [],
     },
     {
       icon: "dashboard",
@@ -267,9 +267,9 @@ export class MenuStore {
         {
           title: "地图路径绘制",
           path: "/exmaple/drawmap",
-          component: DrawBaiduMapExample
-        }
-      ]
-    }
+          component: DrawBaiduMapExample,
+        },
+      ],
+    },
   ];
 }
