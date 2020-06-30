@@ -51,6 +51,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
               var text = params[i].axisValue;
               //值
               var { value, valueIn, value, limit, unit, valueDe } = params[i].data;
+              const ditgit = utils.number.digitCount(value)
 
               if (value > 0) {
                 showHtml += `
@@ -58,7 +59,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
             <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px; ${limit && value > limit ? "color:red;" : ""}">${
-                  props.precision ? (value ? `${valueDe}*${valueIn} ${unit}` : "") : value || ""
+                  props.precision ? (value ? `${valueDe} ${ditgit > 0 ?`*10<sup>${ditgit}</sup>`:''}  <span>${unit}</span>` : "") : value || ""
                 }</div>
           </div>
           `;

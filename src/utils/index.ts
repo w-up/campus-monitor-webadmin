@@ -3,6 +3,7 @@ import { globalConfig } from "../config";
 
 export const utils = {
   number: {
+    digitCount: num => String( Math.floor( Math.abs(num) ) ).length -1,
     toPrecision(val: any, precision = 3) {
       if (!val) return 0;
       return Number(val).toPrecision(precision).replace("e+", "*10^");

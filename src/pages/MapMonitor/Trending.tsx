@@ -256,7 +256,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
             <div style="display:flex;align-items: center;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? utils.number.toPrecision(value) : ""}</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? value: ""} * 10<sup>${utils.number.digitCount(value)}</sup></div>
           </div>
           `;
               }
