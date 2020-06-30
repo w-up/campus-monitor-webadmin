@@ -528,10 +528,10 @@ export const AlertSettingPage = Form.create()(
                   </Row>
                 )}
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="超限值">
-                  {getFieldDecorator("editForm.warnLimit", { initialValue: 0, rules: [{ required: true }] })(<InputNumber size="small" style={{ width: "100%" }} />)}
+                  {getFieldDecorator("editForm.warnLimit", { initialValue: 0, rules: [{ required: true, message: '请输入超限值' }] })(<InputNumber size="small" style={{ width: "100%" }} />)}
                 </Form.Item>
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="告警时间间隔">
-                  {getFieldDecorator("editForm.warnPeriod", { initialValue: 0, rules: [{ required: true }] })(<InputNumber min={0} size="small" placeholder="单位分钟" style={{ width: "100%" }} />)}
+                  {getFieldDecorator("editForm.warnPeriod", { initialValue: 0, rules: [{ required: true, message: '请输入告警时间间隔' }] })(<InputNumber min={0} size="small" placeholder="单位分钟" style={{ width: "100%" }} />)}
                 </Form.Item>
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="邮件通知联络人">
                   {getFieldDecorator("editForm.email", { initialValue: true, valuePropName: "checked", rules: [{ required: false }] })(<Checkbox />)}
