@@ -12,7 +12,7 @@ export const CornerTable = () => {
   return useObserver(() => (
     <div className="topRight screenTable">
       <div className="tableTitle text-center text-white pt-2" style={{ fontSize: 28, color: "#fff" }}>
-        厂界西北角
+        {enterpriseScreenMap.curSiteData?.siteName}
         <p className="text-white" style={{ fontSize: 16 }}>
           更新时间 {enterpriseScreenMap.updateTime}
         </p>
