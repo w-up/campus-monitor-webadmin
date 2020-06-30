@@ -349,7 +349,7 @@ export class EnterpriseOutScreenMapStore {
       if (nextSite) {
         const res = await api.DeviceData.getAllPM20DayDatasBySiteId({ siteId: nextSite.siteId });
         if (res.data?.pms) {
-          this.curSiteRuntimeData = res.data.pms.filter((i) => i.datas[0]?.collectValue !== null);
+          this.curSiteRuntimeData = res.data.pms;
         }
       }
     }

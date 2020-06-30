@@ -336,7 +336,7 @@ export class EnterpriseScreenMapStore {
       if (nextSite) {
         const res = await api.DeviceData.getAllPM24HourDatasBySiteId({ siteId: nextSite.siteId });
         if (res.data?.pms) {
-          this.curSiteRuntimeData = res.data.pms.filter((i) => i.datas[0]?.collectValue !== null);
+          this.curSiteRuntimeData = res.data.pms;
         }
       }
     }
