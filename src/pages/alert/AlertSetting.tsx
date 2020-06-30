@@ -588,10 +588,10 @@ export const AlertSettingPage = Form.create()(
                 )}
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="离线时间>=">
-                  {getFieldDecorator("editDeviceForm.offlineTime", { initialValue: 0, rules: [{ required: true }] })(<InputNumber size="small" style={{ width: "100%" }} />)}
+                  {getFieldDecorator("editDeviceForm.offlineTime", { initialValue: 0, rules: [{ required: true, message: "请输入离线时间" }] })(<InputNumber size="small" style={{ width: "100%" }} />)}
                 </Form.Item>
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="告警时间间隔">
-                  {getFieldDecorator("editDeviceForm.remindPeriod", { initialValue: 0, rules: [{ required: true }] })(<InputNumber size="small" placeholder="单位分钟" style={{ width: "100%" }} />)}
+                  {getFieldDecorator("editDeviceForm.remindPeriod", { initialValue: 0, rules: [{ required: true, message: "请输入告警时间间隔" }] })(<InputNumber size="small" placeholder="单位分钟" style={{ width: "100%" }} />)}
                 </Form.Item>
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="邮件通知联络人">
                   {getFieldDecorator("editDeviceForm.email", { initialValue: true, valuePropName: "checked", rules: [{ required: true }] })(<Checkbox />)}
