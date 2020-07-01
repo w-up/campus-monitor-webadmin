@@ -11,4 +11,7 @@ export default {
   getCompanyBusinessInfoById(data: { companyId: string }) {
     return GET("/company-business-info/getCompanyBusinessInfoById", data);
   },
+  getCompanyLogoById(data: { factoryId: string }) {
+    return GET("/company/getCompanyLogoById", data);
+  },
 };

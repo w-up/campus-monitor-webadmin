@@ -39,10 +39,12 @@ export class EnterpriseOutScreenMapStore {
       this.loadMapConfig(),
       // this.loadAllPmCode(),
       this.loadSiteRuntimePmData(),
+      
       // this.loadDailySewage(),
       // this.loadDailyGas(),
       // this.loadHoursSewage(),
-    ]);
+    ])
+    await this.loadLogo()
   }
 
   @action.bound
@@ -97,6 +99,14 @@ export class EnterpriseOutScreenMapStore {
     const result = await api.DeviceData.getAllPMDataLogin();
     this.SiteRuntimePmDate = result.data.sites || [];
     this.addpoints({ index: 0, update: true });
+  }
+  @action.bound
+  async loadLogo(){
+    const res = await api.Company.getCompanyLogoById({factoryId: this.currentFactory})
+    if(res.data){
+      this.companyLog = res.data
+    }
+    console.log({res})
   }
 
   @observable HoursSewage: {
@@ -273,7 +283,7 @@ export class EnterpriseOutScreenMapStore {
           pic: undefined as FormData | undefined,
           zoom: 15,
         };
-    this.companyLog = result.data.companyLog;
+    
     this.updateMap({
       center: new BMapGL.Point(this.curMapConfig.longitude, this.curMapConfig.latitude),
       heading: this.curMapConfig.highAngle,

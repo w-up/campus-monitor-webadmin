@@ -7,6 +7,7 @@ import { useStore } from "../../stores/index";
 import { PMCode, ContributionData } from "../../type";
 import api from "services";
 import ReactEcharts from "echarts-for-react";
+import mapMonitor from "services/mapMonitor";
 
 export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils }) => {
   const { getFieldDecorator } = form;
@@ -49,23 +50,16 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
       this.statisticalTime = moment(value).startOf(this.dateType.startOf);
       this.dateOpen = false;
     },
-    currentPark: "0",
-    pmcodes: [] as Array<PMCode>,
-    async selectPark(parkId) {
-      this.currentPark = parkId;
-      const result = await api.MapMonitor.getPmCodeListByParkId({ parkId });
-      this.pmcodes = result.data;
-    },
     handleSubmit(e) {
       e.preventDefault();
       form.validateFieldsAndScroll(async (err, values) => {
         if (!err) {
           this.loading = true;
-          const { parkId, pmCode, rankingType, statisticalType } = values;
+          const { rankingType } = values;
           console.log("Received values of form: ", values);
-          const result = await api.MapMonitor.getEmissionsContributionByPmCodeAndParkId({
-            parkId,
-            pmCode,
+          await api.MapMonitor.getEmissionsContributionByPmCodeAndParkId({
+            parkId: mapMonitor.currentPark,
+            pmCode: mapMonitor.currentPmCode,
             rankingType,
             statisticalTime: moment(this.statisticalTime).format(this.dateType.format),
             statisticalType: this.dateType.type,
@@ -146,28 +140,24 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
       <Spin spinning={store.loading}>
         <Form {...store.formItemLayout} onSubmit={store.handleSubmit} key="Contribution">
           <Form.Item label="选择园区">
-            {getFieldDecorator("parkId", { initialValue: mapMonitor.currentPark, rules: [{ required: true }] })(
-              <Select onChange={store.selectPark}>
-                <Select.Option value="0">全部</Select.Option>
-                {mapMonitor.parks.map((item, index) => (
-                  <Select.Option value={item.id} key={index}>
-                    {item.parkName}
-                  </Select.Option>
-                ))}
-              </Select>
-            )}
+            <Select onChange={mapMonitor.selectParkAndLoadPmcode} value={mapMonitor.currentPark}>
+              <Select.Option value="0">全部</Select.Option>
+              {mapMonitor.parks.map((item, index) => (
+                <Select.Option value={item.id} key={index}>
+                  {item.parkName}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
           <Form.Item label="监测因子">
-            {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
-              <Select onChange={mapMonitor.selectPmcode}>
-                <Select.Option value="0">全部</Select.Option>
-                {store.pmcodes.map((item, index) => (
-                  <Select.Option value={item.pmCode} key={index}>
-                    {item.pmName}
-                  </Select.Option>
-                ))}
-              </Select>
-            )}
+            <Select onChange={mapMonitor.selectPmcode} value={mapMonitor.currentPmCode}>
+              <Select.Option value="0">全部</Select.Option>
+              {mapMonitor.pmcodes.map((item, index) => (
+                <Select.Option value={item.pmCode} key={index}>
+                  {item.pmName}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
           <Form.Item label="统计类型">
             {getFieldDecorator("statisticalType", { initialValue: store.type })(

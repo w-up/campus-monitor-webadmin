@@ -33,6 +33,7 @@ export class EnterpriseScreenMapStore {
   async init() {
     this.boxDisplay = false;
     await Promise.all([this.loadAllFactory(), this.loadMapConfig(), this.loadAllPmCode(), this.loadSiteRuntimePmData(), this.loadDailySewage(), this.loadDailyGas(), this.loadHoursSewage()]);
+    await this.loadLogo()
   }
 
   @action.bound
@@ -232,6 +233,15 @@ export class EnterpriseScreenMapStore {
     this.reload();
   }
 
+
+  @action.bound
+  async loadLogo(){
+    const res = await api.Company.getCompanyLogoById({factoryId: this.currentFactory})
+    if(res.data){
+      this.companyLog = res.data
+    }
+  }
+
   // 地图设置相关
   @observable curMapConfig = {
     highAngle: 0,
@@ -258,7 +268,6 @@ export class EnterpriseScreenMapStore {
           pic: undefined as FormData | undefined,
           zoom: 15,
         };
-    this.companyLog = result.data.companyLog;
     this.updateMap({
       center: new BMapGL.Point(this.curMapConfig.longitude, this.curMapConfig.latitude),
       heading: this.curMapConfig.highAngle,

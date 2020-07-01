@@ -79,28 +79,24 @@ export const PollutionDistribution = Form.create()(({ form }: { form: WrappedFor
       <Spin spinning={store.loading}>
         <Form {...store.formItemLayout} onSubmit={store.handleSubmit} key="PollutionDistribution">
           <Form.Item label="选择园区">
-            {getFieldDecorator("parkId", { initialValue: mapMonitor.currentPark, rules: [{ required: true }] })(
-              <Select onChange={mapMonitor.selectPark}>
-                <Select.Option value="0">全部</Select.Option>
-                {mapMonitor.parks.map((item, index) => (
-                  <Select.Option value={item.id} key={index}>
-                    {item.parkName}
-                  </Select.Option>
-                ))}
-              </Select>
-            )}
+            <Select onChange={mapMonitor.selectParkAndLoadPmcode} value={mapMonitor.currentPark}>
+              <Select.Option value="0">全部</Select.Option>
+              {mapMonitor.parks.map((item, index) => (
+                <Select.Option value={item.id} key={index}>
+                  {item.parkName}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
           <Form.Item label="监测因子">
-            {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
-              <Select onChange={mapMonitor.selectPmcode}>
-                <Select.Option value="0">全部</Select.Option>
-                {mapMonitor.pmcodes.map((item, index) => (
-                  <Select.Option value={item.pmCode} key={index}>
-                    {item.pmName}
-                  </Select.Option>
-                ))}
-              </Select>
-            )}
+            <Select onChange={mapMonitor.selectPmcode} value={mapMonitor.currentPmCode}>
+              <Select.Option value="0">全部</Select.Option>
+              {mapMonitor.pmcodes.map((item, index) => (
+                <Select.Option value={item.pmCode} key={index}>
+                  {item.pmName}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
           <Form.Item label="起始时间">
             {getFieldDecorator("timeStart", { initialValue: moment().subtract(1, "week"), rules: [{ required: true }] })(

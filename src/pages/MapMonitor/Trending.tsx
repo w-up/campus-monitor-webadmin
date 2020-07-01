@@ -79,8 +79,8 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           console.log("Received values of form: ", values);
           const { factoryId, pmCode, type } = values;
           api.MapMonitor.getFactoryEmissionsTrendByPmCode({
-            factoryId,
-            pmCode,
+            factoryId: mapMonitor.currentFactory,
+            pmCode: mapMonitor.currentPmCode,
             statisticalTime: moment(this.statisticalTime).format(this.dateType.format),
             type: this.dateType.type,
           })
@@ -256,7 +256,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
             <div style="display:flex;align-items: center;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? value: ""} * 10<sup>${utils.number.digitCount(value)}</sup></div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? value : ""} * 10<sup>${utils.number.digitCount(value)}</sup></div>
           </div>
           `;
               }
@@ -351,40 +351,34 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
       <Spin spinning={store.loading}>
         <Form {...store.formItemLayout} onSubmit={store.handleSubmit} key="Trending">
           <Form.Item label="选择园区">
-            {getFieldDecorator("parkId", { initialValue: mapMonitor.currentPark, rules: [{ required: true }] })(
-              <Select onChange={mapMonitor.selectPark}>
-                <Select.Option value="0">全部</Select.Option>
-                {mapMonitor.parks.map((item, index) => (
-                  <Select.Option value={item.id} key={index}>
-                    {item.parkName}
-                  </Select.Option>
-                ))}
-              </Select>
-            )}
+            <Select onChange={mapMonitor.selectPark} value={mapMonitor.currentPark}>
+              <Select.Option value="0">全部</Select.Option>
+              {mapMonitor.parks.map((item, index) => (
+                <Select.Option value={item.id} key={index}>
+                  {item.parkName}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
           <Form.Item label="监测区域">
-            {getFieldDecorator("factoryId", { initialValue: mapMonitor.currentFactory, rules: [{ required: true }] })(
-              <Select onChange={mapMonitor.selectFactory}>
-                <Select.Option value="0">全部</Select.Option>
-                {mapMonitor.factories.map((item, index) => (
-                  <Select.Option value={item.id} key={index}>
-                    {item.factoryName}
-                  </Select.Option>
-                ))}
-              </Select>
-            )}
+            <Select onChange={mapMonitor.selectFactory} value={mapMonitor.currentFactory}>
+              <Select.Option value="0">全部</Select.Option>
+              {mapMonitor.factories.map((item, index) => (
+                <Select.Option value={item.id} key={index}>
+                  {item.factoryName}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
           <Form.Item label="监测因子">
-            {getFieldDecorator("pmCode", { initialValue: mapMonitor.currentPmCode, rules: [{ required: true }] })(
-              <Select onChange={mapMonitor.selectPmcode}>
-                <Select.Option value="0">全部</Select.Option>
-                {mapMonitor.pmcodes.map((item, index) => (
-                  <Select.Option value={item.pmCode} key={index}>
-                    {item.pmName}
-                  </Select.Option>
-                ))}
-              </Select>
-            )}
+            <Select onChange={mapMonitor.selectPmcode} value={mapMonitor.currentPmCode}>
+              <Select.Option value="0">全部</Select.Option>
+              {mapMonitor.pmcodes.map((item, index) => (
+                <Select.Option value={item.pmCode} key={index}>
+                  {item.pmName}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
           <Form.Item label="统计类型">
             {getFieldDecorator("type", { initialValue: store.type })(
