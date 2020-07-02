@@ -468,6 +468,20 @@ svg {
   }
 }
 
+@media screen and (max-width: 1280px) {
+  .head-left {
+    .text-sm {
+      font-size: 0.7rem;
+    }
+  }
+  .head-right {
+    .ml-4 {
+      margin-left: 0.3rem;
+    }
+    font-size: 0.7rem;
+  }
+}
+
 .screenFormStyle {
   .ant-form {
     .ant-form-item {
