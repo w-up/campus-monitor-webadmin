@@ -79,7 +79,7 @@ export class EnterpriseOutScreenMapStore {
       // update: "15:30:30",
       position: new BMapGL.Point(v.longitude, v.latitude),
       children: v.pmInfos
-        ?.filter((i) => Number(i.collectValue) > 0)
+        ?.filter((i) => i.collectValue !== null)
         .map((pmInfo) => ({
           name: pmInfo.pmName,
           value: pmInfo.collectValue,

@@ -33,7 +33,7 @@ export class EnterpriseScreenMapStore {
   async init() {
     this.boxDisplay = false;
     await Promise.all([this.loadAllFactory(), this.loadMapConfig(), this.loadAllPmCode(), this.loadSiteRuntimePmData(), this.loadDailySewage(), this.loadDailyGas(), this.loadHoursSewage()]);
-    await this.loadLogo()
+    await this.loadLogo();
   }
 
   @action.bound
@@ -68,7 +68,7 @@ export class EnterpriseScreenMapStore {
       // update: "15:30:30",
       position: new BMapGL.Point(v.longitude, v.latitude),
       children: v.pmInfos
-        ?.filter((i) => Number(i.collectValue) > 0)
+        ?.filter((i) => i.collectValue !== null)
         .map((pmInfo) => ({
           name: pmInfo.pmName,
           value: pmInfo.collectValue,
@@ -233,12 +233,11 @@ export class EnterpriseScreenMapStore {
     this.reload();
   }
 
-
   @action.bound
-  async loadLogo(){
-    const res = await api.Company.getCompanyLogoById({factoryId: this.currentFactory})
-    if(res.data){
-      this.companyLog = res.data
+  async loadLogo() {
+    const res = await api.Company.getCompanyLogoById({ factoryId: this.currentFactory });
+    if (res.data) {
+      this.companyLog = res.data;
     }
   }
 
