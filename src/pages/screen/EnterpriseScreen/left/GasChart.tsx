@@ -108,12 +108,12 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
           //值
           var { valueRaw, valueIn, value, limit, unit } = params[i].data;
 
-          if (value > 0) {
+          if (value !== null) {
             showHtml += `
             <div style="display:flex;align-items: center;font-size:18px;font-weight:bold;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px;${limit && value > limit ? "color:red;" : ""}">${value || ""}</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px;${limit && value > limit ? "color:red;" : ""}">${value}</div>
           </div>
           `;
           }
