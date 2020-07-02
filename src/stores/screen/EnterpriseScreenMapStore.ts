@@ -369,7 +369,7 @@ export class EnterpriseScreenMapStore {
     this.playTimer = setInterval(async () => {
       if (!this.map) clearInterval(this.playTimer);
       this.playInterval();
-    }, 10000);
+    }, 20000);
   }
 
   @action.bound
