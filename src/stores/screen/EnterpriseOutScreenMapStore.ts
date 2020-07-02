@@ -39,12 +39,12 @@ export class EnterpriseOutScreenMapStore {
       this.loadMapConfig(),
       // this.loadAllPmCode(),
       this.loadSiteRuntimePmData(),
-      
+
       // this.loadDailySewage(),
       // this.loadDailyGas(),
       // this.loadHoursSewage(),
-    ])
-    await this.loadLogo()
+    ]);
+    await this.loadLogo();
   }
 
   @action.bound
@@ -101,12 +101,12 @@ export class EnterpriseOutScreenMapStore {
     this.addpoints({ index: 0, update: true });
   }
   @action.bound
-  async loadLogo(){
-    const res = await api.Company.getCompanyLogoById({factoryId: this.currentFactory})
-    if(res.data){
-      this.companyLog = res.data
+  async loadLogo() {
+    const res = await api.Company.getCompanyLogoById({ factoryId: this.currentFactory });
+    if (res.data) {
+      this.companyLog = res.data;
     }
-    console.log({res})
+    console.log({ res });
   }
 
   @observable HoursSewage: {
@@ -283,7 +283,7 @@ export class EnterpriseOutScreenMapStore {
           pic: undefined as FormData | undefined,
           zoom: 15,
         };
-    
+
     this.updateMap({
       center: new BMapGL.Point(this.curMapConfig.longitude, this.curMapConfig.latitude),
       heading: this.curMapConfig.highAngle,
@@ -357,6 +357,7 @@ export class EnterpriseOutScreenMapStore {
     if (update) {
       const nextSite = this.SiteRuntimePmDate[index];
       if (nextSite) {
+        console.log({ nextSite });
         const res = await api.DeviceData.getAllPM20DayDatasBySiteId({ siteId: nextSite.siteId });
         if (res.data?.pms) {
           this.curSiteRuntimeData = res.data.pms;
