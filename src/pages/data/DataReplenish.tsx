@@ -138,8 +138,8 @@ export const DataReplenish = Form.create()(
                     )}
                   </Form.Item>
 
-                  <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="补传原因">
-                    {getFieldDecorator("reason", { initialValue: "", rules: [{ required: true, message: "请填写补传原因" }] })(<Input.TextArea placeholder="请填写补传原因" />)}
+                  <Form.Item colon={false} labelAlign="left" labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} label="补录原因">
+                    {getFieldDecorator("reason", { initialValue: "", rules: [{ required: true, message: "请填写补录原因" }] })(<Input.TextArea placeholder="请填写补录原因" />)}
                   </Form.Item>
 
                   {/* <Button type="primary" htmlType="submit" block>查询</Button> */}

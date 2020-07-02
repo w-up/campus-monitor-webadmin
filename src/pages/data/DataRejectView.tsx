@@ -13,7 +13,7 @@ export const DataRejectView = observer(() => {
   const history = useHistory();
 
   const { state = {} }: any = useLocation();
-  const { areaName, parkName, siteName, deviceName, reason, status, createUserName, checkTime, checkUser, addDeviceName, collectDate, list, pic, refuseReason, } = state.data || {};
+  const { areaName, parkName, siteName, deviceName, reason, note, status, createUserName, checkTime, checkUser, addDeviceName, collectDate, list, pic, refuseReason, } = state.data || {};
 
   console.log('state.data', state.data);
 
@@ -33,7 +33,7 @@ export const DataRejectView = observer(() => {
               <Descriptions.Item span={3} label="监测区域">{areaName}</Descriptions.Item>
               <Descriptions.Item span={3} label="站点名称">{siteName}</Descriptions.Item>
               <Descriptions.Item span={3} label="监测设备">{deviceName}</Descriptions.Item>
-              <Descriptions.Item span={3} label="补传原因">{reason}</Descriptions.Item>
+              <Descriptions.Item span={3} label="补录原因">{reason}</Descriptions.Item>
               <Descriptions.Item span={3} label="操作人员">{createUserName}</Descriptions.Item>
             </Descriptions>
 
@@ -52,7 +52,7 @@ export const DataRejectView = observer(() => {
             <Divider />
 
             <Descriptions size="small" title="备注说明" layout="horizontal" bordered>
-              <Descriptions.Item span={3} label="操作说明">{reason}</Descriptions.Item>
+              <Descriptions.Item span={3} label="操作说明">{note}</Descriptions.Item>
               <Descriptions.Item span={3} label="附件">
                 {
                   pic ?

@@ -219,9 +219,9 @@ export const DataManagePage = Form.create()(observer(({ form, history }: any) =>
                   )}
                 </Form.Item>
 
-                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="补传原因" >
+                <Form.Item colon={false} labelAlign="left" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }} label="补录原因" >
                   {getFieldDecorator("reason", { initialValue: query.reason, rules: [{ required: false }] })(
-                    <Input.TextArea placeholder="请填写补传原因" />
+                    <Input.TextArea placeholder="请填写补录原因" />
                   )}
                 </Form.Item>
 

@@ -779,6 +779,7 @@ export const MyEnterprisePage = Form.create()(
                         )}
                       </Upload>
                     </div>
+                    <div style={{fontSize: '10px', color: '#999'}}>建议上传尺寸32*32，透明背景的logo</div>
                   </div>
                   <Form onSubmit={submitEnterpriseInfo}>
                     <Card
