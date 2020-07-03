@@ -357,9 +357,9 @@ export class EnterpriseOutScreenMapStore {
     if (update) {
       const nextSite = this.SiteRuntimePmDate[index];
       if (nextSite) {
-        console.log({ nextSite });
         const res = await api.DeviceData.getAllPM20DayDatasBySiteId({ siteId: nextSite.siteId });
         if (res.data?.pms) {
+          this.curSiteRuntimeData = [];
           this.curSiteRuntimeData = res.data.pms;
         }
       }

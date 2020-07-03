@@ -344,6 +344,7 @@ export class EnterpriseScreenMapStore {
       if (nextSite) {
         const res = await api.DeviceData.getAllPM24HourDatasBySiteId({ siteId: nextSite.siteId });
         if (res.data?.pms) {
+          this.curSiteRuntimeData = [];
           this.curSiteRuntimeData = res.data.pms;
         }
       }
