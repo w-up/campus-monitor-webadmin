@@ -72,7 +72,7 @@ export const EnterpriseScreenOutPage = () => {
                 </div>
               </div>
               <div style={{ marginTop: 20, minHeight: 100, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                {enterpriseScreenMap.curSiteData?.siteName && <div style={{ color: "#3398d4", fontWeight: "bold" }}>{enterpriseScreenMap.curSiteData?.siteName}近二十天日均值趋势图</div>}
+                {enterpriseScreenMap.curSiteData?.siteName && <div style={{ color: "#3398d4", fontWeight: "bold", fontSize: 18 }}>{enterpriseScreenMap.curSiteData?.siteName}近二十天日均值趋势图</div>}
 
                 <div style={{ width: "100%" }}>{enterpriseScreenMap.curSiteRuntimeData.length > 0 && <LineChart animate datas={enterpriseScreenMap.curSiteRuntimeData}></LineChart>}</div>
               </div>
