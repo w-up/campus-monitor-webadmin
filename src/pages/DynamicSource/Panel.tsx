@@ -49,7 +49,7 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
           const endTime = moment(_endTime).format("YYYY-MM-DD HH");
           try {
             if (dynamicSource.computeType == "1") {
-              const res = await api.MapMonitor.getDynamicSourceContribution({ parkId, lat, lng, pmCode, startTime, endTime });
+              const res = await api.MapMonitor.getDynamicSourceContribution({ parkId, lat: Number(lat), lng: Number(lng), pmCode, startTime, endTime });
               if (res) {
                 dynamicSource.DynamicSourceContribution.data = res.data;
               }
@@ -152,10 +152,10 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
           {dynamicSource.computeType == "1" && (
             <div>
               <Form.Item label="敏感点经度">
-                <Input value={dynamicSource.curPoint.lng} onChange={(e) => (dynamicSource.curPoint.lng = Number(e.target.value))} />
+                <Input value={dynamicSource.curPoint.lng} onChange={(e) => (dynamicSource.curPoint.lng = e.target.value)} />
               </Form.Item>
               <Form.Item label="敏感点维度">
-                <Input value={dynamicSource.curPoint.lat} onChange={(e) => (dynamicSource.curPoint.lat = Number(e.target.value))} />
+                <Input value={dynamicSource.curPoint.lat} onChange={(e) => (dynamicSource.curPoint.lat = e.target.value)} />
               </Form.Item>
             </div>
           )}

@@ -82,10 +82,8 @@ export class MapMonitorStore {
   @action.bound
   selectPark(parkId) {
     this.currentPark = parkId;
-    if (parkId !== "0") {
-      this.loadFactories({ parkId });
-      this.loadParkData();
-    }
+    this.loadFactories({ parkId });
+    this.loadParkData();
   }
 
   @action.bound

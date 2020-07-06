@@ -30,8 +30,8 @@ export class DynamicSourceStore {
   }
 
   @observable curPoint: {
-    lng: number;
-    lat: number;
+    lng: number | string;
+    lat: number | string;
     siteName: null | string;
   } = {
     lng: 0,

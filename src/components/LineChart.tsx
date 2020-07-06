@@ -6,7 +6,7 @@ import { utils } from "utils";
 import { DailySewage } from "../type";
 import { useEffect, useMemo } from "react";
 
-export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean; precision?: boolean }) => {
+export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean; precision?: boolean; small?: boolean }) => {
   const mapRef = React.useRef<any>();
   const store = useLocalStore(() => ({
     dataIndex: 0,
@@ -21,7 +21,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
           text: "",
           textStyle: {
             color: "#88A8C5FF",
-            fontSize: "18",
+            fontSize: props.small ? "14" : "18",
             fontWeight: "bold",
           },
           x: "center",
@@ -35,7 +35,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
           padding: 10,
           textStyle: {
             color: "#88A8C5",
-            fontSize: 18,
+            fontSize: props.small ? "14" : "18",
             fontWeight: "bold",
           },
           alwaysShowContent: {
@@ -51,15 +51,15 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
               var text = params[i].axisValue;
               //值
               var { value, valueIn, value, limit, unit, valueDe } = params[i].data;
-              const ditgit = utils.number.digitCount(value)
+              const ditgit = utils.number.digitCount(value);
 
-              if (value > 0) {
+              if (value !== null) {
                 showHtml += `
             <div style="display:flex;align-items: center;font-size:18px;font-weight:bold;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
             <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px; ${limit && value > limit ? "color:red;" : ""}">${
-                  props.precision ? (value ? `${valueDe} ${ditgit > 0 ?`*10<sup>${ditgit}</sup>`:''}  <span>${unit}</span>` : "") : value || ""
+                  props.precision ? `${valueDe} ${ditgit > 0 ? `*10<sup>${ditgit}</sup>` : ""}  <span>${unit}</span>` : value
                 }</div>
           </div>
           `;
@@ -76,7 +76,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
         legend: {
           data: props.datas.map((i) => i.pmName),
           textStyle: {
-            fontSize: 18,
+            fontSize: props.small ? "14" : "18",
             fontWeight: "bold",
             color: "#88A8C5", // 图例文字颜色
           },
@@ -94,7 +94,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
           axisLabel: {
             textStyle: {
               color: "rgba(136,168,197,0.5)",
-              fontSize: "18",
+              fontSize: props.small ? "14" : "18",
               fontWeight: "bold",
             },
           },
@@ -115,7 +115,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
           axisLabel: {
             textStyle: {
               color: "rgba(136,168,197,0.5)",
-              fontSize: "18",
+              fontSize: props.small ? "14" : "18",
               fontWeight: "bold",
             },
           },

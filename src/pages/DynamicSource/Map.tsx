@@ -64,7 +64,7 @@ export const DynamicSourceMap = () => {
           ))
         )}
         {!dynamicSource.curPoint.siteName && dynamicSource.curPoint.lat !== 0 && (
-          <CustomOverlay position={{ lng: dynamicSource.curPoint.lng, lat: dynamicSource.curPoint.lat }} visiable={dynamicSource.zoom > 17}>
+          <CustomOverlay position={{ lng: Number(dynamicSource.curPoint.lng), lat: Number(dynamicSource.curPoint.lat) }} visiable={dynamicSource.zoom > 17}>
             <div style={{ margin: "-50% 0 0  -50%" }}>
               <img style={{ maxWidth: "55px", height: "55px" }} src={require(`../../assets/img/site1.png`)} />
               <div className="site-point">选中敏感点</div>

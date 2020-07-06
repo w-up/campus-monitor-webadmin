@@ -39,12 +39,12 @@ export class EnterpriseOutScreenMapStore {
       this.loadMapConfig(),
       // this.loadAllPmCode(),
       this.loadSiteRuntimePmData(),
-      
+
       // this.loadDailySewage(),
       // this.loadDailyGas(),
       // this.loadHoursSewage(),
-    ])
-    await this.loadLogo()
+    ]);
+    await this.loadLogo();
   }
 
   @action.bound
@@ -79,7 +79,7 @@ export class EnterpriseOutScreenMapStore {
       // update: "15:30:30",
       position: new BMapGL.Point(v.longitude, v.latitude),
       children: v.pmInfos
-        ?.filter((i) => Number(i.collectValue) > 0)
+        ?.filter((i) => i.collectValue !== null)
         .map((pmInfo) => ({
           name: pmInfo.pmName,
           value: pmInfo.collectValue,
@@ -101,12 +101,12 @@ export class EnterpriseOutScreenMapStore {
     this.addpoints({ index: 0, update: true });
   }
   @action.bound
-  async loadLogo(){
-    const res = await api.Company.getCompanyLogoById({factoryId: this.currentFactory})
-    if(res.data){
-      this.companyLog = res.data
+  async loadLogo() {
+    const res = await api.Company.getCompanyLogoById({ factoryId: this.currentFactory });
+    if (res.data) {
+      this.companyLog = res.data;
     }
-    console.log({res})
+    console.log({ res });
   }
 
   @observable HoursSewage: {
@@ -283,7 +283,7 @@ export class EnterpriseOutScreenMapStore {
           pic: undefined as FormData | undefined,
           zoom: 15,
         };
-    
+
     this.updateMap({
       center: new BMapGL.Point(this.curMapConfig.longitude, this.curMapConfig.latitude),
       heading: this.curMapConfig.highAngle,
@@ -359,6 +359,7 @@ export class EnterpriseOutScreenMapStore {
       if (nextSite) {
         const res = await api.DeviceData.getAllPM20DayDatasBySiteId({ siteId: nextSite.siteId });
         if (res.data?.pms) {
+          this.curSiteRuntimeData = [];
           this.curSiteRuntimeData = res.data.pms;
         }
       }
@@ -384,7 +385,7 @@ export class EnterpriseOutScreenMapStore {
     this.playTimer = setInterval(async () => {
       if (!this.map) clearInterval(this.playTimer);
       this.playInterval();
-    }, 10000);
+    }, 20000);
   }
 
   @action.bound
