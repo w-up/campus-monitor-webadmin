@@ -170,7 +170,7 @@ export const RuntimeMonitor = Form.create()(({ form }: { form: WrappedFormUtils 
             <div className="mr-4">
               <div className="primary-text-color mt-10 text-center">24小时监测浓度趋势图</div>
               <div className="mt-4">
-                <LineChart small datas={mapMonitor.siteData?.dataTrend.map((i) => ({ upperLimit: 0, ...i, datas: i.points }))}></LineChart>
+                <LineChart small precision datas={mapMonitor.siteData?.dataTrend.map((i) => ({ upperLimit: 0, ...i, datas: i.points }))}></LineChart>
               </div>
             </div>
           </Scrollbars>

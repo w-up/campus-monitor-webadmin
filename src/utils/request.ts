@@ -36,8 +36,7 @@ http.interceptors.response.use(
         return store.auth.logout();
       }
       if (res.msg !== "success") {
-        debugger
-        message.error({ content: res.msg, key: 'global-message-error', duration: 2 });
+        message.error({ content: res.msg, key: "global-message-error", duration: 2 });
         return Promise.reject(response);
       } else {
         return res;
@@ -65,10 +64,10 @@ export function POST(url, paramsOrData?) {
 export function FORM_POST(url, paramsOrData?) {
   return http({
     method: "POST",
-    responseType: 'arraybuffer',
-    url, 
-    data: paramsOrData
-  })
+    responseType: "arraybuffer",
+    url,
+    data: paramsOrData,
+  });
 }
 
 export default http;

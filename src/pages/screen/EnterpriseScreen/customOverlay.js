@@ -52,7 +52,7 @@ ComplexCustomOverlay.prototype.initialize = function (map) {
     cells +
     `</div></div>
     <div class="map-point">
-      <div style='height:15px;background:${isActive ? "rgba(5,100,230,1)" : "#5A6C77"};border:1px solid rgba(4,249,204,1);color:white;border-radius:2px;'>${this._obj.text}</div>
+      <div style='font-size:20px;background:${isActive ? "rgba(5,100,230,1)" : "#5A6C77"};border:1px solid rgba(4,249,204,1);color:white;border-radius:2px;'>${this._obj.text}</div>
       <img style='width:40px;height:55px;' src='${isActive ? icon : iconActive}'/>
   </div>
   </div>`;

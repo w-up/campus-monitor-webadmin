@@ -55,7 +55,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
 
               if (value !== null) {
                 showHtml += `
-            <div style="display:flex;align-items: center;font-size:18px;font-weight:bold;">
+            <div style="display:flex;align-items: center;font-size:${props.small ? "14px" : "18px"};font-weight:bold;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
             <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px; ${limit && value > limit ? "color:red;" : ""}">${
@@ -65,7 +65,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
           `;
               }
             }
-            return `<div style="color: #04F9CC;text-align:left;line-height:20px;font-size:18px;font-weight:bold">${text} 日均</div>
+            return `<div style="color: #04F9CC;text-align:left;line-height:20px;font-size:${props.small ? "14px" : "18px"};font-weight:bold">${text} 日均</div>
             <div style="color:#88A8C5;text-align:left;font-size:14px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
             ${showHtml}
             </div>
