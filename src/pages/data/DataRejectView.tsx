@@ -44,7 +44,7 @@ export const DataRejectView = observer(() => {
               <Descriptions.Item span={3} label="补测时间">{collectDate}</Descriptions.Item>
               {list.map(item => {
                 return (
-                  <Descriptions.Item span={3} key={item.pmCode} label={item.pmCode}>{item.collectValue} {item.pmUnit}</Descriptions.Item>
+                  <Descriptions.Item span={3} key={item.pmCode} label={item.pmName}>{item.collectValue} {item.pmUnit}</Descriptions.Item>
                 );
               })}
             </Descriptions>
