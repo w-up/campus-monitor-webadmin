@@ -250,15 +250,15 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
               //名称
               var text = params[i].axisValue;
               //值
-              var {value,valueDe} = params[i].data;
-              const ditgit = utils.number.digitCount(value)
+              var { value, valueDe } = params[i].data;
+              const ditgit = utils.number.digitCount(value);
 
               if (Number(value) > 0) {
                 showHtml += `
             <div style="display:flex;align-items: center;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? valueDe : ""} ${ditgit > 0 ?`*10<sup>${ditgit}</sup>`:''} </div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? valueDe : ""} ${ditgit > 0 ? `*10<sup>${ditgit}</sup>` : ""} </div>
           </div>
           `;
               }
@@ -330,7 +330,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           type: "line",
           data: item.pmValues.map((i) => ({
             value: i.avgValue,
-            valueDe: i.avgValueDe
+            valueDe: i.avgValueDe,
           })),
           itemStyle: {
             normal: {
@@ -458,14 +458,22 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
                 </div>
               </div>
               <div>
-                <div className="primary-text-color mt-10 text-center">24小时监测浓度趋势图</div>
+                <div className="primary-text-color mt-10 text-center">
+                  {store.type == "date" && <span>24小时监测浓度趋势图</span>}
+                  {store.type == "month" && <span>{moment(store.statisticalTime).months() + 1}月份监测浓度趋势图</span>}
+                  {store.type == "year" && <span>{moment(store.statisticalTime).year()}年监测浓度趋势图</span>}
+                </div>
                 <div className="mt-4">
                   <ReactEcharts option={store.options1} style={{ width: "100%", height: "240px" }} />
                 </div>
               </div>
 
               <div>
-                <div className="primary-text-color mt-10 text-center">厂界24小时排放浓度趋势图</div>
+                <div className="primary-text-color mt-10 text-center">
+                  {store.type == "date" && <span>厂界24小时排放浓度趋势图</span>}
+                  {store.type == "month" && <span>厂界{moment(store.statisticalTime).months() + 1}月份监测浓度趋势图</span>}
+                  {store.type == "year" && <span>厂界{moment(store.statisticalTime).year()}年监测浓度趋势图</span>}
+                </div>
                 <div className="mt-4">
                   <ReactEcharts option={store.options2} style={{ width: "100%", height: "180px" }} />
                 </div>
