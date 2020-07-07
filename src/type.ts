@@ -202,6 +202,7 @@ export type TrendDataType = {
       siteName: string;
       pmCode: string;
       avgValue: string;
+      avgValueDe: string;
       unit: string;
       statisticalTime: string;
       specificValue: any;
