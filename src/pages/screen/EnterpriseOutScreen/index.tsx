@@ -19,8 +19,8 @@ export const EnterpriseScreenOutPage = () => {
   const fullScreenRef = useRef<HTMLDivElement>(null);
 
   const store = useLocalStore(() => ({
-    height: `${430 * 0.8}px`,
-    width: `${930 * 0.8}px`,
+    height: `${430 * 0.9}px`,
+    width: `${930 * 0.9}px`,
     enterpriseTimer: null as any,
     setUpTimer() {
       if (this.enterpriseTimer) clearInterval(this.enterpriseTimer);
