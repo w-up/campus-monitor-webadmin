@@ -143,7 +143,7 @@ export class MapMonitorStore {
   @action.bound
   async loadPark() {
     const [parkRes] = await Promise.all([api.MapMonitor.getParkList()]);
-    if (parkRes.data) {
+    if (parkRes?.data) {
       this.parks = parkRes.data;
       if (this.parks[0]?.id) {
         this.currentPark = this.parks[0].id;

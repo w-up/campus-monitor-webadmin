@@ -62,7 +62,6 @@ svg {
 
   .groundImg {
     position: absolute;
-    object-fit: contain;
     top: 0;
     left: 0;
     width: 100%;
@@ -246,7 +245,7 @@ svg {
 .outScreen1280 {
   min-height: 720px;
   .topRight {
-    height: calc(100vh - 100px)!important;
+    height: calc(100vh - 100px) !important;
   }
 }
 

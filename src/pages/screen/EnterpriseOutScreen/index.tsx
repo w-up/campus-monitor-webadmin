@@ -19,6 +19,8 @@ export const EnterpriseScreenOutPage = () => {
   const fullScreenRef = useRef<HTMLDivElement>(null);
 
   const store = useLocalStore(() => ({
+    height: "430px",
+    width: "930px",
     enterpriseTimer: null as any,
     setUpTimer() {
       if (this.enterpriseTimer) clearInterval(this.enterpriseTimer);
@@ -64,11 +66,11 @@ export const EnterpriseScreenOutPage = () => {
         <ScreenTop />
         <div className="pb-4 flex-1" style={{ backgroundColor: "#061630" }}>
           <div className="flex mt-4 justify-between">
-            <div className="w-3/5 pl-4 flex flex-col">
-              <div className="relative" style={{ background: "#0F1B35" }}>
-                <div style={{ height: "40vh" }}>
-                  <div id="allmap" style={{ height: "40vh", width: "100%" }} />
-                  <img className="groundImg" style={{ height: "40vh" }} src={utils.img.getImageUrl(enterpriseScreenMap?.curMapConfig?.picUrl)} />
+            <div className=" pl-4 flex flex-col">
+              <div className="relative" style={{ background: "#0F1B35", width: store.width }}>
+                <div style={{ height: store.height, width: store.width }}>
+                  <div id="allmap" style={{ height: store.height, width: store.width }} />
+                  <img className="groundImg" style={{ height: store.height, width: store.width }} src={utils.img.getImageUrl(enterpriseScreenMap?.curMapConfig?.picUrl)} />
                 </div>
               </div>
               <div style={{ marginTop: 20, minHeight: 100, display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -77,7 +79,7 @@ export const EnterpriseScreenOutPage = () => {
                 <div style={{ width: "100%" }}>{enterpriseScreenMap.curSiteRuntimeData.length > 0 && <LineChart animate datas={enterpriseScreenMap.curSiteRuntimeData}></LineChart>}</div>
               </div>
             </div>
-            <div className="w-2/5 pr-4 flex flex-col items-end">
+            <div className="flex-1 pr-4 flex flex-col items-end">
               <CornerTable />
             </div>
           </div>
