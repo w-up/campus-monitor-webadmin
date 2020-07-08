@@ -19,8 +19,8 @@ export const EnterpriseScreenOutPage = () => {
   const fullScreenRef = useRef<HTMLDivElement>(null);
 
   const store = useLocalStore(() => ({
-    height: "430px",
-    width: "930px",
+    height: `${430 * 0.8}px`,
+    width: `${930 * 0.8}px`,
     enterpriseTimer: null as any,
     setUpTimer() {
       if (this.enterpriseTimer) clearInterval(this.enterpriseTimer);
@@ -73,10 +73,10 @@ export const EnterpriseScreenOutPage = () => {
                   <img className="groundImg" style={{ height: store.height, width: store.width }} src={utils.img.getImageUrl(enterpriseScreenMap?.curMapConfig?.picUrl)} />
                 </div>
               </div>
-              <div style={{ marginTop: 20, minHeight: 100, display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <div style={{ marginTop: 10, minHeight: 100, display: "flex", flexDirection: "column", alignItems: "center" }}>
                 {enterpriseScreenMap.curSiteData?.siteName && <div style={{ color: "#3398d4", fontWeight: "bold", fontSize: 18 }}>{enterpriseScreenMap.curSiteData?.siteName}近二十天日均值趋势图</div>}
 
-                <div style={{ width: "100%" }}>{enterpriseScreenMap.curSiteRuntimeData.length > 0 && <LineChart animate datas={enterpriseScreenMap.curSiteRuntimeData}></LineChart>}</div>
+                <div style={{ width: "100%" }}>{enterpriseScreenMap.curSiteRuntimeData.length > 0 && <LineChart height={150} animate datas={enterpriseScreenMap.curSiteRuntimeData}></LineChart>}</div>
               </div>
             </div>
             <div className="flex-1 pr-4 flex flex-col items-end">

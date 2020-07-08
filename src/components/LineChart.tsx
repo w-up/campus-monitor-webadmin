@@ -6,7 +6,7 @@ import { utils } from "utils";
 import { DailySewage } from "../type";
 import { useEffect, useMemo } from "react";
 
-export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean; precision?: boolean; small?: boolean }) => {
+export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean; precision?: boolean; small?: boolean; height?: number }) => {
   const mapRef = React.useRef<any>();
   const store = useLocalStore(() => ({
     dataIndex: 0,
@@ -198,7 +198,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
   }, []);
   return useObserver(() => (
     <div>
-      <ReactEcharts ref={mapRef} option={store.options} style={{ width: "100%", height: "252px" }} />
+      <ReactEcharts ref={mapRef} option={store.options} style={{ width: "100%", height: props.height ? props.height : "252px" }} />
     </div>
   ));
 };
