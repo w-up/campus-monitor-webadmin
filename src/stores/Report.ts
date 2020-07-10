@@ -459,7 +459,12 @@ export class Report {
         Object.keys(heatMap).forEach((item: any) => {
           const option: any = { ...defaultQuarterOption };
           option.series[0].name = item;
-          option.calendar[0].range = param.collectDate;
+          option.calendar = option.calendar.map(item => {
+            return {
+              ...item,
+              range: param.collectDate,
+            }
+          });
           Object.keys(heatMap[item]).forEach((month, index) => {
             option.calendar[index].range = `${moment(param.collectDate).format('YYYY')}-${month}`;
             option.series[index].calendarIndex = index;
@@ -467,10 +472,11 @@ export class Report {
               return [day, heatMap[item][month][day]]
             });
           });
-          if (Object.keys(heatMap[item]).length < 3) {
-            delete option.calendar[2];
-            delete option.series[2];
-          }
+          
+          // if (Object.keys(heatMap[item]).length < 3) {
+          //   delete option.calendar[2];
+          //   delete option.series[2];
+          // }
           this.heatOptions.push(option);
         });
       }
