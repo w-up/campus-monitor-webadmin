@@ -263,7 +263,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           `;
               }
             }
-            return `<div style="color: #04F9CC;text-align:left;line-height:20px;font-size:14px">${text} 日均</div>
+            return `<div style="color: #04F9CC;text-align:left;line-height:20px;font-size:14px">${text} ${store.type == "year" ? "月均" : "日均"}</div>
             <div style="color:#88A8C5;text-align:left;font-size:14px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
             ${showHtml}
             </div>
