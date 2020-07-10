@@ -250,13 +250,13 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
               //名称
               var text = params[i].axisValue;
               //值
-              var { value, valueDe } = params[i].data;
+              var { value, valueDe, color } = params[i].data;
               const ditgit = utils.number.digitCount(value);
 
               if (Number(value) > 0) {
                 showHtml += `
             <div style="display:flex;align-items: center;">
-            <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
+            <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${color};background:${color}"></div>
             <div>${name}</div>
             <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px">${value ? valueDe : ""} ${ditgit > 0 ? `*10<sup>${ditgit}</sup>` : ""} </div>
           </div>
@@ -331,6 +331,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           data: item.pmValues.map((i) => ({
             value: i.avgValue,
             valueDe: i.avgValueDe,
+            color: constant.seriesColors[index],
           })),
           itemStyle: {
             normal: {
