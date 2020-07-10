@@ -35,8 +35,8 @@ export const WasteGasTable = () => {
         <div className="tabTitle">
           <div>采集时间</div>
           <div>区域</div>
-          <div>监测数值</div>
-          <div>限值</div>
+          <div>污染物</div>
+          <div>监测值</div>
         </div>
         <div className="scroll-bar-color">
           <Scrollbars style={{ height: 250 }}>
