@@ -35,7 +35,9 @@ export class EnterpriseOutScreenMapStore {
   async init() {
     this.boxDisplay = false;
     await Promise.all([
-      this.loadAllFactory(),
+      store.screen.enterpriseScreenMap.loadAllPmCode(),
+      store.screen.enterpriseScreenMap.loadAllFactory(),
+      // this.loadAllFactory(),
       this.loadMapConfig(),
       // this.loadAllPmCode(),
       this.loadSiteRuntimePmData(),
@@ -44,7 +46,8 @@ export class EnterpriseOutScreenMapStore {
       // this.loadDailyGas(),
       // this.loadHoursSewage(),
     ]);
-    await this.loadLogo();
+    await store.screen.enterpriseScreenMap.loadLogo();
+    // await this.loadLogo();
   }
 
   @action.bound
@@ -100,14 +103,14 @@ export class EnterpriseOutScreenMapStore {
     this.SiteRuntimePmDate = result.data.sites || [];
     this.addpoints({ index: 0, update: true });
   }
-  @action.bound
-  async loadLogo() {
-    const res = await api.Company.getCompanyLogoById({ factoryId: this.currentFactory });
-    if (res.data) {
-      this.companyLog = res.data;
-    }
-    console.log({ res });
-  }
+  // @action.bound
+  // async loadLogo() {
+  //   const res = await api.Company.getCompanyLogoById({ factoryId: this.currentFactory });
+  //   if (res.data) {
+  //     this.companyLog = res.data;
+  //   }
+  //   console.log({ res });
+  // }
 
   @observable HoursSewage: {
     pms: Array<DailySewage>;
@@ -173,30 +176,35 @@ export class EnterpriseOutScreenMapStore {
     this.dailyGas = result.data.pms || [];
   }
 
+  @computed
+  get allfactoriy() {
+    return store.screen.enterpriseScreenMap.allfactoriy;
+  }
+
   // 厂区相关
-  @observable allfactoriy: Array<{
-    factoryId: string;
-    factoryName: string;
-    select: boolean;
-  }> = [];
+  // @observable allfactoriy: Array<{
+  //   factoryId: string;
+  //   factoryName: string;
+  //   select: boolean;
+  // }> = [];
   @observable currentFactory = "";
 
   get currentFactoryData() {
     return this.allfactoriy.find((i) => i.factoryId == this.currentFactory);
   }
 
-  @action.bound
-  async loadAllFactory() {
-    const res = await api.Factory.getAllFactoryLogin();
-    if (res?.data) {
-      this.allfactoriy = res.data;
-      this.allfactoriy.forEach((i) => {
-        if (i.select) {
-          this.currentFactory = i.factoryId;
-        }
-      });
-    }
-  }
+  // @action.bound
+  // async loadAllFactory() {
+  //   const res = await api.Factory.getAllFactoryLogin();
+  //   if (res?.data) {
+  //     this.allfactoriy = res.data;
+  //     this.allfactoriy.forEach((i) => {
+  //       if (i.select) {
+  //         this.currentFactory = i.factoryId;
+  //       }
+  //     });
+  //   }
+  // }
 
   @action.bound
   async selectFactory(factoryId) {
@@ -267,7 +275,11 @@ export class EnterpriseOutScreenMapStore {
     pic: undefined as FormData | undefined,
     zoom: 15,
   };
-  @observable companyLog = "";
+  // @observable companyLog = "";
+  @computed
+  get companyLog() {
+    return store.screen.enterpriseScreenMap.companyLog;
+  }
   @action.bound
   async loadMapConfig() {
     const result = await api.MapConfig.getMapConfigLogin();
