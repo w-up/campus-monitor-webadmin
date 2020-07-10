@@ -90,6 +90,11 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
       trigger: "axis",
       backgroundColor: "rgba(38,95,163,0.6);",
       padding: 10,
+      position: function (point, params, dom, rect, size) {
+        dom.style.marginTop = "100px";
+        dom.style.transform = "translateZ(0)";
+      },
+
       textStyle: {
         color: "#88A8C5",
         fontSize: 10,
@@ -106,12 +111,12 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
           //名称
           var text = params[i].axisValue;
           //值
-          var { valueRaw, valueIn, value, limit, unit } = params[i].data;
+          var { valueRaw, valueIn, value, limit, unit, color } = params[i].data;
 
           if (value !== null) {
             showHtml += `
             <div style="display:flex;align-items: center;font-size:18px;font-weight:bold;">
-            <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
+            <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${color};background:${color}"></div>
             <div>${name}</div>
             <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px;${limit && value > limit ? "color:red;" : ""}">${value}</div>
           </div>
@@ -209,6 +214,7 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
             valueIn: i.collectValueIn,
             limit: site.upperLimit,
             unit: i.unit,
+            color: constant.seriesColors[index],
             itemStyle: {
               normal: {
                 color: isUpperlimit ? "red" : constant.seriesColors[index],
