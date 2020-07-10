@@ -91,7 +91,7 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
       backgroundColor: "rgba(38,95,163,0.6);",
       padding: 10,
       position: function (point, params, dom, rect, size) {
-        dom.style.marginTop = "100px";
+        dom.style.marginTop = "150px";
         dom.style.transform = "translateZ(0)";
       },
 
