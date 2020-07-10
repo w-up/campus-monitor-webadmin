@@ -1,6 +1,6 @@
 import { action, observable } from "mobx";
 import moment from "moment";
-import { message } from "antd";
+import { message, Icon } from "antd";
 import { GET, POST } from "../../utils/request";
 import { store } from "../index";
 
@@ -174,7 +174,12 @@ export class MyEnterprise {
   async getTree(keyWord = '') {
     const { data }: any = await GET("/company/getCompanyTreeByUserId", { keyWord });
 
-    const transformList = (list) => list.map((v) => ({ ...v, title: v.label, key: v.id, children: v.children.length > 0 ? transformList(v.children) : [] }));
+    const transformList = (list) => list.map((v) => ({
+      ...v,
+      title: v.label,
+      key: v.id,
+      children: v.children.length > 0 ? transformList(v.children) : [],
+    }));
 
     this.treeData = transformList(data);
 

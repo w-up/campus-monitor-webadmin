@@ -930,6 +930,9 @@ svg {
 .rolesPage,
 .systemConfigPage,
 .enterprisePage {
+  .ant-tree li span.ant-tree-switcher.ant-tree-switcher-noop {
+    display: none;
+  }
   .ant-spin-blur {
     opacity: 0.1;
   }

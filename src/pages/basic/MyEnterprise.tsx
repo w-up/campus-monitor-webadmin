@@ -96,7 +96,7 @@ export const MyEnterprisePage = Form.create()(
       setDeviceInfo,
       deviceInfo,
       getDeviceInfo,
-      treeData,
+      treeData: oriTreeData,
       onTreeItemSelect,
       enterpriseInfo,
       factoryInfo,
@@ -126,6 +126,16 @@ export const MyEnterprisePage = Form.create()(
       deviceSiteListSelectedRowKeys,
       onDeviceSiteListSelectChange,
     } = myEnterprise;
+
+    const transformList = (list) => list.map((v) => ({
+      ...v,
+      icon: v.children.length > 0 ? null : v.level < 4 ? <Icon type="copy" /> : <Icon type="block" />,
+      children: v.children.length > 0 ? transformList(v.children) : [],
+    }));
+
+    const treeData = transformList(oriTreeData);
+
+    console.log(toJS(treeData));
 
     const {
       businessPeriodEnd,
@@ -726,8 +736,9 @@ export const MyEnterprisePage = Form.create()(
                 <div>
                   <Tree
                     showLine={true}
-                    showIcon={false}
+                    showIcon={true}
                     onSelect={handleTreeItemSelect}
+                    switcherIcon={<Icon type="caret-down" />}
                     onExpand={(keys, e) => {
                       setTreeExpandedKeys(keys as any);
                       if (e.expanded) {
