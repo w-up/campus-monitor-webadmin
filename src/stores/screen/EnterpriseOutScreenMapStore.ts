@@ -38,7 +38,7 @@ export class EnterpriseOutScreenMapStore {
       store.screen.enterpriseScreenMap.loadAllPmCode(),
       store.screen.enterpriseScreenMap.loadAllFactory(),
       // this.loadAllFactory(),
-      // this.loadMapConfig(),
+      this.loadMapConfig(),
       // this.loadAllPmCode(),
       this.loadSiteRuntimePmData(),
 
