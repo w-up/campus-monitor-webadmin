@@ -37,8 +37,10 @@ export class EnterpriseOutScreenMapStore {
     await Promise.all([
       store.screen.enterpriseScreenMap.loadAllPmCode(),
       store.screen.enterpriseScreenMap.loadAllFactory(),
+      store.screen.enterpriseScreenMap.loadMapConfig(),
+
       // this.loadAllFactory(),
-      this.loadMapConfig(),
+      // this.loadMapConfig(),
       // this.loadAllPmCode(),
       this.loadSiteRuntimePmData(),
 
@@ -265,44 +267,49 @@ export class EnterpriseOutScreenMapStore {
     this.reload();
   }
 
+  @computed
+  get curMapConfig() {
+    return store.screen.enterpriseScreenMap.curMapConfig;
+  }
+
   // 地图设置相关
-  @observable curMapConfig = {
-    highAngle: 0,
-    latitude: 0,
-    longitude: 0,
-    rotationAngle: 0,
-    picUrl: "",
-    pic: undefined as FormData | undefined,
-    zoom: 15,
-  };
+  // @observable curMapConfig = {
+  //   highAngle: 0,
+  //   latitude: 0,
+  //   longitude: 0,
+  //   rotationAngle: 0,
+  //   picUrl: "",
+  //   pic: undefined as FormData | undefined,
+  //   zoom: 15,
+  // };
   // @observable companyLog = "";
   @computed
   get companyLog() {
     return store.screen.enterpriseScreenMap.companyLog;
   }
-  @action.bound
-  async loadMapConfig() {
-    const result = await api.MapConfig.getMapConfigLogin();
-    if (!result || !result.data) return;
-    this.curMapConfig = result.data
-      ? result.data
-      : {
-          highAngle: 0,
-          latitude: 0,
-          longitude: 0,
-          rotationAngle: 0,
-          picUrl: "",
-          pic: undefined as FormData | undefined,
-          zoom: 15,
-        };
+  // @action.bound
+  // async loadMapConfig() {
+  //   const result = await api.MapConfig.getMapConfigLogin();
+  //   if (!result || !result.data) return;
+  //   this.curMapConfig = result.data
+  //     ? result.data
+  //     : {
+  //         highAngle: 0,
+  //         latitude: 0,
+  //         longitude: 0,
+  //         rotationAngle: 0,
+  //         picUrl: "",
+  //         pic: undefined as FormData | undefined,
+  //         zoom: 15,
+  //       };
 
-    this.updateMap({
-      center: new BMapGL.Point(this.curMapConfig.longitude, this.curMapConfig.latitude),
-      heading: this.curMapConfig.highAngle,
-      zoom: this.curMapConfig.zoom,
-      tilt: this.curMapConfig.rotationAngle,
-    });
-  }
+  //   this.updateMap({
+  //     center: new BMapGL.Point(this.curMapConfig.longitude, this.curMapConfig.latitude),
+  //     heading: this.curMapConfig.highAngle,
+  //     zoom: this.curMapConfig.zoom,
+  //     tilt: this.curMapConfig.rotationAngle,
+  //   });
+  // }
 
   @action.bound
   async saveMapConfig() {
@@ -341,7 +348,6 @@ export class EnterpriseOutScreenMapStore {
     this.map.disablePinchToZoom();
     this.map.disableContinuousZoom();
     this.map.disableDragging();
-    this.updateMap();
   }
 
   @action.bound

@@ -317,6 +317,7 @@ export class EnterpriseScreenMapStore {
 
   @action.bound
   updateMap(data: Partial<EnterpriseScreenMapStore> = {}) {
+    store.screen.enterpriseOutScreenMap.updateMap(data);
     if (!this.map) return;
     if (data) {
       Object.assign(this, data);

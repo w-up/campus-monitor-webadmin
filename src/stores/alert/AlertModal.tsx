@@ -83,7 +83,7 @@ export class AlertModal {
         <div className="scroll-1" style={{ height: "80vh", overflow: "scroll", zIndex: 10000 }}>
           <div className="text-white pr-4" style={{ background: "#0d142f" }}>
             {this.alerts.map((i, index) => (
-              <AlertItem item={i} key={index}></AlertItem>
+              <AlertItem item={i} key={index} type="popup"></AlertItem>
             ))}
           </div>
         </div>

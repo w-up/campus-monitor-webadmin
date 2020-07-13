@@ -71,8 +71,8 @@ export class MapMonitorStore {
   }
 
   @action.bound
-  async doConfirmAlarmInfoById(alarmId) {
-    const result = await api.MapMonitor.confirmAlarmInfoById({ alarmId: alarmId, isFromPopup: 1 });
+  async doConfirmAlarmInfoById(data: { alarmId: string; isFromPopup?: number }) {
+    const result = await api.MapMonitor.confirmAlarmInfoById(data);
     if (result) {
       message.success("处理成功");
       // this.loadAlarms();
@@ -80,10 +80,11 @@ export class MapMonitorStore {
   }
 
   @action.bound
-  selectPark(parkId) {
+  async selectPark(parkId) {
     this.currentPark = parkId;
-    this.loadFactories({ parkId });
-    this.loadParkData();
+    await this.loadFactories({ parkId });
+    await this.loadPmCodes({});
+    await this.loadParkData();
   }
 
   @action.bound
@@ -167,7 +168,7 @@ export class MapMonitorStore {
     const result = await api.MapMonitor.getFactoryList({
       parkId,
     });
-    if (result.data) {
+    if (result?.data) {
       this.factories = result.data;
       if (this.factories[0]?.id) {
         this.currentFactory = this.factories[0].id;
