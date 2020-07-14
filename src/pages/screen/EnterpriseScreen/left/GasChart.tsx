@@ -160,7 +160,7 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
       type: "category",
       axisLabel: {
         textStyle: {
-          color: "rgba(136,168,197,0.5)",
+          color: "white",
           fontSize: "18",
           fontWeight: "bold",
         },
@@ -174,7 +174,7 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
       // max: 10,
       splitNumber: 3,
       nameTextStyle: {
-        color: "rgba(136,168,197,0.5)",
+        color: "white",
         align: "center",
         verticalAlign: "middle",
         padding: [10, 0, 20, 0],
@@ -184,7 +184,7 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
       nameGap: 15,
       axisLabel: {
         textStyle: {
-          color: "rgba(136,168,197,0.5)",
+          color: "white",
           fontSize: "18",
           fontWeight: "bold",
         },
@@ -193,7 +193,7 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
       //   分割线
       splitLine: {
         lineStyle: {
-          color: "rgba(101,198,231,0.2)",
+          color: "white",
         },
       },
       //   刻度线

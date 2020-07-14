@@ -287,6 +287,7 @@ export class EnterpriseScreenMapStore {
       pic,
     });
     this.reload();
+    store.screen.enterpriseOutScreenMap.reload();
   }
 
   @action.bound

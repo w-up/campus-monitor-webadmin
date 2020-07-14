@@ -120,7 +120,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
             },
             axisLabel: {
               textStyle: {
-                color: "rgba(136,168,197,0.5)",
+                color: "white",
                 fontSize: "10",
               },
             },
@@ -135,18 +135,18 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
             // interval: 50,
             axisLine: {
               lineStyle: {
-                color: "rgba(136,168,197,0.5)",
+                color: "white",
               },
             },
             axisLabel: {
               textStyle: {
-                color: "rgba(136,168,197,0.5)",
+                color: "white",
                 fontSize: "10",
               },
             },
             splitLine: {
               lineStyle: {
-                color: "rgba(101,198,231,0.2)",
+                color: "white",
               },
             },
           },
@@ -158,18 +158,18 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
             // interval: 5,
             axisLine: {
               lineStyle: {
-                color: "rgba(136,168,197,0.5)",
+                color: "white",
               },
             },
             axisLabel: {
               textStyle: {
-                color: "rgba(136,168,197,0.5)",
+                color: "white",
                 fontSize: "10",
               },
             },
             splitLine: {
               lineStyle: {
-                color: "rgba(101,198,231,0.2)",
+                color: "white",
               },
             },
           },
@@ -221,7 +221,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
         title: {
           text: "",
           textStyle: {
-            color: "#88A8C5FF",
+            // color: "#88A8C5FF",
             fontSize: "14",
             fontWeight: "normal",
           },
@@ -290,7 +290,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           type: "category",
           axisLabel: {
             textStyle: {
-              color: "rgba(136,168,197,0.5)",
+              color: "white",
               fontSize: "10",
             },
           },
@@ -299,7 +299,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
         yAxis: {
           // name: "（mg/m³）",
           nameTextStyle: {
-            color: "rgba(136,168,197,0.5)",
+            color: "white",
             align: "center",
             verticalAlign: "middle",
             padding: [5, 0, 15, 20],
@@ -310,14 +310,14 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           splitNumber: 3,
           axisLabel: {
             textStyle: {
-              color: "rgba(136,168,197,0.5)",
+              color: "white",
               fontSize: "10",
             },
           },
           //   分割线
           splitLine: {
             lineStyle: {
-              color: "rgba(101,198,231,0.2)",
+              color: "white",
             },
           },
           //   刻度线

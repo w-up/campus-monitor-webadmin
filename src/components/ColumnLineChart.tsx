@@ -32,7 +32,7 @@ export const ColumnLineChart = () => {
           },
           axisLabel: {
             textStyle: {
-              color: "rgba(136,168,197,0.5)",
+              color: "white",
               fontSize: "10",
             },
           },
@@ -47,18 +47,18 @@ export const ColumnLineChart = () => {
           interval: 50,
           axisLine: {
             lineStyle: {
-              color: "rgba(136,168,197,0.5)",
+              color: "white",
             },
           },
           axisLabel: {
             textStyle: {
-              color: "rgba(136,168,197,0.5)",
+              color: "white",
               fontSize: "10",
             },
           },
           splitLine: {
             lineStyle: {
-              color: "rgba(101,198,231,0.2)",
+              color: "white",
             },
           },
         },
@@ -70,18 +70,18 @@ export const ColumnLineChart = () => {
           interval: 5,
           axisLine: {
             lineStyle: {
-              color: "rgba(136,168,197,0.5)",
+              color: "white",
             },
           },
           axisLabel: {
             textStyle: {
-              color: "rgba(136,168,197,0.5)",
+              color: "white",
               fontSize: "10",
             },
           },
           splitLine: {
             lineStyle: {
-              color: "rgba(101,198,231,0.2)",
+              color: "white",
             },
           },
         },

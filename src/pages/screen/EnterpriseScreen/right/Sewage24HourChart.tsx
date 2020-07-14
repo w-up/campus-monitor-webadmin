@@ -51,7 +51,7 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
     title: {
       text: "",
       textStyle: {
-        color: "#88A8C5FF",
+        // color: "#88A8C5FF",
         fontSize: "14",
         fontWeight: "normal",
       },
@@ -81,15 +81,16 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
           var text = params[i].axisValue;
           //值
           var { valueRaw, valueIn, value, limit, unit, valueDe } = params[i].data;
-          const ditgit = utils.number.digitCount(value)
-          
+          const ditgit = utils.number.digitCount(value);
 
           if (valueRaw > 0) {
             showHtml += `
             <div style="display:flex;align-items: center;font-size:18px;font-weight:bold;">
             <div style="margin-right:10px;width:10px;height:1px;border:1px solid ${constant.seriesColors[i]};background:${constant.seriesColors[i]}"></div>
             <div>${name}</div>
-            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px; ${limit && valueRaw > limit ? "color:red;" : ""}">${value ? `${valueDe} ${ditgit > 0 ?`*10<sup>${ditgit}</sup>`:''}  <span>${unit}</span>` : ""}</div>
+            <div style="color:#04F9CC;text-align:right;display:inline-block;margin-left:15px; ${limit && valueRaw > limit ? "color:red;" : ""}">${
+              value ? `${valueDe} ${ditgit > 0 ? `*10<sup>${ditgit}</sup>` : ""}  <span>${unit}</span>` : ""
+            }</div>
           </div>
           `;
           }
@@ -123,7 +124,7 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
       boundaryGap: true,
       axisLabel: {
         textStyle: {
-          color: "rgba(136,168,197,0.5)",
+          color: "white",
           fontSize: "18",
           fontWeight: "bold",
         },
@@ -133,7 +134,7 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
     yAxis: {
       // name: "（mg/m³）",
       nameTextStyle: {
-        color: "rgba(136,168,197,0.5)",
+        color: "white",
         align: "center",
         verticalAlign: "middle",
         padding: [5, 0, 15, 20],
@@ -144,7 +145,7 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
       splitNumber: 3,
       axisLabel: {
         textStyle: {
-          color: "rgba(136,168,197,0.5)",
+          color: "white",
           fontSize: "18",
           fontWeight: "bold",
         },
@@ -152,7 +153,7 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
       //   分割线
       splitLine: {
         lineStyle: {
-          color: "rgba(101,198,231,0.2)",
+          color: "white",
         },
       },
       //   刻度线

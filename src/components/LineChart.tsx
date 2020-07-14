@@ -20,7 +20,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
         title: {
           text: "",
           textStyle: {
-            color: "#88A8C5FF",
+            // color: "#88A8C5FF",
             fontSize: props.small ? "14" : "18",
             fontWeight: "bold",
           },
@@ -93,7 +93,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
           type: "category",
           axisLabel: {
             textStyle: {
-              color: "rgba(136,168,197,0.5)",
+              color: "white",
               fontSize: props.small ? "14" : "18",
               fontWeight: "bold",
             },
@@ -103,7 +103,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
         yAxis: {
           // name: "（mg/m³）",
           nameTextStyle: {
-            color: "rgba(136,168,197,0.5)",
+            color: "white",
             align: "center",
             verticalAlign: "middle",
             padding: [5, 0, 10, 20],
@@ -114,7 +114,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
           splitNumber: 3,
           axisLabel: {
             textStyle: {
-              color: "rgba(136,168,197,0.5)",
+              color: "white",
               fontSize: props.small ? "14" : "18",
               fontWeight: "bold",
             },
@@ -122,7 +122,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
           //   分割线
           splitLine: {
             lineStyle: {
-              color: "rgba(101,198,231,0.2)",
+              color: "white",
             },
           },
           //   刻度线

@@ -21,7 +21,7 @@ export const ParkScreen24HourChart = () => {
         title: {
           text: "24小时排放趋势图",
           textStyle: {
-            color: "#88A8C5FF",
+            // color: "#88A8C5FF",
             fontSize: "16",
             fontWeight: "normal",
           },
@@ -86,7 +86,7 @@ export const ParkScreen24HourChart = () => {
         },
         yAxis: {
           // name: "(mg/m³)",
-          nameTextStyle: { color: "rgba(136,168,197,0.5)", align: "center", verticalAlign: "middle", padding: [5, 0, 15, 20] },
+          nameTextStyle: { color: "white", align: "center", verticalAlign: "middle", padding: [5, 0, 15, 20] },
           type: "value",
           // min: 0,
           // max: 3,
@@ -100,7 +100,7 @@ export const ParkScreen24HourChart = () => {
           //   分割线
           splitLine: {
             lineStyle: {
-              color: "rgba(101,198,231,0.2)",
+              color: "white",
             },
           },
           //   刻度线
