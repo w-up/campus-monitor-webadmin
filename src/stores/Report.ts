@@ -459,14 +459,28 @@ export class Report {
         Object.keys(heatMap).forEach((item: any) => {
           const option: any = { ...defaultQuarterOption };
           option.series[0].name = item;
-          option.calendar = option.calendar.map(item => {
+          const [curYear, curQuarter] = param.collectDate.split('-');
+          const arr = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]];
+          const current = arr[curQuarter - 1];
+          option.calendar = option.calendar.map((item, index) => {
             return {
               ...item,
-              range: param.collectDate,
+              yearLabel: {
+                margin: 40
+              },
+              monthLabel: {
+                  nameMap: 'cn',
+                  margin: 20
+              },
+              // dayLabel: {
+              //     firstDay: 1,
+              //     nameMap: 'cn'
+              // },
+              range: `${curYear}-${current[index]}`,
             }
           });
           Object.keys(heatMap[item]).forEach((month, index) => {
-            option.calendar[index].range = `${moment(param.collectDate).format('YYYY')}-${month}`;
+            // option.calendar[index].range = `${moment(param.collectDate).format('YYYY')}-${month}`;
             option.series[index].calendarIndex = index;
             option.series[index].data = Object.keys(heatMap[item][month]).map(day => {
               return [day, heatMap[item][month][day]]
