@@ -55,16 +55,8 @@ export class EnterpriseOutScreenMapStore {
   @action.bound
   async reload() {
     if (!store.auth.token) return;
-    this.dailySewage = {
-      pms: [],
-      dates: [],
-    };
     this.curSiteRuntimeData = [];
-    this.HoursSewage = {
-      pms: [],
-      dates: [],
-    };
-    this.dailyGas = [];
+    this.SiteRuntimePmDate = [];
     this.init();
   }
 
@@ -102,7 +94,9 @@ export class EnterpriseOutScreenMapStore {
   @action.bound
   async loadSiteRuntimePmData() {
     const result = await api.DeviceData.getAllPMDataLogin();
+    this.SiteRuntimePmDate = [];
     this.SiteRuntimePmDate = result.data.sites || [];
+    console.log(this.SiteRuntimePmDate.slice());
     this.addpoints({ index: 0, update: true });
   }
   // @action.bound

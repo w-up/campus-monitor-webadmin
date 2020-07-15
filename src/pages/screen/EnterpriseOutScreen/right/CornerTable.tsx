@@ -25,7 +25,11 @@ export const CornerTable = () => {
         </div>
         {enterpriseScreenMap.SiteRuntimePmData.children.map((item, index) => {
           return (
-            <div className={Number(item.limit) && Number(item.limit) && Number(item.value) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"} style={{ fontSize: 24, fontWeight: "bold"}}>
+            <div
+              key={index}
+              className={Number(item.limit) && Number(item.limit) && Number(item.value) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"}
+              style={{ fontSize: 24, fontWeight: "bold" }}
+            >
               <div title={item.collectDate}>{item.name}</div>
               <div>{item.value}</div>
               <div>{item.limit}</div>

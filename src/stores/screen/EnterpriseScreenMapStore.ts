@@ -8,6 +8,7 @@ import style from "../../common/mapStyle";
 import auth from "services/auth";
 import { store } from "../index";
 import { result } from "lodash";
+import remotedev from "mobx-remotedev";
 
 //@ts-ignore
 const BMapGL = window.BMapGL;
@@ -44,6 +45,7 @@ export class EnterpriseScreenMapStore {
       dates: [],
     };
     this.curSiteRuntimeData = [];
+    this.SiteRuntimePmDate = [];
     this.HoursSewage = {
       pms: [],
       dates: [],
@@ -185,6 +187,7 @@ export class EnterpriseScreenMapStore {
     notification.success({ message: "更新成功" });
     this.toggleBox();
     this.reload();
+    store.screen.enterpriseOutScreenMap.reload();
   }
 
   // 因子相关
@@ -231,6 +234,7 @@ export class EnterpriseScreenMapStore {
     notification.success({ message: "更新成功" });
     this.toggleBox();
     this.reload();
+    store.screen.enterpriseOutScreenMap.reload();
   }
 
   @action.bound
