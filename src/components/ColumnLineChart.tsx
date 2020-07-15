@@ -20,7 +20,7 @@ export const ColumnLineChart = () => {
         data: ["排放量", "平均浓度"],
         textStyle: {
           fontSize: 10,
-          color: "#88A8C5", // 图例文字颜色
+          color: "white", // 图例文字颜色
         },
       },
       xAxis: [

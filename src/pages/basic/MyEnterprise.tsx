@@ -127,11 +127,12 @@ export const MyEnterprisePage = Form.create()(
       onDeviceSiteListSelectChange,
     } = myEnterprise;
 
-    const transformList = (list) => list.map((v) => ({
-      ...v,
-      icon: v.children.length > 0 ? null : v.level < 4 ? <Icon type="copy" /> : <Icon type="block" />,
-      children: v.children.length > 0 ? transformList(v.children) : [],
-    }));
+    const transformList = (list) =>
+      list.map((v) => ({
+        ...v,
+        icon: v.children.length > 0 ? null : v.level < 4 ? <Icon type="copy" /> : <Icon type="block" />,
+        children: v.children.length > 0 ? transformList(v.children) : [],
+      }));
 
     const treeData = transformList(oriTreeData);
 
@@ -790,7 +791,7 @@ export const MyEnterprisePage = Form.create()(
                         )}
                       </Upload>
                     </div>
-                    <div style={{fontSize: '10px', color: '#999'}}>建议上传尺寸32*32，透明背景的logo</div>
+                    <div style={{ fontSize: "10px", color: "#999" }}>建议上传尺寸32*32，透明背景的logo</div>
                   </div>
                   <Form onSubmit={submitEnterpriseInfo}>
                     <Card
@@ -1267,7 +1268,7 @@ export const MyEnterprisePage = Form.create()(
             </Col>
           </Row>
         </Spin>
-        <div className="fixed bottom-0 text-center pb-1" style={{ width: "calc(100% - 200px)", color: "#88a8c5", zIndex: 9999 }}>
+        <div className="fixed bottom-0 text-center pb-1" style={{ width: "calc(100% - 200px)", color: "white", zIndex: 9999 }}>
           版权所有: 武汉三藏科技有限责任公司
         </div>
       </div>

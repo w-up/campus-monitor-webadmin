@@ -51,7 +51,7 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
     title: {
       text: "",
       textStyle: {
-        // color: "#88A8C5FF",
+        // color: "whiteFF",
         fontSize: "14",
         fontWeight: "normal",
       },
@@ -65,7 +65,7 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
       backgroundColor: "rgba(38,95,163,0.6)",
       padding: 10,
       textStyle: {
-        color: "#88A8C5",
+        color: "white",
         fontSize: 10,
       },
       alwaysShowContent: {
@@ -96,7 +96,7 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
           }
         }
         return `<div style="color: #04F9CC;text-align:left;line-height:20px;font-size:18px;font-weight:bold;">${text} 日均</div>
-            <div style="color:#88A8C5;text-align:left;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
+            <div style="color:white;text-align:left;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
             ${showHtml}
             </div>
           </div>`;
@@ -107,7 +107,7 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
       data: data.pms.map((i) => i.pmName),
       textStyle: {
         fontSize: 18,
-        color: "#88A8C5", // 图例文字颜色
+        color: "white", // 图例文字颜色
         fontWeight: "bold",
       },
       // y:"-10px",

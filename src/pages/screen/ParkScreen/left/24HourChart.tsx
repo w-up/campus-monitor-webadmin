@@ -21,7 +21,7 @@ export const ParkScreen24HourChart = () => {
         title: {
           text: "24小时排放趋势图",
           textStyle: {
-            // color: "#88A8C5FF",
+            // color: "whiteFF",
             fontSize: "16",
             fontWeight: "normal",
           },
@@ -59,7 +59,7 @@ export const ParkScreen24HourChart = () => {
             }
 
             return `<div style="color: #04F9CC;text-align:left;line-height:20px">${text}</div>
-            <div style="color:#88A8C5;text-align:left;font-size:14px;padding:5px;margin-top:5px;">
+            <div style="color:white;text-align:left;font-size:14px;padding:5px;margin-top:5px;">
               <div style="display:flex;align-items: center;">
                 <div style="margin-right:10px;width:10px;height:1px;border:1px solid #1089E7;background:#1089E7"></div>
                 ${showHtml}

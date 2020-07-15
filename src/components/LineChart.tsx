@@ -20,7 +20,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
         title: {
           text: "",
           textStyle: {
-            // color: "#88A8C5FF",
+            // color: "whiteFF",
             fontSize: props.small ? "14" : "18",
             fontWeight: "bold",
           },
@@ -34,7 +34,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
           backgroundColor: "rgba(38,95,163,0.6)",
           padding: 10,
           textStyle: {
-            color: "#88A8C5",
+            color: "white",
             fontSize: props.small ? "14" : "18",
             fontWeight: "bold",
           },
@@ -66,7 +66,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
               }
             }
             return `<div style="color: #04F9CC;text-align:left;line-height:20px;font-size:${props.small ? "14px" : "18px"};font-weight:bold">${text} 日均</div>
-            <div style="color:#88A8C5;text-align:left;font-size:14px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
+            <div style="color:white;text-align:left;font-size:14px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
             ${showHtml}
             </div>
           </div>`;
@@ -78,7 +78,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
           textStyle: {
             fontSize: props.small ? "14" : "18",
             fontWeight: "bold",
-            color: "#88A8C5", // 图例文字颜色
+            color: "white", // 图例文字颜色
           },
           // y:"-10px",
         },

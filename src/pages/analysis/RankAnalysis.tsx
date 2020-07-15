@@ -37,7 +37,7 @@ const columns = [
     title: "贡献率",
     key: "rateNum",
     dataIndex: "rateNum",
-    render: (val) => val ? `${(val * 100).toFixed(2)}%` : '0%',
+    render: (val) => (val ? `${(val * 100).toFixed(2)}%` : "0%"),
   },
 ];
 
@@ -333,7 +333,7 @@ export const RankAnalysisPage = Form.create()(
               </Tabs>
             </Col>
           </Row>
-          <div className="fixed bottom-0 text-center pb-1" style={{ width: "calc(100% - 200px)", color: "#88a8c5", zIndex: 9999 }}>
+          <div className="fixed bottom-0 text-center pb-1" style={{ width: "calc(100% - 200px)", color: "white", zIndex: 9999 }}>
             版权所有: 武汉三藏科技有限责任公司
           </div>
         </Spin>

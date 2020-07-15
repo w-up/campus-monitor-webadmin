@@ -528,10 +528,12 @@ export const AlertSettingPage = Form.create()(
                   </Row>
                 )}
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="超限值">
-                  {getFieldDecorator("editForm.warnLimit", { initialValue: 0, rules: [{ required: true, message: '请输入超限值' }] })(<InputNumber size="small" style={{ width: "100%" }} />)}
+                  {getFieldDecorator("editForm.warnLimit", { initialValue: 0, rules: [{ required: true, message: "请输入超限值" }] })(<InputNumber size="small" style={{ width: "100%" }} />)}
                 </Form.Item>
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="告警时间间隔">
-                  {getFieldDecorator("editForm.warnPeriod", { initialValue: 0, rules: [{ required: true, message: '请输入告警时间间隔' }] })(<InputNumber min={0} size="small" placeholder="单位分钟" style={{ width: "100%" }} />)}
+                  {getFieldDecorator("editForm.warnPeriod", { initialValue: 0, rules: [{ required: true, message: "请输入告警时间间隔" }] })(
+                    <InputNumber min={0} size="small" placeholder="单位分钟" style={{ width: "100%" }} />
+                  )}
                 </Form.Item>
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="邮件通知联络人">
                   {getFieldDecorator("editForm.email", { initialValue: true, valuePropName: "checked", rules: [{ required: false }] })(<Checkbox />)}
@@ -588,10 +590,14 @@ export const AlertSettingPage = Form.create()(
                 )}
 
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="离线时间>=">
-                  {getFieldDecorator("editDeviceForm.offlineTime", { initialValue: 0, rules: [{ required: true, message: "请输入离线时间" }] })(<InputNumber size="small" min={0} style={{ width: "100%" }} />)}
+                  {getFieldDecorator("editDeviceForm.offlineTime", { initialValue: 0, rules: [{ required: true, message: "请输入离线时间" }] })(
+                    <InputNumber size="small" min={0} style={{ width: "100%" }} />
+                  )}
                 </Form.Item>
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="告警时间间隔">
-                  {getFieldDecorator("editDeviceForm.remindPeriod", { initialValue: 0, rules: [{ required: true, message: "请输入告警时间间隔" }] })(<InputNumber min={0} size="small" placeholder="单位分钟" style={{ width: "100%" }} />)}
+                  {getFieldDecorator("editDeviceForm.remindPeriod", { initialValue: 0, rules: [{ required: true, message: "请输入告警时间间隔" }] })(
+                    <InputNumber min={0} size="small" placeholder="单位分钟" style={{ width: "100%" }} />
+                  )}
                 </Form.Item>
                 <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="邮件通知联络人">
                   {getFieldDecorator("editDeviceForm.email", { initialValue: true, valuePropName: "checked", rules: [{ required: true }] })(<Checkbox />)}
@@ -600,7 +606,7 @@ export const AlertSettingPage = Form.create()(
             </Col>
           </Row>
         </Modal>
-        <div className="fixed bottom-0 text-center pb-1" style={{ width: "calc(100% - 200px)", color: "#88a8c5", zIndex: 9999 }}>
+        <div className="fixed bottom-0 text-center pb-1" style={{ width: "calc(100% - 200px)", color: "white", zIndex: 9999 }}>
           版权所有: 武汉三藏科技有限责任公司
         </div>
       </div>

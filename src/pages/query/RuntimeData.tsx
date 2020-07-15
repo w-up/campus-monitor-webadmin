@@ -85,10 +85,10 @@ export const RuntimeDataPage = Form.create()(
     const doResetFields = () => {
       // resetFields();
       setFieldsValue({
-        parkId: '',
-        factoryId: '',
+        parkId: "",
+        factoryId: "",
         siteIdList: [],
-        ptId: '',
+        ptId: "",
         pmCodeList: [],
       });
       runTimeData.query = {
@@ -167,7 +167,7 @@ export const RuntimeDataPage = Form.create()(
                   </Form.Item>
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测区域">
                     {getFieldDecorator("factoryId", { initialValue: factoryList && factoryList[0] && factoryList[0].factoryId, rules: [{ required: true, message: "请选择监测区域" }] })(
-                      <Select onChange={() => resetFields(['siteIdList'])} placeholder="请选择" size="small">
+                      <Select onChange={() => resetFields(["siteIdList"])} placeholder="请选择" size="small">
                         {factoryList.map((item) => (
                           <Option key={item.factoryId} value={item.factoryId}>
                             {item.factoryName}
@@ -205,7 +205,7 @@ export const RuntimeDataPage = Form.create()(
 
                   <Form.Item colon={false} labelAlign="left" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} label="监测类型">
                     {getFieldDecorator("ptId", { initialValue: ptList && ptList[0] && ptList[0].id, rules: [{ required: true, message: "请选择监测类型" }] })(
-                      <Select onChange={() => resetFields(['pmCodeList'])} placeholder="请选择" size="small">
+                      <Select onChange={() => resetFields(["pmCodeList"])} placeholder="请选择" size="small">
                         {ptList.map((item) => (
                           <Option key={item.id} value={item.id}>
                             {item.label}
@@ -253,7 +253,7 @@ export const RuntimeDataPage = Form.create()(
             </Col>
           </Row>
         </Spin>
-        <div className="fixed bottom-0 text-center pb-1" style={{ width: "calc(100% - 200px)", color: "#88a8c5", zIndex: 9999 }}>
+        <div className="fixed bottom-0 text-center pb-1" style={{ width: "calc(100% - 200px)", color: "white", zIndex: 9999 }}>
           版权所有: 武汉三藏科技有限责任公司
         </div>
       </div>

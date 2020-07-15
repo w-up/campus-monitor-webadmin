@@ -108,7 +108,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           data: ["排放量", "平均浓度"],
           textStyle: {
             fontSize: 10,
-            color: "#88A8C5", // 图例文字颜色
+            color: "white", // 图例文字颜色
           },
         },
         xAxis: [
@@ -221,7 +221,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
         title: {
           text: "",
           textStyle: {
-            // color: "#88A8C5FF",
+            // color: "whiteFF",
             fontSize: "14",
             fontWeight: "normal",
           },
@@ -235,7 +235,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           backgroundColor: "rgba(38,95,163,0.6)",
           padding: 10,
           textStyle: {
-            color: "#88A8C5",
+            color: "white",
             fontSize: 10,
           },
           alwaysShowContent: {
@@ -264,7 +264,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
               }
             }
             return `<div style="color: #04F9CC;text-align:left;line-height:20px;font-size:14px">${text} ${store.type == "year" ? "月均" : "日均"}</div>
-            <div style="color:#88A8C5;text-align:left;font-size:14px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
+            <div style="color:white;text-align:left;font-size:14px;background:rgba(11,36,69,0.6);padding:5px;border-radius:5px;margin-top:5px;">
             ${showHtml}
             </div>
           </div>`;
@@ -275,7 +275,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           data: this.siteData?.siteConcentrationMonitoringTrend.map((i) => i.siteName),
           textStyle: {
             fontSize: 10,
-            color: "#88A8C5", // 图例文字颜色
+            color: "white", // 图例文字颜色
           },
           // y:"-10px",
         },

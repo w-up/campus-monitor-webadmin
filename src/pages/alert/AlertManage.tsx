@@ -50,12 +50,11 @@ export const AlertManagePage = Form.create()(
         setFieldsValue({
           factoryIds: [],
           pmList: [],
-          mins: '',
-          status: '',
-          timeRange: '',
+          mins: "",
+          status: "",
+          timeRange: "",
         });
       }, 500);
-
     };
 
     const doSubmit = (e) => {
@@ -443,7 +442,7 @@ export const AlertManagePage = Form.create()(
 
     return (
       <div className="alertPage">
-        <div className="fixed bottom-0 text-center pb-1" style={{ width: "calc(100% - 200px)", color: "#88a8c5", zIndex: 9999 }}>
+        <div className="fixed bottom-0 text-center pb-1" style={{ width: "calc(100% - 200px)", color: "white", zIndex: 9999 }}>
           版权所有: 武汉三藏科技有限责任公司
         </div>
         <Spin spinning={loading}>
