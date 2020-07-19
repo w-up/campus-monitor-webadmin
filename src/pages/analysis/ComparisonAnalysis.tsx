@@ -238,6 +238,7 @@ export const ComparisonAnalysisPage = Form.create()(
                   <Card bordered size="small" title="各行业排放贡献率" extra={cardExtra}>
                     <ReactEcharts
                       //@ts-ignore
+                      key={JSON.stringify(toJS(option1))}
                       option={toJS(option1)}
                       ref={chart1}
                       style={{ height: "360px" }}
@@ -248,6 +249,7 @@ export const ComparisonAnalysisPage = Form.create()(
                   <Card bordered size="small" title="区域排放贡献率" extra={cardExtra}>
                     <ReactEcharts
                       //@ts-ignore
+                      key={JSON.stringify(toJS(option2))}
                       option={toJS(option2)}
                       ref={chart2}
                       style={{ height: "360px" }}
@@ -258,6 +260,7 @@ export const ComparisonAnalysisPage = Form.create()(
                   <Card bordered size="small" title="区域排放趋势对比" extra={cardExtra}>
                     <ReactEcharts
                       //@ts-ignore
+                      key={JSON.stringify(toJS(option3))}
                       option={toJS(option3)}
                       ref={chart3}
                       style={{ height: "360px" }}

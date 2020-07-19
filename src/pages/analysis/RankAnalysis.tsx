@@ -111,6 +111,8 @@ export const RankAnalysisPage = Form.create()(
 
     console.log("option1", toJS(option1));
     console.log("option2", toJS(option2));
+    console.log("option3", toJS(option3));
+    console.log("option4", toJS(option4));
 
     const [dateOpen, setDateOpen] = useState(false);
 
@@ -278,6 +280,7 @@ export const RankAnalysisPage = Form.create()(
                       <Card bordered size="small" title="区域排放量">
                         <ReactEcharts
                           //@ts-ignore
+                          key={JSON.stringify(toJS(option1))}
                           option={toJS(option1)}
                           ref={chart1}
                           style={{ height: "360px" }}
@@ -288,6 +291,7 @@ export const RankAnalysisPage = Form.create()(
                       <Card bordered size="small" title="区域排放量贡献率">
                         <ReactEcharts
                           //@ts-ignore
+                          key={JSON.stringify(toJS(option2))}
                           option={toJS(option2)}
                           ref={chart2}
                           style={{ height: "360px" }}
@@ -307,6 +311,7 @@ export const RankAnalysisPage = Form.create()(
                       <Card bordered size="small" title="站点排放量">
                         <ReactEcharts
                           //@ts-ignore
+                          key={JSON.stringify(toJS(option3))}
                           option={toJS(option3)}
                           ref={chart1}
                           style={{ height: "360px" }}
@@ -317,6 +322,7 @@ export const RankAnalysisPage = Form.create()(
                       <Card bordered size="small" title="站点排放量贡献率">
                         <ReactEcharts
                           //@ts-ignore
+                          key={JSON.stringify(toJS(option4))}
                           option={toJS(option4)}
                           ref={chart2}
                           style={{ height: "360px" }}
