@@ -23,19 +23,22 @@ export const CornerTable = () => {
           <div>数值</div>
           <div>限值</div>
         </div>
-        {enterpriseScreenMap.SiteRuntimePmData.children.map((item, index) => {
-          return (
-            <div
-              key={index}
-              className={Number(item.limit) && Number(item.limit) && Number(item.value) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"}
-              style={{ fontSize: 24, fontWeight: "bold" }}
-            >
-              <div title={item.collectDate}>{item.name}</div>
-              <div>{item.value}</div>
-              <div>{item.limit}</div>
-            </div>
-          );
-        })}
+        {
+          //@ts-ignore
+          enterpriseScreenMap.SiteRuntimePmData.children.map((item, index) => {
+            return (
+              <div
+                key={index}
+                className={Number(item.limit) && Number(item.limit) && Number(item.value) > Number(item.limit) ? "listItem tabTitle warningColor" : " listItem tabTitle"}
+                style={{ fontSize: 24, fontWeight: "bold" }}
+              >
+                <div title={item.collectDate}>{item.name}</div>
+                <div>{item.value}</div>
+                <div>{item.limit}</div>
+              </div>
+            );
+          })
+        }
       </div>
     </div>
   ));

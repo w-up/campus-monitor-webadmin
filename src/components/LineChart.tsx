@@ -121,9 +121,7 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
           },
           //   分割线
           splitLine: {
-            lineStyle: {
-              color: "white",
-            },
+            show: false,
           },
           //   刻度线
           axisLine: {

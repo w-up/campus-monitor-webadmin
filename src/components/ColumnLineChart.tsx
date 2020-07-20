@@ -57,9 +57,7 @@ export const ColumnLineChart = () => {
             },
           },
           splitLine: {
-            lineStyle: {
-              color: "white",
-            },
+            show: false,
           },
         },
         {
@@ -80,9 +78,7 @@ export const ColumnLineChart = () => {
             },
           },
           splitLine: {
-            lineStyle: {
-              color: "white",
-            },
+            show: false,
           },
         },
       ],

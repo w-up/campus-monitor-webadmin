@@ -99,9 +99,7 @@ export const ParkScreen24HourChart = () => {
           },
           //   分割线
           splitLine: {
-            lineStyle: {
-              color: "white",
-            },
+            show: false,
           },
           //   刻度线
           axisLine: {

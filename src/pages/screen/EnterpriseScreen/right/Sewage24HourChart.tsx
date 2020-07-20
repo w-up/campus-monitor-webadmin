@@ -152,9 +152,7 @@ export const makeOption = ({ data, dataIndex, count = 7 }: { data: EnterpriseScr
       },
       //   分割线
       splitLine: {
-        lineStyle: {
-          color: "white",
-        },
+        show: false,
       },
       //   刻度线
       axisLine: {

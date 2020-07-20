@@ -145,9 +145,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
               },
             },
             splitLine: {
-              lineStyle: {
-                color: "white",
-              },
+              show: false,
             },
           },
           {
@@ -168,9 +166,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
               },
             },
             splitLine: {
-              lineStyle: {
-                color: "white",
-              },
+              show: false,
             },
           },
         ],
@@ -316,9 +312,7 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
           },
           //   分割线
           splitLine: {
-            lineStyle: {
-              color: "white",
-            },
+            show: false,
           },
           //   刻度线
           axisLine: {

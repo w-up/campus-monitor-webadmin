@@ -192,9 +192,7 @@ export const makeOption = (site: EnterpriseScreenMapStore["dailyGas"][0]) => {
       },
       //   分割线
       splitLine: {
-        lineStyle: {
-          color: "white",
-        },
+        show: false,
       },
       //   刻度线
       axisLine: {
