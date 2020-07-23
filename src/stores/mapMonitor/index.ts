@@ -135,7 +135,7 @@ export class MapMonitorStore {
   async loadParkData({ parkId, pmCode }: { parkId: string; pmCode?: string } = { parkId: this.currentPark, pmCode: this.currentPmCode }) {
     // if (this.map) { this.map.clearOverlays() }
     const result = await api.MapMonitor.getMapInfoByPmCodeAndParkId({ parkId, pmCode: this.currentPmCode });
-    if (result.data) {
+    if (result?.data) {
       this.curParkData = result.data;
       this.updateMap();
     }

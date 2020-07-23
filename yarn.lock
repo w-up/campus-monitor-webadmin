@@ -1156,6 +1156,13 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
+"@reecelucas/react-use-hotkeys@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.npm.taobao.org/@reecelucas/react-use-hotkeys/download/@reecelucas/react-use-hotkeys-1.2.0.tgz#f9b7a5e902f099756d567dca9770b5db0c5df304"
+  integrity sha1-+bel6QLwmXVtVn3Kl3C12wxd8wQ=
+  dependencies:
+    shim-keyboard-event-key "^1.0.3"
+
 "@sheerun/mutationobserver-shim@^0.3.2":
   version "0.3.2"
   resolved "https://registry.npm.taobao.org/@sheerun/mutationobserver-shim/download/@sheerun/mutationobserver-shim-0.3.2.tgz#8013f2af54a2b7d735f71560ff360d3a8176a87b"
@@ -10232,6 +10239,13 @@ react-slick@~0.25.2:
     lodash.debounce "^4.0.8"
     resize-observer-polyfill "^1.5.0"
 
+react-use-hotkeys@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.npm.taobao.org/react-use-hotkeys/download/react-use-hotkeys-1.1.2.tgz#76efe51d6bd1a6149ae81d011e5e28cf475cba69"
+  integrity sha1-du/lHWvRphSa6B0BHl4oz0dcumk=
+  dependencies:
+    shim-keyboard-event-key "^1.0.3"
+
 react-use@^13.24.0:
   version "13.24.0"
   resolved "https://registry.npm.taobao.org/react-use/download/react-use-13.24.0.tgz#f4574e26cfaaad65e3f04c0d5ff80c1836546236"
@@ -11104,6 +11118,11 @@ shellwords@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
+
+shim-keyboard-event-key@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npm.taobao.org/shim-keyboard-event-key/download/shim-keyboard-event-key-1.0.3.tgz#9a9441d6b7d1fb25819d86182caf554e821a515c"
+  integrity sha1-mpRB1rfR+yWBnYYYLK9VToIaUVw=
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"

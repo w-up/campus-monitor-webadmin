@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reecelucas/react-use-hotkeys": "^1.2.0",
     "@types/echarts": "^4.4.3",
     "@types/geolib": "^2.0.23",
     "@types/mockjs": "^1.0.2",
@@ -37,6 +38,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "react-use": "^13.24.0",
+    "react-use-hotkeys": "^1.1.2",
     "typescript": "~3.7.2",
     "websocket-as-promised": "^1.0.1"
   },

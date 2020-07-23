@@ -1108,3 +1108,16 @@ svg {
 .map-list {
   z-index: 10;
 }
+
+.dynamicsource-page {
+  .ant-slider-rail {
+    height: 10px;
+    background: linear-gradient(to right, rgb(21, 24, 65) 0%, rgb(69, 68, 221) 100%);
+  }
+  .ant-slider {
+    margin: 13px 6px 20px;
+  }
+  .ant-slider-handle {
+    margin-top: -2px;
+  }
+}
