@@ -53,7 +53,7 @@ export const DynamicSourceMap = () => {
         )}
         {dynamicSource.curParkData?.map((park) =>
           park.siteDatas?.map((item, index) => (
-            <CustomOverlay position={{ lng: Number(item.gpsX), lat: Number(item.gpsY) }} key={index} visiable={dynamicSource.zoom > 17}>
+            <CustomOverlay position={{ lng: Number(item.gpsX), lat: Number(item.gpsY) }} key={index}>
               {item.siteIcon && item.isSensitivePoint == 1 && (
                 <div style={{ margin: "-50% 0 0  -50%" }} onClick={() => dynamicSource.setCurPoint({ lng: Number(item.gpsX), lat: Number(item.gpsY), siteName: item.siteName })}>
                   <img style={{ maxWidth: "55px", height: "55px" }} src={require(`../../assets/img/site${item.siteIcon}.png`)} />
@@ -64,7 +64,7 @@ export const DynamicSourceMap = () => {
           ))
         )}
         {!dynamicSource.curPoint.siteName && dynamicSource.curPoint.lat !== 0 && (
-          <CustomOverlay position={{ lng: Number(dynamicSource.curPoint.lng), lat: Number(dynamicSource.curPoint.lat) }} visiable={dynamicSource.zoom > 17}>
+          <CustomOverlay position={{ lng: Number(dynamicSource.curPoint.lng), lat: Number(dynamicSource.curPoint.lat) }}>
             <div style={{ margin: "-50% 0 0  -50%" }}>
               <img style={{ maxWidth: "55px", height: "55px" }} src={require(`../../assets/img/site1.png`)} />
               <div className="site-point">选中敏感点</div>
