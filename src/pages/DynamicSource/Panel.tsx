@@ -6,7 +6,6 @@ import { TableProps } from "antd/lib/table";
 import RadioGroup from "antd/lib/radio/group";
 import { PieChart } from "../../components/PieChart";
 import { useStore } from "../../stores/index";
-import useHotkeys from "@reecelucas/react-use-hotkeys";
 import api from "services";
 import moment from "moment";
 
