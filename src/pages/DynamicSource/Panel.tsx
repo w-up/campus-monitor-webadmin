@@ -50,17 +50,20 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
           try {
             if (dynamicSource.computeType == "1") {
               const res = await api.MapMonitor.getDynamicSourceContribution({ parkId, lat: Number(lat), lng: Number(lng), pmCode, startTime, endTime });
+              dynamicSource.DynamicSourceContribution.data = [];
               if (res) {
                 dynamicSource.DynamicSourceContribution.data = res.data;
               }
             }
             if (dynamicSource.computeType == "2") {
               const res = await api.MapMonitor.getDynamicSourceWindRose({ endTime, parkId, pmCode, startTime });
+              dynamicSource.DynamicSourceWindRose.data = [];
               if (res) {
                 dynamicSource.DynamicSourceWindRose.data = res.data;
               }
             }
             if (dynamicSource.computeType == "3") {
+              dynamicSource.DynamicSourceTraceSource.data = [];
               const res = await api.MapMonitor.getDynamicSourceTraceSource({ endTime, parkId, pmCode, startTime });
               if (res) {
                 dynamicSource.DynamicSourceTraceSource.data = res.data;
