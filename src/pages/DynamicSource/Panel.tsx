@@ -143,7 +143,6 @@ export const DynamicSourcePanel = Form.create()(({ form }: { form: WrappedFormUt
           <Form.Item label="监测因子">
             {getFieldDecorator("pmCode", { initialValue: dynamicSource.currentPmCode, rules: [{ required: true }] })(
               <Select onChange={dynamicSource.selectPmcode}>
-                <Select.Option value="0">全部</Select.Option>
                 {dynamicSource.pmcodes.map((item, index) => (
                   <Select.Option value={item.pmCode} key={index}>
                     {item.pmName}
