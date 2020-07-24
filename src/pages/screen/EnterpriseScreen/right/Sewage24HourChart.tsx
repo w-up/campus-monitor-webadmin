@@ -41,7 +41,10 @@ export const Sewage24HourChart = () => {
         <div>污水排放浓度24小时趋势</div>
         <img src="/images/right1.png" className="img" />
       </div>
-      <ReactEcharts ref={mapRef} option={makeOption({ data: enterpriseScreenMap.HoursSewage, dataIndex: store.dataIndex })} style={{ width: "100%", height: "240px" }} />
+      {
+        //@ts-ignore
+        <ReactEcharts ref={mapRef} option={makeOption({ data: enterpriseScreenMap.HoursSewage, dataIndex: store.dataIndex })} style={{ width: "100%", height: "240px" }} />
+      }
     </div>
   ));
 };

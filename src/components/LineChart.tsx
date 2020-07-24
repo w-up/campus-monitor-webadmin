@@ -197,7 +197,10 @@ export const LineChart = (props: { datas: Array<DailySewage>; animate?: boolean;
   }, []);
   return useObserver(() => (
     <div>
-      <ReactEcharts ref={mapRef} option={store.options} style={{ width: "100%", height: props.height ? props.height : "252px" }} />
+      {
+        //@ts-ignore
+        <ReactEcharts ref={mapRef} option={store.options} style={{ width: "100%", height: props.height ? props.height : "252px" }} />
+      }
     </div>
   ));
 };

@@ -125,7 +125,10 @@ export const ColumnLineChart = () => {
   }));
   return useObserver(() => (
     <div className="mt-4">
-      <ReactEcharts ref={mapRef} option={store.options} style={{ width: "100%", height: "240px" }} />
+      {
+        //@ts-ignore
+        <ReactEcharts ref={mapRef} option={store.options} style={{ width: "100%", height: "240px" }} />
+      }
     </div>
   ));
 };

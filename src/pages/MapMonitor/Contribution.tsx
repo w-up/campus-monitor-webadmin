@@ -205,7 +205,10 @@ export const Contribution = Form.create()(({ form }: { form: WrappedFormUtils })
         <div>
           <div className="primary-text-color mt-10 text-center">园区{mapMonitor.currentPmCodeData?.pmName}排放贡献率</div>
           <div className="mt-4">
-            <ReactEcharts option={store.options} style={{ width: "100%", height: "350px" }} />
+            {
+              //@ts-ignore
+              <ReactEcharts option={store.options} style={{ width: "100%", height: "350px" }} />
+            }
           </div>
         </div>
       )}

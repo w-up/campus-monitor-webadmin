@@ -459,7 +459,10 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
                   {store.type == "year" && <span>{moment(store.statisticalTime).year()}年监测浓度趋势图</span>}
                 </div>
                 <div className="mt-4">
-                  <ReactEcharts option={store.options1} style={{ width: "100%", height: "240px" }} />
+                  {
+                    //@ts-ignore
+                    <ReactEcharts option={store.options1} style={{ width: "100%", height: "240px" }} />
+                  }
                 </div>
               </div>
 
@@ -470,7 +473,10 @@ export const Trending = Form.create()(({ form }: { form: WrappedFormUtils }) => 
                   {store.type == "year" && <span>厂界{moment(store.statisticalTime).year()}年监测浓度趋势图</span>}
                 </div>
                 <div className="mt-4">
-                  <ReactEcharts option={store.options2} style={{ width: "100%", height: "180px" }} />
+                  {
+                    //@ts-ignore
+                    <ReactEcharts option={store.options2} style={{ width: "100%", height: "180px" }} />
+                  }
                 </div>
               </div>
             </div>

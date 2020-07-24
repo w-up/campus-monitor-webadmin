@@ -46,7 +46,10 @@ export const PieChart = (props: { showLegend?: boolean; pieRadius?: string; cent
   }));
   return useObserver(() => (
     <div className="mt-4">
-      <ReactEcharts ref={mapRef} option={store.options} style={{ width: "100%", height: "350px" }} />
+      {
+        //@ts-ignore
+        <ReactEcharts ref={mapRef} option={store.options} style={{ width: "100%", height: "350px" }} />
+      }
     </div>
   ));
 };

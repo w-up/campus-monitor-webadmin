@@ -50,13 +50,16 @@ export const EnterpriseScreenGasChart = () => {
           {enterpriseScreenMap.dailyGas.map((item, index) => {
             return (
               <Slide index={index} key={index}>
-                <ReactEcharts
+                {
                   //@ts-ignore
-                  ref={elementsRef.current[index]}
-                  option={makeOption(item)}
-                  style={{ padding: "10px 10px 0 10px", width: "100%", height: "280px" }}
-                  className="react_for_echarts"
-                />
+                  <ReactEcharts
+                    ref={elementsRef.current[index]}
+                    //@ts-ignore
+                    option={makeOption(item)}
+                    style={{ padding: "10px 10px 0 10px", width: "100%", height: "280px" }}
+                    className="react_for_echarts"
+                  />
+                }
               </Slide>
             );
           })}
