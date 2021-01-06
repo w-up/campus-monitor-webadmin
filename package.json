@@ -11,7 +11,7 @@
     "@types/ol": "^6.3.1",
     "@uiw/react-baidu-map": "^1.17.1",
     "antd": "^3.26.11",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "axios-hooks": "^1.9.0",
     "coordtransform": "^2.1.2",
     "core-js": "2.5.7",
